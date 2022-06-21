@@ -26,7 +26,8 @@ public class IndexController {
     @Autowired
 	HttpSession session; 
     
-    //最初にここにきて、login画面にいくdayoa
+
+    //最初にここにきて、login画面にいくよ
     @RequestMapping({ "/", "/index"})
     public String index(@ModelAttribute("index") IndexForm form, Model model) {
         return "login";
@@ -37,6 +38,10 @@ public class IndexController {
     	if (bindingResult.hasErrors()) {	
             return "login";
         }
+    	
+    	if(form.getMail().equals("1") && form.getPass().equals("1")) {
+    		return "admin";
+    	}
     	
     	return "menu";
     	
@@ -69,6 +74,21 @@ public class IndexController {
     public String recordRegist(@ModelAttribute("index") UserForm form, Model model) {
 
     	
+        return "menu";
+    }
+    
+    //マイリスト編集画面から登録ボタンでメニュー画面に遷移
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    public String registList(@ModelAttribute("index") UserForm form, Model model) {
+
+    	
+        return "menu";
+    }
+    
+    //お問い合わせ画面から登録ボタンでメニュー画面に遷移
+    @RequestMapping(value = "/information", method = RequestMethod.POST)
+    public String registInformation(@ModelAttribute("index") UserForm form, Model model) {
+
         return "menu";
     }
     
@@ -121,6 +141,40 @@ public class IndexController {
     	
         return "information";
     }
+    
+    
+    //管理者ページでロゴをクリックで管理者ページへ
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String admin(@ModelAttribute("index") UserForm form, Model model) {
+
+    	
+        return "admin";
+    }
+    //ハンバーガーメニューから管理者お問い合わせへ
+    @RequestMapping(value = "/adminInformation", method = RequestMethod.GET)
+    public String adminInformation(@ModelAttribute("index") UserForm form, Model model) {
+
+    	
+        return "adminInformation";
+    }
+    
+    //対処済みにするを押すと、admin画面に遷移
+    @RequestMapping(value = "/process", method = RequestMethod.GET)
+    public String process(@ModelAttribute("index") UserForm form, Model model) {
+
+    	
+        return "admin";
+    }
+    
+    //一覧に戻るボタンを押すと、admin画面に遷移
+    @RequestMapping(value = "/backList", method = RequestMethod.GET)
+    public String backList(@ModelAttribute("index") UserForm form, Model model) {
+
+    	
+        return "admin";
+    }
+    
+    
     
   //ハンバーガーメニューからログアウトへ
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
