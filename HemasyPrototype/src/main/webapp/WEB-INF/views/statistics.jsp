@@ -12,9 +12,6 @@
 <meta charset="UTF-8">
 <title>統計画面</title>
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<link href="css/commons.css" rel="stylesheet">
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<meta name="viewport" content="width=device-width">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
 	integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
@@ -23,23 +20,7 @@
 	src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 </head>
 <body>
-<header>
-	<div class="header-logo"><a href="./back">Hemasy</a></div>
-	<form:form action="hamburger" modelAttribute="index" method="post">
-	    <button type="button" class="menu-btn">
-	      <i class="fa fa-bars" aria-hidden="true"></i>
-	    </button>
-	    <div class="menu">
-	      <div class="menu__item"><a href="./account">アカウント管理</a></div>
-	      <div class="menu__item"><a href="./rank">ランキング</a></div>
-	      <div class="menu__item"><a href="./list">リスト編集</a></div>
-	      <div class="menu__item"><a href="./information">お問い合わせ</a></div>
-	      <div class="menu__item"><a href="./logout">ログアウト</a></div>
-	    </div>
-    </form:form>
-</header>
-
-	<div><b>統計</b></div>
+	<h1>統計</h1>
 	<div id="selectGraph">
 		<button data-index="food" onclick="entryClick(1)">食事</button>
 		<button data-index="exercise" onclick="entryClick(2)">運動</button>
@@ -47,7 +28,9 @@
 		<button data-index="smoke" onclick="entryClick(4)">タバコ</button>
 		<button data-index="bmi" onclick="entryClick(5)">体重</button>
 	</div>
-	<br><input type="button" value="左"><input type="button" value="右">
+	<br><input type="button" value="左" onclick="getName()"><input type="button" value="右">
+	
+	${name}
 	<div style="width: 400px">
 		<canvas id="foodGraph"></canvas>
 	</div>
@@ -63,6 +46,18 @@
 	<div style="width: 400px">
 		<canvas id="bmiGraph"></canvas>
 	</div>
+	<script>
+	let foodList = [];
+	function getFoodList(){
+		fetch('/getFoodList?id=' + 1)
+		.then(res => res.json().then(data => {
+			foodlist = data
+			console.log(data)
+			console.log(name)
+		}))
+    	.catch(error => console.log(error))
+	};
+	</script>
 	<script>
 	//食事用のグラフ
 window.addEventListener('load', makeChart);
@@ -182,7 +177,7 @@ window.addEventListener('load', makeChart);
 		<script>
 		//食事用のデータ
 		var foodGraphData = {
-			labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+			labels: [],
 			datasets: [{
 			      label: '食事',
 			      data: [20, 35, 40, 30, 45, 35, 40],
@@ -277,6 +272,7 @@ window.addEventListener('load', makeChart);
 	<script type="text/javascript">
 function entryClick(id){
 		if(id == 1){
+			getFoodList();
 			document.getElementById('foodGraph').style.display = "";
 			document.getElementById('exerciseGraph').style.display = "none";
 			document.getElementById('alcoholGraph').style.display = "none";
@@ -308,7 +304,7 @@ function entryClick(id){
 			document.getElementById('bmiGraph').style.display = "";
 		}
 }
-// window.onload = entryChange;
+window.onload = entryClick;
 </script>
 
 	<script>
@@ -340,6 +336,5 @@ function entryClick(id){
 			}
 		};
 	</script>
-<script src="js/commons.js"></script>
 </body>
 </html>
