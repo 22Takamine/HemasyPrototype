@@ -18,34 +18,32 @@
 <meta name="viewport" content="width=device-width">
 </head>
 <body>
-  
-
-	<header>
-		<div class="header-logo" id="header">Hemasy</div>
-		<form:form action="hamburger" modelAttribute="index" method="post">
-			<button type="button" class="menu-btn">
-				<i class="fa fa-bars" aria-hidden="true"></i>
-			</button>
-			<div class="menu">
-				<div class="menu__item">
-					<a href="./account">アカウント管理</a>
-				</div>
-				<div class="menu__item">
-					<a href="./rank">ランキング</a>
-				</div>
-				<div class="menu__item">
-					<a href="./list">リスト編集</a>
-				</div>
-				<div class="menu__item">
-					<a href="./information">お問い合わせ</a>
-				</div>
-				<div class="menu__item">
-					<a href="./logout">ログアウト</a>
-				</div>
+<header>
+	<div class="header-logo"><a href="./back">Hemasy</a></div>
+	<form:form action="hamburger" modelAttribute="index" method="post">
+		<button type="button" class="menu-btn">
+			<i class="fa fa-bars" aria-hidden="true"></i>
+		</button>
+		<div class="menu">
+			<div class="menu__item">
+				<a href="./account">アカウント管理</a>
 			</div>
-		</form:form>
-	</header>
-	<h1>記録画面</h1>
+			<div class="menu__item">
+				<a href="./rank">ランキング</a>
+			</div>
+			<div class="menu__item">
+				<a href="./list">リスト編集</a>
+			</div>
+			<div class="menu__item">
+				<a href="./information">お問い合わせ</a>
+			</div>
+			<div class="menu__item">
+				<a href="./logout">ログアウト</a>
+			</div>
+		</div>
+	</form:form>
+</header>
+	<div><b>記録画面</b></div>
 	<a href="#food">食事</a>
 	<a href="#sport">運動</a>
 	<a href="#alcohol">酒</a>
