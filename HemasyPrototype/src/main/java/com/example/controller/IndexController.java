@@ -26,7 +26,7 @@ public class IndexController {
     @Autowired
 	HttpSession session; 
     
-    //最初にここにきて、login画面にいくdayo
+    //最初にここにきて、login画面にいくdayoあ
     @RequestMapping({ "/", "/index"})
     public String index(@ModelAttribute("index") IndexForm form, Model model) {
         return "login";
