@@ -47,41 +47,42 @@
 		<canvas id="bmiGraph"></canvas>
 	</div>
 	<script>
-	let foodList = [];
+	//食事記録グラフの作成　ユーザーの目標摂取カロリーをセッションから取得するようにする。
+	var foodList = [];
 	function getFoodList(){
 		fetch('/getFoodList?id=' + 1)
 		.then(res => res.json().then(data => {
-			foodlist = data
+			foodList = data
 			console.log(data)
-			console.log(name)
+			console.log(foodList)
+			var goalCalorie = [];
+			foodList.forEach(function(createDate){
+ 				 goalCalorie.push(1000);
+			});
+			var foodGraphData = {
+				labels: foodList.map(item => item.createDate),
+				
+				datasets: [{
+				      label: '食事',
+				      data: foodList.map(item => item.value2),
+				      borderColor: '#484',
+				    }, {
+				      label: 'ユーザーの目標摂取カロリー',
+				      data: goalCalorie,
+				      borderColor: '#ff0000',
+				    }],
+			}
+			window.addEventListener('load', makeChart);
+			var ctx = document.getElementById("foodGraph");
+					var myChart = new Chart(ctx, {
+						type : 'line',
+						data : foodGraphData,
+						options : complexChartOption
+			})			
 		}))
     	.catch(error => console.log(error))
 	};
 	</script>
-	<script>
-	//食事用のグラフ
-window.addEventListener('load', makeChart);
-	function makeChart(){		
-	var ctx = document.getElementById("foodGraph");
-			var myChart = new Chart(ctx, {
-				type : 'line',
-				data : foodGraphData,
-				options : complexChartOption
-			})
-	};
-			document.getElementById('canvas').addEventListener('click', e => {
-					console.log(e)
-		    	  const elements = window.myCanvas.getElementAtEvent(e);
-		    	  if (elements[0]._model.label.length) {
-		    		  window.location.href = './eat?day=' + [elements[0]._model.label];
-	    			  console.log('elements', [elements[0]._model.label]);
-		    	  }else {
-		    		  alert('aa');
-		     	 }
-			
-		    	});
-	</script>
-
 	<script>
 	//運動用のグラフ
 window.addEventListener('load', makeChart);
@@ -175,28 +176,9 @@ window.addEventListener('load', makeChart);
 		    	});
 	</script>
 		<script>
-		//食事用のデータ
-		var foodGraphData = {
-			labels: [],
-			datasets: [{
-			      label: '食事',
-			      data: [20, 35, 40, 30, 45, 35, 40],
-			      borderColor: '#f88',
-			    }, {
-			      label: 'Green',
-			      data: [20, 15, 30, 25, 30, 40, 35],
-			      borderColor: '#484',
-			    }, {
-			      label: 'Blue',
-			      data: [30, 25, 10, 5, 25, 30, 20],
-			      borderColor: '#48f',
-			    }],
-		};
-	</script>
-		<script>
 		//運動用のデータ
 		var exerciseGraphData = {
-			labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+
 			datasets: [{
 			      label: '運動',
 			      data: [20, 35, 40, 30, 45, 35, 40],
@@ -234,7 +216,7 @@ window.addEventListener('load', makeChart);
 		<script>
 		//タバコ用のデータ
 		var smokeGraphData = {
-			labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+			labels: [foodList],
 			datasets: [{
 			      label: 'タバコ',
 			      data: [20, 35, 40, 30, 45, 35, 40],
@@ -273,6 +255,7 @@ window.addEventListener('load', makeChart);
 function entryClick(id){
 		if(id == 1){
 			getFoodList();
+			console.log(foodList);
 			document.getElementById('foodGraph').style.display = "";
 			document.getElementById('exerciseGraph').style.display = "none";
 			document.getElementById('alcoholGraph').style.display = "none";
