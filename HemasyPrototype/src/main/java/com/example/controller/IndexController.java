@@ -1,7 +1,5 @@
 package com.example.controller;
 
-import java.util.Locale;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +26,10 @@ public class IndexController {
 	MessageSource messageSource;
 
 	@Autowired
-	UserDao userDao;
-
-	@Autowired
 	HttpSession session; 
-
+    
+    @Autowired
+	UserDao userDao;
 
 	//最初にここにきて、login画面にいくよ
 	@RequestMapping({ "/", "/index"})
@@ -48,31 +45,48 @@ public class IndexController {
 
 		User user = userDao.findIdAndPass(form.getMail(), form.getPass());
 
+    	
+    	
+        return "statistics";
+    }
+    
+    
+    
 
-		if(user == null) {
-			// メッセージリソースファイルから、メッセージを取得
-			String errMsg = messageSource.getMessage("select.error", null, Locale.getDefault());
-			model.addAttribute("msg", errMsg);
-
-			return "login";
-		}
-		else {
-			
-			session.setAttribute("user", user);
-
-			return "menu";
-		}
-	}
 
 	//ログイン画面から、新規登録画面に遷移
 	@RequestMapping(value = "/result", params="register", method = RequestMethod.POST)
 	public String register(@ModelAttribute("index") UserForm form, Model model) {
-
-		return "register";
-	}
+    	//ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
+    	//User user = session.getAttribute("user",user);
+    	//int user_id = user.getUserId()
+    	
+    	//ここは仮でuser_idを取得する。
+    	int user_id = 1;
+    	User user = userDao.findById(user_id);
+		model.addAttribute("user", user);
+    	
+        return "account";
+    }
+    
 	
 	@RequestMapping(value = "/result", params="loginBack", method = RequestMethod.POST)
 	public String loginBack(@ModelAttribute("index") UserForm form, Model model) {
+    	
+        return "rank";
+    }
+    
+    //ハンバーガーメニューからリスト編集へ
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String list(@ModelAttribute("index") UserForm form, Model model) {
+    	
+    	//ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
+    	//User user = session.getAttribute("user",user);
+    	//int user_id = user.getUserId()
+    	
+    	//ここは仮でuser_idを取得する。
+    	int user_id = 1;
+    	
 
 		User user = new User(form.getName(),form.getMail(), form.getPass(),form.getSex(),form.getBirthDate(),form.getHeight(),
 				form.getCreatedAt(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRole());
@@ -100,11 +114,16 @@ public class IndexController {
 	}
 
 	//記録画面から登録ボタンでメニュー画面に遷移
-	@RequestMapping(value = "/recordRegist", method = RequestMethod.POST)
-	public String recordRegist(@ModelAttribute("index") UserForm form, Model model) {
+    @RequestMapping(value = "/recordRegist", method = RequestMethod.POST)
+    public String recordRegist(@ModelAttribute("index") UserForm form, Model model) {
 
-		return "menu";
-	}
+
+			
+
+    	//メインメニュー画面に戻るときの処理をどうやるのかを周りの人に聞く。
+        return "menu";
+    
+    }
 
 	//マイリスト編集画面から登録ボタンでメニュー画面に遷移
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -153,14 +172,6 @@ public class IndexController {
 
 
 		return "rank";
-	}
-
-	//ハンバーガーメニューからリスト編集へ
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(@ModelAttribute("index") UserForm form, Model model) {
-
-
-		return "list";
 	}
 
 	//ハンバーガーメニューからお問い合わせへ

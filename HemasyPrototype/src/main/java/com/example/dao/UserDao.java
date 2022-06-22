@@ -1,4 +1,5 @@
 package com.example.dao;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ private static final String SELECT_ID_AND_PASS =
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
+	
 	public User findIdAndPass(String mail,String password) {
 
 		MapSqlParameterSource param = new MapSqlParameterSource();
@@ -33,6 +35,7 @@ private static final String SELECT_ID_AND_PASS =
 
 		return resultList.isEmpty() ? null:resultList.get(0);
 	}
+	
 	
 	public void insert(User user) {
 		String sql = INSERT;
@@ -50,5 +53,17 @@ private static final String SELECT_ID_AND_PASS =
 		param.addValue("smokeFlag", user.getSmokeFlag());
 		
 		jdbcTemplate.update(sql, param);
+	}
+	public User findById(int userId) {
+		String sql = """
+						select * from users
+						where user_id = :user_id
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", userId);
+		
+		var list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<User>(User.class) );
+		return list.isEmpty() ? null :list.get(0);
+		
 	}
 }
