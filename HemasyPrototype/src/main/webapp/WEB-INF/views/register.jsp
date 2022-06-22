@@ -24,16 +24,19 @@
 		<div>
 			<fmt:message key="form.lbl.name" />
 			<form:input path="name" />
+			<form:errors path="name" cssStyle="color: red"/>
 		</div>
 
 		<div>
 			<fmt:message key="form.lbl.mail" />
 			<form:input type="mail" path="mail" />
+			<form:errors path="mail" cssStyle="color: red"/>
 		</div>
 
 		<div>
 			<fmt:message key="form.lbl.password" />
 			<form:password path="password" />
+			<form:errors path="password" cssStyle="color: red"/>
 		</div>
 
 		<div>
@@ -47,16 +50,19 @@
 		<div>
 			<fmt:message key="form.lbl.birthDate" />
 			<form:input type="date" path="birthDate" />
+			<form:errors path="birthDate" cssStyle="color: red"/>
 		</div>
 
 		<div>
 			<fmt:message key="form.lbl.height" />
 			<form:input path="height" />
+			<form:errors path="height" cssStyle="color: red"/>
 		</div>
 
 		<div>
 			<fmt:message key="form.lbl.weight" />
 			<form:input path="weight" />
+			<form:errors path="weight" cssStyle="color: red"/>
 		</div>
 
 		<div>
@@ -90,7 +96,6 @@
 			飲む
 			<form:radiobutton path="alcoholFlag" value="1"/>
 			飲まない
-
 		</div>
 
 		<form:button>

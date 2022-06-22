@@ -3,25 +3,27 @@ package com.example.form;
 import java.sql.Date;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 
 public class UserForm {
 
-	@NotEmpty
+	@NotBlank
 	private String name;
 
+	@NotBlank
 	@Email
 	private String mail;
 
-	@NotEmpty
+	@NotBlank
 	private String password;
 
 	@NotNull
 	private Integer sex;
 
+	@NotNull
 	@Past
 	private Date birthDate;
 
@@ -38,7 +40,7 @@ public class UserForm {
 	private Integer smokeFlag;
 	private Integer alcoholFlag;
 	private Date createdAt;
-	private Integer role;
+	private Integer roleId;
 	private Double bodyFatPercentage;
 	
 	public String getName() {
@@ -127,11 +129,11 @@ public class UserForm {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-	public Integer getRole() {
-		return role;
+	public Integer getRoleId() {
+		return roleId;
 	}
-	public void setRole(Integer role) {
-		this.role = role;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 	public Double getBodyFatPercentage() {
 		return bodyFatPercentage;

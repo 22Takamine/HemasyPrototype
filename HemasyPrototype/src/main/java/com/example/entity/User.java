@@ -14,14 +14,15 @@ public class User {
 	private Integer rankFlag;
 	private Integer alcoholFlag;
 	private Integer smokeFlag;
-    private Integer role;
-
+	private Integer roleId;
+	private Integer id;
+	
 	public User() {
 
 	}
 
 	public User(String user_name, String mail, String password,Integer sex,
-			Date birthDate,Double height,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer role) {
+			Date birthDate,Double height,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer roleId) {
 		this.user_name = user_name;
 		this.mail = mail;
 		this.password = password;
@@ -31,15 +32,15 @@ public class User {
 		this.rankFlag = rankFlag;
 		this.alcoholFlag = alcoholFlag;
 		this.smokeFlag = smokeFlag;
-		this.role = role;
-	}
-		
-	public Integer getRole() {
-		return role;
+		this.roleId = roleId;
 	}
 
-	public void setRole(Integer role) {
-		this.role = role;
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getUser_name() {
@@ -122,11 +123,18 @@ public class User {
 	public void setSmokeFlag(Integer smokeFlag) {
 		this.smokeFlag = smokeFlag;
 	}
+	public Integer getId() {
+		return id;
+	}
 
-//	// 全フィールドが未入力かの判断
-//	public boolean isEmptyCondition() {
-//		return id == null && ParamUtil.isNullOrEmpty(name) && score == null;
-//	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	//	// 全フィールドが未入力かの判断
+	//	public boolean isEmptyCondition() {
+	//		return id == null && ParamUtil.isNullOrEmpty(name) && score == null;
+	//	}
 }
 
 

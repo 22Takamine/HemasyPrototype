@@ -9,7 +9,7 @@ public class IndexForm {
     private String mail;
     
     @NotEmpty
-    private String pass;
+    private String password;
 
     public String getMail() {
         return mail;
@@ -19,12 +19,11 @@ public class IndexForm {
         this.mail = mail;
     }
     
-    public String getPass() {
-        return pass;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setPassword(String password) {
+        this.password = password;
     }
-
 }

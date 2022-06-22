@@ -42,16 +42,16 @@ public class IndexController {
 			return "login";
 		}
 
-		User user = userDao.findIdAndPass(form.getMail(), form.getPass());
+		User user = userDao.findIdAndPass(form.getMail(), form.getPassword());
 
     	if(user == null) {
     		
     		return "login";
     	}
-    	else if(user.getRole() == 0) {
+    	else if(user.getRoleId() == 0) {
     		
     		session.setAttribute("user", user);
-    		return "account";
+    		return "admin";
     	}
     	else {
     		
@@ -84,7 +84,7 @@ public class IndexController {
 		}
 		
 		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirthDate(),
-				form.getHeight(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRole());
+				form.getHeight(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
 		
 		userDao.insert(user);
 
@@ -103,7 +103,7 @@ public class IndexController {
     	//int user_id = 1;
     	
 		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirthDate(),form.getHeight(),
-				form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRole());
+				form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
 
 		userDao.insert(user);
 
