@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.dao.ListAndRecordDao;
 import com.example.dao.UserDao;
+import com.example.entity.ListAndRecord;
 import com.example.entity.User;
 import com.example.form.IndexForm;
+import com.example.form.ListAndRecordForm;
 import com.example.form.UserForm;
 
 
@@ -30,6 +35,9 @@ public class IndexController {
     
     @Autowired
 	UserDao userDao;
+    
+    @Autowired
+    ListAndRecordDao listAndRecordDao;
 
     //最初にここにきて、login画面にいくよ
 
@@ -143,7 +151,7 @@ public class IndexController {
     
     //ハンバーガーメニューからリスト編集へ
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(@ModelAttribute("index") UserForm form, Model model) {
+    public String list(@ModelAttribute("index") ListAndRecordForm form, Model model) {
     	
     	//ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
     	//User user = session.getAttribute("user",user);
@@ -151,6 +159,14 @@ public class IndexController {
     	
     	//ここは仮でuser_idを取得する。
     	int user_id = 1;
+    	//user_id =1が登録した食事リストを取得する
+    	List<ListAndRecord> foodList = listAndRecordDao.FoodListById(user_id);
+    	System.out.println(foodList.get(0).getListsAndRecordsId());
+    	model.addAttribute("foodList", foodList);
+    	
+    	//user_id =1が登録したお酒リストを取得する(今は暫定でuser_idの部分に固定で２を入れている)
+    	List<ListAndRecord> alcoholList = listAndRecordDao.AlcoholListById(2);
+    	model.addAttribute("alcoholList", alcoholList);
     	
 
     	
