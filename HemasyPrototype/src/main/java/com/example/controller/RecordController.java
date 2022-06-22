@@ -33,6 +33,12 @@ public class RecordController {
     public List<CommonRecord> getFoodList(@RequestParam("id") int id) {
     	return listAndRecordDao.getFoodRecords(id);
     }
+    
+    @RequestMapping("/getExerciseList")
+    public List<CommonRecord> getExerciseList(@RequestParam("id") int id) {
+    	return listAndRecordDao.getExerciseRecords(id);
+    }
+    
 }
 
 

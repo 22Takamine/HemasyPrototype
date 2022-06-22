@@ -36,9 +36,36 @@ public class ListAndRecordDao {
 				from lists_and_records
 				where category = 2
 				and type = 1
+				and user_id = 1
 				group by create_date
 				ORDER by create_date""";
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class));
+	}
+	
+	
+	public List<CommonRecord> getExerciseRecords(int user_id) {
+		String sql = """
+				select
+				ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2) value2
+				, T2.create_date create_date 
+				, ROUND(T2.value2 * T3.value2 * (T3.value3/60) * 1.05, 2) value3
+				, T3.value3 value4
+				from users T1	
+				Join lists_and_records T2
+				ON T1.user_id = T2.user_id
+				AND T2.category = 2
+				AND T2.type = 5
+				JOIN lists_and_records T3 
+				ON T1.user_id = T3.user_id
+				AND T3.category = 2
+				AND T3.type = 2
+				AND T2.create_date = T3.create_date
+				where T1.user_id =1
+				order by T2.create_date;
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", user_id);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
 	
    
