@@ -1,5 +1,6 @@
 package com.example.dao;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,5 @@ public class ListAndRecordDao {
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class));
 	}
 	
-    
+   
 }
