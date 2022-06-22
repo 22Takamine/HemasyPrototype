@@ -26,6 +26,8 @@ public class UserForm {
     @NotEmpty
     private String weight;
     
+    
+    private String id;
     private String bodyFat;
     private String achievementId;
     private String goalExerciseTime;
@@ -146,6 +148,14 @@ public class UserForm {
     public void setAlcohol(String alcohol) {
         this.alcohol = alcohol;
     }
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
     
     
     
