@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.dao.InformationDao;
 import com.example.dao.ListAndRecordDao;
 import com.example.dao.UserDao;
 import com.example.entity.ListAndRecord;
@@ -38,6 +39,9 @@ public class IndexController {
 
 	@Autowired
 	ListAndRecordDao listAndRecordDao;
+	
+	@Autowired
+	InformationDao informationDao;
 
 	// 最初にここにきて、login画面にいくよ
 
@@ -98,10 +102,32 @@ public class IndexController {
 
 	// お問い合わせ画面から登録ボタンでメニュー画面に遷移
 	@RequestMapping(value = "/information", method = RequestMethod.POST)
-	public String registInformation(@ModelAttribute("information") InformationForm form, Model model) {
+	public String registInformation(@ModelAttribute("information") InformationForm Iform,@ModelAttribute("index") UserForm form, Model model) {
+		
+		// ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
+		// User user = session.getAttribute("user",user);
+		// int user_id = user.getUserId()
 
+		// ここは仮でuser_idを取得する。
+		int user_id = 1;
+		
+		String title = Iform.getTitle();
+		String contents = Iform.getContents();
+		
+		System.out.println(title);
+		System.out.println(contents);
+		
+		String result = informationDao.InformationRegister(title, contents, user_id );
+		
+		if(("正常に登録できました").equals(result)) {
+			
+			return "menu";
+		}else {
+			model.addAttribute("msg",result );
+			return "information";
+		}
+		
 		// メインメニュー画面に戻るときの処理をどうやるのかを周りの人に聞く。
-		return "menu";
 	}
 
 	// 戻るボタンを押すと、メニュー画面に遷移

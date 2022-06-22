@@ -19,7 +19,7 @@
 <body>
 <header>
 	<div class="header-logo"><a href="./back">Hemasy</a></div>
-	<form:form action="hamburger" modelAttribute="kawamitsu" method="post">
+	<form:form action="hamburger" modelAttribute="information" method="post">
 	    <button type="button" class="menu-btn">
 	      <i class="fa fa-bars" aria-hidden="true"></i>
 	    </button>
@@ -44,7 +44,7 @@
     
       <c:if test="${not empty msg}"><p class="error">${msg}</p></c:if>
       
-      <form:form action="insert" method="post" modelAttribute="information">
+      <form:form action="information" method="post" modelAttribute="information">
       	<form:input path="userId" type="hidden" value="${userId}" />
         <fieldset class="label-130">
           <div>
