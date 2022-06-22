@@ -44,6 +44,11 @@ public class IndexController {
 
 		User user = userDao.findIdAndPass(form.getMail(), form.getPassword());
 
+		List list = userDao.listAndRecord();
+		
+		//User list = userDao.findUser(user.getId());
+		
+				
     	if(user == null) {
     		
     		return "login";

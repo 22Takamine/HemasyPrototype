@@ -20,6 +20,7 @@ public class UserDao{
 	private static final String INSERT = "INSERT INTO users(user_name,mail,password,sex,birth,height,created_at,rank_flag,alcohol_flag,smoke_flag,role_id )"
 			+ " VALUES(:user_name, :mail,:password,:sex,:birth,:height,:createdAt,:rankFlag,:alcoholFlag,:smokeFlag,1)";
 
+	private static final String SELECT_USER_ID = "";
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -37,6 +38,18 @@ public class UserDao{
 		return resultList.isEmpty() ? null:resultList.get(0);
 	}
 
+	public User findUser(Integer id) {
+		
+		MapSqlParameterSource param = new MapSqlParameterSource();
+
+		param.addValue("userId", id);
+		
+		String sql = SELECT_USER_ID;
+		List<User>resultList = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<User>(User.class));
+
+		return resultList.isEmpty() ? null:resultList.get(0);
+	}
+	
 	public void insert(User user) {
 		String sql = INSERT;
 
