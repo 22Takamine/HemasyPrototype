@@ -1,6 +1,10 @@
 package com.example.form;
 
+import java.sql.Date;
+
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 
 public class UserForm {
@@ -14,27 +18,28 @@ public class UserForm {
     @NotEmpty
     private String pass;
     
-    @NotEmpty
-    private String sex;
+    @NotNull
+    private Integer sex;
     
-    @NotEmpty
-    private String birthDate;
+    @NotNull
+    @Past
+    private Date birthDate;
     
-    @NotEmpty
-    private String height;
+    @NotNull
+    private Double height;
     
-    @NotEmpty
-    private String weight;
+    @NotNull
+    private Double weight;
     
     
-    private String id;
-    private String bodyFat;
-    private String achievementId;
-    private String goalExerciseTime;
-    private String goalCalorise;
-    private String rank;
-    private String smoke;
-    private String alcohol;
+    private Integer id;
+    private Double bodyFat;
+    private Integer achievementId;
+    private Integer goalExerciseTime;
+    private Integer goalCalorise;
+    private Integer rank;
+    private Integer smoke;
+    private Integer alcohol;
 
     	
     public String getName() {
@@ -61,99 +66,99 @@ public class UserForm {
         this.pass = pass;
     }
     
-    public String getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
     
-    public String getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
     
-    public String getHeight() {
+    public Double getHeight() {
         return height;
     }
 
-    public void setHeight(String height) {
+    public void setHeight(Double height) {
         this.height = height;
     }
     
-    public String getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(String weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
     
-    public String getBodyFat() {
+    public Double getBodyFat() {
         return bodyFat;
     }
 
-    public void setBodyFat(String bodyFat) {
+    public void setBodyFat(Double bodyFat) {
         this.bodyFat = bodyFat;
     }
     
-    public String getAchievementId() {
+    public Integer getAchievementId() {
         return achievementId;
     }
 
-    public void setAchievementId(String achievementId) {
+    public void setAchievementId(Integer achievementId) {
         this.achievementId = achievementId;
     }
     
-    public String getGoalExerciseTime() {
+    public Integer getGoalExerciseTime() {
         return goalExerciseTime;
     }
 
-    public void setGoalExerciseTime(String goalExerciseTime) {
+    public void setGoalExerciseTime(Integer goalExerciseTime) {
         this.goalExerciseTime = goalExerciseTime;
     }
     
-    public String getGoalCalorise() {
+    public Integer getGoalCalorise() {
         return goalCalorise;
     }
 
-    public void setGoalCalorise(String goalCalorise) {
+    public void setGoalCalorise(Integer goalCalorise) {
         this.goalCalorise = goalCalorise;
     }
     
-    public String getRank() {
+    public Integer getRank() {
         return rank;
     }
 
-    public void setRank(String rank) {
+    public void setRank(Integer rank) {
         this.rank = rank;
     }
     
-    public String getsmoke() {
+    public Integer getsmoke() {
         return smoke;
     }
 
-    public void setSmoke(String smoke) {
+    public void setSmoke(Integer smoke) {
         this.smoke = smoke;
     }
     
-    public String getAlcohol() {
+    public Integer getAlcohol() {
         return alcohol;
     }
 
-    public void setAlcohol(String alcohol) {
+    public void setAlcohol(Integer alcohol) {
         this.alcohol = alcohol;
     }
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
     

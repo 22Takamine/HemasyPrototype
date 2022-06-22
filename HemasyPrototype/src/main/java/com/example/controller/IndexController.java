@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.sql.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,19 +112,9 @@ public class IndexController {
         return "menu";
     }
     
-    //アカウント管理で登録ボタンを押すと、メニュー画面に遷移
-    @RequestMapping(value = "/accountRegist", method = RequestMethod.POST)
-    public String accountRegist(@Validated  @ModelAttribute("index") UserForm form, BindingResult bindingResult, Model model) {
-    	if (bindingResult.hasErrors()) {
-            return "login";
-        }
-    	
-        return "menu";
-    }
-    
     //ハンバーガーメニューからアカウント管理へ
     @RequestMapping(value = "/account", method = RequestMethod.GET)
-    public String account(@ModelAttribute("account") UserForm form, Model model) {
+    public String account(@ModelAttribute("index") UserForm form, Model model) {
 
     	//ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
     	//User user = session.getAttribute("user",user);
@@ -134,6 +126,35 @@ public class IndexController {
 		model.addAttribute("user", user);
     	
         return "account";
+    }
+    
+    //アカウント管理で登録ボタンを押すと、メニュー画面に遷移
+    @RequestMapping(value = "/accountRegist", method = RequestMethod.POST)
+    public String accountRegist(@Validated  @ModelAttribute("index") UserForm form, BindingResult bindingResult, Model model) {
+    	if (bindingResult.hasErrors()) {
+    		int user_id = 1;
+        	User user = userDao.findById(user_id);
+    		model.addAttribute("user", user);
+    		return "account";
+        }
+    	
+    	Integer id = form.getId();
+    	String name = form.getName();
+    	String mail = form.getMail();
+    	String pass = form.getPass();
+    	Integer sex = form.getSex();
+    	Date birthDate = form.getBirthDate();
+    	Double height = form.getHeight();
+    	Integer achievementId = form.getAchievementId();
+    	Integer time = form.getGoalExerciseTime();
+    	Integer calorise = form.getGoalCalorise();
+    	Integer rank = form.getRank();
+    	Integer smoke = form.getsmoke();
+    	Integer alcohol = form.getAlcohol();
+    	
+    	userDao.update(id, name, mail, pass, sex, birthDate, height, achievementId, time, calorise, rank, smoke, alcohol);
+    	 
+        return "menu";
     }
     
     //ハンバーガーメニューからランキングへ
