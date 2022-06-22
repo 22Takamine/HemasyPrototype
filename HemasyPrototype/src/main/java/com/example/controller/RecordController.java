@@ -39,6 +39,16 @@ public class RecordController {
     	return listAndRecordDao.getExerciseRecords(id);
     }
     
+    @RequestMapping("/getAlcoholList")
+    public List<CommonRecord> getAlcoholList(@RequestParam("id") int id) {
+    	return listAndRecordDao.getAlcoholRecords(id);
+    }
+
+    @RequestMapping("/getSmokeList")
+    public List<CommonRecord> getSmokeList(@RequestParam("id") int id) {
+    	return listAndRecordDao.getSmokeRecords(id);
+    }
+    
 }
 
 

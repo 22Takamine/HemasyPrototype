@@ -29,7 +29,7 @@ public class ListAndRecordDao {
 
 	public List<CommonRecord> getFoodRecords(int id) {
 		MapSqlParameterSource param = new MapSqlParameterSource();
-		
+		//ToDo user_id を :user_id にして id を入れる。
 		String sql ="""
 				select  sum(value2*value3) value2
 				,create_date AS create_date
@@ -44,6 +44,7 @@ public class ListAndRecordDao {
 	
 	
 	public List<CommonRecord> getExerciseRecords(int user_id) {
+		//ToDouser_id をidからとる
 		String sql = """
 				select
 				ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2) value2
@@ -66,6 +67,38 @@ public class ListAndRecordDao {
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("user_id", user_id);
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
+
+	public List<CommonRecord> getAlcoholRecords(int id) {
+		//ToDo user_id をidからとる
+		String sql = """
+				select
+				ROUND(value2*value3*(value4/100), 2) value2
+				,create_date
+				from lists_and_records
+				where category = 2
+				and type = 4
+				and user_id = 2
+				ORDER BY create_date;
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
+
+	public List<CommonRecord> getSmokeRecords(int id) {
+		//ToDo user_id をidからとる
+				String sql = """
+						select
+						value3
+						,create_date
+						from lists_and_records
+						where category = 2
+						and type = 3
+						and user_id = 2
+						ORDER BY create_date;
+						""";
+				MapSqlParameterSource param = new MapSqlParameterSource();
+				return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
 	
    

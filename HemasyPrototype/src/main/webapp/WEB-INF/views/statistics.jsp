@@ -27,156 +27,183 @@
                             <button data-index="bmi" onclick="entryClick(5)">体重</button>
                         </div>
                         <br><input type="button" value="左" onclick="getName()"><input type="button" value="右"> ${name}
-                        <div style="width: 400px">
+                        <div style="width: 1000px">
                             <canvas id="foodGraph"></canvas>
                         </div>
-                        <div style="width: 400px">
+                        <div style="width: 1000px">
                             <canvas id="exerciseGraph"></canvas>
                         </div>
-                        <div style="width: 400px">
+                        <div style="width: 1000px">
                             <canvas id="alcoholGraph"></canvas>
                         </div>
-                        <div style="width: 400px">
+                        <div style="width: 1000px">
                             <canvas id="smokeGraph"></canvas>
                         </div>
-                        <div style="width: 400px">
+                        <div style="width: 1000px">
                             <canvas id="bmiGraph"></canvas>
                         </div>
-                        <script>
-                            //食事記録グラフの作成　ユーザーの目標摂取カロリーをセッションから取得するようにする。
-                            let foodList = [];
-                            let goalCalorie = [];
+<script>
+//食事記録グラフの作成　ユーザーの目標摂取カロリーをセッションから取得するようにする。
+let foodList = [];
+let goalCalorie = [];
+//データの取得
+function getFoodList() {
+	fetch('/getFoodList?id=' + 1)
+	.then(res => res.json().then(data => {
+		foodList = data
+		console.log(data)
+		console.log(foodList)
+		foodList.forEach(function(createDate) {
+			goalCalorie.push(1000); //ToDo session から ${user.goal_calorie}　の値をとる。
+		});
+	//食事記録グラフに使うデータ
+	var foodGraphData = {
+		//グラフの下　日付
+		labels: foodList.map(item => item.createDate),
+		datasets: [{
+			label: '摂取カロリーの推移',
+			data: foodList.map(item => item.value2),
+			borderColor: '#484',
+		}, {
+			label: 'ユーザーの目標摂取カロリー',
+			data: goalCalorie,
+			borderColor: '#ff0000',
+		}],
+	}
+	//食事記録グラフの描画
+	window.addEventListener('load', makeChart);
+	var ctx = document.getElementById("foodGraph");
+	var myChart = new Chart(ctx, {
+		type: 'line',
+		data: foodGraphData,
+		options: complexChartOption
+	})
+}))
+	.catch(error => console.log(error))
+};
+</script>
 
-                            //データの取得
-                            function getFoodList() {
-                                fetch('/getFoodList?id=' + 1)
-                                    .then(res => res.json().then(data => {
-                                        foodList = data
-                                        console.log(data)
-                                        console.log(foodList)
-                                        foodList.forEach(function(createDate) {
-                                            goalCalorie.push(1000); //ToDo session から ${user.goal_calorie}　の値をとる。
-                                        });
-                                        //食事記録グラフに使うデータ
-                                        var foodGraphData = {
-                                                //グラフの下　日付
-                                                labels: foodList.map(item => item.createDate),
-                                                datasets: [{
-                                                    label: '摂取カロリーの推移',
-                                                    data: foodList.map(item => item.value2),
-                                                    borderColor: '#484',
-                                                }, {
-                                                    label: 'ユーザーの目標摂取カロリー',
-                                                    data: goalCalorie,
-                                                    borderColor: '#ff0000',
-                                                }],
-                                            }
-                                            //食事記録グラフの描画
-                                        window.addEventListener('load', makeChart);
-                                        var ctx = document.getElementById("foodGraph");
-                                        var myChart = new Chart(ctx, {
-                                            type: 'line',
-                                            data: foodGraphData,
-                                            options: complexChartOption
-                                        })
-                                    }))
-                                    .catch(error => console.log(error))
-                            };
-                        </script>
-                        <script>
-                            //運動記録グラフの作成　ユーザーの目標運動時間をセッションから取得するようにする。
-                            let exerciseList = [];
-                            let goalExerciseTime = [];
+<script>
+//運動記録グラフの作成　ユーザーの目標運動時間をセッションから取得するようにする。
+let exerciseList = [];
+let goalExerciseTime = [];
+//データの取得
+function getExerciseList() {
+	fetch('/getExerciseList?id=' + 1)
+	.then(res => res.json().then(data => {
+		exerciseList = data
+		console.log(data)
+		console.log(exerciseList)
+		exerciseList.forEach(function(createDate) {
+			goalExerciseTime.push(100); //ToDo session から ${user.goal_exercise_time}　の値をとる。
+		});
+		//運動記録グラフに使うデータ
+		var exerciseGraphData = {
+			//グラフの下　日付
+			labels: exerciseList.map(item => item.createDate),
+			datasets: [{
+				label: '運動時間の推移',
+				data: exerciseList.map(item => item.value4),
+				borderColor: '#F36C21',
+				yAxisID : "exerciseTimeShaft",// 追加
+			},{
+				label: 'ユーザーの目標運動時間',
+				data: goalExerciseTime,
+				borderColor: '#ff0000',
+				yAxisID : "exerciseTimeShaft",// 追加
+			}, {
+				label: '消費カロリーの推移',
+				data: exerciseList.map(item => item.value3),
+				borderColor: '#48f',
+				yAxisID : "y-axis-2",// 追加
+			}],
+		}
+	window.addEventListener('load', makeChart);
+	var ctx = document.getElementById("exerciseGraph");
+	var myChart = new Chart(ctx, {
+		type: 'line',
+		data: exerciseGraphData,
+		options: exerciseChartOption
+	})
+}))
+	.catch(error => console.log(error))
+};
+</script>
 
-                            //データの取得
-                            function getExerciseList() {
-                                fetch('/getExerciseList?id=' + 1)
-                                    .then(res => res.json().then(data => {
-                                        exerciseList = data
-                                        console.log(data)
-                                        console.log(exerciseList)
-                                        exerciseList.forEach(function(createDate) {
-                                            goalExerciseTime.push(1000); //ToDo session から ${user.goal_exercise_time}　の値をとる。
-                                        });
-                                        //運動記録グラフに使うデータ
-                                        var exerciseGraphData = {
-                                            //グラフの下　日付
-                                            labels: exerciseList.map(item => item.createDate),
-                                            datasets: [{
-                                                label: '運動時間の推移',
-                                                data: exerciseList.map(item => item.value4),
-                                                borderColor: '#F36C21',
-                                            }, {
-                                                label: '消費カロリーの推移',
-                                                data: exerciseList.map(item => item.value3),
-                                                borderColor: '#48f',
-                                            }, {
-                                                label: 'ユーザーの目標運動時間',
-                                                data: goalExerciseTime,
-                                                borderColor: '#ff0000',
-                                            }],
-                                        }
+<script>
+//アルコール記録グラフ
+let alcoholList = [];
+let deadLine = [];
 
-                                        window.addEventListener('load', makeChart);
-                                        var ctx = document.getElementById("exerciseGraph");
-                                        var myChart = new Chart(ctx, {
-                                            type: 'line',
-                                            data: exerciseGraphData,
-                                            options: complexChartOption
-                                        })
-                                    }))
-                                    .catch(error => console.log(error))
-                            };
-                        </script>
-                        <script>
-                            //アルコール用のグラフ
-                            window.addEventListener('load', makeChart);
-
-                            function makeChart() {
-                                var ctx = document.getElementById("alcoholGraph");
-                                var myChart = new Chart(ctx, {
-                                    type: 'line',
-                                    data: alcoholGraphData,
-                                    options: complexChartOption
-                                })
-                            };
-                            document.getElementById('canvas').addEventListener('click', e => {
-                                console.log(e)
-                                const elements = window.myCanvas.getElementAtEvent(e);
-                                if (elements[0]._model.label.length) {
-                                    window.location.href = './eat?day=' + [elements[0]._model.label];
-                                    console.log('elements', [elements[0]._model.label]);
-                                } else {
-                                    alert('aa');
-                                }
-
-                            });
-                        </script>
-                        <script>
-                            //タバコ用のグラフ
-                            window.addEventListener('load', makeChart);
-
-                            function makeChart() {
-                                var ctx = document.getElementById("smokeGraph");
-                                var myChart = new Chart(ctx, {
-                                    type: 'line',
-                                    data: smokeGraphData,
-                                    options: complexChartOption
-                                })
-                            };
-                            document.getElementById('canvas').addEventListener('click', e => {
-                                console.log(e)
-                                const elements = window.myCanvas.getElementAtEvent(e);
-                                if (elements[0]._model.label.length) {
-                                    window.location.href = './eat?day=' + [elements[0]._model.label];
-                                    console.log('elements', [elements[0]._model.label]);
-                                } else {
-                                    alert('aa');
-                                }
-
-                            });
-                        </script>
-                        <script>
+//データの取得
+function getAlcoholList() {
+	fetch('/getAlcoholList?id=' + 1)
+	.then(res => res.json().then(data => {
+		alcoholList = data
+		console.log(data)
+		console.log(exerciseList)
+		alcoholList.forEach(function(createDate) {
+			deadLine.push(20);
+		});
+		//アルコール量記録グラフに使うデータ
+		var alcoholGraphData = {
+			//グラフの下　日付
+			labels: alcoholList.map(item => item.createDate),
+			datasets: [{
+				label: '摂取アルコール量の推移',
+				data: alcoholList.map(item => item.value2),
+				borderColor: '#F36C21',
+			},{
+				label: 'デッドライン',
+				data: deadLine,
+				borderColor: '#ff0000',
+			}],
+		}
+	window.addEventListener('load', makeChart);
+	var ctx = document.getElementById("alcoholGraph");
+	var myChart = new Chart(ctx, {
+		type: 'line',
+		data: alcoholGraphData,
+		options: complexChartOption
+	})
+}))
+	.catch(error => console.log(error))
+};
+</script>
+<script>
+//タバコ記録グラフ
+let smokeList = [];
+//データの取得
+function getSmokeList() {
+	fetch('/getSmokeList?id=' + 1)
+	.then(res => res.json().then(data => {
+		smokeList = data
+		console.log(data)
+		console.log(smokeList)
+		//アルコール量記録グラフに使うデータ
+		var smokeGraphData = {
+			//グラフの下　日付
+			labels: smokeList.map(item => item.createDate),
+			datasets: [{
+				label: 'タバコを吸った本数',
+				data: smokeList.map(item => item.value3),
+				 backgroundColor: 'black',
+				yAxisID : "smokeShaft",// 追加
+				
+			}],
+		}
+	window.addEventListener('load', makeChart);
+	var ctx = document.getElementById("smokeGraph");
+	var myChart = new Chart(ctx, {
+		type: 'bar',
+		data: smokeGraphData,
+		options: smokeChartOption
+	})
+}))
+	.catch(error => console.log(error))
+};
+</script>
+<script>
                             //体重用のグラフ
                             window.addEventListener('load', makeChart);
 
@@ -199,44 +226,6 @@
                                 }
 
                             });
-                        </script>
-                        <script>
-                            //酒用のデータ
-                            var alcoholGraphData = {
-                                labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                                datasets: [{
-                                    label: '酒',
-                                    data: [20, 35, 40, 30, 45, 35, 40],
-                                    borderColor: '#f88',
-                                }, {
-                                    label: 'Green',
-                                    data: [20, 15, 30, 25, 30, 40, 35],
-                                    borderColor: '#484',
-                                }, {
-                                    label: 'Blue',
-                                    data: [30, 25, 10, 5, 25, 30, 20],
-                                    borderColor: '#48f',
-                                }],
-                            };
-                        </script>
-                        <script>
-                            //タバコ用のデータ
-                            var smokeGraphData = {
-                                labels: [foodList],
-                                datasets: [{
-                                    label: 'タバコ',
-                                    data: [20, 35, 40, 30, 45, 35, 40],
-                                    borderColor: '#f88',
-                                }, {
-                                    label: 'Green',
-                                    data: [20, 15, 30, 25, 30, 40, 35],
-                                    borderColor: '#484',
-                                }, {
-                                    label: 'Blue',
-                                    data: [30, 25, 10, 5, 25, 30, 20],
-                                    borderColor: '#48f',
-                                }],
-                            };
                         </script>
                         <script>
                             //体重用のデータ
@@ -275,12 +264,14 @@
                                     document.getElementById('smokeGraph').style.display = "none";
                                     document.getElementById('bmiGraph').style.display = "none";
                                 } else if (id == 3) {
+                                	getAlcoholList();
                                     document.getElementById('foodGraph').style.display = "none";
                                     document.getElementById('exerciseGraph').style.display = "none";
                                     document.getElementById('alcoholGraph').style.display = "";
                                     document.getElementById('smokeGraph').style.display = "none";
                                     document.getElementById('bmiGraph').style.display = "none";
                                 } else if (id == 4) {
+                                	getSmokeList();
                                     document.getElementById('foodGraph').style.display = "none";
                                     document.getElementById('exerciseGraph').style.display = "none";
                                     document.getElementById('alcoholGraph').style.display = "none";
@@ -298,18 +289,33 @@
                         </script>
 
                         <script>
+                            var exerciseChartOption = {
+                                responsive: true,
+                                scales: {
+                                    		'exerciseTimeShaft': {
+                                      				 type: 'linear',
+                                       				 position: 'right',
+                                        			 min: 0,      // 最小値
+                                        			 //ユーザーの目標消費運動時間を100に入れる。
+                                              		 max: 1.5*100,    // 最大値
+													 display: false,
+                                        
+                                    		 },
+                                    		 'y-axis-2': {
+                                       				 type: 'linear',
+                                      			 	 position: 'left'
+                                 				  }
+                                }
+                            };
+                        </script>
+                        <script>
                             var complexChartOption = {
                                 responsive: true,
                                 scales: {
                                     yAxes: [{
                                         id: "y-axis-1",
                                         type: "linear",
-                                        position: "left",
-                                        ticks: {
-                                            max: 2000,
-                                            min: 0,
-                                            // 						stepSize : 0.1
-                                        },
+                                        position: "left"
                                     }, {
                                         id: "y-axis-2",
                                         type: "linear",
@@ -326,6 +332,19 @@
                                 }
                             };
                         </script>
-                    </body>
+                        
+                         <script>
+                            var smokeChartOption = {
+                                responsive: true,
+                                scales: {
+                                    		'smokeShaft': {
+                                      				 type: 'linear',
+                                       				 position: 'left',
+                                        			 min: 0,      // 最小値
+                                              		                                        
+                                    		 },
+                                }
+                            };
+                        </script>
 
                     </html>
