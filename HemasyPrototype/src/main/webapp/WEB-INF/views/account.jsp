@@ -31,7 +31,8 @@
 </header>
 	<div class="main">
 	<form:form action="accountRegist" modelAttribute="index" method="post">
-	<form:input path="id" type="hidden" value="${user.getId()}" readonly="readonly" />
+	<form:input path="id" type="hidden" value="${user.getUserId()}" readonly="readonly" />
+	
 <!-- 	UserFormの体重のバリデーションを通すために、仮のデータを挿入しています。 -->
 	<form:input path="weight" type="hidden" value="10" readonly="readonly" />
 	<div>

@@ -23,7 +23,7 @@ public class UserDao {
 		String sql = SELECT_BY_PRODUCT_ID;
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("user_id", userId);
-		
+		System.out.println(userId);
 		var list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<User>(User.class) );
 		return list.isEmpty() ? null :list.get(0);
 		
@@ -47,7 +47,7 @@ public class UserDao {
         param.addValue("rank", rank);
         param.addValue("smoke", smoke);
         param.addValue("alcohol", alcohol);
-        
+        System.out.println(name);
         jdbcTemplate.update(sql, param);  
     	
     }

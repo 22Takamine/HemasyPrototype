@@ -151,6 +151,10 @@ public class IndexController {
     	Integer rank = form.getRank();
     	Integer smoke = form.getsmoke();
     	Integer alcohol = form.getAlcohol();
+    	System.out.print(id);
+    	System.out.print(name);
+    	System.out.print(mail);
+    	
     	
     	userDao.update(id, name, mail, pass, sex, birthDate, height, achievementId, time, calorise, rank, smoke, alcohol);
     	 
