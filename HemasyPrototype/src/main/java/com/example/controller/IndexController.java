@@ -26,7 +26,6 @@ public class IndexController {
     @Autowired
 	HttpSession session; 
     
-
     //最初にここにきて、login画面にいくよ
 
     @RequestMapping({ "/", "/index"})
