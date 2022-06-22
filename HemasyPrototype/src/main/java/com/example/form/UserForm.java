@@ -35,7 +35,7 @@ public class UserForm {
 	@NotNull
 	private Double weight;
 
-	private Integer id;
+	private Integer userId;
 	private Integer achievementId;
 	private Integer goalExerciseTime;
 	private Integer goalCalorise;
@@ -145,11 +145,11 @@ public class UserForm {
 	public void setBodyFatPercentage(Double bodyFatPercentage) {
 		this.bodyFatPercentage = bodyFatPercentage;
 	}
-	public Integer getId() {
-		return id;
+	public Integer getUserId() {
+		return userId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setUserId(Integer id) {
+		this.userId = id;
 	}
     
 }

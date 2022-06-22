@@ -148,7 +148,7 @@ public class IndexController {
     		return "account";
         }
     	
-    	Integer id = form.getId();
+    	Integer id = form.getUserId();
     	String name = form.getName();
     	String mail = form.getMail();
     	String pass = form.getPassword();
