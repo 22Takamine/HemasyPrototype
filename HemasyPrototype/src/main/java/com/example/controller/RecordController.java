@@ -49,6 +49,11 @@ public class RecordController {
     	return listAndRecordDao.getSmokeRecords(id);
     }
     
+    @RequestMapping("/getBmiList")
+    public List<CommonRecord> getBmiList(@RequestParam("id") int id) {
+    	return listAndRecordDao.getBmiRecords(id);
+    }
+    
 }
 
 

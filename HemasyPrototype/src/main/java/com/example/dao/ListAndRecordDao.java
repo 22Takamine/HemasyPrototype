@@ -100,6 +100,26 @@ public class ListAndRecordDao {
 				MapSqlParameterSource param = new MapSqlParameterSource();
 				return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
+
+	public List<CommonRecord> getBmiRecords(int id) {
+		String sql = """
+			select
+			ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2) value3
+			, T2.value2 value2
+			, T2.create_date 
+			, T1.user_name
+			FROM
+			users T1
+			JOIN lists_and_records T2
+			ON T1.user_id = T2.user_id
+			AND T2.category = 2
+			AND T2.type = 5
+			where T1.user_id = 1
+			ORDER BY T2.create_date;
+			""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
 	
    
 }

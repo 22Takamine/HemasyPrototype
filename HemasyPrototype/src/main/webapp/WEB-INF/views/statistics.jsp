@@ -71,9 +71,13 @@ function getFoodList() {
 		}],
 	}
 	//食事記録グラフの描画
-	window.addEventListener('load', makeChart);
 	var ctx = document.getElementById("foodGraph");
-	var myChart = new Chart(ctx, {
+	
+	if (typeof foodListChart !== 'undefined') {
+	    foodListChart.destroy();
+	}
+	
+	foodListChart = new Chart(ctx, {
 		type: 'line',
 		data: foodGraphData,
 		options: complexChartOption
@@ -89,6 +93,7 @@ let exerciseList = [];
 let goalExerciseTime = [];
 //データの取得
 function getExerciseList() {
+
 	fetch('/getExerciseList?id=' + 1)
 	.then(res => res.json().then(data => {
 		exerciseList = data
@@ -97,6 +102,7 @@ function getExerciseList() {
 		exerciseList.forEach(function(createDate) {
 			goalExerciseTime.push(100); //ToDo session から ${user.goal_exercise_time}　の値をとる。
 		});
+
 		//運動記録グラフに使うデータ
 		var exerciseGraphData = {
 			//グラフの下　日付
@@ -118,14 +124,18 @@ function getExerciseList() {
 				yAxisID : "y-axis-2",// 追加
 			}],
 		}
-	window.addEventListener('load', makeChart);
-	var ctx = document.getElementById("exerciseGraph");
-	var myChart = new Chart(ctx, {
-		type: 'line',
-		data: exerciseGraphData,
-		options: exerciseChartOption
-	})
-}))
+		var ctx = document.getElementById("exerciseGraph");
+		
+		
+		if (typeof exerciseListChart !== 'undefined') {
+		    exerciseListChart.destroy();
+		}
+		exerciseListChart = new Chart(ctx, {
+			type: 'line',
+			data: exerciseGraphData,
+			options: exerciseChartOption
+		})
+	}))
 	.catch(error => console.log(error))
 };
 </script>
@@ -159,9 +169,13 @@ function getAlcoholList() {
 				borderColor: '#ff0000',
 			}],
 		}
-	window.addEventListener('load', makeChart);
 	var ctx = document.getElementById("alcoholGraph");
-	var myChart = new Chart(ctx, {
+		
+	if (typeof alcoholListChart !== 'undefined') {
+	    alcoholListChart.destroy();
+	}
+		
+	alcoholListChart = new Chart(ctx, {
 		type: 'line',
 		data: alcoholGraphData,
 		options: complexChartOption
@@ -180,7 +194,7 @@ function getSmokeList() {
 		smokeList = data
 		console.log(data)
 		console.log(smokeList)
-		//アルコール量記録グラフに使うデータ
+		//タバコ記録グラフに使うデータ
 		var smokeGraphData = {
 			//グラフの下　日付
 			labels: smokeList.map(item => item.createDate),
@@ -192,9 +206,13 @@ function getSmokeList() {
 				
 			}],
 		}
-	window.addEventListener('load', makeChart);
 	var ctx = document.getElementById("smokeGraph");
-	var myChart = new Chart(ctx, {
+		
+	if (typeof smokeListChart !== 'undefined') {
+	    smokeListChart.destroy();
+	}
+		
+	smokeListChart = new Chart(ctx, {
 		type: 'bar',
 		data: smokeGraphData,
 		options: smokeChartOption
@@ -204,48 +222,44 @@ function getSmokeList() {
 };
 </script>
 <script>
-                            //体重用のグラフ
-                            window.addEventListener('load', makeChart);
-
-                            function makeChart() {
-                                var ctx = document.getElementById("bmiGraph");
-                                var myChart = new Chart(ctx, {
-                                    type: 'line',
-                                    data: bmiGraphData,
-                                    options: complexChartOption
-                                })
-                            };
-                            document.getElementById('canvas').addEventListener('click', e => {
-                                console.log(e)
-                                const elements = window.myCanvas.getElementAtEvent(e);
-                                if (elements[0]._model.label.length) {
-                                    window.location.href = './eat?day=' + [elements[0]._model.label];
-                                    console.log('elements', [elements[0]._model.label]);
-                                } else {
-                                    alert('aa');
-                                }
-
-                            });
-                        </script>
-                        <script>
-                            //体重用のデータ
-                            var bmiGraphData = {
-                                labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                                datasets: [{
-                                    label: '体重',
-                                    data: [20, 35, 40, 30, 45, 35, 40],
-                                    borderColor: '#f88',
-                                }, {
-                                    label: 'Green',
-                                    data: [20, 15, 30, 25, 30, 40, 35],
-                                    borderColor: '#484',
-                                }, {
-                                    label: 'Blue',
-                                    data: [30, 25, 10, 5, 25, 30, 20],
-                                    borderColor: '#48f',
-                                }],
-                            };
-                        </script>
+//体重記録グラフ
+let bmiList = [];
+//データの取得
+function getBmiList() {
+	fetch('/getBmiList?id=' + 1)
+	.then(res => res.json().then(data => {
+		bmiList = data
+		console.log(data)
+		console.log(bmiList)
+		//体重記録グラフに使うデータ
+		var bmiGraphData = {
+			//グラフの下　日付
+			labels: bmiList.map(item => item.createDate),
+			datasets: [{
+				label: 'BMIの推移',
+				data: bmiList.map(item => item.value3),
+				borderColor: 'red',				
+			},{
+				label: '体重の推移',
+				data: bmiList.map(item => item.value2),
+				borderColor: 'blue',				
+			}],
+		}
+	var ctx = document.getElementById("bmiGraph");
+		
+	if (typeof bmiListChart !== 'undefined') {
+	    bmiListChart.destroy();
+	}
+	
+	bmiListChart = new Chart(ctx, {
+		type: 'line',
+		data: bmiGraphData,
+		options: complexChartOption
+	})
+}))
+	.catch(error => console.log(error))
+};
+</script>
                         <script type="text/javascript">
                             function entryClick(id) {
                                 if (id == 1) {
@@ -278,6 +292,7 @@ function getSmokeList() {
                                     document.getElementById('smokeGraph').style.display = "";
                                     document.getElementById('bmiGraph').style.display = "none";
                                 } else if (id == 5) {
+                                	getBmiList();
                                     document.getElementById('foodGraph').style.display = "none";
                                     document.getElementById('exerciseGraph').style.display = "none";
                                     document.getElementById('alcoholGraph').style.display = "none";
