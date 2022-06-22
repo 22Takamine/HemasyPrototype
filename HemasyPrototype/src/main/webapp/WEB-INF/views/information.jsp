@@ -19,7 +19,7 @@
 <body>
 <header>
 	<div class="header-logo"><a href="./back">Hemasy</a></div>
-	<form:form action="hamburger" modelAttribute="index" method="post">
+	<form:form action="hamburger" modelAttribute="kawamitsu" method="post">
 	    <button type="button" class="menu-btn">
 	      <i class="fa fa-bars" aria-hidden="true"></i>
 	    </button>
@@ -34,13 +34,45 @@
 </header>
   <div class="main">
   <h2>お問い合わせ</h2>
-  <form:form action="information" modelAttribute="index" method="post">
+  
+  <div class="insert">
+    <div class="discription">
+      <p>お問い合わせ内容を入力してください</p>
+    </div>
+  
+    <div class="form_body">
+    
+      <c:if test="${not empty msg}"><p class="error">${msg}</p></c:if>
+      
+      <form:form action="insert" method="post" modelAttribute="information">
+      	<form:input path="userId" type="hidden" value="${userId}" />
+        <fieldset class="label-130">
+          <div>
+            <label class="required">件名</label>
+            <form:input path="title" type="text" class="base-text" />
+          </div>
+          <div>
+            <label class="required">お問い合わせ内容</label>
+            <form:textarea path="contents" name="お問い合わせ内容" cols="50" rows="5"></form:textarea>
+          </div>
+        </fieldset>
+        <div id="modal">
+          <div class="btns">
+           <form:button type="submit" class="basic_btn">登録</form:button>
+           <button type="button" onclick="location.href='/back'" class="cancel_btn">戻る</button>
+          </div>
+        </div>
+      </form:form>
+    </div>
+  </div>
+  
+  <%-- <form:form action="information" modelAttribute="information" method="post">
     <form:button><fmt:message key="form.lbl.regist"/></form:button>
   </form:form>
   
-  <form:form action="back" modelAttribute="index" method="get">
+  <form:form action="back" modelAttribute="information" method="get">
     <form:button><fmt:message key="form.lbl.back"/></form:button>
-  </form:form>
+  </form:form> --%>
   </div>
 <script src="js/commons.js"></script>
 </body>

@@ -31,7 +31,7 @@
 </header>
 	<div class="main">
 	<form:form action="recordRegist" modelAttribute="account" method="post">
-	<form:input path="id" type="hidden" value="${user.getId()}" readonly="readonly" />
+	<form:input path="id" type="hidden" value="${user.getId()}" />
 	<div>
 		<fmt:message key="form.lbl.name"/>
 		<input type="text" name="name" value="${user.getUserName()}">      
