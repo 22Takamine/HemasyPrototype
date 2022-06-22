@@ -18,54 +18,46 @@
   <h1>登録情報を入力してください</h1>
   
   <form:form action="index" modelAttribute="index" method="post">
+    
     <div>
 		<fmt:message key="form.lbl.name"/>
-		<input type="text" name="name" value="ユーザー">      
+		<input type="text" name="name" value="">      
     </div>
     
     <div>
 		<fmt:message key="form.lbl.mail"/>
-		<input type="text" name="mail" value="sample@gmail.com">      
+		<input type="text" name="mail" value="">      
     </div>
     
     <div>
 		<fmt:message key="form.lbl.password"/>
-		<input type="text" name="pass" value="pass">      
+		<input type="password" name="pass" value="">      
     </div>
     
     <div>
-    	<fmt:message key="form.lbl.sex"/>
-    	<c:if test="${men}">   
+    	<fmt:message key="form.lbl.sex"/> 
 			<input type="radio" name="sex" value="men" checked>男      
 			<input type="radio" name="sex" value="women">女
-		</c:if>   
-			<input type="radio" name="sex" value="men">男      
-			<input type="radio" name="sex" value="women" checked>女 
     </div>
     
     <div>
 		<fmt:message key="form.lbl.birthDate"/>
-		<input type="date" name="birthDate" value="1998-04-21">      
+		<input type="date" name="birthDate" value="">      
     </div>
     
     <div>
 		<fmt:message key="form.lbl.height"/>
-		<input type="text" name="height" value="168cm">      
+		<input type="text" name="height" value="">      
     </div>
     
     <div>
-		<fmt:message key="form.lbl.achievement"/>
-		<input type="text" name="achievementId" value="1">      
+		<fmt:message key="form.lbl.weight"/>
+		<input type="text" name="weight" value="">      
     </div>
     
     <div>
-		<fmt:message key="form.lbl.time"/>
-		<input type="text" name="goalExerciseTime" value="60分">      
-    </div>
-    
-    <div>
-		<fmt:message key="form.lbl.calorie"/>
-		<input type="text" name="goalCalorise" value="2200kcal">      
+		<fmt:message key="form.lbl.bodyFatPercentage"/>
+		<input type="text" name="bodyFatPercentage" value="">      
     </div>
     
     <div>
