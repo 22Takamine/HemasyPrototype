@@ -10,6 +10,7 @@ import javax.validation.constraints.Past;
 
 public class UserForm {
 
+
 	@NotBlank
 	private String name;
 
@@ -19,6 +20,7 @@ public class UserForm {
 
 	@NotBlank
 	private String password;
+
 
 	@NotNull
 	private Integer sex;
@@ -33,7 +35,8 @@ public class UserForm {
 	@NotNull
 	private Double weight;
 
-	private String achievementId;
+	private Integer userId;
+	private Integer achievementId;
 	private Integer goalExerciseTime;
 	private Integer goalCalorise;
 	private Integer rankFlag;
@@ -66,6 +69,7 @@ public class UserForm {
 	}
 	public void setSex(Integer sex) {
 		this.sex = sex;
+
 	}
 
 	public Date getBirthDate() {
@@ -87,10 +91,10 @@ public class UserForm {
 	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
-	public String getAchievementId() {
+	public Integer getAchievementId() {
 		return achievementId;
 	}
-	public void setAchievementId(String achievementId) {
+	public void setAchievementId(Integer achievementId) {
 		this.achievementId = achievementId;
 	}
 	public Integer getGoalExerciseTime() {
@@ -141,12 +145,11 @@ public class UserForm {
 	public void setBodyFatPercentage(Double bodyFatPercentage) {
 		this.bodyFatPercentage = bodyFatPercentage;
 	}
-//	public String getId() {
-//		return id;
-//	}
-//
-//	public void setId(String id) {
-//		this.id = id;
-//	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer id) {
+		this.userId = id;
+	}
     
 }

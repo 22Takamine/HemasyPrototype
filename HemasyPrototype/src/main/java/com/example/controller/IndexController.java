@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.sql.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,32 @@ public class IndexController {
 		return "login";
 	}
 	
+	//ログイン画面から、新規登録画面に遷移
+	@RequestMapping(value = "/result", params="register", method = RequestMethod.POST)
+	public String register(@ModelAttribute("index") UserForm form, Model model) {
+    	//ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
+    	//User user = session.getAttribute("user",user);
+    	//int user_id = user.getUserId()
+    	
+	
+        return "register";
+    }
+	
+	//新規登録画面で登録ボタンを押した際に、ログイン画面に遷移
+	@RequestMapping(value = "/loginBack", method = RequestMethod.POST)
+	public String loginBack(@Validated @ModelAttribute("index") UserForm form,BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			return "register";
+		}
+		
+		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirthDate(),
+				form.getHeight(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
+		
+		userDao.insert(user);
+
+		return "login";
+    }
+	
 	//ログイン成功時にメニュー画面に遷移
 	@RequestMapping(value = "/result", params="login", method = RequestMethod.POST)
 	public String login(@Validated @ModelAttribute("index") IndexForm form, BindingResult bindingResult, Model model) {
@@ -64,56 +92,6 @@ public class IndexController {
     		return "menu";
     	}
     }
-
-	//ログイン画面から、新規登録画面に遷移
-	@RequestMapping(value = "/result", params="register", method = RequestMethod.POST)
-	public String register(@ModelAttribute("index") UserForm form, Model model) {
-    	//ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
-    	//User user = session.getAttribute("user",user);
-    	//int user_id = user.getUserId()
-    	
-		
-		
-//    	//ここは仮でuser_idを取得する。
-//    	int user_id = 1;
-//    	User user = userDao.findById(user_id);
-//		model.addAttribute("user", user);
-	
-        return "register";
-    }
-	
-	@RequestMapping(value = "/loginBack", method = RequestMethod.POST)
-	public String loginBack(@Validated @ModelAttribute("index") UserForm form,BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors()) {
-			return "register";
-		}
-		
-		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirthDate(),
-				form.getHeight(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
-		
-		userDao.insert(user);
-
-		return "login";
-    }
-    
-    //ハンバーガーメニューからリスト編集へ
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(@ModelAttribute("index") UserForm form, Model model) {
-    	
-    	//ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
-    	//User user = session.getAttribute("user",user);
-    	//int user_id = user.getUserId()
-    	
-    	//ここは仮でuser_idを取得する。
-    	//int user_id = 1;
-    	
-		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirthDate(),form.getHeight(),
-				form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
-
-		userDao.insert(user);
-
-		return "login";
-	}
 	
 	//記録＆リスト画面に遷移
 	@RequestMapping(value = "/record", method = RequestMethod.POST)
@@ -166,14 +144,33 @@ public class IndexController {
 	}
 
 	//アカウント管理で登録ボタンを押すと、メニュー画面に遷移
-	@RequestMapping(value = "/accountRegist", method = RequestMethod.POST)
-	public String accountRegist(@Validated  @ModelAttribute("index") UserForm form, BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors()) {
-			return "login";
-		}
-
-		return "menu";
-	}
+    @RequestMapping(value = "/accountRegist", method = RequestMethod.POST)
+    public String accountRegist(@Validated  @ModelAttribute("index") UserForm form, BindingResult bindingResult, Model model) {
+    	if (bindingResult.hasErrors()) {
+    		int user_id = 1;
+        	User user = userDao.findById(user_id);
+    		model.addAttribute("user", user);
+    		return "account";
+        }
+    	
+    	Integer id = form.getUserId();
+    	String name = form.getName();
+    	String mail = form.getMail();
+    	String pass = form.getPassword();
+    	Integer sex = form.getSex();
+    	Date birthDate = form.getBirthDate();
+    	Double height = form.getHeight();
+    	Integer achievementId = form.getAchievementId();
+    	Integer time = form.getGoalExerciseTime();
+    	Integer calorise = form.getGoalCalorise();
+    	Integer rank = form.getRankFlag();
+    	Integer smoke = form.getSmokeFlag();
+    	Integer alcohol = form.getAlcoholFlag();
+    	
+    	userDao.update(id, name, mail, pass, sex, birthDate, height, achievementId, time, calorise, rank, smoke, alcohol);
+    	 
+        return "menu";
+    }
 
 	//ハンバーガーメニューからアカウント管理へ
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
