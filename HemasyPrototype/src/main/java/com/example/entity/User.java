@@ -1,43 +1,44 @@
 package com.example.entity;
 
+import java.sql.Date;
+
 public class User {
 
 	private String user_name;
 	private String mail;
 	private String password;
-	private String sex;
-	private String birth;
-	private String height;
-	private String createdAt;
-	private String rankFlag;
-	private String alcoholFlag;
-	private String smokeFlag;
-    private String role;
+	private Integer sex;
+	private Date birthDate;
+	private Double height;
+	private Date createdAt;
+	private Integer rankFlag;
+	private Integer alcoholFlag;
+	private Integer smokeFlag;
+    private Integer role;
 
 	public User() {
 
 	}
 
-	public User(String user_name, String mail, String password,String
-			sex,String birth,String height,String createdAt,String rankFlag,String alcoholFlag,String smokeFlag,String role) {
+	public User(String user_name, String mail, String password,Integer sex,
+			Date birthDate,Double height,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer role) {
 		this.user_name = user_name;
 		this.mail = mail;
 		this.password = password;
 		this.sex = sex;
-		this.birth = birth;
+		this.birthDate = birthDate;
 		this.height = height;
-		this.createdAt = createdAt;
 		this.rankFlag = rankFlag;
 		this.alcoholFlag = alcoholFlag;
 		this.smokeFlag = smokeFlag;
 		this.role = role;
 	}
 		
-	public String getRole() {
+	public Integer getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Integer role) {
 		this.role = role;
 	}
 
@@ -65,59 +66,60 @@ public class User {
 		this.password = password;
 	}
 
-	public String getSex() {
+	public Integer getSex() {
 		return sex;
 	}
 
-	public void setSex(String sex) {
+	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
 
-	public String getBirth() {
-		return birth;
-	}
-
-	public void setBirth(String birth) {
-		this.birth = birth;
-	}
-
-	public String getHeight() {
+	public Double getHeight() {
 		return height;
 	}
 
-	public void setHeight(String height) {
+	public void setHeight(Double height) {
 		this.height = height;
 	}
 
-	public String getCreatedAt() {
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(String createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public String getRankFlag() {
+	public Integer getRankFlag() {
 		return rankFlag;
 	}
 
-	public void setRankFlag(String rankFlag) {
+	public void setRankFlag(Integer rankFlag) {
 		this.rankFlag = rankFlag;
 	}
 
-	public String getAlcoholFlag() {
+	public Integer getAlcoholFlag() {
 		return alcoholFlag;
 	}
 
-	public void setAlcoholFlag(String alcoholFlag) {
+	public void setAlcoholFlag(Integer alcoholFlag) {
 		this.alcoholFlag = alcoholFlag;
 	}
 
-	public String getSmokeFlag() {
+	public Integer getSmokeFlag() {
 		return smokeFlag;
 	}
 
-	public void setSmokeFlag(String smokeFlag) {
+	public void setSmokeFlag(Integer smokeFlag) {
 		this.smokeFlag = smokeFlag;
 	}
 

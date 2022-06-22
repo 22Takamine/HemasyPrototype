@@ -17,8 +17,6 @@ import com.example.entity.User;
 import com.example.form.IndexForm;
 import com.example.form.UserForm;
 
-
-
 @Controller
 public class IndexController {
 
@@ -36,6 +34,7 @@ public class IndexController {
 	public String index(@ModelAttribute("index") IndexForm form, Model model) {
 		return "login";
 	}
+	
 	//ログイン成功時にメニュー画面に遷移
 	@RequestMapping(value = "/result", params="login", method = RequestMethod.POST)
 	public String login(@Validated @ModelAttribute("index") IndexForm form, BindingResult bindingResult, Model model) {
@@ -45,14 +44,21 @@ public class IndexController {
 
 		User user = userDao.findIdAndPass(form.getMail(), form.getPass());
 
-    	
-    	
-        return "statistics";
+    	if(user == null) {
+    		
+    		return "login";
+    	}
+    	else if(user.getRole() == 0) {
+    		
+    		session.setAttribute("user", user);
+    		return "account";
+    	}
+    	else {
+    		
+    		session.setAttribute("user", user);
+    		return "menu";
+    	}
     }
-    
-    
-    
-
 
 	//ログイン画面から、新規登録画面に遷移
 	@RequestMapping(value = "/result", params="register", method = RequestMethod.POST)
@@ -61,19 +67,28 @@ public class IndexController {
     	//User user = session.getAttribute("user",user);
     	//int user_id = user.getUserId()
     	
-    	//ここは仮でuser_idを取得する。
-    	int user_id = 1;
-    	User user = userDao.findById(user_id);
-		model.addAttribute("user", user);
-    	
-        return "account";
-    }
-    
+		
+		
+//    	//ここは仮でuser_idを取得する。
+//    	int user_id = 1;
+//    	User user = userDao.findById(user_id);
+//		model.addAttribute("user", user);
 	
-	@RequestMapping(value = "/result", params="loginBack", method = RequestMethod.POST)
-	public String loginBack(@ModelAttribute("index") UserForm form, Model model) {
-    	
-        return "rank";
+        return "register";
+    }
+	
+	@RequestMapping(value = "/loginBack", method = RequestMethod.POST)
+	public String loginBack(@Validated @ModelAttribute("index") UserForm form,BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			return "register";
+		}
+		
+		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirthDate(),
+				form.getHeight(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRole());
+		
+		userDao.insert(user);
+
+		return "login";
     }
     
     //ハンバーガーメニューからリスト編集へ
@@ -85,13 +100,10 @@ public class IndexController {
     	//int user_id = user.getUserId()
     	
     	//ここは仮でuser_idを取得する。
-    	int user_id = 1;
+    	//int user_id = 1;
     	
-
-		User user = new User(form.getName(),form.getMail(), form.getPass(),form.getSex(),form.getBirthDate(),form.getHeight(),
-				form.getCreatedAt(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRole());
-		
-		System.out.print(user);
+		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirthDate(),form.getHeight(),
+				form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRole());
 
 		userDao.insert(user);
 
