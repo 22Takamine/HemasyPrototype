@@ -2,8 +2,9 @@ package com.example.form;
 
 import java.sql.Date;
 
-public class CommonRecordForm {
+public class ListAndRecordForm {
 
+	private int listsAndRecordsId;
 	private int category;
 	private int type;
 	private String value1;
@@ -16,6 +17,13 @@ public class CommonRecordForm {
 	private Integer value8;
 	private Date createDate;
 	private int userId;
+
+	public int getListsAndRecordsId() {
+		return listsAndRecordsId;
+	}
+	public void setListsAndRecordsIdy(int listsAndRecordsId) {
+		this.listsAndRecordsId = listsAndRecordsId;
+	}
 	public int getCategory() {
 		return category;
 	}

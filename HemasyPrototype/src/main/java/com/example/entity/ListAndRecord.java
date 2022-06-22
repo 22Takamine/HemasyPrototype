@@ -2,8 +2,9 @@ package com.example.entity;
 
 import java.sql.Date;
 
-public class CommonRecord {
+public class ListAndRecord {
 
+	private int listsAndRecordsId;
 	private int category;
 	private int type;
 	private String value1;
@@ -17,7 +18,12 @@ public class CommonRecord {
 	private Date createDate;
 	private int userId;
 	
-	
+	public int getListsAndRecordsId() {
+		return listsAndRecordsId;
+	}
+	public void setListsAndRecordsIdy(int listsAndRecordsId) {
+		this.listsAndRecordsId = listsAndRecordsId;
+	}
 	public int getCategory() {
 		return category;
 	}
