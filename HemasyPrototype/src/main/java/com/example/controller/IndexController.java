@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.dao.UserDao;
+import com.example.entity.User;
 import com.example.form.IndexForm;
 import com.example.form.UserForm;
 
@@ -27,8 +29,12 @@ public class IndexController {
     @Autowired
 	HttpSession session; 
     
+    @Autowired
+	UserDao userDao;
+
 
     //最初にここにきて、login画面にいくよ
+
 
     @RequestMapping({ "/", "/index"})
     public String index(@ModelAttribute("index") IndexForm form, Model model) {
@@ -68,6 +74,7 @@ public class IndexController {
     public String statistics(@ModelAttribute("index") UserForm form, Model model) {
 
     	
+    	
         return "statistics";
     }
     
@@ -91,6 +98,7 @@ public class IndexController {
     @RequestMapping(value = "/information", method = RequestMethod.POST)
     public String registInformation(@ModelAttribute("index") UserForm form, Model model) {
 
+    	//メインメニュー画面に戻るときの処理をどうやるのかを周りの人に聞く。
         return "menu";
     }
     
@@ -114,8 +122,16 @@ public class IndexController {
     
     //ハンバーガーメニューからアカウント管理へ
     @RequestMapping(value = "/account", method = RequestMethod.GET)
-    public String account(@ModelAttribute("index") UserForm form, Model model) {
+    public String account(@ModelAttribute("account") UserForm form, Model model) {
 
+    	//ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
+    	//User user = session.getAttribute("user",user);
+    	//int user_id = user.getUserId()
+    	
+    	//ここは仮でuser_idを取得する。
+    	int user_id = 1;
+    	User user = userDao.findById(user_id);
+		model.addAttribute("user", user);
     	
         return "account";
     }
@@ -131,6 +147,14 @@ public class IndexController {
     //ハンバーガーメニューからリスト編集へ
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(@ModelAttribute("index") UserForm form, Model model) {
+    	
+    	//ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
+    	//User user = session.getAttribute("user",user);
+    	//int user_id = user.getUserId()
+    	
+    	//ここは仮でuser_idを取得する。
+    	int user_id = 1;
+    	
 
     	
         return "list";
