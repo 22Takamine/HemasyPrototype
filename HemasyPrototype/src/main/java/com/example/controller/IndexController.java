@@ -33,7 +33,7 @@ public class IndexController {
     
 
 
-    //最初にここにきて、login画面にいくよ
+    //最初にここにきて、login画面にいく
 
     @RequestMapping({ "/", "/index"})
     public String index(@ModelAttribute("index") IndexForm form, Model model) {
