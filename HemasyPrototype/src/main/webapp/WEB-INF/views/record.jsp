@@ -43,7 +43,7 @@
 		</div>
 	</form:form>
 </header>
-	<div><b>記録画面</b></div>
+	<div id="header"><b>記録画面</b></div>
 	<a href="#food">食事</a>
 	<a href="#sport">運動</a>
 	<a href="#alcohol">酒</a>
@@ -52,60 +52,106 @@
 	<form action="record">
 		<input type="date" name="record_day">
 	</form>
-	<form>
+	<form:form action="recordCommit" modelAttribute="record">
 		<div id="food">
 			<h2>食事記録</h2>
 			<a href="statistics">統計</a>
 			<p>目安: ${2}kcal 摂取: ${2}kcal</p>
 			<div id="food_bre">
 				<p>朝食<button type="button" id="add_bre" onclick="addBreForm()">⊕</button></p>
+				<c:forEach var="breakfastRecord" items="${breakfastRecordList}">
+					<p>
+						<form:input path="value1" value="${breakfastRecord.value1}"/>
+						<form:input type="number" path="value2" value="${breakfastRecord.value2}" id="onceCal_${breakfastRecord.listsAndRecordsId}" onchange="calcCalorie(${breakfastRecord.listsAndRecordsId})"/>kcal ×
+						<form:input type="number" path="value3" step="0.1" value="${breakfastRecord.value3}" id="amount_${breakfastRecord.listsAndRecordsId}" onchange="calcCalorie(${breakfastRecord.listsAndRecordsId})"/>人前＝
+						<span id="calorie_${breakfastRecord.listsAndRecordsId}">${breakfastRecord.value2 * breakfastRecord.value3}</span>kcal
+						<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>
+					</p>
+				</c:forEach>
 			</div>
 			<div id="food_lun">
 				<p>昼食<button type="button" id="add_lun" onclick="addLunForm()">⊕</button></p>
+				<c:forEach var="lunchRecord" items="${lunchRecordList}">
+					<p>
+						<form:input path="value1" value="${lunchRecord.value1}"/>
+						<form:input type="number" path="value2" value="${lunchRecord.value2}" id="onceCal_${lunchRecord.listsAndRecordsId}" onchange="calcCalorie(${lunchRecord.listsAndRecordsId})"/>kcal ×
+						<form:input type="number" path="value3" step="0.1" value="${lunchRecord.value3}" id="amount_${lunchRecord.listsAndRecordsId}" onchange="calcCalorie(${lunchRecord.listsAndRecordsId})"/>人前＝
+						<span id="calorie_${lunchRecord.listsAndRecordsId}">${lunchRecord.value2 * lunchRecord.value3}</span>kcal
+						<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>
+					</p>
+				</c:forEach>
 			</div>
 			<div id="food_din">
 				<p>夕食<button type="button" id="add_din" onclick="addDinForm()">⊕</button></p>
+				<c:forEach var="dinnerRecord" items="${dinnerRecordList}">
+					<p>
+						<form:input path="value1" value="${dinnerRecord.value1}"/>
+						<form:input type="number" path="value2" value="${dinnerRecord.value2}" id="onceCal_${dinnerRecord.listsAndRecordsId}" onchange="calcCalorie(${dinnerRecord.listsAndRecordsId})"/>kcal ×
+						<form:input type="number" path="value3" step="0.1" value="${dinnerRecord.value3}" id="amount_${dinnerRecord.listsAndRecordsId}" onchange="calcCalorie(${dinnerRecord.listsAndRecordsId})"/>人前＝
+						<span id="calorie_${dinnerRecord.listsAndRecordsId}">${dinnerRecord.value2 * dinnerRecord.value3}</span>kcal
+						<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>
+					</p>
+				</c:forEach>
 			</div>
 			<div id="food_sna">
 				<p>間食<button type="button" id="add_sna" onclick="addSnaForm()">⊕</button></p>
+				<c:forEach var="snackRecord" items="${snackRecordList}">
+					<p>
+						<form:input path="value1" value="${snackRecord.value1}"/>
+						<form:input type="number" path="value2" value="${snackRecord.value2}" id="onceCal_${snackRecord.listsAndRecordsId}" onchange="calcCalorie(${snackRecord.listsAndRecordsId})"/>kcal ×
+						<form:input type="number" path="value3" step="0.1" value="${snackRecord.value3}" id="amount_${snackRecord.listsAndRecordsId}" onchange="calcCalorie(${snackRecord.listsAndRecordsId})"/>人前＝
+						<span id="calorie_${snackRecord.listsAndRecordsId}">${snackRecord.value2 * snackRecord.value3}</span>kcal
+						<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>
+					</p>
+				</c:forEach>
 			</div>
 		</div>
 		<div id="sport">
 			<h2>運動記録<button type="button" id="add_spo" onclick="addSpoForm()">⊕</button></h2>
 			<a href="statistics">統計</a>
 			<p>目安: ${2}kcal 消費: ${2}kcal</p>
+			<c:forEach var="sportRecord" items="${sportRecordList}">
+				<p>
+					<form:input path="value1" value="${sportRecord.value1}"/>を
+					<input type="hidden" value="${sportRecord.value2}" id="mets_${sportRecord.listsAndRecordsId}">
+					<form:input type="number" path="value3" value="${sportRecord.value3}" id="time_${sportRecord.listsAndRecordsId}" onchange="calcUsedCalorie(${sportRecord.listsAndRecordsId})"/>分運動しました。
+					<span id="calorie_${sportRecord.listsAndRecordsId}">${weightRecord.value2 * sportRecord.value2 * sportRecord.value3 / 60 * 1.05}</span>kcal消費
+				</p>
+			</c:forEach>
 		</div>
 		<div id="smoke">
 			<h2>たばこ</h2>
 			<a href="statistics">統計</a>
 			<p>
-				今日は<input type="number" value="${2}">本吸いました
+				<form:input type="number" path="value3" value="${smokeRecord.value3}"/>本吸いました
 			</p>
 		</div>
 		<div id="alcohol">
 			<h2>アルコール<button type="button" id="add_alc" onclick="addAlcForm()">⊕</button></h2>
 			<a href="statistics">統計</a>
+			<c:forEach var="alcoholRecord" items="${alcoholRecordList}">
+				<p>
+					<form:input path="value1" value="${alcoholRecord.value1}"/>
+					<form:input type="number" path="value4" value="${alcoholRecord.value4}" id="oncePer_${alcoholRecord.listsAndRecordsId}" step="0.1"/>%
+					<form:input type="number" path="value2" value="${alcoholRecord.value2}" id="onceAmount_${alcoholRecord.listsAndRecordsId}"/>ml/杯を
+					<form:input type="number" path="value3" step="0.1" value="${alcoholRecord.value3}" id="amount_${alcoholRecord.listsAndRecordsId}"/>杯飲みました。
+					<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>
+				</p>
+			</c:forEach>
 		</div>
 		<div id="weight">
 			<h2>体重</h2>
 			<a href="statistics">統計</a>
 			<p>
-				現在の体重は<input type="number" value="${2}" step="0.1">kg、体脂肪率は<input type="number" value="${2}" step="0.1">%です。
+				体重は<form:input type="number" path="value2" value="${weightRecord.value2}" id="weightRecord" step="0.1"/>kg、体脂肪率は<form:input type="number" path="value3" value="${weightRecord.value3}" step="0.1"/>%です。
 			</p>
 		</div>
-	</form>
-
-	<form:form action="recordRegist" modelAttribute="index" method="post">
-		<form:button>
-			<fmt:message key="form.lbl.regist" />
-		</form:button>
+		<input type="submit" value="登録">
 	</form:form>
 
-	<form:form action="back" modelAttribute="index" method="post">
-		<form:button>
-			<fmt:message key="form.lbl.back" />
-		</form:button>
-	</form:form>
+	
+
+	<button type="button">戻る</button>
 	
 	<a href="#header">↑</a>
 	<script>
@@ -316,7 +362,17 @@
 	  var ipt_id = document.getElementById('newAlc_' + target_id);
 	  var tgt_id = document.getElementById(target_id);
 	  parent.removeChild(ipt_id);
-	  parent.removeChild(tgt_id);	
+	  parent.removeChild(tgt_id);
+	}
+	
+	/* 摂取カロリー計算 */
+	function calcCalorie(id){
+	    document.getElementById('calorie_' + id).innerHTML = document.getElementById('onceCal_' + id).value * document.getElementById('amount_' + id).value;
+	}
+	
+	/* 消費カロリー計算 */
+	function calcUsedCalorie(id) {
+		document.getElementById('calorie_' + id).innerHTML = document.getElementById('weightRecord').value * document.getElementById('mets_' + id).value * document.getElementById('time_' + id).value / 60 * 1.05;
 	}
 	</script>
 	<script src="js/commons.js"></script>

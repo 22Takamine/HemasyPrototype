@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.dao.ListAndRecordDao;
-import com.example.entity.CommonRecord;
-import com.example.form.CommonRecordForm;
+import com.example.entity.ListAndRecord;
 import com.example.form.IndexForm;
+import com.example.form.ListAndRecordForm;
 import com.example.form.UserForm;
 
 
@@ -65,19 +65,42 @@ public class IndexController {
     
     //記録＆リスト画面に遷移
     @RequestMapping(value = "/record", method = RequestMethod.POST)
-    public String record(@ModelAttribute("record") CommonRecordForm form, Model model) {
+    public String record(@ModelAttribute("record") ListAndRecordForm form, Model model) {
     	
-    	List<CommonRecord> recordList = listAndRecordDao.getRecords(2, Date.valueOf("2022-06-20"));
+    	List<ListAndRecord> breakfastRecordList = listAndRecordDao.getBreakfastRecords(2, Date.valueOf("2022-06-20"));
     	
-    	CommonRecord smokeRecode = listAndRecordDao.getSmokeRecord(2, Date.valueOf("2022-6-20"));
+    	List<ListAndRecord> lunchRecordList = listAndRecordDao.getLunchRecords(2, Date.valueOf("2022-06-20"));
     	
-    	CommonRecord weightRecord = listAndRecordDao.getWeightRecord(2, Date.valueOf("2022-6-20"));
+    	List<ListAndRecord> dinnerRecordList = listAndRecordDao.getDinnerRecords(2, Date.valueOf("2022-06-20"));
+    	
+    	List<ListAndRecord> snackRecordList = listAndRecordDao.getSnackRecords(2, Date.valueOf("2022-06-20"));
+    	
+    	List<ListAndRecord> sportRecordList = listAndRecordDao.getSportRecords(2, Date.valueOf("2022-06-20"));
+    	
+    	List<ListAndRecord> alcoholRecordList = listAndRecordDao.getAlcoholRecords(2, Date.valueOf("2022-06-20"));
+    	
+    	ListAndRecord smokeRecord = listAndRecordDao.getSmokeRecord(2, Date.valueOf("2022-6-20"));
+    	
+    	ListAndRecord latestWeightRecord = listAndRecordDao.getLatestWeightRecord(2);
     	
     	System.out.println(Date.valueOf("2022-06-20"));
     	
-    	System.out.println(recordList.size());
+    	System.out.println(breakfastRecordList.size());
     	
-    	model.addAttribute("recordList", recordList);
+    	System.out.println(smokeRecord.getValue3());
+    	
+    	System.out.println(dinnerRecordList.size());
+    	
+    	System.out.println(snackRecordList.size());
+    	
+    	model.addAttribute("breakfastRecordList", breakfastRecordList);
+    	model.addAttribute("lunchRecordList", lunchRecordList);
+    	model.addAttribute("dinnerRecordList", dinnerRecordList);
+    	model.addAttribute("snackRecordList", snackRecordList);
+    	model.addAttribute("sportRecordList", sportRecordList);
+    	model.addAttribute("alcoholRecordList", alcoholRecordList);
+    	model.addAttribute("smokeRecord", smokeRecord);
+    	model.addAttribute("weightRecord", latestWeightRecord);
     	
         return "record";
     }
