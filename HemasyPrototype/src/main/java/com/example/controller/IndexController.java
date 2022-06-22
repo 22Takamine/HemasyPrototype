@@ -30,10 +30,8 @@ public class IndexController {
     
     @Autowired
 	UserDao userDao;
-    
 
-
-    //最初にここにきて、login画面にいくよ
+    //最初にここにきて、login画面にいく
 
     @RequestMapping({ "/", "/index"})
     public String index(@ModelAttribute("index") IndexForm form, Model model) {
@@ -97,6 +95,7 @@ public class IndexController {
     @RequestMapping(value = "/information", method = RequestMethod.POST)
     public String registInformation(@ModelAttribute("index") UserForm form, Model model) {
 
+    	//メインメニュー画面に戻るときの処理をどうやるのかを周りの人に聞く。
         return "menu";
     }
     
@@ -145,6 +144,14 @@ public class IndexController {
     //ハンバーガーメニューからリスト編集へ
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(@ModelAttribute("index") UserForm form, Model model) {
+    	
+    	//ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
+    	//User user = session.getAttribute("user",user);
+    	//int user_id = user.getUserId()
+    	
+    	//ここは仮でuser_idを取得する。
+    	int user_id = 1;
+    	
 
     	
         return "list";
