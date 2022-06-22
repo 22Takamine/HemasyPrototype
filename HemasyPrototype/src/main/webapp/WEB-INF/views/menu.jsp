@@ -33,14 +33,38 @@
     </form:form>
 </header>
   <div class="main">
-  <form:form action="record" modelAttribute="index" method="post">
-    <form:button><fmt:message key="form.lbl.record"/></form:button>
-  </form:form>
+	  <form:form action="record" modelAttribute="index" method="post">
+	    <form:button><fmt:message key="form.lbl.record"/></form:button>
+	  </form:form>
   
-  <form:form action="statistics" modelAttribute="index" method="post">
-    <form:button><fmt:message key="form.lbl.statistics"/></form:button>
-  </form:form>
+	  <form:form action="statistics" modelAttribute="index" method="post">
+	    <form:button><fmt:message key="form.lbl.statistics"/></form:button>
+	  </form:form>
   </div>
+  
+  <div class="body_container box1">
+  	  	<div class="box2 lung">
+  	  		<div class="lung_right_box">
+  	  		
+  	  		</div>
+  	  		<div class="lung_left_box">
+  	  		
+  	  		</div>
+  	  	</div>
+  	  	
+  	  	<div class="box2">
+  	  		<div class="liver_box">
+  	  		
+  	  		</div>
+  	  	</div>
+  	  	
+  	  	<div class="box2">
+  	  		<div class="stomach_box">
+  	  		
+  	  		</div>
+  	  	
+  	  	</div>
+  	  </div>
 <script src="js/commons.js"></script>
 </body>
 </html>
