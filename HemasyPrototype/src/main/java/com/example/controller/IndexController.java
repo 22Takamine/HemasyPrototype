@@ -30,8 +30,6 @@ public class IndexController {
     
     @Autowired
 	UserDao userDao;
-    
-
 
     //最初にここにきて、login画面にいく
 
