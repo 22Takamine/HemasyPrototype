@@ -23,6 +23,7 @@ public class IndexController {
     @Autowired
     MessageSource messageSource;
     
+    
     @Autowired
 	HttpSession session; 
     
