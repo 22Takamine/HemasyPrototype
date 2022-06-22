@@ -14,16 +14,26 @@ import com.example.entity.ListAndRecord;
 @Repository
 public class ListAndRecordDao {
 	
+	private static final String GET_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND (type = 1 OR type = 2 OR type = 4) AND user_id = :userId AND create_date = :createDate";
+	private static final String GET_BREAKFAST_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 1 AND value4 = 1 AND user_id = :userId AND create_date = :createDate";
+	private static final String GET_LUNCH_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 1 AND value4 = 2 AND user_id = :userId AND create_date = :createDate";
+	private static final String GET_DINNER_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 1 AND value4 = 3 AND user_id = :userId AND create_date = :createDate";
+	private static final String GET_SNACK_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 1 AND value4 = 4 AND user_id = :userId AND create_date = :createDate";
+	private static final String GET_SPORT_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 2 AND user_id = :userId AND create_date = :createDate";
+	private static final String GET_ALCOHOL_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 4 AND user_id = :userId AND create_date = :createDate";
+	private static final String GET_SMOKE_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId AND create_date = :createDate";
+	private static final String GET_WEIGHT_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 5 AND user_id = :userId AND create_date = :createDate";
+	private static final String GET_LATEST_WEIGHT_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 5 AND user_id = :userId ORDER BY create_date DESC";
+	
 	@Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
-	
 	
 	//日付とユーザーIDでアルコール、食事、運動をすべて取得
 	public List<ListAndRecord> getRecords(int userId, Date date) {
     	MapSqlParameterSource param = new MapSqlParameterSource();
     	param.addValue("userId", userId);
     	param.addValue("createDate", date);
-		List<ListAndRecord> recordList = jdbcTemplate.query("SELECT * FROM lists_and_records WHERE category = 2 AND (type = 1 OR type = 2 OR type = 4) AND user_id = :userId AND create_date = :createDate", param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+		List<ListAndRecord> recordList = jdbcTemplate.query(GET_RECORD, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
     	return recordList;
     }
 	
@@ -31,7 +41,7 @@ public class ListAndRecordDao {
     	MapSqlParameterSource param = new MapSqlParameterSource();
     	param.addValue("userId", userId);
     	param.addValue("createDate", date);
-		List<ListAndRecord> recordList = jdbcTemplate.query("SELECT * FROM lists_and_records WHERE category = 2 AND type = 1 AND value4 = 1 AND user_id = :userId AND create_date = :createDate", param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+		List<ListAndRecord> recordList = jdbcTemplate.query(GET_BREAKFAST_RECORDS, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
     	return recordList;
     }
 	
@@ -39,7 +49,7 @@ public class ListAndRecordDao {
     	MapSqlParameterSource param = new MapSqlParameterSource();
     	param.addValue("userId", userId);
     	param.addValue("createDate", date);
-		List<ListAndRecord> recordList = jdbcTemplate.query("SELECT * FROM lists_and_records WHERE category = 2 AND type = 1 AND value4 = 2 AND user_id = :userId AND create_date = :createDate", param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+		List<ListAndRecord> recordList = jdbcTemplate.query(GET_LUNCH_RECORDS, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
     	return recordList;
     }
 	
@@ -47,7 +57,7 @@ public class ListAndRecordDao {
     	MapSqlParameterSource param = new MapSqlParameterSource();
     	param.addValue("userId", userId);
     	param.addValue("createDate", date);
-		List<ListAndRecord> recordList = jdbcTemplate.query("SELECT * FROM lists_and_records WHERE category = 2 AND type = 1 AND value4 = 3 AND user_id = :userId AND create_date = :createDate", param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+		List<ListAndRecord> recordList = jdbcTemplate.query(GET_DINNER_RECORDS, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
     	return recordList;
     }
 	
@@ -55,7 +65,7 @@ public class ListAndRecordDao {
     	MapSqlParameterSource param = new MapSqlParameterSource();
     	param.addValue("userId", userId);
     	param.addValue("createDate", date);
-		List<ListAndRecord> recordList = jdbcTemplate.query("SELECT * FROM lists_and_records WHERE category = 2 AND type = 1 AND value4 = 4 AND user_id = :userId AND create_date = :createDate", param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+		List<ListAndRecord> recordList = jdbcTemplate.query(GET_SNACK_RECORDS, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
     	return recordList;
     }
 	
@@ -63,7 +73,7 @@ public class ListAndRecordDao {
     	MapSqlParameterSource param = new MapSqlParameterSource();
     	param.addValue("userId", userId);
     	param.addValue("createDate", date);
-		List<ListAndRecord> recordList = jdbcTemplate.query("SELECT * FROM lists_and_records WHERE category = 2 AND type = 2 AND user_id = :userId AND create_date = :createDate", param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+		List<ListAndRecord> recordList = jdbcTemplate.query(GET_SPORT_RECORDS, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
     	return recordList;
     }
 	
@@ -71,7 +81,7 @@ public class ListAndRecordDao {
     	MapSqlParameterSource param = new MapSqlParameterSource();
     	param.addValue("userId", userId);
     	param.addValue("createDate", date);
-		List<ListAndRecord> recordList = jdbcTemplate.query("SELECT * FROM lists_and_records WHERE category = 2 AND type = 4 AND user_id = :userId AND create_date = :createDate", param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+		List<ListAndRecord> recordList = jdbcTemplate.query(GET_ALCOHOL_RECORDS, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
     	return recordList;
     }
 	
@@ -79,7 +89,7 @@ public class ListAndRecordDao {
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("userId", userId);
 		param.addValue("createDate", date);
-		List<ListAndRecord> list = jdbcTemplate.query("SELECT * FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId AND create_date = :createDate", param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+		List<ListAndRecord> list = jdbcTemplate.query(GET_SMOKE_RECORDS, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
         return list.isEmpty() ? null : list.get(0);
 	}
 	
@@ -87,7 +97,7 @@ public class ListAndRecordDao {
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("userId", userId);
 		param.addValue("createDate", date);
-		List<ListAndRecord> list = jdbcTemplate.query("SELECT * FROM lists_and_records WHERE category = 2 AND type = 5 AND user_id = :userId AND create_date = :createDate", param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+		List<ListAndRecord> list = jdbcTemplate.query(GET_WEIGHT_RECORD, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
         return list.isEmpty() ? null : list.get(0);
 	}
 	
@@ -95,7 +105,7 @@ public class ListAndRecordDao {
 	public ListAndRecord getLatestWeightRecord(int userId) {
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("userId", userId);
-		List<ListAndRecord> list = jdbcTemplate.query("SELECT * FROM lists_and_records WHERE category = 2 AND type = 5 AND user_id = :userId ORDER BY create_date DESC", param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+		List<ListAndRecord> list = jdbcTemplate.query(GET_LATEST_WEIGHT_RECORD, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
         return list.isEmpty() ? null : list.get(0);
 	}
 }
