@@ -5,9 +5,9 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class CommonRecord {
+public class ListAndRecord {
 
-	private int id;
+	private int lists_and_records_id;
 	private int category;
 	private int type;
 	private String value1;
