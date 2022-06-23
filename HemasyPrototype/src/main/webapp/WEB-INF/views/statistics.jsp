@@ -33,11 +33,11 @@
 	<br>
 	<input type="button" value="左" onclick="getName()">
 	<input type="button" value="右"> ${name}
-	<div>
-		<input type="date" name="date" value="2022-01-01">
-		<p id="output">Change the Date</p>
-		<input type="button" value="日付で検索" name="serch" onclick="serchByDate()">
-	</div>
+<!-- 	<div> -->
+<!-- 		<input type="date" name="date" value="2022-01-01"> -->
+<!-- 		<p id="output">Change the Date</p> -->
+<!-- 		<input type="button" value="日付で検索" name="serch" onclick="serchByDate()"> -->
+<!-- 	</div> -->
 	<div style="width: 1000px">
 		<canvas id="foodGraph"></canvas>
 	</div>
@@ -53,21 +53,6 @@
 	<div style="width: 1000px">
 		<canvas id="bmiGraph"></canvas>
 	</div>
-<script type="text/javascript">
-var dateToSerch;
-document.addEventListener('change', e => {
-if(e.target.matches('[name=date]')){
-		dateToSerch = e.target.value;
-	}
-});
-</script>
-<script>
-function serchByDate() {
-	console.log(dateToSerch)
-	fetch('get')
-};
-</script>	
-
 <script>
 //食事記録グラフの作成　ユーザーの目標摂取カロリーをセッションから取得するようにする。
 let foodList = [];
