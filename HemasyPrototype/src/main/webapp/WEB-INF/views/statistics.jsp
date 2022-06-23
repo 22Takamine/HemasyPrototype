@@ -80,7 +80,7 @@ function getFoodList() {
 		console.log(data)
 		console.log(foodList)
 		foodList.forEach(function(createDate) {
-			goalCalorie.push(1000); //ToDo session から ${user.goal_calorie}　の値をとる。
+// 			goalCalorie.push(1000); //ToDo session から ${user.goal_calorie}　の値をとる。
 		});
 	//食事記録グラフに使うデータ
 	var foodGraphData = {
