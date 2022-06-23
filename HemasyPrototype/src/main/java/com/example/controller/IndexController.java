@@ -36,7 +36,7 @@ public class IndexController {
 	@Autowired
 	HttpSession session; 
 
-	@Autowired
+    @Autowired
 	UserDao userDao;
 
 	@Autowired
