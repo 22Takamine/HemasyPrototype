@@ -185,17 +185,17 @@
 	  var newDiv = document.createElement('div');
 	  newDiv.id = 'newBre_' + i;
 	  newDiv.innerHTML =
-		'<p><input type="hidden" value="2" name="category">' +
-		'<input type="hidden" value="1" name="type">' +
-		'<input type="text" name="value1"><input type="number" min="0" name="value2" id="onceCal_' + i + 
-		'" onchange="calcCalorie(' + i +
-		')"/>kcal × <input type="number" min="0.1" step="0.1" name="value3" id="amount_' + i +
-		'" onchange="calcCalorie(' + i +
-		')"/>人前＝ <span id="calorie_' + i +
-		'"></span>kcal' + 
-		'<input type="hidden" value="1" name="value4">' + 
-		'<input type="hidden" name="createDate">' +
-		'<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a></p>';
+		'<p class="breakfastData">' +
+		'<input name="value1Bre' + i +
+		'"><input type="number" min="0" name="value2Bre' + i + 
+		'" id="onceCal_${breakfastRecord.listsAndRecordsId}" onchange="calcCalorie(${breakfastRecord.listsAndRecordsId})">kcal ×' +
+		'<input type="number" min="0.1" step="0.1" name="value3Bre' + i + 
+		'" id="amount_${breakfastRecord.listsAndRecordsId}" onchange="calcCalorie(${breakfastRecord.listsAndRecordsId})">人前＝' +
+		'<span id="calorie_${breakfastRecord.listsAndRecordsId}">${breakfastRecord.value2 * breakfastRecord.value3}</span>kcal
+		<input type="hidden" value="${breakfastRecord.createDate}" name="createDate">
+		<input type="checkbox" value="del" name="delBre${bStatus.index}">削除
+		<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>
+	</p>'
 	  var parent = document.getElementById('food_bre');
 	  parent.appendChild(newDiv);
 	  var button_data = document.createElement('button');
