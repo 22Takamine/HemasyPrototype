@@ -57,7 +57,7 @@ public class IndexController {
 		}
 		
 		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirthDate(),
-				form.getHeight(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
+				form.getHeight(),form.getGoalExerciseTime(),form.getGoalCalorise(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
 		
 		userDao.insert(user);
 
@@ -74,7 +74,7 @@ public class IndexController {
 		User user = userDao.findIdAndPass(form.getMail(), form.getPassword());
 
     	if(user == null) {
-    		
+    		model.addAttribute("msg","メールアドレスまたはパスワードが間違っています");
     		return "login";
     	}
     	else if(user.getRoleId() == 0) {
@@ -143,9 +143,9 @@ public class IndexController {
     @RequestMapping(value = "/accountRegist", method = RequestMethod.POST)
     public String accountRegist(@Validated  @ModelAttribute("index") UserForm form, BindingResult bindingResult, Model model) {
     	if (bindingResult.hasErrors()) {
-    		int user_id = 1;
-        	User user = userDao.findById(user_id);
-    		model.addAttribute("user", user);
+//    		int user_id = 1;
+//        	User user = userDao.findById(user_id);
+//    		model.addAttribute("user", user);
     		return "account";
         }
     	
@@ -171,7 +171,6 @@ public class IndexController {
 	//ハンバーガーメニューからアカウント管理へ
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
 	public String account(@ModelAttribute("index") UserForm form, Model model) {
-
 
 		return "account";
 	}

@@ -148,8 +148,8 @@ public class UserForm {
 	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(Integer id) {
-		this.userId = id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
     
 }

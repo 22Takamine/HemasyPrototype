@@ -69,6 +69,11 @@
 			<fmt:message key="form.lbl.bodyFatPercentage" />
 			<form:input path="bodyFatPercentage" />
 		</div>
+		
+		<div>
+			<fmt:message key="form.lbl.time" />
+			<form:input path="goalExerciseTime" />
+		</div>
 
 		<div>
 			<fmt:message key="form.lbl.rank" />
