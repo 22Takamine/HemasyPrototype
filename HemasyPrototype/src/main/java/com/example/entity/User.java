@@ -28,4 +28,33 @@ public class User implements Serializable{
 	
 	private double bmi;
 	
+	public User() {
+		
+	}
+
+	public User(int id, int userId, String userName, String mail, String password, int sex, Date birth, int height,
+			Date createdAt, int goalExerciseTime, int goalCalorie, int rankFlag, int alcoholFlag, int smokeFlag,
+			int roleId, int achievementId, int achievementFlag, double bmi) {
+		this.id = id;
+		this.userId = userId;
+		this.userName = userName;
+		this.mail = mail;
+		this.password = password;
+		this.sex = sex;
+		this.birth = birth;
+		this.height = height;
+		this.createdAt = createdAt;
+		this.goalExerciseTime = goalExerciseTime;
+		this.goalCalorie = goalCalorie;
+		this.rankFlag = rankFlag;
+		this.alcoholFlag = alcoholFlag;
+		this.smokeFlag = smokeFlag;
+		this.roleId = roleId;
+		this.achievementId = achievementId;
+		this.achievementFlag = achievementFlag;
+		this.bmi = bmi;
+	}
+	
+	
+	
 }
