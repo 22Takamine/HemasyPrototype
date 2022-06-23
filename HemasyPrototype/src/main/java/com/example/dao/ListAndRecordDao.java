@@ -1,6 +1,7 @@
 package com.example.dao;
 
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.entity.CommonRecord;
+import com.example.entity.User;
 
 @Repository
 public class ListAndRecordDao {
@@ -137,5 +139,37 @@ public class ListAndRecordDao {
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
 	
-   
+	public void setZero(User user, int type) {
+		String sql = """
+			insert into lists_and_records (create_date, value2, value3, value4, value5, value6, value7, category, type, user_id)
+			select * from (
+			with recursive Dummy(i) as 
+			(select cast(now() as date) i
+			union all
+			select cast(i + cast('-1 days ' as interval) as date) from Dummy where i > cast(:created_date as date)) 
+			select i as days, 0 value2, 0 value3, 0 value4, 0 value5, 0 value6, 0 value7, 2 category, :type type, :user_id user_id from Dummy
+			
+			except
+			
+			select
+			create_date days, 0 value2, 0 value3, 0 value4, 0 value5, 0 value6, 0 value7, 2 category, :type type, :user_id user_id
+			from
+			lists_and_records 
+			where
+			category = 2 
+			and type = :type
+			and user_id = :user_id
+			order by days) c;
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		int type = user.getUserId();
+		Date date = user.getCreatedAt();
+		
+		param.addValue("type", type);
+		param.addValue("user_id", date);
+		param.addValue("created_date", created_date);
+		jdbcTemplate.update(sql, param);
+	}
+	
+
 }
