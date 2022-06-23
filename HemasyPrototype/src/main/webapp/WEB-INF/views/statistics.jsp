@@ -1,47 +1,73 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-        <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-            <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-                <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-                    <!DOCTYPE html>
-                    <html>
+<!DOCTYPE html>
+<html>
 
-                    <head>
-                        <meta charset="UTF-8">
-                        <title>統計画面</title>
-                        <meta name="viewport" content="width=device-width,initial-scale=1.0">
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js" integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg==" crossorigin="anonymous"></script>
-                        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-                    </head>
+<head>
+<meta charset="UTF-8">
+<title>統計画面</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+	integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
 
-                    <body>
-                        <h1>統計</h1>
-                        <div id="selectGraph">
-                            <button data-index="food" onclick="entryClick(1)">食事</button>
-                            <button data-index="exercise" onclick="entryClick(2)">運動</button>
-                            <button data-index="alcohol" onclick="entryClick(3)">酒</button>
-                            <button data-index="smoke" onclick="entryClick(4)">タバコ</button>
-                            <button data-index="bmi" onclick="entryClick(5)">体重</button>
-                        </div>
-                        <br><input type="button" value="左" onclick="getName()"><input type="button" value="右"> ${name}
-                        <div style="width: 1000px">
-                            <canvas id="foodGraph"></canvas>
-                        </div>
-                        <div style="width: 1000px">
-                            <canvas id="exerciseGraph"></canvas>
-                        </div>
-                        <div style="width: 1000px">
-                            <canvas id="alcoholGraph"></canvas>
-                        </div>
-                        <div style="width: 1000px">
-                            <canvas id="smokeGraph"></canvas>
-                        </div>
-                        <div style="width: 1000px">
-                            <canvas id="bmiGraph"></canvas>
-                        </div>
+<body>
+	<h1>統計</h1>
+	<div id="selectGraph">
+		<button data-index="food" onclick="entryClick(1)">食事</button>
+		<button data-index="exercise" onclick="entryClick(2)">運動</button>
+		<button data-index="alcohol" onclick="entryClick(3)">酒</button>
+		<button data-index="smoke" onclick="entryClick(4)">タバコ</button>
+		<button data-index="bmi" onclick="entryClick(5)">体重</button>
+	</div>
+	<br>
+	<input type="button" value="左" onclick="getName()">
+	<input type="button" value="右"> ${name}
+	<div>
+		<input type="date" name="date" value="2022-01-01">
+		<p id="output">Change the Date</p>
+		<input type="button" value="日付で検索" name="serch" onclick="serchByDate()">
+	</div>
+	<div style="width: 1000px">
+		<canvas id="foodGraph"></canvas>
+	</div>
+	<div style="width: 1000px">
+		<canvas id="exerciseGraph"></canvas>
+	</div>
+	<div style="width: 1000px">
+		<canvas id="alcoholGraph"></canvas>
+	</div>
+	<div style="width: 1000px">
+		<canvas id="smokeGraph"></canvas>
+	</div>
+	<div style="width: 1000px">
+		<canvas id="bmiGraph"></canvas>
+	</div>
+<script type="text/javascript">
+var dateToSerch;
+document.addEventListener('change', e => {
+if(e.target.matches('[name=date]')){
+		dateToSerch = e.target.value;
+	}
+});
+</script>
+<script>
+function serchByDate() {
+	console.log(dateToSerch)
+	fetch('get')
+};
+</script>	
+
 <script>
 //食事記録グラフの作成　ユーザーの目標摂取カロリーをセッションから取得するようにする。
 let foodList = [];
@@ -260,106 +286,104 @@ function getBmiList() {
 	.catch(error => console.log(error))
 };
 </script>
-                        <script type="text/javascript">
-                            function entryClick(id) {
-                                if (id == 1) {
-                                    getFoodList();
-                                    console.log(foodList);
-                                    document.getElementById('foodGraph').style.display = "";
-                                    document.getElementById('exerciseGraph').style.display = "none";
-                                    document.getElementById('alcoholGraph').style.display = "none";
-                                    document.getElementById('smokeGraph').style.display = "none";
-                                    document.getElementById('bmiGraph').style.display = "none";
-                                } else if (id == 2) {
-                                	getExerciseList();
-                                    document.getElementById('foodGraph').style.display = "none";
-                                    document.getElementById('exerciseGraph').style.display = "";
-                                    document.getElementById('alcoholGraph').style.display = "none";
-                                    document.getElementById('smokeGraph').style.display = "none";
-                                    document.getElementById('bmiGraph').style.display = "none";
-                                } else if (id == 3) {
-                                	getAlcoholList();
-                                    document.getElementById('foodGraph').style.display = "none";
-                                    document.getElementById('exerciseGraph').style.display = "none";
-                                    document.getElementById('alcoholGraph').style.display = "";
-                                    document.getElementById('smokeGraph').style.display = "none";
-                                    document.getElementById('bmiGraph').style.display = "none";
-                                } else if (id == 4) {
-                                	getSmokeList();
-                                    document.getElementById('foodGraph').style.display = "none";
-                                    document.getElementById('exerciseGraph').style.display = "none";
-                                    document.getElementById('alcoholGraph').style.display = "none";
-                                    document.getElementById('smokeGraph').style.display = "";
-                                    document.getElementById('bmiGraph').style.display = "none";
-                                } else if (id == 5) {
-                                	getBmiList();
-                                    document.getElementById('foodGraph').style.display = "none";
-                                    document.getElementById('exerciseGraph').style.display = "none";
-                                    document.getElementById('alcoholGraph').style.display = "none";
-                                    document.getElementById('smokeGraph').style.display = "none";
-                                    document.getElementById('bmiGraph').style.display = "";
-                                }
-                            }
-                            window.onload = entryClick;
-                        </script>
+<script type="text/javascript">
+function entryClick(id) {
+	if (id == 1) {	
+		getFoodList();
+		console.log(foodList);
+		document.getElementById('foodGraph').style.display = "";
+		document.getElementById('exerciseGraph').style.display = "none";
+		document.getElementById('alcoholGraph').style.display = "none";
+		document.getElementById('smokeGraph').style.display = "none";
+		document.getElementById('bmiGraph').style.display = "none";
+	} else if (id == 2) {
+		getExerciseList();
+		document.getElementById('foodGraph').style.display = "none";
+		document.getElementById('exerciseGraph').style.display = "";
+		document.getElementById('alcoholGraph').style.display = "none";
+		document.getElementById('smokeGraph').style.display = "none";
+		document.getElementById('bmiGraph').style.display = "none";
+	} else if (id == 3) {
+		getAlcoholList();
+		document.getElementById('foodGraph').style.display = "none";
+		document.getElementById('exerciseGraph').style.display = "none";
+		document.getElementById('alcoholGraph').style.display = "";
+		document.getElementById('smokeGraph').style.display = "none";
+		document.getElementById('bmiGraph').style.display = "none";
+	} else if (id == 4) {
+		getSmokeList();
+		document.getElementById('foodGraph').style.display = "none";
+		document.getElementById('exerciseGraph').style.display = "none";
+		document.getElementById('alcoholGraph').style.display = "none";
+		document.getElementById('smokeGraph').style.display = "";
+		document.getElementById('bmiGraph').style.display = "none";
+	} else if (id == 5) {
+		getBmiList();
+		document.getElementById('foodGraph').style.display = "none";
+		document.getElementById('exerciseGraph').style.display = "none";
+		document.getElementById('alcoholGraph').style.display = "none";
+		document.getElementById('smokeGraph').style.display = "none";
+		document.getElementById('bmiGraph').style.display = "";
+	}
+}
+window.onload = entryClick;
+</script>
 
-                        <script>
-                            var exerciseChartOption = {
-                                responsive: true,
-                                scales: {
-                                    		'exerciseTimeShaft': {
-                                      				 type: 'linear',
-                                       				 position: 'right',
-                                        			 min: 0,      // 最小値
-                                        			 //ユーザーの目標消費運動時間を100に入れる。
-                                              		 max: 1.5*100,    // 最大値
-													 display: false,
-                                        
-                                    		 },
-                                    		 'y-axis-2': {
-                                       				 type: 'linear',
-                                      			 	 position: 'left'
-                                 				  }
-                                }
-                            };
-                        </script>
-                        <script>
-                            var complexChartOption = {
-                                responsive: true,
-                                scales: {
-                                    yAxes: [{
-                                        id: "y-axis-1",
-                                        type: "linear",
-                                        position: "left"
-                                    }, {
-                                        id: "y-axis-2",
-                                        type: "linear",
-                                        position: "right",
-                                        ticks: {
-                                            // 						max : 1.5,
-                                            // 						min : 0,
-                                            // 						stepSize : .5
-                                        },
-                                        gridLines: {
-                                            drawOnChartArea: false,
-                                        },
-                                    }],
-                                }
-                            };
-                        </script>
-                        
-                         <script>
-                            var smokeChartOption = {
-                                responsive: true,
-                                scales: {
-                                    		'smokeShaft': {
-                                      				 type: 'linear',
-                                       				 position: 'left',
-                                        			 min: 0,      // 最小値
-                                              		                                        
-                                    		 },
-                                }
-                            };
-                        </script>
+<script>
+var exerciseChartOption = {
+	responsive: true,
+	scales: {
+		'exerciseTimeShaft': {
+			type: 'linear',
+			position: 'right',
+			min: 0,      // 最小値
+			//ユーザーの目標消費運動時間を100に入れる。
+			max: 1.5*100,    // 最大値
+			display: false,
+		},
+		'y-axis-2': {
+			type: 'linear',
+			position: 'left'
+		}
+	}
+};
+</script>
 
-                    </html>
+<script>	
+var complexChartOption = {
+	responsive: true,
+	scales: {
+		yAxes: [{
+			id: "y-axis-1",
+			type: "linear",
+			position: "left"
+		}, {
+			id: "y-axis-2",
+			type: "linear",
+			position: "right",
+			ticks: {
+				//max : 1.5,
+				//min : 0,
+				// stepSize : .5
+			},
+			gridLines: {
+				drawOnChartArea: false,
+			},
+		}],
+	}
+};
+</script>
+
+	<script>
+var smokeChartOption = {
+	responsive: true,
+	scales: {
+		'smokeShaft': {
+			type: 'linear',
+			position: 'left',
+			min: 0,      // 最小値
+		},
+	}
+};
+</script>
+</html>

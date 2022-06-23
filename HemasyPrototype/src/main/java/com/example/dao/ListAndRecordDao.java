@@ -38,19 +38,24 @@ public class ListAndRecordDao {
 				and type = 1
 				and user_id = 1
 				group by create_date
-				ORDER by create_date""";
+				ORDER by create_date
+				LIMIT 7
+				""";
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class));
 	}
 	
 	
 	public List<CommonRecord> getExerciseRecords(int user_id) {
 		//ToDouser_id をidからとる
+		//value 2 = bmi
+		//value 3 = 消費カロリー　
+		//value 4 = 体重
 		String sql = """
 				select
-				ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2) value2
+				sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value2   
 				, T2.create_date create_date 
-				, ROUND(T2.value2 * T3.value2 * (T3.value3/60) * 1.05, 2) value3
-				, T3.value3 value4
+				, sum(ROUND(T2.value2 * T3.value2 * (T3.value3/60) * 1.05, 2)) value3
+				, sum(T3.value3) value4
 				from users T1	
 				Join lists_and_records T2
 				ON T1.user_id = T2.user_id
@@ -62,7 +67,9 @@ public class ListAndRecordDao {
 				AND T3.type = 2
 				AND T2.create_date = T3.create_date
 				where T1.user_id =1
-				order by T2.create_date;
+				group by T2.create_date
+				order by T2.create_date
+				LIMIT 7
 				""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("user_id", user_id);
@@ -71,15 +78,19 @@ public class ListAndRecordDao {
 
 	public List<CommonRecord> getAlcoholRecords(int id) {
 		//ToDo user_id をidからとる
+		//alcohol量
 		String sql = """
 				select
-				ROUND(value2*value3*(value4/100), 2) value2
+				sum(ROUND(value2*value3*(value4/100), 2)) value2
 				,create_date
 				from lists_and_records
 				where category = 2
 				and type = 4
-				and user_id = 2
-				ORDER BY create_date;
+				and user_id = 1
+				group by create_date
+				ORDER BY create_date
+				
+				LIMIT 7
 				""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
@@ -89,25 +100,28 @@ public class ListAndRecordDao {
 		//ToDo user_id をidからとる
 				String sql = """
 						select
-						value3
+						sum(value3) value3
 						,create_date
 						from lists_and_records
 						where category = 2
 						and type = 3
 						and user_id = 2
-						ORDER BY create_date;
+						group by create_date
+						ORDER BY create_date
+						LIMIT 7
 						""";
 				MapSqlParameterSource param = new MapSqlParameterSource();
 				return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
 
 	public List<CommonRecord> getBmiRecords(int id) {
+		//value3 BMI
+		//valu2 体重
 		String sql = """
 			select
-			ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2) value3
-			, T2.value2 value2
+			sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value3
+			, sum(T2.value2) value2
 			, T2.create_date 
-			, T1.user_name
 			FROM
 			users T1
 			JOIN lists_and_records T2
@@ -115,7 +129,9 @@ public class ListAndRecordDao {
 			AND T2.category = 2
 			AND T2.type = 5
 			where T1.user_id = 1
-			ORDER BY T2.create_date;
+			group by T2.create_date
+			ORDER BY T2.create_date
+			LIMIT 7
 			""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
