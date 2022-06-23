@@ -20,32 +20,6 @@ public class ListAndRecordDao {
 
     @Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
-
-    public int insert(List<CommonRecord> recordList) {
-    	for (CommonRecord record : recordList) {
-    		BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(record);
-            jdbcTemplate.update("INSERT INTO lists_and_records (category, type, value1, value2, value3, value4, value5, value6, value7, value8, create_date, user_id) VALUES (:category, :type, :value1, :value2, :value3, :value4, :value5, :value6, :value7, :value8, :createDate, :userId)", paramSource);
-    	}
-    	
-    	return 1;
-	}
-
-	public List<CommonRecord> getFoodRecords(int id) {
-		MapSqlParameterSource param = new MapSqlParameterSource();
-		//ToDo user_id を :user_id にして id を入れる。
-		String sql ="""
-				select  sum(value2*value3) value2
-				,create_date AS create_date
-				from lists_and_records
-				where category = 2
-				and type = 1
-				and user_id = 1
-				group by create_date
-				ORDER by create_date
-				LIMIT 7
-				""";
-		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class));
-	}
 	
 	//SQL
 	//ユーザーのuser_idを取得して、そのユーザーが登録した食事リストを取得するSQL。
@@ -72,6 +46,33 @@ public class ListAndRecordDao {
 	//称号ランキング
 	String sql5 = "select user_name, sum_score, achievement_name from (select user_name, sum_score, achievement_id from users as u join (select user_id, sum(score) as sum_score from achievement_unlock as au join achievement as a on au.achievement_id = a.achievement_id group by user_id) as a on u.user_id = a.user_id) as u join achievement as a on u.achievement_id = a.achievement_id order by sum_score desc;";
 
+	
+	
+	public int insert(List<CommonRecord> recordList) {
+    	for (CommonRecord record : recordList) {
+    		BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(record);
+            jdbcTemplate.update("INSERT INTO lists_and_records (category, type, value1, value2, value3, value4, value5, value6, value7, value8, create_date, user_id) VALUES (:category, :type, :value1, :value2, :value3, :value4, :value5, :value6, :value7, :value8, :createDate, :userId)", paramSource);
+    	}
+    	
+    	return 1;
+	}
+
+	public List<CommonRecord> getFoodRecords(int id) {
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		//ToDo user_id を :user_id にして id を入れる。
+		String sql ="""
+				select  sum(value2*value3) value2
+				,create_date AS create_date
+				from lists_and_records
+				where category = 2
+				and type = 1
+				and user_id = 1
+				group by create_date
+				ORDER by create_date
+				LIMIT 7
+				""";
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class));
+	}
 	
 	//ユーザーのuser_idを取得して、そのユーザーが登録した食事リストを取得する。
 	public List<ListAndRecord> FoodListById(int userId) {
