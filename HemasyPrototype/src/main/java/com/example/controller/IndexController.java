@@ -16,6 +16,7 @@ import com.example.dao.UserDao;
 import com.example.entity.User;
 import com.example.form.IndexForm;
 import com.example.form.UserForm;
+import com.example.service.RecordService;
 
 
 
@@ -28,9 +29,11 @@ public class IndexController {
     @Autowired
 	HttpSession session; 
     
-
     @Autowired
 	UserDao userDao;
+    
+    @Autowired
+    RecordService recordService;
 
     //最初にここにきて、login画面にいく
 
@@ -49,6 +52,11 @@ public class IndexController {
     		return "admin";
     	}
     	
+    	//実装時に使う(川満さんに聞いてね)
+//    	int userId = 1;
+//    	User user = userDao.findById(userId);
+//    	recordService.setZeroPastRecords(user);
+//    	
     	return "menu";
     	
     }

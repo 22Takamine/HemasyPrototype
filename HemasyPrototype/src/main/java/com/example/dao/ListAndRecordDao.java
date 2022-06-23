@@ -162,11 +162,11 @@ public class ListAndRecordDao {
 			order by days) c;
 				""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
-		int type = user.getUserId();
+		int id = user.getUserId();
 		Date date = user.getCreatedAt();
 		
 		param.addValue("type", type);
-		param.addValue("user_id", date);
+		param.addValue("user_id", id);
 		param.addValue("created_date", date);
 		jdbcTemplate.update(sql, param);
 	}
