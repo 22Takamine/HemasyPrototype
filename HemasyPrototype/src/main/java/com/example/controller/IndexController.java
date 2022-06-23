@@ -126,14 +126,18 @@ public class IndexController {
 
 		return "menu";
 	}
-
+	
+	//ハンバーガーメニューからアカウント管理へ
+	@RequestMapping(value = "/account", method = RequestMethod.GET)
+	public String account(@ModelAttribute("index") UserForm form, Model model) {
+		
+		return "account";
+	}
+		
 	//アカウント管理で登録ボタンを押すと、メニュー画面に遷移
     @RequestMapping(value = "/accountRegist", method = RequestMethod.POST)
     public String accountRegist(@Validated  @ModelAttribute("index") UserForm form, BindingResult bindingResult, Model model) {
     	if (bindingResult.hasErrors()) {
-//    		int user_id = 1;
-//        	User user = userDao.findById(user_id);
-//    		model.addAttribute("user", user);
     		return "account";
         }
     	
@@ -168,12 +172,9 @@ public class IndexController {
 	@RequestMapping(value = "/information", method = RequestMethod.POST)
 	public String registInformation(@ModelAttribute("information") InformationForm Iform,@ModelAttribute("index") UserForm form, Model model) {
 		
-		// ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
-		// User user = session.getAttribute("user",user);
-		// int user_id = user.getUserId()
-
-		// ここは仮でuser_idを取得する。
-		int user_id = 1;
+		 //ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
+		 User user = (User)session.getAttribute("user");
+		 int user_id = user.getUserId();
 		
 		String title = Iform.getTitle();
 		String contents = Iform.getContents();
@@ -192,13 +193,6 @@ public class IndexController {
 		}
 		
 		// メインメニュー画面に戻るときの処理をどうやるのかを周りの人に聞く。
-	}
-	
-	//ハンバーガーメニューからアカウント管理へ
-	@RequestMapping(value = "/account", method = RequestMethod.GET)
-	public String account(@ModelAttribute("index") UserForm form, Model model) {
-		
-		return "register";
 	}
 
 	// ハンバーガーメニューからランキングへ
@@ -237,14 +231,6 @@ public class IndexController {
 	// ハンバーガーメニューからお問い合わせへ
 	@RequestMapping(value = "/information", method = RequestMethod.GET)
 	public String information(@ModelAttribute("information") InformationForm LRform, Model model) {
-
-		// ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
-		// User user = session.getAttribute("user");
-		// int user_id = user.getUserId();
-
-		// ここは仮でuser_idを取得する。
-		int userId = 1;
-		model.addAttribute("userId", userId);
 
 		return "information";
 	}

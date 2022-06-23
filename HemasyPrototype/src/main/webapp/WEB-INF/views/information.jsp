@@ -45,7 +45,7 @@
       <c:if test="${not empty msg}"><p class="error">${msg}</p></c:if>
       
       <form:form action="information" method="post" modelAttribute="information">
-      	<form:input path="userId" type="hidden" value="${userId}" />
+<%--       	<form:input path="userId" type="hidden" value="${userId}" /> --%>
         <fieldset class="label-130">
           <div>
             <label class="required">件名</label>
