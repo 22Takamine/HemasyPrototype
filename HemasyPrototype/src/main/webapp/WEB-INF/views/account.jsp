@@ -12,6 +12,9 @@
 <link href="css/commons.css" rel="stylesheet">
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header>
@@ -86,6 +89,25 @@
     
     <div>
 		<fmt:message key="form.lbl.achievement"/>
+		<div id="open">
+	      称号
+	    </div>
+	    <div id="mask" class="hidden"></div>
+	    <section id="modal" class="hidden">
+	    <p>He said that that that that that boy used in the sentence was wrong.<br>あの少年がその文で使ったあのthatは間違っていたと彼は言った。</p>
+	    <div id="close">
+	      閉じる
+	    </div>
+	    </section>
+	    
+	    
+		
+		
+		
+		
+		
+		
+		
 		<form:input type="text" path="achievementId" value="${user.getAchievementId()}"/>
 		<form:errors path="achievementId" cssStyle="color: red"/>
 <%-- 		<input type="text" name="achievementId" value="${user.getAchievementFlag()}">       --%>
