@@ -3,7 +3,9 @@ package com.example.entity;
 import java.sql.Date;
 
 public class User {
-
+	
+	
+	private Integer id;
 	private Integer userId;
 	private String userName;
 	private String mail;
@@ -20,6 +22,7 @@ public class User {
 	private Integer roleId;
 	private Integer achievementId;
 	private Integer achievementFlag;
+	private Double bmi;
 	
 	
 	public User() {
@@ -40,6 +43,29 @@ public class User {
 		this.alcoholFlag = alcoholFlag;
 		this.smokeFlag = smokeFlag;
 		this.roleId = roleId;
+	}
+	
+	public User(Integer id, Integer userId, String userName, String mail, String password, Integer sex, Date birth, Double height,
+			Date createdAt, Integer goalExerciseTime, Integer goalCalorie, Integer rankFlag, Integer alcoholFlag, Integer smokeFlag,
+			Integer roleId, Integer achievementId, Integer achievementFlag, Double bmi) {
+		this.id = id;
+		this.userId = userId;
+		this.userName = userName;
+		this.mail = mail;
+		this.password = password;
+		this.sex = sex;
+		this.birth = birth;
+		this.height = height;
+		this.createdAt = createdAt;
+		this.goalExerciseTime = goalExerciseTime;
+		this.goalCalorie = goalCalorie;
+		this.rankFlag = rankFlag;
+		this.alcoholFlag = alcoholFlag;
+		this.smokeFlag = smokeFlag;
+		this.roleId = roleId;
+		this.achievementId = achievementId;
+		this.achievementFlag = achievementFlag;
+		this.bmi = bmi;
 	}
 	
 	
@@ -172,13 +198,11 @@ public class User {
 		this.achievementFlag = achievementFlag;
 	}
 	
-	
-	
 
 	//	// 全フィールドが未入力かの判断
 	//	public boolean isEmptyCondition() {
 	//		return id == null && ParamUtil.isNullOrEmpty(name) && score == null;
 	//	}
+	
 }
-
 
