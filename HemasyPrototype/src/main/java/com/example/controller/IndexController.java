@@ -46,36 +46,10 @@ public class IndexController {
 	InformationDao informationDao;
 
 	//最初にここにきて、login画面にいく
-	@RequestMapping({ "/", "/index"})
+	@RequestMapping({ "/", "/index" })
 	public String index(@ModelAttribute("index") IndexForm form, Model model) {
 		return "login";
 	}
-	
-	//ログイン画面から、新規登録画面に遷移
-	@RequestMapping(value = "/result", params="register", method = RequestMethod.POST)
-	public String register(@ModelAttribute("index") UserForm form, Model model) {
-    	//ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
-    	//User user = session.getAttribute("user",user);
-    	//int user_id = user.getUserId()
-    	
-	
-        return "register";
-    }
-	
-	//新規登録画面で登録ボタンを押した際に、ログイン画面に遷移
-	@RequestMapping(value = "/loginBack", method = RequestMethod.POST)
-	public String loginBack(@Validated @ModelAttribute("index") UserForm form,BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors()) {
-			return "register";
-		}
-		
-		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirthDate(),
-				form.getHeight(),form.getGoalExerciseTime(),form.getGoalCalorise(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
-		
-		userDao.insert(user);
-
-		return "login";
-    }
 	
 	//ログイン成功時にメニュー画面に遷移
 	@RequestMapping(value = "/result", params="login", method = RequestMethod.POST)
@@ -101,25 +75,53 @@ public class IndexController {
     		return "menu";
     	}
     }
+	
+	//ログイン画面から、新規登録画面に遷移
+	@RequestMapping(value = "/result", params="register", method = RequestMethod.POST)
+	public String register(@ModelAttribute("index") UserForm form, Model model) {
+    	
+        return "register";
+    }
+	
+	//新規登録画面で登録ボタンを押した際に、ログイン画面に遷移
+	@RequestMapping(value = "/loginBack", method = RequestMethod.POST)
+	public String loginBack(@Validated @ModelAttribute("index") UserForm form,BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			return "register";
+		}
+		
+		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirthDate(),
+				form.getHeight(),form.getGoalExerciseTime(),form.getGoalCalorise(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
+		
+		userDao.insert(user);
 
+		return "login";
+    }
+	
+	// 記録＆リスト画面に遷移
+	@RequestMapping(value = "/record", method = RequestMethod.POST)
+	public String record(@ModelAttribute("index") UserForm form, Model model) {
+
+		return "record";
+	}
+
+	// 統計画面に遷移
+	@RequestMapping(value = "/statistics", method = RequestMethod.POST)
+	public String statistics(@ModelAttribute("index") UserForm form, Model model) {
+
+		return "statistics";
+	}
+
+	// 記録画面から登録ボタンでメニュー画面に遷移
+	@RequestMapping(value = "/recordRegist", method = RequestMethod.POST)
+	public String recordRegist(@ModelAttribute("index") UserForm form, Model model) {
+
+		return "menu";
+	}
+	
 	//マイリスト編集画面から登録ボタンでメニュー画面に遷移
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public String registList(@ModelAttribute("index") UserForm form, Model model) {
-
-
-		return "menu";
-	}
-
-	//お問い合わせ画面から登録ボタンでメニュー画面に遷移
-	@RequestMapping(value = "/information", method = RequestMethod.POST)
-	public String registInformation(@ModelAttribute("index") UserForm form, Model model) {
-
-		return "menu";
-	}
-
-	//戻るボタンを押すと、メニュー画面に遷移
-	@RequestMapping(value = "/back", method = RequestMethod.GET)
-	public String back(@ModelAttribute("index") UserForm form, Model model) {
 
 
 		return "menu";
@@ -153,35 +155,15 @@ public class IndexController {
     	 
         return "menu";
     }
+	
+	//戻るボタンを押すと、メニュー画面に遷移
+	@RequestMapping(value = "/back", method = RequestMethod.GET)
+	public String back(@ModelAttribute("index") UserForm form, Model model) {
 
-	//ハンバーガーメニューからアカウント管理へ
-	@RequestMapping(value = "/account", method = RequestMethod.GET)
-	public String account(@ModelAttribute("index") UserForm form, Model model) {
-		
-		return "register";
-	}
-
-	// 記録＆リスト画面に遷移
-	@RequestMapping(value = "/record", method = RequestMethod.POST)
-	public String record(@ModelAttribute("index") UserForm form, Model model) {
-
-		return "record";
-	}
-
-	// 統計画面に遷移
-	@RequestMapping(value = "/statistics", method = RequestMethod.POST)
-	public String statistics(@ModelAttribute("index") UserForm form, Model model) {
-
-		return "statistics";
-	}
-
-	// 記録画面から登録ボタンでメニュー画面に遷移
-	@RequestMapping(value = "/recordRegist", method = RequestMethod.POST)
-	public String recordRegist(@ModelAttribute("index") UserForm form, Model model) {
 
 		return "menu";
 	}
-
+	
 	// お問い合わせ画面から登録ボタンでメニュー画面に遷移
 	@RequestMapping(value = "/information", method = RequestMethod.POST)
 	public String registInformation(@ModelAttribute("information") InformationForm Iform,@ModelAttribute("index") UserForm form, Model model) {
@@ -211,6 +193,13 @@ public class IndexController {
 		
 		// メインメニュー画面に戻るときの処理をどうやるのかを周りの人に聞く。
 	}
+	
+	//ハンバーガーメニューからアカウント管理へ
+	@RequestMapping(value = "/account", method = RequestMethod.GET)
+	public String account(@ModelAttribute("index") UserForm form, Model model) {
+		
+		return "register";
+	}
 
 	// ハンバーガーメニューからランキングへ
 	@RequestMapping(value = "/rank", method = RequestMethod.GET)
@@ -228,13 +217,6 @@ public class IndexController {
 
 		return "rank";
 	}
-
-	//ハンバーガーメニューからお問い合わせへ
-	@RequestMapping(value = "/information", method = RequestMethod.GET)
-	public String information(@ModelAttribute("index") UserForm form, Model model) {
-		return "information";
-	}
-	
 	// ハンバーガーメニューからリスト編集へ
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(@ModelAttribute("index") ListAndRecordForm form, Model model) {
