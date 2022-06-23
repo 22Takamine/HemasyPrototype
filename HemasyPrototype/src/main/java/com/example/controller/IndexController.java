@@ -214,15 +214,16 @@ public class IndexController {
 	// ハンバーガーメニューからリスト編集へ
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(@ModelAttribute("index") ListAndRecordForm form, Model model) {
-
-		// ここは仮でuser_idを取得する。
-		int user_id = 1;
+		
+		User user = (User)session.getAttribute("user");
+		int user_id = user.getUserId();
+		
 		// user_id =1が登録した食事リストを取得する
 		List<ListAndRecord> foodList = listAndRecordDao.FoodListById(user_id);
 		model.addAttribute("foodList", foodList);
 
 		// user_id =1が登録したお酒リストを取得する(今は暫定でuser_idの部分に固定で２を入れている)
-		List<ListAndRecord> alcoholList = listAndRecordDao.AlcoholListById(2);
+		List<ListAndRecord> alcoholList = listAndRecordDao.AlcoholListById(user_id);
 		model.addAttribute("alcoholList", alcoholList);
 
 		return "list";

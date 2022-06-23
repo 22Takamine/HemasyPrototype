@@ -66,11 +66,12 @@ public class ListAndRecordDao {
 				from lists_and_records
 				where category = 2
 				and type = 1
-				and user_id = 1
+				and user_id = :user_id
 				group by create_date
 				ORDER by create_date
 				LIMIT 7
 				""";
+		param.addValue("user_id", id);
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class));
 	}
 	
@@ -136,7 +137,7 @@ public class ListAndRecordDao {
 				AND T3.category = 2
 				AND T3.type = 2
 				AND T2.create_date = T3.create_date
-				where T1.user_id =1
+				where T1.user_id = :user_id
 				group by T2.create_date
 				order by T2.create_date
 				LIMIT 7
@@ -146,7 +147,7 @@ public class ListAndRecordDao {
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
 
-	public List<CommonRecord> getAlcoholRecords(int id) {
+	public List<CommonRecord> getAlcoholRecords(int user_id) {
 		//ToDo user_id をidからとる
 		//alcohol量
 		String sql = """
@@ -156,17 +157,18 @@ public class ListAndRecordDao {
 				from lists_and_records
 				where category = 2
 				and type = 4
-				and user_id = 1
+				and user_id = :user_id
 				group by create_date
 				ORDER BY create_date
 				
 				LIMIT 7
 				""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", user_id);
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
 
-	public List<CommonRecord> getSmokeRecords(int id) {
+	public List<CommonRecord> getSmokeRecords(int user_id) {
 		//ToDo user_id をidからとる
 				String sql = """
 						select
@@ -175,16 +177,17 @@ public class ListAndRecordDao {
 						from lists_and_records
 						where category = 2
 						and type = 3
-						and user_id = 2
+						and user_id = :user_id
 						group by create_date
 						ORDER BY create_date
 						LIMIT 7
 						""";
 				MapSqlParameterSource param = new MapSqlParameterSource();
+				param.addValue("user_id", user_id);
 				return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
 
-	public List<CommonRecord> getBmiRecords(int id) {
+	public List<CommonRecord> getBmiRecords(int user_id) {
 		//value3 BMI
 		//valu2 体重
 		String sql = """
@@ -198,12 +201,13 @@ public class ListAndRecordDao {
 			ON T1.user_id = T2.user_id
 			AND T2.category = 2
 			AND T2.type = 5
-			where T1.user_id = 1
+			where T1.user_id = :user_id
 			group by T2.create_date
 			ORDER BY T2.create_date
 			LIMIT 7
 			""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", user_id);
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
 	

@@ -12,6 +12,8 @@
 <head>
 <meta charset="UTF-8">
 <title>統計画面</title>
+<link href="css/commons.css" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
@@ -22,6 +24,25 @@
 </head>
 
 <body>
+<header>
+	<div class="header-logo"><a href="./back">Hemasy</a></div>
+	<form:form action="hamburger" modelAttribute="index" method="post">
+	    <button type="button" class="menu-btn">
+	      <i class="fa fa-bars" aria-hidden="true"></i>
+	    </button>
+	    <div class="menu">
+	      <div class="menu__item"><a href="./account">アカウント管理</a></div>
+	      <div class="menu__item"><a href="./rank">ランキング</a></div>
+	      <div class="menu__item"><a href="./list">リスト編集</a></div>
+	      <div class="menu__item"><a href="./information">お問い合わせ</a></div>
+	      <div class="menu__item"><a href="./logout">ログアウト</a></div>
+	    </div>
+    </form:form>
+</header>
+<script src="js/commons.js"></script>
+
+	<br>
+	<br>
 	<h1>統計</h1>
 	<div id="selectGraph">
 		<button data-index="food" onclick="entryClick(1)">食事</button>
@@ -80,7 +101,7 @@ function getFoodList() {
 		console.log(data)
 		console.log(foodList)
 		foodList.forEach(function(createDate) {
-			goalCalorie.push(1000); //ToDo session から ${user.goal_calorie}　の値をとる。
+			goalCalorie.push(${user.getGoalCalorie()}); 
 		});
 	//食事記録グラフに使うデータ
 	var foodGraphData = {
@@ -126,7 +147,7 @@ function getExerciseList() {
 		console.log(data)
 		console.log(exerciseList)
 		exerciseList.forEach(function(createDate) {
-			goalExerciseTime.push(100); //ToDo session から ${user.goal_exercise_time}　の値をとる。
+			goalExerciseTime.push(${user.getGoalExerciseTime()});
 		});
 
 		//運動記録グラフに使うデータ
