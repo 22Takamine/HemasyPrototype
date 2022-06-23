@@ -397,12 +397,12 @@ public class IndexController {
  		// メインメニュー画面に戻るときの処理をどうやるのかを周りの人に聞く。
  	}
     
-    //ハンバーガーメニューからランキングへ
-    @RequestMapping(value = "/rank", method = RequestMethod.GET)
-    public String rank(@ModelAttribute("index") UserForm form, Model model) {
-
-        return "rank";
-    }
+//    //ハンバーガーメニューからランキングへ
+//    @RequestMapping(value = "/rank", method = RequestMethod.GET)
+//    public String rank(@ModelAttribute("index") UserForm form, Model model) {
+//
+//        return "rank";
+//    }
 
 	// ハンバーガーメニューからランキングへ
 	@RequestMapping(value = "/rank", method = RequestMethod.GET)

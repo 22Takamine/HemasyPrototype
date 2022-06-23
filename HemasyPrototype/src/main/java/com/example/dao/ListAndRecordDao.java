@@ -69,7 +69,7 @@ public class ListAndRecordDao {
 	String sql5 = "select user_name, sum_score, achievement_name from (select user_name, sum_score, achievement_id from users as u join (select user_id, sum(score) as sum_score from achievement_unlock as au join achievement as a on au.achievement_id = a.achievement_id group by user_id) as a on u.user_id = a.user_id) as u join achievement as a on u.achievement_id = a.achievement_id order by sum_score desc;";
 
 	
-	//やすなり
+	//やすなり-------------------------------------------------------------------------------------------------------------
 	public int insert(List<CommonRecord> recordList) {
     	for (CommonRecord record : recordList) {
     		BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(record);
@@ -138,7 +138,7 @@ public class ListAndRecordDao {
 		return list.isEmpty() ? null :list;
 	}
 	
-	//かわみつ
+	//かわみつ-------------------------------------------------------------------------------------------------------------
 	public List<CommonRecord> getExerciseRecords(int user_id) {
 		//ToDouser_id をidからとる
 		//value 2 = bmi
@@ -235,7 +235,7 @@ public class ListAndRecordDao {
 	}
 	
 	
-	//りん
+	//りん-------------------------------------------------------------------------------------------------------------
 	//日付とユーザーIDでアルコール、食事、運動をすべて取得
 	public List<ListAndRecord> getRecords(int userId, Date date) {
     	MapSqlParameterSource param = new MapSqlParameterSource();
