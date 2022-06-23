@@ -60,12 +60,13 @@
 			<div id="food_bre">
 				<p>朝食<button type="button" id="add_bre" onclick="addBreForm()">⊕</button></p>
 				<c:forEach var="breakfastRecord" items="${breakfastRecordList}" varStatus="bStatus">
-					<p>
+					<p class="breakfastData">
 						<input value="${breakfastRecord.value1}" name="value1Bre${bStatus.index}">
 						<input type="number" min="0" value="${breakfastRecord.value2}" name="value2Bre${bStatus.index}" id="onceCal_${breakfastRecord.listsAndRecordsId}" onchange="calcCalorie(${breakfastRecord.listsAndRecordsId})">kcal ×
 						<input type="number" min="0.1" step="0.1" value="${breakfastRecord.value3}" name="value3Bre${bStatus.index}" id="amount_${breakfastRecord.listsAndRecordsId}" onchange="calcCalorie(${breakfastRecord.listsAndRecordsId})">人前＝
 						<span id="calorie_${breakfastRecord.listsAndRecordsId}">${breakfastRecord.value2 * breakfastRecord.value3}</span>kcal
 						<input type="hidden" value="${breakfastRecord.createDate}" name="createDate">
+						<input type="checkbox" value="del" name="delBre${bStatus.index}">削除
 						<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>
 					</p>
 				</c:forEach>
@@ -73,12 +74,13 @@
 			<div id="food_lun">
 				<p>昼食<button type="button" id="add_lun" onclick="addLunForm()">⊕</button></p>
 				<c:forEach var="lunchRecord" items="${lunchRecordList}" varStatus="lStatus">
-					<p>
+					<p class="lunchData">
 						<input value="${lunchRecord.value1}" name="value1Lun${lStatus.index}">
 						<input type="number" min="0" value="${lunchRecord.value2}" name="value2Lun${lStatus.index}" id="onceCal_${lunchRecord.listsAndRecordsId}" onchange="calcCalorie(${lunchRecord.listsAndRecordsId})">kcal ×
 						<input type="number" min="0.1" step="0.1" value="${lunchRecord.value3}" name="value3Lun${lStatus.index}" id="amount_${lunchRecord.listsAndRecordsId}" onchange="calcCalorie(${lunchRecord.listsAndRecordsId})">人前＝
 						<span id="calorie_${lunchRecord.listsAndRecordsId}">${lunchRecord.value2 * lunchRecord.value3}</span>kcal
 						<input type="hidden" value="${lunchRecord.createDate}" name="createDate">
+						<input type="checkbox" value="del" name="delLun${lStatus.index}">削除
 						<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>
 					</p>
 				</c:forEach>
@@ -86,12 +88,14 @@
 			<div id="food_din">
 				<p>夕食<button type="button" id="add_din" onclick="addDinForm()">⊕</button></p>
 				<c:forEach var="dinnerRecord" items="${dinnerRecordList}" varStatus="dStatus">
-					<p>
+					<p class="dinnerData">
 						<input value="${dinnerRecord.value1}" name="value1Din${dStatus.index}">
 						<input type="number" min="0" value="${dinnerRecord.value2}" name="value2Din${dStatus.index}" id="onceCal_${dinnerRecord.listsAndRecordsId}" onchange="calcCalorie(${dinnerRecord.listsAndRecordsId})"/>kcal ×
 						<input type="number" min="0.1" step="0.1" value="${dinnerRecord.value3}" name="value3Din${dStatus.index}" id="amount_${dinnerRecord.listsAndRecordsId}" onchange="calcCalorie(${dinnerRecord.listsAndRecordsId})"/>人前＝
 						<span id="calorie_${dinnerRecord.listsAndRecordsId}">${dinnerRecord.value2 * dinnerRecord.value3}</span>kcal
 						<input type="hidden" value="${dinnerRecord.createDate}" name="createDate">
+						<input type="checkbox" value="del" name="delDin${dStatus.index}">削除
+						<input type="hidden" value="${dStatus.index + 100}" id="dIndex">
 						<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>
 					</p>
 				</c:forEach>
@@ -99,12 +103,13 @@
 			<div id="food_sna">
 				<p>間食<button type="button" id="add_sna" onclick="addSnaForm()">⊕</button></p>
 				<c:forEach var="snackRecord" items="${snackRecordList}" varStatus="sStatus">
-					<p>
+					<p class="snackData">
 						<input value="${snackRecord.value1}" name="value1Sna${sStatus.index}">
 						<input type="number" min="0" value="${snackRecord.value2}" name="value2Sna${sStatus.index}" id="onceCal_${snackRecord.listsAndRecordsId}" onchange="calcCalorie(${snackRecord.listsAndRecordsId})"/>kcal ×
 						<input type="number" min="0.1" step="0.1" value="${snackRecord.value3}" name="value3Sna${sStatus.index}" id="amount_${snackRecord.listsAndRecordsId}" onchange="calcCalorie(${snackRecord.listsAndRecordsId})"/>人前＝
 						<span id="calorie_${snackRecord.listsAndRecordsId}">${snackRecord.value2 * snackRecord.value3}</span>kcal
 						<input type="hidden" value="${snackRecord.createDate}" name="createDate">
+						<input type="checkbox" value="del" name="delSna${sStatus.index}">削除
 						<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>
 					</p>
 				</c:forEach>
@@ -115,12 +120,13 @@
 			<a href="statistics">統計</a>
 			<p>目安: ${2}kcal 消費: ${2}kcal</p>
 			<c:forEach var="sportRecord" items="${sportRecordList}" varStatus="spStatus">
-				<p>
+				<p class="sportData">
 					<input value="${sportRecord.value1}" name="value1Spo${spStatus.index}">を
 					<input type="hidden" value="${sportRecord.value2}" name="value2Spo${spStatus.index}" id="mets_${sportRecord.listsAndRecordsId}">
 					<input type="number" min="1" value="${sportRecord.value3}" name="value3Spo${spStatus.index}" id="time_${sportRecord.listsAndRecordsId}" onchange="calcUsedCalorie(${sportRecord.listsAndRecordsId})"/>分運動しました。
 					<input type="hidden" value="${sportRecord.createDate}" name="createDate">
 					<span id="calorie_${sportRecord.listsAndRecordsId}">${weightRecord.value2 * sportRecord.value2 * sportRecord.value3 / 60 * 1.05}</span>kcal消費
+					<input type="checkbox" value="del" name="delSpo${spStatus.index}">削除
 				</p>
 			</c:forEach>
 		</div>
@@ -136,13 +142,14 @@
 			<h2>アルコール<button type="button" id="add_alc" onclick="addAlcForm()">⊕</button></h2>
 			<a href="statistics">統計</a>
 			<c:forEach var="alcoholRecord" items="${alcoholRecordList}" varStatus="aStatus">
-				<p>
+				<p class="alcoholData">
 					<input value="${alcoholRecord.value1}" name="value1Alc${aStatus.index}">
 					<input type="number" min="0.1" value="${alcoholRecord.value4}" name="value4Alc${aStatus.index}" id="oncePer_${alcoholRecord.listsAndRecordsId}" step="0.1">%
 					<input type="number" min="0" value="${alcoholRecord.value5}" name="value5Alc${aStatus.index}">kcal/杯
 					<input type="number" min="1" value="${alcoholRecord.value2}" name="value2Alc${aStatus.index}" id="onceAmount_${alcoholRecord.listsAndRecordsId}">ml/杯を
 					<input type="number" min="0.1" step="0.1" value="${alcoholRecord.value3}" name="value3Alc${aStatus.index}" id="amount_${alcoholRecord.listsAndRecordsId}">杯飲みました。
 					<input type="hidden" value="${alcoholRecord.createDate}" name="createDate">
+					<input type="checkbox" value="del" name="delAlc${aStatus.index}">削除
 					<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>
 				</p>
 			</c:forEach>
@@ -165,8 +172,15 @@
 	<a href="#header">↑</a>
 	<script>
 	
+	
+	
+	
+	
+	
+	
+	
 	/* 朝食用処理追加処理 */
-	var i = 10000 ;
+	var i = console.log(document.getElementsByClassName('breakfastData').length);
 	function addBreForm() {
 	  var newDiv = document.createElement('div');
 	  newDiv.id = 'newBre_' + i;
@@ -203,7 +217,7 @@
 	}
 	
 	/* 昼食用処理追加処理 */
-	var i = 10000 ;
+	var i = console.log(document.getElementsByClassName('lunchData').length);
 	function addLunForm() {
 	  var newDiv = document.createElement('div');
 	  newDiv.id = 'newLun_' + i;
@@ -234,7 +248,7 @@
 	}
 	
 	/* 夕食用処理追加処理 */
-	var i = 1 ;
+	var i = console.log(document.getElementsByClassName('dinnerData').length);
 	function addDinForm() {
 	  var newDiv = document.createElement('div');
 	  newDiv.id = 'newDin_' + i;
@@ -266,7 +280,7 @@
 	}
 	
 	/* 間食用処理追加処理 */
-	var i = 1 ;
+	var i = console.log(document.getElementsByClassName('snackData').length);
 	function addSnaForm() {
 	  var newDiv = document.createElement('div');
 	  newDiv.id = 'newSna_' + i;
@@ -298,7 +312,7 @@
 	}
 	
 	/* 運動用処理追加処理 */
-	var i = 1 ;
+	var i = console.log(document.getElementsByClassName('sportData').length);
 	function addSpoForm() {
 	  var newDiv = document.createElement('div');
 	  newDiv.id = 'newSpo_' + i;
@@ -328,7 +342,7 @@
 	}
 	
 	/* アルコール用処理追加処理 */
-	var i = 1 ;
+	var i = console.log(document.getElementsByClassName('alcoholData').length);
 	function addAlcForm() {
 	  var newDiv = document.createElement('div');
 	  newDiv.id = 'newAlc_' + i;
