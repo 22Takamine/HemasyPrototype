@@ -27,8 +27,8 @@
     </div>
     
     <div>
-      <label><fmt:message key="form.lbl.password"/></label><form:input path="pass" type="password"/>
-      <form:errors path="pass" cssStyle="color: red"/>
+      <label><fmt:message key="form.lbl.password"/></label><form:input path="password" type="password"/>
+      <form:errors path="password" cssStyle="color: red"/>
     </div>
     
     <form:button name="login"><fmt:message key="form.lbl.login"/></form:button>
