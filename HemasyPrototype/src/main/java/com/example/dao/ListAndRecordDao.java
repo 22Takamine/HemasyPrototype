@@ -193,21 +193,21 @@ public class ListAndRecordDao {
 
 	public List<CommonRecord> getSmokeRecords(int user_id) {
 		//ToDo user_id をidからとる
-				String sql = """
-						select
-						sum(value3) value3
-						,create_date
-						from lists_and_records
-						where category = 2
-						and type = 3
-						and user_id = :user_id
-						group by create_date
-						ORDER BY create_date
-						LIMIT 7
-						""";
-				MapSqlParameterSource param = new MapSqlParameterSource();
-				param.addValue("user_id", user_id);
-				return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+		String sql = """
+				select
+				sum(value3) value3
+				,create_date
+				from lists_and_records
+				where category = 2
+				and type = 3
+				and user_id = :user_id
+				group by create_date
+				ORDER BY create_date
+				LIMIT 7
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", user_id);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
 
 	public List<CommonRecord> getBmiRecords(int user_id) {
