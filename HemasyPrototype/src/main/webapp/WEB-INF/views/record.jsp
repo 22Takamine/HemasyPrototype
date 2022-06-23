@@ -180,7 +180,7 @@
 	
 	
 	/* 朝食用処理追加処理 */
-	var i = console.log(document.getElementsByClassName('breakfastData').length);
+	var i = document.getElementsByClassName('breakfastData').length + 1;
 	function addBreForm() {
 	  var newDiv = document.createElement('div');
 	  newDiv.id = 'newBre_' + i;
@@ -217,7 +217,7 @@
 	}
 	
 	/* 昼食用処理追加処理 */
-	var i = console.log(document.getElementsByClassName('lunchData').length);
+	var i = document.getElementsByClassName('lunchData').length + 1;
 	function addLunForm() {
 	  var newDiv = document.createElement('div');
 	  newDiv.id = 'newLun_' + i;
@@ -248,7 +248,7 @@
 	}
 	
 	/* 夕食用処理追加処理 */
-	var i = console.log(document.getElementsByClassName('dinnerData').length);
+	var i = document.getElementsByClassName('dinnerData').length;
 	function addDinForm() {
 	  var newDiv = document.createElement('div');
 	  newDiv.id = 'newDin_' + i;
@@ -280,7 +280,7 @@
 	}
 	
 	/* 間食用処理追加処理 */
-	var i = console.log(document.getElementsByClassName('snackData').length);
+	var i = document.getElementsByClassName('snackData').length;
 	function addSnaForm() {
 	  var newDiv = document.createElement('div');
 	  newDiv.id = 'newSna_' + i;
@@ -312,7 +312,7 @@
 	}
 	
 	/* 運動用処理追加処理 */
-	var i = console.log(document.getElementsByClassName('sportData').length);
+	var i = document.getElementsByClassName('sportData').length;
 	function addSpoForm() {
 	  var newDiv = document.createElement('div');
 	  newDiv.id = 'newSpo_' + i;
@@ -342,7 +342,7 @@
 	}
 	
 	/* アルコール用処理追加処理 */
-	var i = console.log(document.getElementsByClassName('alcoholData').length);
+	var i = document.getElementsByClassName('alcoholData').length;
 	function addAlcForm() {
 	  var newDiv = document.createElement('div');
 	  newDiv.id = 'newAlc_' + i;
