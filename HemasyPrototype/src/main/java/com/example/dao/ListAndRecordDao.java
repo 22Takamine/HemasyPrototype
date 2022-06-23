@@ -167,7 +167,7 @@ public class ListAndRecordDao {
 		
 		param.addValue("type", type);
 		param.addValue("user_id", date);
-		param.addValue("created_date", created_date);
+		param.addValue("created_date", date);
 		jdbcTemplate.update(sql, param);
 	}
 	
