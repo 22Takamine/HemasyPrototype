@@ -34,6 +34,60 @@
 </header>
   <div class="main">
   <h2>マイリスト編集</h2>
+  
+  <table>
+   <div class="caption"><p>検索結果：${foodList.size()}件</p></div>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>名前</th>
+        <th>カロリー</th>
+        <th>編集</th>
+        <th>削除</th>
+      </tr>
+    </thead>
+    <tbody>
+      <c:forEach var="foodList" items="${foodList}" varStatus="status">
+        <tr>
+          <td><c:out value="${foodList.getListsAndRecordsId()}"/></td>
+          <td><c:out value="${foodList.getValue1()}"/></td>
+          <td><c:out value="${foodList.getValue2()}"/></td>
+          <%-- <td><a class="detail_btn" href="DitailServlet?id=${resultA.id}">編集</a></td> --%>
+          <%-- <td><a class="detail_btn" href="DitailServlet?id=${resultA.id}">削除</a></td> --%>
+        </tr>
+	  </c:forEach>
+    </tbody>
+    </table>
+    
+    <table>
+	   <div class="caption"><p>検索結果：${alcoholList.size()}件</p></div>
+	    <thead>
+	      <tr>
+	        <th>id</th>
+	        <th>名前</th>
+	        <th>1杯（ml）</th>
+	        <th>度数</th>
+	        <th>カロリー</th>
+	        <th>編集</th>
+        	<th>削除</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <c:forEach var="alcoholList" items="${alcoholList}" varStatus="status">
+	        <tr>
+	          <td><c:out value="${alcoholList.getListsAndRecordsId()}"/></td>
+	          <td><c:out value="${alcoholList.getValue1()}"/></td>
+	          <td><c:out value="${alcoholList.getValue2()}"/></td>
+	          <td><c:out value="${alcoholList.getValue3()}"/></td>
+	          <td><c:out value="${alcoholList.getValue4()}"/></td>
+	          <%-- <td><a class="detail_btn" href="DitailServlet?id=${resultA.id}">詳細</a></td> --%>
+	          <%-- <td><a class="detail_btn" href="DitailServlet?id=${resultA.id}">削除</a></td> --%>
+	        </tr>
+		  </c:forEach>
+	    </tbody>
+    </table>
+  
+  
   <form:form action="list" modelAttribute="index" method="post">
     <form:button><fmt:message key="form.lbl.regist"/></form:button>
   </form:form>

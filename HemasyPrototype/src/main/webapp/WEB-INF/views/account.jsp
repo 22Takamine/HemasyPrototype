@@ -34,6 +34,7 @@
 	<form:input path="userId" type="hidden" value="${user.getUserId()}" readonly="readonly" />
 <!-- 	UserFormの体重のバリデーションを通すために、仮のデータを挿入しています。 -->
 	<form:input path="weight" type="hidden" value="10" readonly="readonly" />
+
 	<div>
 		<fmt:message key="form.lbl.name"/>
 		<form:input type="text" path="name" value="${user.getUserName()}"/>
