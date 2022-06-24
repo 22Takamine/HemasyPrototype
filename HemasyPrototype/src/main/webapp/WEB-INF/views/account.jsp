@@ -94,20 +94,33 @@
 	    </div>
 	    <div id="mask" class="hidden"></div>
 	    <section id="modal" class="hidden">
-	    <p>He said that that that that that boy used in the sentence was wrong.<br>あの少年がその文で使ったあのthatは間違っていたと彼は言った。</p>
+	    
+	    <table>
+	      <thead>
+	        <tr>
+	          <th>称号ID</th>
+	          <th>称号名</th>
+	          <th>条件</th>
+	          <th>チェック</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        	<c:forEach var="achievements" items="${achievementsList}">
+	          		<tr>
+			            <td>${achievements.achievementId}</td>
+			            <td>${achievements.achievementName}</td>
+			            <td>${achievements.requirementToGet}</td>
+			            <td><form:radiobutton path="achievementId" value="${achievements.achievementId}"/></td>
+	          		</tr>
+	          	</c:forEach>
+	      </tbody>
+	    </table>
+	    
 	    <div id="close">
 	      閉じる
 	    </div>
 	    </section>
 	    
-	    
-		
-		
-		
-		
-		
-		
-		
 		<form:input type="text" path="achievementId" value="${user.getAchievementId()}"/>
 		<form:errors path="achievementId" cssStyle="color: red"/>
 <%-- 		<input type="text" name="achievementId" value="${user.getAchievementFlag()}">       --%>

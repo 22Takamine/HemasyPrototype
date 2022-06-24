@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.dao.AchievementsDao;
 import com.example.dao.InformationDao;
 import com.example.dao.ListAndRecordDao;
 import com.example.dao.UserDao;
+import com.example.entity.Achievements;
 import com.example.entity.ListAndRecord;
 import com.example.entity.Rank;
 import com.example.entity.User;
@@ -44,6 +46,9 @@ public class IndexController {
 	
 	@Autowired
 	InformationDao informationDao;
+	
+	@Autowired
+	AchievementsDao achievementsDao;
 
 	//最初にここにきて、login画面にいく
 
@@ -131,6 +136,9 @@ public class IndexController {
 	//ハンバーガーメニューからアカウント管理へ
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
 	public String account(@ModelAttribute("index") UserForm form, Model model) {
+		List<Achievements> achievements = null;
+		achievements = achievementsDao.findByAll();
+		model.addAttribute("achievementsList",achievements);
 		
 		return "account";
 	}
