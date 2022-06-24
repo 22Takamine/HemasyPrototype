@@ -82,9 +82,9 @@
 			</div>
 	
 			<div class="bmi-human-box">
-				<div class="bmi-human-box-img">
-					<p>BMI(肥満度)</p>
-					<img src="${bmiImg}" alt="#">
+				<div class="bmi-human-img-box">
+					<p>BMI(肥満度): ${bmiValue}</p>
+					<img src="${bmiImg}" alt="#" class="bmi-img">
 				</div>
 			</div>
 		</div>

@@ -89,13 +89,19 @@ public class IndexController {
     		String lungImg = "../../images/lung.png";
     		String livarImg = "../../images/livar1.png" ;
     		String stomachImg = "../../images/stomach.png" ;
-    		String bmiImg = "../../images/BMI_under18.png" ;
+    		String bmiImg = "../../images/bmi3.png" ;
     		
     		//ここでsessionに画像のパスを保存する。
     		//session.setAttribute("lungImg", lungImg);
     		//session.setAttribute("livarImg", livarImg);
     		//session.setAttribute("stomachImg", stomachImg);
     		//session.setAttribute("bmiImg", bmiImg);
+    		
+    		//計算したbmiをsessionに保存
+    		//session.setAttribute("bmiValue", bmiValue);
+    		
+    		double bmiValue = 22.4;
+    		model.addAttribute("bmiValue",bmiValue);
     		
     		
     		String lungWord = "禁煙○○日目です";

@@ -160,7 +160,7 @@ main {
 
 .livar-img {
 	height: 85%;
-	width: 100%;
+	width: 80%;
 }
 
 .stomach-img {
@@ -220,10 +220,17 @@ main {
 } 
 
 
-.bmi-human-box-img {
+.bmi-human-img-box {
+	height: 70%;
 	display: flex;
-	flex-direction: column;
+    align-items: center;
+    flex-direction: column;
 } 
+
+.bmi-img{
+	width: 100%;
+	height: 70%;
+}
 
 footer {
 	border-top: 1px solid;
