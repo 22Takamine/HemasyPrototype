@@ -129,8 +129,9 @@
 	    </table>
 	    
 	    <div id="close" onclick="getAchievementName()">
-	      閉じる
+	      登録
 	    </div>
+	    
 	    </section>
 	    
 	    <input type=text value="${achievementName}" readonly="readonly" id="tatsuki">
@@ -211,9 +212,7 @@ let achievementList;
 let achievementName;
 function getAchievementName() {
 	fetch('/getAchivementName?id=' + Array.from(document.getElementsByName("achievementId")).find(e => e.checked).value)
-	.then(
-		res => res.json().then(
-			data => {
+	.then(res => res.json().then(data => {
 				achievementList = data
 				achievementName = achievementList.achievementName
 				console.log(achievementName)

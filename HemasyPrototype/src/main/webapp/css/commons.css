@@ -133,11 +133,7 @@
 	height: 100%
 }
 
-<<<<<<< HEAD
 
-
-
-=======
 #open,
 #close {
   cursor: pointer;
@@ -188,4 +184,4 @@
 #modal.hidden {
   display: none;
 }
->>>>>>> refs/heads/takamine
+
