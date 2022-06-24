@@ -16,13 +16,13 @@ public class CommonRecord {
 	private double value8;
 	private Date createDate;
 	private int userId;
-	private Date createDay;
+	private String createDay;
 	
 
-	public Date getCreateDay() {
+	public String getCreateDay() {
 		return createDay;
 	}
-	public void setCreateDay(Date createDay) {
+	public void setCreateDay(String createDay) {
 		this.createDay = createDay;
 	}
 	public int getCategory() {

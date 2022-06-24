@@ -167,15 +167,15 @@ public class ListAndRecordDao {
 		//ToDo user_id を :user_id にして id を入れる。
 		String sql ="""
 					SELECT
-					 to_char(create_date, 'YYYY-MM-01') AS create_day,
+					 to_char(create_date, 'YYYY-MM') AS create_day,
 					sum(value2 * value3) value2
 					FROM lists_and_records
 					where category =2
 					AND type = 1
 					AND user_id = :user_id
 					AND left(to_char(create_date, 'YYYY-MM'), 4) = left(:day, 4)
-					GROUP BY to_char(create_date, 'YYYY-MM-01')
-					ORDER BY to_char(create_date, 'YYYY-MM-01');
+					GROUP BY to_char(create_date, 'YYYY-MM')
+					ORDER BY to_char(create_date, 'YYYY-MM');
 
 				""";
 		param.addValue("user_id", id);
