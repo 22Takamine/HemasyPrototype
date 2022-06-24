@@ -68,8 +68,10 @@ public class IndexController {
 		if (bindingResult.hasErrors()) {	
 			return "login";
 		}
-
+		
+		
 		User user = userDao.findIdAndPass(form.getMail(), form.getPassword());
+
 
     	if(user == null) {
     		model.addAttribute("msg","メールアドレスまたはパスワードが間違っています");
@@ -84,6 +86,52 @@ public class IndexController {
     	else {
     		
     		session.setAttribute("user", user);
+    		
+    		//以下にDBから取得してきた画像のパスを入れる。
+    		//（まっしーへ　ここに取ってきた画像のパスを入れるまでお願いします。）
+    		
+    		String lungImg = "../../images/lung.png";
+    		String livarImg = "../../images/livar1.png" ;
+    		String stomachImg = "../../images/stomach.png" ;
+    		String bmiImg = "../../images/bmi3.png" ;
+    		
+    		//ここでsessionに画像のパスを保存する。
+    		//session.setAttribute("lungImg", lungImg);
+    		//session.setAttribute("livarImg", livarImg);
+    		//session.setAttribute("stomachImg", stomachImg);
+    		//session.setAttribute("bmiImg", bmiImg);
+    		
+    		//計算したbmiをsessionに保存
+    		//session.setAttribute("bmiValue", bmiValue);
+    		
+    		double bmiValue = 22.4;
+    		model.addAttribute("bmiValue",bmiValue);
+    		
+    		
+    		String lungWord = "禁煙○○日目です";
+    		String livarWord = "禁酒○○日目です。" ;
+    		String stomachGoalkcal = "目標摂取カロリーは○○Kcalです。" ;
+    		String stomachInputKcal = "摂取カロリーは○○Kcalです。" ;
+    		String stomachOutputKcal = "消費カロリーは○○Kcalです。" ;
+    		
+    		//ツールチップに表示する項目をsessionに保存する
+    		//session.setAttribute("lungWord", lungWord);
+    		//session.setAttribute("livarWord", livarWord);
+    		//session.setAttribute("stomachGoalkcal", stomachGoalkcal);
+    		//session.setAttribute("stomachInputKcal", stomachInputKcal);
+    		//session.setAttribute("stomachOutputKcal", stomachOutputKcal);
+    		
+    		model.addAttribute("lungImg",lungImg );
+    		model.addAttribute("livarImg",livarImg );
+    		model.addAttribute("stomachImg",stomachImg );
+    		model.addAttribute("bmiImg",bmiImg );
+    		
+    		model.addAttribute("lungWord", lungWord);
+    		model.addAttribute("livarWord", livarWord);
+    		model.addAttribute("stomachGoalkcal", stomachGoalkcal);
+    		model.addAttribute("stomachInputKcal", stomachInputKcal);
+    		model.addAttribute("stomachOutputKcal", stomachOutputKcal);
+    		
     		return "menu";
     	}
     }
@@ -109,10 +157,9 @@ public class IndexController {
 
 		return "login";
     }
-
 	
-	//記録＆リスト画面に遷移
-	@RequestMapping(value = "/record", method = RequestMethod.POST)
+	//記録＆リスト画面に遷移(ゆうちゃんへGETにしてね)
+	@RequestMapping(value = "/record", method = RequestMethod.GET)
 	public String record(@ModelAttribute("record") ListAndRecordForm form, Model model) {
 		
 		List<ListAndRecord> breakfastRecordList = listAndRecordDao.getBreakfastRecords(2, Date.valueOf("2022-06-20"));
@@ -151,7 +198,7 @@ public class IndexController {
 		model.addAttribute("weightRecord", latestWeightRecord);
 		
 	    return "record";
-	    
+
 	}
     
     
@@ -310,14 +357,12 @@ public class IndexController {
     	
     }
     
-    //統計画面に遷移
-    @RequestMapping(value = "/statistics", method = RequestMethod.POST)
+    //統計画面に遷移（ゆうちゃんへ、GETにしてね）
+    @RequestMapping(value = "/statistics", method = RequestMethod.GET)
     public String statistics(@ModelAttribute("index") UserForm form, Model model) {
     	
         return "statistics";
     }
-    
-
 
 	// 記録画面から登録ボタンでメニュー画面に遷移
 	@RequestMapping(value = "/recordRegist", method = RequestMethod.POST)
@@ -325,18 +370,71 @@ public class IndexController {
 
         return "menu";
     }
-    
-    //戻るボタンを押すと、メニュー画面に遷移
-    @RequestMapping(value = "/back", method = RequestMethod.GET)
-    public String back(@ModelAttribute("index") UserForm form, Model model) {
-
-		return "menu";
-	}
 	
 	//マイリスト編集画面から登録ボタンでメニュー画面に遷移
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public String registList(@ModelAttribute("index") UserForm form, Model model) {
 
+		return "menu";
+	}
+
+	// お問い合わせ画面から登録ボタンでメニュー画面に遷移
+	@RequestMapping(value = "/information", method = RequestMethod.POST)
+	public String registInformation(@ModelAttribute("information") InformationForm Iform, @ModelAttribute("index") UserForm form, Model model) {
+		
+		// ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
+		User user = (User) session.getAttribute("user");
+		int user_id = user.getUserId();
+
+		// ここは仮でuser_idを取得する。
+		//int user_id = 1;
+		
+		String title = Iform.getTitle();
+		String contents = Iform.getContents();
+		
+		System.out.println(title);
+		System.out.println(contents);
+		
+		String result = informationDao.InformationRegister(title, contents, user_id );
+		
+		if(("正常に登録できました").equals(result)) {
+			
+			/*
+			 * ユーザーの状態に対応した画像のパスをsessionに保存しているからそれを取ってきて、
+			 * メインメニューページに表示する。今は画像をベタ打ちで入力している状態
+			 */
+				//肺の画像をsessionから取得する
+				//String lungImg = (String) session.getAttribute("lungImg");
+				//肝臓の画像をsessionから取得する
+				//String livarImg = (String) session.getAttribute("livarImg");
+				//胃の画像をsessionから取得する
+				//String stomachImg = (String) session.getAttribute("stomachImg");
+				//BMIの画像をsessionから取得する
+				//String bmiImg = (String) session.getAttribute("bmiImg");
+				
+				String lungImg = "../../images/lung.png";
+				String livarImg = "../../images/livar1.png" ;
+				String stomachImg = "../../images/stomach.png" ;
+				String bmiImg = "../../images/BMI_under18.png" ;
+				
+				model.addAttribute("lungImg",lungImg );
+				model.addAttribute("livarImg",livarImg );
+				model.addAttribute("stomachImg",stomachImg );
+				model.addAttribute("bmiImg",bmiImg );
+
+				return "menu";
+			
+		}else {
+			model.addAttribute("msg",result );
+			return "information";
+		}
+		
+		// メインメニュー画面に戻るときの処理をどうやるのかを周りの人に聞く。
+	}
+
+	// 戻るボタンを押すと、メニュー画面に遷移
+	@RequestMapping(value = "/back", method = RequestMethod.GET)
+	public String back(@ModelAttribute("index") UserForm form, Model model) {
 
 		return "menu";
 	}
@@ -378,40 +476,6 @@ public class IndexController {
     	session.setAttribute("user", user);
         return "menu";
     }
-    
- // お問い合わせ画面から登録ボタンでメニュー画面に遷移
- 	@RequestMapping(value = "/information", method = RequestMethod.POST)
- 	public String registInformation(@ModelAttribute("information") InformationForm Iform,@ModelAttribute("index") UserForm form, Model model) {
- 		
- 		 //ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
- 		 User user = (User)session.getAttribute("user");
- 		 int user_id = user.getUserId();
- 		
- 		String title = Iform.getTitle();
- 		String contents = Iform.getContents();
- 		
- 		System.out.println(title);
- 		System.out.println(contents);
- 		
- 		String result = informationDao.InformationRegister(title, contents, user_id );
- 		
- 		if(("正常に登録できました").equals(result)) {
- 			
- 			return "menu";
- 		}else {
- 			model.addAttribute("msg",result );
- 			return "information";
- 		}
- 		
- 		// メインメニュー画面に戻るときの処理をどうやるのかを周りの人に聞く。
- 	}
-    
-//    //ハンバーガーメニューからランキングへ
-//    @RequestMapping(value = "/rank", method = RequestMethod.GET)
-//    public String rank(@ModelAttribute("index") UserForm form, Model model) {
-//
-//        return "rank";
-//    }
 
 	// ハンバーガーメニューからランキングへ
 	@RequestMapping(value = "/rank", method = RequestMethod.GET)
