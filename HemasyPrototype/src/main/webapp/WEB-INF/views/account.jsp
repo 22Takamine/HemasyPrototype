@@ -111,7 +111,18 @@
 			            <td>${achievements.achievementId}</td>
 			            <td>${achievements.achievementName}</td>
 			            <td>${achievements.requirementToGet}</td>
-			            <td><form:radiobutton path="achievementId" value="${achievements.achievementId}"/></td>
+			            <td>
+				            <c:choose>
+				            	<c:when test="${achievements.achievementId == user.getAchievementId()}">
+				            		<form:radiobutton path="achievementId" value="${achievements.achievementId}" checked="checked"/>
+				            	</c:when>
+				            
+				            	<c:otherwise>
+				            		<form:radiobutton path="achievementId" value="${achievements.achievementId}"/>
+				            	</c:otherwise>
+				            	
+				            </c:choose>
+			            </td>
 	          		</tr>
 	          	</c:forEach>
 	      </tbody>
@@ -122,7 +133,7 @@
 	    </div>
 	    </section>
 	    
-	    <input type=text value="${achievementName}" readonly="readonly">
+	    <input type=text value="${achievementName}" readonly="readonly" id="tatsuki">
 	    <form:errors path="achievementId" cssStyle="color: red"/>
 	    
     </div>
@@ -203,11 +214,14 @@ function getAchievementName() {
 	.then(
 		res => res.json().then(
 			data => {
-				achievementList = {id : 1, name : '名前'}
-				achievementName = achievementList.name
+				achievementList = data
+				achievementName = achievementList.achievementName
 				console.log(achievementName)
 				console.log(Array.from(document.getElementsByName("achievementId")).find(e => e.checked).value)
+				let tatsuki = document.getElementById("tatsuki");
+				tatsuki.value= (achievementName);
 			},
+
 		)
 	)
 };
