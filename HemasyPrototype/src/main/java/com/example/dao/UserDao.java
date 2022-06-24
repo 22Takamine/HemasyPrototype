@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import com.example.entity.User;
 
 @Repository
-
 public class UserDao {
 
 	private static final String SELECT_BY_PRODUCT_ID = "SELECT * FROM users WHERE user_id = :user_id";
@@ -70,8 +69,9 @@ public class UserDao {
 
 		Date today = new Date();
 
+	
 		MapSqlParameterSource param = new MapSqlParameterSource();
-		param.addValue("user_name", user.getUser_name());
+		param.addValue("user_name", user.getUserName());
 		param.addValue("mail", user.getMail());
 		param.addValue("password", user.getPassword());
 		param.addValue("sex", user.getSex());
@@ -87,7 +87,7 @@ public class UserDao {
 		return;
 	}
 	
-	public void update(Integer id, String name, String mail, String pass, Integer sex, Date birth, Double height, Integer achievement, Integer time, Integer calorise, Integer rank, Integer smoke, Integer alcohol) {
+	public void update(Integer id, String name, String mail, String pass, Integer sex, Date birth, Integer height, Integer achievement, Integer time, Integer calorise, Integer rank, Integer smoke, Integer alcohol) {
     	String sql = UPDATE;
     	
     	MapSqlParameterSource param = new MapSqlParameterSource();

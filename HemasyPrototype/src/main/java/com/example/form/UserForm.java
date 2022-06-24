@@ -7,9 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
-
 public class UserForm {
-
 
 	@NotBlank
 	private String name;
@@ -30,7 +28,7 @@ public class UserForm {
 	private Date birthDate;
 
 	@NotNull
-	private Double height;
+	private Integer height;
 
 	@NotNull
 	private Double weight;
@@ -79,10 +77,10 @@ public class UserForm {
 		this.birthDate = birthDate;
 	}
 	
-	public Double getHeight() {
+	public Integer getHeight() {
 		return height;
 	}
-	public void setHeight(Double height) {
+	public void setHeight(Integer height) {
 		this.height = height;
 	}
 	public Double getWeight() {
@@ -148,8 +146,7 @@ public class UserForm {
 	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(Integer id) {
-		this.userId = id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
-    
 }
