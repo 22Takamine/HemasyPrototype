@@ -57,7 +57,7 @@
 		<input type="date" name="record_day">
 	</form>
 	<form action="recordCommit" method="post">
-		
+		<input type="hidden" value="${dataDate}" name="createDate">
 		<div id="food">
 			<h2>食事記録</h2>
 			<a href="statistics">統計</a>
@@ -82,8 +82,7 @@
 							id="amountMor_${bStatus.index}"
 							onchange="calcCalorieMor(${bStatus.index})">人前＝
 						<span id="calorieMor_${bStatus.index}">${breakfastRecord.value2 * breakfastRecord.value3}</span>kcal
-						<input type="hidden" value="${breakfastRecord.createDate}"
-							name="createDate"> <input type="checkbox" value="del"
+					 <input type="checkbox" value="del"
 							name="delBre${bStatus.index}">削除 <input type="checkbox"
 							value="${1}">簡易登録<a href="information.jsp">?</a>
 					</p>
@@ -108,8 +107,7 @@
 							id="amountLun_${lStatus.index}"
 							onchange="calcCalorieLun(${lStatus.index})">人前＝
 						<span id="calorieLun_${lStatus.index}">${lunchRecord.value2 * lunchRecord.value3}</span>kcal
-						<input type="hidden" value="${lunchRecord.createDate}"
-							name="createDate"> <input type="checkbox" value="del"
+						<input type="checkbox" value="del"
 							name="delLun${lStatus.index}">削除 <input type="checkbox"
 							value="${1}">簡易登録<a href="information.jsp">?</a>
 					</p>
@@ -134,8 +132,7 @@
 							id="amountDin_${dStatus.index}"
 							onchange="calcCalorieDin(${dStatus.index})" />人前＝ <span
 							id="calorieDin_${dStatus.index}">${dinnerRecord.value2 * dinnerRecord.value3}</span>kcal
-						<input type="hidden" value="${dinnerRecord.createDate}"
-							name="createDate"> <input type="checkbox" value="del"
+						<input type="checkbox" value="del"
 							name="delDin${dStatus.index}">削除 <input type="hidden"
 							value="${dStatus.index + 100}" id="dIndex"> <input
 							type="checkbox" value="${1}">簡易登録<a
@@ -162,8 +159,7 @@
 							id="amountSna_${sStatus.index}"
 							onchange="calcCalorieSna(${sStatus.index})" />人前＝ <span
 							id="calorieSna_${sStatus.index}">${snackRecord.value2 * snackRecord.value3}</span>kcal
-						<input type="hidden" value="${snackRecord.createDate}"
-							name="createDate"> <input type="checkbox" value="del"
+						<input type="checkbox" value="del"
 							name="delSna${sStatus.index}">削除 <input type="checkbox"
 							value="${1}">簡易登録<a href="information.jsp">?</a>
 					</p>
@@ -188,8 +184,7 @@
 						name="value3Spo${spStatus.index}"
 						id="time_${sportRecord.listsAndRecordsId}"
 						onchange="calcUsedCalorie(${sportRecord.listsAndRecordsId})" />分運動しました。
-					<input type="hidden" value="${sportRecord.createDate}"
-						name="createDate"> <span
+					<span
 						id="calorie_${sportRecord.listsAndRecordsId}">${weightRecord.value2 * sportRecord.value2 * sportRecord.value3 / 60 * 1.05}</span>kcal消費
 					<input type="checkbox" value="del" name="delSpo${spStatus.index}">削除
 				</p>
@@ -200,8 +195,7 @@
 			<a href="statistics">統計</a>
 			<p>
 				<input type="number" min="0" value="${smokeRecord.value3}"
-					name="value3Smo">本吸いました <input type="hidden"
-					value="${smokeRecord.createDate}" name="createDate">
+					name="value3Smo">本吸いました
 			</p>
 		</div>
 		<div id="alcohol">
@@ -225,9 +219,8 @@
 						id="onceAmount_${alcoholRecord.listsAndRecordsId}">ml/杯を <input
 						type="number" min="0.1" step="0.1" value="${alcoholRecord.value3}"
 						name="value3Alc${aStatus.index}"
-						id="amount_${alcoholRecord.listsAndRecordsId}">杯飲みました。 <input
-						type="hidden" value="${alcoholRecord.createDate}"
-						name="createDate"> <input type="checkbox" value="del"
+						id="amount_${alcoholRecord.listsAndRecordsId}">杯飲みました。
+						<input type="checkbox" value="del"
 						name="delAlc${aStatus.index}">削除 <input type="checkbox"
 						value="${1}">簡易登録<a href="information.jsp">?</a>
 				</p>
@@ -240,8 +233,7 @@
 				体重は<input type="number" min="1" value="${weightRecord.value2}"
 					name="value2Wei" id="weightRecord" step="0.1" />kg、体脂肪率は<input
 					type="number" min="0.1" value="${weightRecord.value3}"
-					name="value3Wei" step="0.1" />%です。 <input type="hidden"
-					value="${weightRecord.createDate}" name="createDate">
+					name="value3Wei" step="0.1" />%です。
 			</p>
 		</div>
 		<input type="submit" value="登録">
