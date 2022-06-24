@@ -65,25 +65,6 @@ public class IndexController {
 			return "login";
 		}
 		
-		//以下にDBから取得してきた画像のパスを入れる。
-		//（まっしーへ　ここに取ってきた画像のパスを入れるまでお願いします。）
-		
-		String lungImg = "../../images/lung.png";
-		String livarImg = "../../images/livar1.png" ;
-		String stomachImg = "../../images/stomach.png" ;
-		String bmiImg = "../../images/BMI_under18.png" ;
-		
-		//ここでsessionに画像のパスを保存する。
-		//session.setAttribute("lungImg", lungImg);
-		//session.setAttribute("livarImg", livarImg);
-		//session.setAttribute("stomachImg", stomachImg);
-		//session.setAttribute("bmiImg", bmiImg);
-		
-		
-		model.addAttribute("lungImg",lungImg );
-		model.addAttribute("livarImg",livarImg );
-		model.addAttribute("stomachImg",stomachImg );
-		model.addAttribute("bmiImg",bmiImg );
 		
 		User user = userDao.findIdAndPass(form.getMail(), form.getPassword());
 
@@ -101,6 +82,46 @@ public class IndexController {
     	else {
     		
     		session.setAttribute("user", user);
+    		
+    		//以下にDBから取得してきた画像のパスを入れる。
+    		//（まっしーへ　ここに取ってきた画像のパスを入れるまでお願いします。）
+    		
+    		String lungImg = "../../images/lung.png";
+    		String livarImg = "../../images/livar1.png" ;
+    		String stomachImg = "../../images/stomach.png" ;
+    		String bmiImg = "../../images/BMI_under18.png" ;
+    		
+    		//ここでsessionに画像のパスを保存する。
+    		//session.setAttribute("lungImg", lungImg);
+    		//session.setAttribute("livarImg", livarImg);
+    		//session.setAttribute("stomachImg", stomachImg);
+    		//session.setAttribute("bmiImg", bmiImg);
+    		
+    		
+    		String lungWord = "禁煙○○日目です";
+    		String livarWord = "禁酒○○日目です。" ;
+    		String stomachGoalkcal = "目標摂取カロリーは○○Kcalです。" ;
+    		String stomachInputKcal = "摂取カロリーは○○Kcalです。" ;
+    		String stomachOutputKcal = "消費カロリーは○○Kcalです。" ;
+    		
+    		//ツールチップに表示する項目をsessionに保存する
+    		//session.setAttribute("lungWord", lungWord);
+    		//session.setAttribute("livarWord", livarWord);
+    		//session.setAttribute("stomachGoalkcal", stomachGoalkcal);
+    		//session.setAttribute("stomachInputKcal", stomachInputKcal);
+    		//session.setAttribute("stomachOutputKcal", stomachOutputKcal);
+    		
+    		model.addAttribute("lungImg",lungImg );
+    		model.addAttribute("livarImg",livarImg );
+    		model.addAttribute("stomachImg",stomachImg );
+    		model.addAttribute("bmiImg",bmiImg );
+    		
+    		model.addAttribute("lungWord", lungWord);
+    		model.addAttribute("livarWord", livarWord);
+    		model.addAttribute("stomachGoalkcal", stomachGoalkcal);
+    		model.addAttribute("stomachInputKcal", stomachInputKcal);
+    		model.addAttribute("stomachOutputKcal", stomachOutputKcal);
+    		
     		return "menu";
     	}
     }

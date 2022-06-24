@@ -57,9 +57,28 @@
 			</div>
 			
 			<div class="human-box">
-				<img src="${lungImg}" alt="#" class="lung-img img">
-				<img src="${livarImg}" alt="#" class="livar-img img">
-				<img src="${stomachImg}" alt="#" class="stomach-img img">
+				<div class="tooltip">
+					<div class="description">
+					 	<p>${lungWord}</p>
+					</div>
+					<img src="${lungImg}" alt="#" class="lung-img">
+				</div>
+				
+				<div class="tooltip">
+					<div class="description">
+						<p>${livarWord}</p>
+					</div>
+					<img src="${livarImg}" alt="#" class="livar-img">
+				</div>
+				
+				<div class="tooltip">
+					<div class="description">
+						<p>${stomachGoalkcal}</p>
+						<p>${stomachInputKcal}</p>
+						<p>${stomachOutputKcal}</p>
+					</div>
+					<img src="${stomachImg}" alt="#" class="stomach-img">
+				</div>
 			</div>
 	
 			<div class="bmi-human-box">
