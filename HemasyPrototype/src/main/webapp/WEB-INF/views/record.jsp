@@ -57,6 +57,7 @@
 		<input type="date" name="record_day">
 	</form>
 	<form action="recordCommit" method="post">
+		
 		<div id="food">
 			<h2>食事記録</h2>
 			<a href="statistics">統計</a>
@@ -73,14 +74,14 @@
 							name="value1Bre${bStatus.index}"> <input type="number"
 							min="0" value="${breakfastRecord.value2}"
 							name="value2Bre${bStatus.index}"
-							id="onceCal_${breakfastRecord.listsAndRecordsId}"
-							onchange="calcCalorie(${breakfastRecord.listsAndRecordsId})">kcal
+							id="onceCalMor_${bStatus.index}"
+							onchange="calcCalorieMor(${bStatus.index})">kcal
 						× <input type="number" min="0.1" step="0.1"
 							value="${breakfastRecord.value3}"
 							name="value3Bre${bStatus.index}"
-							id="amount_${breakfastRecord.listsAndRecordsId}"
-							onchange="calcCalorie(${breakfastRecord.listsAndRecordsId})">人前＝
-						<span id="calorie_${breakfastRecord.listsAndRecordsId}">${breakfastRecord.value2 * breakfastRecord.value3}</span>kcal
+							id="amountMor_${bStatus.index}"
+							onchange="calcCalorieMor(${bStatus.index})">人前＝
+						<span id="calorieMor_${bStatus.index}">${breakfastRecord.value2 * breakfastRecord.value3}</span>kcal
 						<input type="hidden" value="${breakfastRecord.createDate}"
 							name="createDate"> <input type="checkbox" value="del"
 							name="delBre${bStatus.index}">削除 <input type="checkbox"
@@ -100,13 +101,13 @@
 							name="value1Lun${lStatus.index}"> <input type="number"
 							min="0" value="${lunchRecord.value2}"
 							name="value2Lun${lStatus.index}"
-							id="onceCal_${lunchRecord.listsAndRecordsId}"
-							onchange="calcCalorie(${lunchRecord.listsAndRecordsId})">kcal
+							id="onceCalLun_${lStatus.index}"
+							onchange="calcCalorieLun(${lStatus.index})">kcal
 						× <input type="number" min="0.1" step="0.1"
 							value="${lunchRecord.value3}" name="value3Lun${lStatus.index}"
-							id="amount_${lunchRecord.listsAndRecordsId}"
-							onchange="calcCalorie(${lunchRecord.listsAndRecordsId})">人前＝
-						<span id="calorie_${lunchRecord.listsAndRecordsId}">${lunchRecord.value2 * lunchRecord.value3}</span>kcal
+							id="amountLun_${lStatus.index}"
+							onchange="calcCalorieLun(${lStatus.index})">人前＝
+						<span id="calorieLun_${lStatus.index}">${lunchRecord.value2 * lunchRecord.value3}</span>kcal
 						<input type="hidden" value="${lunchRecord.createDate}"
 							name="createDate"> <input type="checkbox" value="del"
 							name="delLun${lStatus.index}">削除 <input type="checkbox"
@@ -126,13 +127,13 @@
 							name="value1Din${dStatus.index}"> <input type="number"
 							min="0" value="${dinnerRecord.value2}"
 							name="value2Din${dStatus.index}"
-							id="onceCal_${dinnerRecord.listsAndRecordsId}"
-							onchange="calcCalorie(${dinnerRecord.listsAndRecordsId})" />kcal
+							id="onceCalDin_${dStatus.index}"
+							onchange="calcCalorieDin(${dStatus.index})" />kcal
 						× <input type="number" min="0.1" step="0.1"
 							value="${dinnerRecord.value3}" name="value3Din${dStatus.index}"
-							id="amount_${dinnerRecord.listsAndRecordsId}"
-							onchange="calcCalorie(${dinnerRecord.listsAndRecordsId})" />人前＝ <span
-							id="calorie_${dinnerRecord.listsAndRecordsId}">${dinnerRecord.value2 * dinnerRecord.value3}</span>kcal
+							id="amountDin_${dStatus.index}"
+							onchange="calcCalorieDin(${dStatus.index})" />人前＝ <span
+							id="calorieDin_${dStatus.index}">${dinnerRecord.value2 * dinnerRecord.value3}</span>kcal
 						<input type="hidden" value="${dinnerRecord.createDate}"
 							name="createDate"> <input type="checkbox" value="del"
 							name="delDin${dStatus.index}">削除 <input type="hidden"
@@ -154,13 +155,13 @@
 							name="value1Sna${sStatus.index}"> <input type="number"
 							min="0" value="${snackRecord.value2}"
 							name="value2Sna${sStatus.index}"
-							id="onceCal_${snackRecord.listsAndRecordsId}"
-							onchange="calcCalorie(${snackRecord.listsAndRecordsId})" />kcal ×
+							id="onceCalSna_${sStatus.index}"
+							onchange="calcCalorieSna(${sStatus.index})" />kcal ×
 						<input type="number" min="0.1" step="0.1"
 							value="${snackRecord.value3}" name="value3Sna${sStatus.index}"
-							id="amount_${snackRecord.listsAndRecordsId}"
-							onchange="calcCalorie(${snackRecord.listsAndRecordsId})" />人前＝ <span
-							id="calorie_${snackRecord.listsAndRecordsId}">${snackRecord.value2 * snackRecord.value3}</span>kcal
+							id="amountSna_${sStatus.index}"
+							onchange="calcCalorieSna(${sStatus.index})" />人前＝ <span
+							id="calorieSna_${sStatus.index}">${snackRecord.value2 * snackRecord.value3}</span>kcal
 						<input type="hidden" value="${snackRecord.createDate}"
 							name="createDate"> <input type="checkbox" value="del"
 							name="delSna${sStatus.index}">削除 <input type="checkbox"
@@ -261,12 +262,12 @@
 		  newP.innerHTML =
 		'<input name="value1Bre' + mnum +
 		'"><input type="number" min="0" name="value2Bre' + mnum + 
-		'" id="onceCal_' + mnum +
-		'" onchange="calcCalorie(' + mnum +
+		'" id="onceCalMor_' + mnum +
+		'" onchange="calcCalorieMor(' + mnum +
 		')">kcal ×<input type="number" min="0.1" step="0.1" name="value3Bre' + mnum + 
-		'" id="amount_' + mnum + 
-		'" onchange="calcCalorie(' + mnum +
-		')">人前＝ <span id="calorie_' + mnum +
+		'" id="amountMor_' + mnum + 
+		'" onchange="calcCalorieMor(' + mnum +
+		')">人前＝ <span id="calorieMor_' + mnum +
 		'"></span>kcal<input type="hidden" name="createDate">' +
 		'<input type="checkbox" value="del" name="delBre' + mnum +
 		'">削除<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>';
@@ -283,12 +284,12 @@
 	  	newP.innerHTML =
 		 	'<input name="value1Lun' + lnum +
 			'"><input type="number" min="0" name="value2Lun' + lnum + 
-			'" id="onceCal_' + lnum +
-			'" onchange="calcCalorie(' + lnum +
+			'" id="onceCalLun_' + lnum +
+			'" onchange="calcCalorieLun(' + lnum +
 			')">kcal ×<input type="number" min="0.1" step="0.1" name="value3Lun' + lnum + 
-			'" id="amount_' + lnum + 
-			'" onchange="calcCalorie(' + lnum +
-			')">人前＝ <span id="calorie_' + lnum +
+			'" id="amountLun_' + lnum + 
+			'" onchange="calcCalorieLun(' + lnum +
+			')">人前＝ <span id="calorieLun_' + lnum +
 			'"></span>kcal<input type="hidden" name="createDate">' +
 			'<input type="checkbox" value="del" name="delLun' + lnum +
 			'">削除<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>';
@@ -305,12 +306,12 @@
 	  newP.innerHTML =
 		    '<input name="value1Din' + dnum +
 			'"><input type="number" min="0" name="value2Din' + dnum + 
-			'" id="onceCal_' + dnum +
-			'" onchange="calcCalorie(' + dnum +
+			'" id="onceCalDin_' + dnum +
+			'" onchange="calcCalorieDin(' + dnum +
 			')">kcal ×<input type="number" min="0.1" step="0.1" name="value3Din' + dnum + 
-			'" id="amount_' + dnum + 
-			'" onchange="calcCalorie(' + dnum +
-			')">人前＝ <span id="calorie_' + dnum +
+			'" id="amountDin_' + dnum + 
+			'" onchange="calcCalorieDin(' + dnum +
+			')">人前＝ <span id="calorieDin_' + dnum +
 			'"></span>kcal<input type="hidden" name="createDate">' +
 			'<input type="checkbox" value="del" name="delDin' + dnum +
 			'">削除<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>';
@@ -327,12 +328,12 @@
 	  newP.innerHTML =
 		    '<input name="value1Sna' + snum +
 			'"><input type="number" min="0" name="value2Sna' + snum + 
-			'" id="onceCal_' + snum +
-			'" onchange="calcCalorie(' + snum +
+			'" id="onceCalSna_' + snum +
+			'" onchange="calcCalorieSna(' + snum +
 			')">kcal ×<input type="number" min="0.1" step="0.1" name="value3Sna' + snum + 
-			'" id="amount_' + snum + 
-			'" onchange="calcCalorie(' + snum +
-			')">人前＝ <span id="calorie_' + snum +
+			'" id="amountSna_' + snum + 
+			'" onchange="calcCalorieSna(' + snum +
+			')">人前＝ <span id="calorieSna_' + snum +
 			'"></span>kcal<input type="hidden" name="createDate">' +
 			'<input type="checkbox" value="del" name="delSna' + snum +
 			'">削除<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>';
@@ -404,9 +405,32 @@
 	}
 	
 	/* 摂取カロリー計算 */
-	function calcCalorie(id){
+	function calcCalorieMor(id){
 		console.log(id);
-	    document.getElementById('calorie_' + id).innerHTML = document.getElementById('onceCal_' + id).value * document.getElementById('amount_' + id).value;
+		console.log('一戸カロリー' + document.getElementById('onceCalMor_' + id).value);
+		console.log('人前' + document.getElementById('amountMor_' + id).value);
+	    document.getElementById('calorieMor_' + id).innerHTML = document.getElementById('onceCalMor_' + id).value * document.getElementById('amountMor_' + id).value;
+	}
+	
+	function calcCalorieLun(id){
+		console.log(id);
+		console.log('一戸カロリー' + document.getElementById('onceCalLun_' + id).value);
+		console.log('人前' + document.getElementById('amountLun_' + id).value);
+	    document.getElementById('calorieLun_' + id).innerHTML = document.getElementById('onceCalLun_' + id).value * document.getElementById('amountLun_' + id).value;
+	}
+	
+	function calcCalorieDin(id){
+		console.log(id);
+		console.log('一戸カロリー' + document.getElementById('onceCalDin_' + id).value);
+		console.log('人前' + document.getElementById('amountDin_' + id).value);
+	    document.getElementById('calorieDin_' + id).innerHTML = document.getElementById('onceCalDin_' + id).value * document.getElementById('amountDin_' + id).value;
+	}
+	
+	function calcCalorieSna(id){
+		console.log(id);
+		console.log('一戸カロリー' + document.getElementById('onceCalSna_' + id).value);
+		console.log('人前' + document.getElementById('amountSna_' + id).value);
+	    document.getElementById('calorieSna_' + id).innerHTML = document.getElementById('onceCalSna_' + id).value * document.getElementById('amountSna_' + id).value;
 	}
 	
 	/* 消費カロリー計算 */

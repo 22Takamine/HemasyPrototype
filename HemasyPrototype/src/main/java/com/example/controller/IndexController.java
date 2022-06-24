@@ -102,7 +102,8 @@ public class IndexController {
 		System.out.println(dinnerRecordList.size());
 
 		System.out.println(snackRecordList.size());
-
+		
+		model.addAttribute("dataDate", Date.valueOf("2022-06-20"));
 		model.addAttribute("breakfastRecordList", breakfastRecordList);
 		model.addAttribute("lunchRecordList", lunchRecordList);
 		model.addAttribute("dinnerRecordList", dinnerRecordList);
