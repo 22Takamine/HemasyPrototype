@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.dao.AchievementsDao;
 import com.example.dao.InformationDao;
 import com.example.dao.ListAndRecordDao;
 import com.example.dao.UserDao;
+import com.example.entity.Achievements;
 import com.example.entity.ListAndRecord;
 import com.example.entity.Rank;
 import com.example.entity.User;
@@ -50,6 +52,8 @@ public class IndexController {
 	@Autowired
 	UserDao userDao;
 	
+	@Autowired
+	AchievementsDao achievementsDao;
 	
 
 	//最初にここにきて、login画面にいく
@@ -340,7 +344,11 @@ public class IndexController {
 	//ハンバーガーメニューからアカウント管理へ
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
 	public String account(@ModelAttribute("index") UserForm form, Model model) {
-		
+		User user = (User) session.getAttribute("user");
+		List<Achievements> achievements = null;
+		achievements = achievementsDao.findByAll();
+		session.setAttribute("achievementsList",achievements);
+		model.addAttribute("achievementName",achievementsDao.findById(user.getAchievementId()).getAchievementName());
 		return "account";
 	}
 		
@@ -366,7 +374,8 @@ public class IndexController {
     	Integer alcohol = form.getAlcoholFlag();
     	
     	userDao.update(id, name, mail, pass, sex, birthDate, height, achievementId, time, calorise, rank, smoke, alcohol);
-    	 
+    	User user = userDao.findById(id);
+    	session.setAttribute("user", user);
         return "menu";
     }
     

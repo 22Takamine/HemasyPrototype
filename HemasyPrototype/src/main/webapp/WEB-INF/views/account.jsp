@@ -12,6 +12,9 @@
 <link href="css/commons.css" rel="stylesheet">
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header>
@@ -86,9 +89,53 @@
     
     <div>
 		<fmt:message key="form.lbl.achievement"/>
-		<form:input type="text" path="achievementId" value="${user.getAchievementId()}"/>
-		<form:errors path="achievementId" cssStyle="color: red"/>
 <%-- 		<input type="text" name="achievementId" value="${user.getAchievementFlag()}">       --%>
+		<div id="open">
+	      称号
+	    </div>
+	    <div id="mask" class="hidden"></div>
+	    <section id="modal" class="hidden">
+	    
+	    <table>
+	      <thead>
+	        <tr>
+	          <th>称号ID</th>
+	          <th>称号名</th>
+	          <th>条件</th>
+	          <th>チェック</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        	<c:forEach var="achievements" items="${achievementsList}">
+	          		<tr>
+			            <td>${achievements.achievementId}</td>
+			            <td>${achievements.achievementName}</td>
+			            <td>${achievements.requirementToGet}</td>
+			            <td>
+				            <c:choose>
+				            	<c:when test="${achievements.achievementId == user.getAchievementId()}">
+				            		<form:radiobutton path="achievementId" value="${achievements.achievementId}" checked="checked"/>
+				            	</c:when>
+				            
+				            	<c:otherwise>
+				            		<form:radiobutton path="achievementId" value="${achievements.achievementId}"/>
+				            	</c:otherwise>
+				            	
+				            </c:choose>
+			            </td>
+	          		</tr>
+	          	</c:forEach>
+	      </tbody>
+	    </table>
+	    
+	    <div id="close" onclick="getAchievementName()">
+	      閉じる
+	    </div>
+	    </section>
+	    
+	    <input type=text value="${achievementName}" readonly="readonly" id="tatsuki">
+	    <form:errors path="achievementId" cssStyle="color: red"/>
+	    
     </div>
     
     <div>
@@ -159,6 +206,26 @@
   </form:form>
   </div>
 
+<script>
+let achievementList;
+let achievementName;
+function getAchievementName() {
+	fetch('/getAchivementName?id=' + Array.from(document.getElementsByName("achievementId")).find(e => e.checked).value)
+	.then(
+		res => res.json().then(
+			data => {
+				achievementList = data
+				achievementName = achievementList.achievementName
+				console.log(achievementName)
+				console.log(Array.from(document.getElementsByName("achievementId")).find(e => e.checked).value)
+				let tatsuki = document.getElementById("tatsuki");
+				tatsuki.value= (achievementName);
+			},
+
+		)
+	)
+};
+</script>
 <script src="js/commons.js"></script>
 </body>
 </html>

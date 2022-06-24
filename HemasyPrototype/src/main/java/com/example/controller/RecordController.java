@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.dao.AchievementsDao;
 import com.example.dao.ListAndRecordDao;
+import com.example.entity.Achievements;
 import com.example.entity.CommonRecord;
 
 
@@ -28,6 +30,9 @@ public class RecordController {
     
     @Autowired
 	HttpSession session; 
+    
+    @Autowired
+	AchievementsDao achievementsDao;
     
     @RequestMapping("/getFoodList")
     public List<CommonRecord> getFoodList(@RequestParam("id") int id) {
@@ -52,10 +57,16 @@ public class RecordController {
     @RequestMapping("/getBmiList")
     public List<CommonRecord> getBmiList(@RequestParam("id") int id) {
     	return listAndRecordDao.getBmiRecords(id);
+    
     }
     
-}
+    @RequestMapping("/getAchivementName")
+    public Achievements getAchievement(@RequestParam("id") int id) {
+    	return achievementsDao.findById(id);
 
+    }
+
+}
 
 
 

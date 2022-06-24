@@ -35,8 +35,10 @@ public class UserForm {
 	@NotNull
 	private Double weight;
 
-	private Integer userId;
+	@NotNull
 	private Integer achievementId;
+	
+	private Integer userId;
 	private Integer goalExerciseTime;
 	private Integer goalCalorise;
 	private Integer rankFlag;
