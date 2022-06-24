@@ -32,6 +32,42 @@
 </header>
   <div class="main">
   <h2>管理者お問い合わせ</h2>
+  
+  <table>
+	      <thead>
+	        <tr>
+	          <th>No.</th>
+	          <th>ユーザー名</th>
+	          <th>メールアドレス</th>
+	          <th>チェック</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        	<c:forEach var="achievements" items="${achievementsList}">
+	          		<tr>
+			            <td>${achievements.achievementId}</td>
+			            <td>${achievements.achievementName}</td>
+			            <td>${achievements.requirementToGet}</td>
+			            <td>
+				            <c:choose>
+				            	<c:when test="${achievements.achievementId == user.getAchievementId()}">
+				            		<form:radiobutton path="achievementId" value="${achievements.achievementId}" checked="checked"/>
+				            	</c:when>
+				            
+				            	<c:otherwise>
+				            		<form:radiobutton path="achievementId" value="${achievements.achievementId}"/>
+				            	</c:otherwise>
+				            	
+				            </c:choose>
+			            </td>
+	          		</tr>
+	          	</c:forEach>
+	      </tbody>
+	</table>
+  
+  
+  
+  
   <form:form action="process" modelAttribute="index" method="post">
     <form:button><fmt:message key="form.lbl.process"/></form:button>
   </form:form>
