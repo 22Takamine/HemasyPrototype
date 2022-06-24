@@ -60,6 +60,26 @@ public class IndexController {
 		if (form.getMail().equals("1") && form.getPass().equals("1")) {
 			return "admin";
 		}
+		
+		//以下にDBから取得してきた画像のパスを入れる。
+		//（まっしーへ　ここに取ってきた画像のパスを入れるまでお願いします。）
+		
+		String lungImg = "../../images/lung.png";
+		String livarImg = "../../images/livar1.png" ;
+		String stomachImg = "../../images/stomach.png" ;
+		String bmiImg = "../../images/BMI_under18.png" ;
+		
+		//ここでsessionに画像のパスを保存する。
+		//session.setAttribute("lungImg", lungImg);
+		//session.setAttribute("livarImg", livarImg);
+		//session.setAttribute("stomachImg", stomachImg);
+		//session.setAttribute("bmiImg", bmiImg);
+		
+		
+		model.addAttribute("lungImg",lungImg );
+		model.addAttribute("livarImg",livarImg );
+		model.addAttribute("stomachImg",stomachImg );
+		model.addAttribute("bmiImg",bmiImg );
 
 		return "menu";
 
@@ -72,15 +92,15 @@ public class IndexController {
 		return "register";
 	}
 
-	// 記録＆リスト画面に遷移
-	@RequestMapping(value = "/record", method = RequestMethod.POST)
+	// 記録＆リスト画面に遷移（ゆうちゃんへ、ここをPOSTからGETにしたよ）
+	@RequestMapping(value = "/record", method = RequestMethod.GET)
 	public String record(@ModelAttribute("index") UserForm form, Model model) {
 
 		return "record";
 	}
 
-	// 統計画面に遷移
-	@RequestMapping(value = "/statistics", method = RequestMethod.POST)
+	// 統計画面に遷移（ゆうちゃんへ、ここをPOSTからGETにしたよ）
+	@RequestMapping(value = "/statistics", method = RequestMethod.GET)
 	public String statistics(@ModelAttribute("index") UserForm form, Model model) {
 
 		return "statistics";
@@ -102,7 +122,7 @@ public class IndexController {
 
 	// お問い合わせ画面から登録ボタンでメニュー画面に遷移
 	@RequestMapping(value = "/information", method = RequestMethod.POST)
-	public String registInformation(@ModelAttribute("information") InformationForm Iform,@ModelAttribute("index") UserForm form, Model model) {
+	public String registInformation(@ModelAttribute("information") InformationForm Iform, @ModelAttribute("index") UserForm form, Model model) {
 		
 		// ここはログイン時にsession保存したユーザー情報を使って、user_idを取得する。
 		// User user = session.getAttribute("user",user);
@@ -121,7 +141,31 @@ public class IndexController {
 		
 		if(("正常に登録できました").equals(result)) {
 			
-			return "menu";
+			/*
+			 * ユーザーの状態に対応した画像のパスをsessionに保存しているからそれを取ってきて、
+			 * メインメニューページに表示する。今は画像をベタ打ちで入力している状態
+			 */
+				//肺の画像をsessionから取得する
+				//String lungImg = (String) session.getAttribute("lungImg");
+				//肝臓の画像をsessionから取得する
+				//String livarImg = (String) session.getAttribute("livarImg");
+				//胃の画像をsessionから取得する
+				//String stomachImg = (String) session.getAttribute("stomachImg");
+				//BMIの画像をsessionから取得する
+				//String bmiImg = (String) session.getAttribute("bmiImg");
+				
+				String lungImg = "../../images/lung.png";
+				String livarImg = "../../images/livar1.png" ;
+				String stomachImg = "../../images/stomach.png" ;
+				String bmiImg = "../../images/BMI_under18.png" ;
+				
+				model.addAttribute("lungImg",lungImg );
+				model.addAttribute("livarImg",livarImg );
+				model.addAttribute("stomachImg",stomachImg );
+				model.addAttribute("bmiImg",bmiImg );
+
+				return "menu";
+			
 		}else {
 			model.addAttribute("msg",result );
 			return "information";
