@@ -128,7 +128,7 @@ public class IndexController {
     }
 	
 	//記録＆リスト画面に遷移(ゆうちゃんへGETにしてね)
-	@RequestMapping(value = "/record", method = RequestMethod.POST)
+	@RequestMapping(value = "/record", method = RequestMethod.GET)
 	public String record(@ModelAttribute("record") ListAndRecordForm form, Model model) {
 		
 		List<ListAndRecord> breakfastRecordList = listAndRecordDao.getBreakfastRecords(2, Date.valueOf("2022-06-20"));
@@ -327,7 +327,7 @@ public class IndexController {
     }
     
     //統計画面に遷移（ゆうちゃんへ、GETにしてね）
-    @RequestMapping(value = "/statistics", method = RequestMethod.POST)
+    @RequestMapping(value = "/statistics", method = RequestMethod.GET)
     public String statistics(@ModelAttribute("index") UserForm form, Model model) {
     	
         return "statistics";
