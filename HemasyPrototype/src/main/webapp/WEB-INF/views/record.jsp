@@ -73,18 +73,16 @@
 						<input value="${breakfastRecord.value1}"
 							name="value1Bre${bStatus.index}"> <input type="number"
 							min="0" value="${breakfastRecord.value2}"
-							name="value2Bre${bStatus.index}"
-							id="onceCalMor_${bStatus.index}"
-							onchange="calcCalorieMor(${bStatus.index})">kcal
-						× <input type="number" min="0.1" step="0.1"
+							name="value2Bre${bStatus.index}" id="onceCalMor_${bStatus.index}"
+							onchange="calcCalorieMor(${bStatus.index})">kcal × <input
+							type="number" min="0.1" step="0.1"
 							value="${breakfastRecord.value3}"
-							name="value3Bre${bStatus.index}"
-							id="amountMor_${bStatus.index}"
-							onchange="calcCalorieMor(${bStatus.index})">人前＝
-						<span id="calorieMor_${bStatus.index}">${breakfastRecord.value2 * breakfastRecord.value3}</span>kcal
-					 <input type="checkbox" value="del"
-							name="delBre${bStatus.index}">削除 <input type="checkbox"
-							value="${1}">簡易登録<a href="information.jsp">?</a>
+							name="value3Bre${bStatus.index}" id="amountMor_${bStatus.index}"
+							onchange="calcCalorieMor(${bStatus.index})">人前＝ <span
+							id="calorieMor_${bStatus.index}">${breakfastRecord.value2 * breakfastRecord.value3}</span>kcal
+						<input type="checkbox" value="del" name="delBre${bStatus.index}">削除
+						<input type="checkbox" value="${1}">簡易登録<a
+							href="information.jsp">?</a>
 					</p>
 				</c:forEach>
 			</div>
@@ -99,17 +97,15 @@
 						<input value="${lunchRecord.value1}"
 							name="value1Lun${lStatus.index}"> <input type="number"
 							min="0" value="${lunchRecord.value2}"
-							name="value2Lun${lStatus.index}"
-							id="onceCalLun_${lStatus.index}"
-							onchange="calcCalorieLun(${lStatus.index})">kcal
-						× <input type="number" min="0.1" step="0.1"
-							value="${lunchRecord.value3}" name="value3Lun${lStatus.index}"
-							id="amountLun_${lStatus.index}"
-							onchange="calcCalorieLun(${lStatus.index})">人前＝
-						<span id="calorieLun_${lStatus.index}">${lunchRecord.value2 * lunchRecord.value3}</span>kcal
-						<input type="checkbox" value="del"
-							name="delLun${lStatus.index}">削除 <input type="checkbox"
-							value="${1}">簡易登録<a href="information.jsp">?</a>
+							name="value2Lun${lStatus.index}" id="onceCalLun_${lStatus.index}"
+							onchange="calcCalorieLun(${lStatus.index})">kcal × <input
+							type="number" min="0.1" step="0.1" value="${lunchRecord.value3}"
+							name="value3Lun${lStatus.index}" id="amountLun_${lStatus.index}"
+							onchange="calcCalorieLun(${lStatus.index})">人前＝ <span
+							id="calorieLun_${lStatus.index}">${lunchRecord.value2 * lunchRecord.value3}</span>kcal
+						<input type="checkbox" value="del" name="delLun${lStatus.index}">削除
+						<input type="checkbox" value="${1}">簡易登録<a
+							href="information.jsp">?</a>
 					</p>
 				</c:forEach>
 			</div>
@@ -124,18 +120,15 @@
 						<input value="${dinnerRecord.value1}"
 							name="value1Din${dStatus.index}"> <input type="number"
 							min="0" value="${dinnerRecord.value2}"
-							name="value2Din${dStatus.index}"
-							id="onceCalDin_${dStatus.index}"
-							onchange="calcCalorieDin(${dStatus.index})" />kcal
-						× <input type="number" min="0.1" step="0.1"
-							value="${dinnerRecord.value3}" name="value3Din${dStatus.index}"
-							id="amountDin_${dStatus.index}"
+							name="value2Din${dStatus.index}" id="onceCalDin_${dStatus.index}"
+							onchange="calcCalorieDin(${dStatus.index})" />kcal × <input
+							type="number" min="0.1" step="0.1" value="${dinnerRecord.value3}"
+							name="value3Din${dStatus.index}" id="amountDin_${dStatus.index}"
 							onchange="calcCalorieDin(${dStatus.index})" />人前＝ <span
 							id="calorieDin_${dStatus.index}">${dinnerRecord.value2 * dinnerRecord.value3}</span>kcal
-						<input type="checkbox" value="del"
-							name="delDin${dStatus.index}">削除 <input type="hidden"
-							value="${dStatus.index + 100}" id="dIndex"> <input
-							type="checkbox" value="${1}">簡易登録<a
+						<input type="checkbox" value="del" name="delDin${dStatus.index}">削除
+						<input type="hidden" value="${dStatus.index + 100}" id="dIndex">
+						<input type="checkbox" value="${1}">簡易登録<a
 							href="information.jsp">?</a>
 					</p>
 				</c:forEach>
@@ -151,17 +144,15 @@
 						<input value="${snackRecord.value1}"
 							name="value1Sna${sStatus.index}"> <input type="number"
 							min="0" value="${snackRecord.value2}"
-							name="value2Sna${sStatus.index}"
-							id="onceCalSna_${sStatus.index}"
-							onchange="calcCalorieSna(${sStatus.index})" />kcal ×
-						<input type="number" min="0.1" step="0.1"
-							value="${snackRecord.value3}" name="value3Sna${sStatus.index}"
-							id="amountSna_${sStatus.index}"
+							name="value2Sna${sStatus.index}" id="onceCalSna_${sStatus.index}"
+							onchange="calcCalorieSna(${sStatus.index})" />kcal × <input
+							type="number" min="0.1" step="0.1" value="${snackRecord.value3}"
+							name="value3Sna${sStatus.index}" id="amountSna_${sStatus.index}"
 							onchange="calcCalorieSna(${sStatus.index})" />人前＝ <span
 							id="calorieSna_${sStatus.index}">${snackRecord.value2 * snackRecord.value3}</span>kcal
-						<input type="checkbox" value="del"
-							name="delSna${sStatus.index}">削除 <input type="checkbox"
-							value="${1}">簡易登録<a href="information.jsp">?</a>
+						<input type="checkbox" value="del" name="delSna${sStatus.index}">削除
+						<input type="checkbox" value="${1}">簡易登録<a
+							href="information.jsp">?</a>
 					</p>
 				</c:forEach>
 			</div>
@@ -179,13 +170,11 @@
 					<input value="${sportRecord.value1}"
 						name="value1Spo${spStatus.index}">を <input type="hidden"
 						value="${sportRecord.value2}" name="value2Spo${spStatus.index}"
-						id="mets_${sportRecord.listsAndRecordsId}"> <input
-						type="number" min="1" value="${sportRecord.value3}"
-						name="value3Spo${spStatus.index}"
-						id="time_${sportRecord.listsAndRecordsId}"
-						onchange="calcUsedCalorie(${sportRecord.listsAndRecordsId})" />分運動しました。
-					<span
-						id="calorie_${sportRecord.listsAndRecordsId}">${weightRecord.value2 * sportRecord.value2 * sportRecord.value3 / 60 * 1.05}</span>kcal消費
+						id="mets_${spStatus.index}"> <input type="number" min="1"
+						value="${sportRecord.value3}" name="value3Spo${spStatus.index}"
+						id="time_${spStatus.index}"
+						onchange="calcUsedCalorie(${spStatus.index})" />分運動しました。 <span
+						id="calorie_${spStatus.index}">${weightRecord.value2 * sportRecord.value2 * sportRecord.value3 / 60 * 1.05}</span>kcal消費
 					<input type="checkbox" value="del" name="delSpo${spStatus.index}">削除
 				</p>
 			</c:forEach>
@@ -209,20 +198,21 @@
 				<p class="alcoholData">
 					<input value="${alcoholRecord.value1}"
 						name="value1Alc${aStatus.index}"> <input type="number"
-						min="0.1" value="${alcoholRecord.value4}"
-						name="value4Alc${aStatus.index}"
-						id="oncePer_${alcoholRecord.listsAndRecordsId}" step="0.1">%
-					<input type="number" min="0" value="${alcoholRecord.value5}"
+						min="0.1" max="100" value="${alcoholRecord.value4}"
+						name="value4Alc${aStatus.index}" id="oncePer_${aStatus.index}"
+						step="0.1" onchange="calcAlc(${aStatus.index})">% <input
+						type="number" min="0" value="${alcoholRecord.value5}"
 						name="value5Alc${aStatus.index}">kcal/杯 <input
 						type="number" min="1" value="${alcoholRecord.value2}"
-						name="value2Alc${aStatus.index}"
-						id="onceAmount_${alcoholRecord.listsAndRecordsId}">ml/杯を <input
+						name="value2Alc${aStatus.index}" id="onceAmount_${aStatus.index}"
+						onchange="calcAlc(${aStatus.index})">ml/杯を <input
 						type="number" min="0.1" step="0.1" value="${alcoholRecord.value3}"
-						name="value3Alc${aStatus.index}"
-						id="amount_${alcoholRecord.listsAndRecordsId}">杯飲みました。
-						<input type="checkbox" value="del"
-						name="delAlc${aStatus.index}">削除 <input type="checkbox"
-						value="${1}">簡易登録<a href="information.jsp">?</a>
+						name="value3Alc${aStatus.index}" id="amount_${aStatus.index}"
+						onchange="calcAlc(${aStatus.index})">杯飲みました。 アルコール <span
+						id="alcoholAmount_${aStatus.index}">${alcoholRecord.value2 * alcoholRecord.value3 * alcoholRecord.value4 / 100}</span>g
+					<input type="checkbox" value="del" name="delAlc${aStatus.index}">削除
+					<input type="checkbox" value="${1}">簡易登録<a
+						href="information.jsp">?</a>
 				</p>
 			</c:forEach>
 		</div>
@@ -260,7 +250,7 @@
 		'" id="amountMor_' + mnum + 
 		'" onchange="calcCalorieMor(' + mnum +
 		')">人前＝ <span id="calorieMor_' + mnum +
-		'"></span>kcal<input type="hidden" name="createDate">' +
+		'"></span>kcal' +
 		'<input type="checkbox" value="del" name="delBre' + mnum +
 		'">削除<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>';
 	  var parent = document.getElementById('food_bre');
@@ -282,7 +272,7 @@
 			'" id="amountLun_' + lnum + 
 			'" onchange="calcCalorieLun(' + lnum +
 			')">人前＝ <span id="calorieLun_' + lnum +
-			'"></span>kcal<input type="hidden" name="createDate">' +
+			'"></span>kcal' +
 			'<input type="checkbox" value="del" name="delLun' + lnum +
 			'">削除<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>';
 	  var parent = document.getElementById('food_lun');
@@ -304,7 +294,7 @@
 			'" id="amountDin_' + dnum + 
 			'" onchange="calcCalorieDin(' + dnum +
 			')">人前＝ <span id="calorieDin_' + dnum +
-			'"></span>kcal<input type="hidden" name="createDate">' +
+			'"></span>kcal' +
 			'<input type="checkbox" value="del" name="delDin' + dnum +
 			'">削除<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>';
 	  var parent = document.getElementById('food_din');
@@ -326,7 +316,7 @@
 			'" id="amountSna_' + snum + 
 			'" onchange="calcCalorieSna(' + snum +
 			')">人前＝ <span id="calorieSna_' + snum +
-			'"></span>kcal<input type="hidden" name="createDate">' +
+			'"></span>kcal' +
 			'<input type="checkbox" value="del" name="delSna' + snum +
 			'">削除<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>';
 	  var parent = document.getElementById('food_sna');
@@ -335,65 +325,47 @@
 	}
 	
 	/* 運動用処理追加処理 */
-	var i = document.getElementsByClassName('sportData').length + 1;
+	var spnum = document.getElementsByClassName('sportData').length;
 	function addSpoForm() {
 	  var newP = document.createElement('p');
-	  newDiv.innerHTML = '<p>\
-			<input type="text">を\
-			<input type="number">分運動しました。\
-			<input type="number" value="${100}">kcal\
-			</p>';
+	  newP.innerHTML =
+		  '<input name="value1Spo' + spnum +
+		  '">を <input type="hidden" name="value2Spo' + spnum +
+		  '"id="mets_' + spnum +
+		  '"> <input type="number" min="1" name="value3Spo' + spnum +
+		  '" id="time_' + spnum +
+		  '" onchange="calcUsedCalorie(' + spnum +
+		  ')" />分運動しました。<span id="calorie_' + spnum +
+		  '">${weightRecord.value2 * sportRecord.value2 * sportRecord.value3 / 60 * 1.05}</span>kcal消費' +
+		  '<input type="checkbox" value="del" name="delSpo' + spnum +
+		  '">削除';
 	  var parent = document.getElementById('sport');
-	  parent.appendChild(newDiv);
-	  var button_data = document.createElement('button');
-	  button_data.type = 'button';
-	  button_data.id = i;
-	  button_data.onclick = function(){deleteSpoBtn(this);}
-	  button_data.innerHTML = '削除';
-	  var input_area = document.getElementById(newDiv.id);
-	  parent.appendChild(button_data);
-	  i++ ;
-	}
-	function deleteSpoBtn(target) {
-	  var target_id = target.id;
-	  var parent = document.getElementById('sport');
-	  var ipt_id = document.getElementById('newSpo_' + target_id);
-	  var tgt_id = document.getElementById(target_id);
-	  parent.removeChild(ipt_id);
-	  parent.removeChild(tgt_id);	
+	  parent.appendChild(newP);
+	  spnum++ ;
 	}
 	
 	/* アルコール用処理追加処理 */
-	var i = document.getElementsByClassName('alcoholData').length;
+	var anum = document.getElementsByClassName('alcoholData').length;
 	function addAlcForm() {
-	  var newDiv = document.createElement('div');
-	  newDiv.id = 'newAlc_' + i;
-	  newDiv.innerHTML = '<p>\
-	  	<input type="text" value="${1}">\
-		<input type="number" value="${1}" step="0.1">%\
-		<input type="number" value="${1}">kcal/杯\
-		<input type="number" value="${1}">ml/杯を\
-		<input type="number" value="${1}">杯飲みました。\
-		<input type="checkbox" value="${1}">簡易登録<a href="information.jsp"></a>\
-		</p>';
+	  var newP = document.createElement('p');
+	  newP.innerHTML = 
+		  '<input name="value1Alc' + anum +
+		  '"> <input type="number" min="0.1" max="100" name="value4Alc' + anum +
+		  '"id="oncePer_' + anum +
+		  '" step="0.1" onchange="calcAlc(' + anum +
+		  ')">% <input type="number" min="0" name="value5Alc' + anum + 
+		  '">kcal/杯 <input type="number" min="1" name="value2Alc' + anum +
+		  '"id="onceAmount_' + anum + 
+		  '" onchange="calcAlc(' + anum +
+		  ')">ml/杯を <input type="number" min="0.1" step="0.1" name="value3Alc' + anum +
+		  '" id="amount_' + anum +
+		  '" onchange="calcAlc(' + anum +
+		  ')">杯飲みました。 アルコール<span id="alcoholAmount_' + anum +
+		  '"></span>g<input type="checkbox" value="del" name="delAlc' + anum +
+		  '">削除 <input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>';
 	  var parent = document.getElementById('alcohol');
-	  parent.appendChild(newDiv);
-	  var button_data = document.createElement('button');
-	  button_data.type = 'button';
-	  button_data.id = i;
-	  button_data.onclick = function(){deleteAlcBtn(this);}
-	  button_data.innerHTML = '削除';
-	  var input_area = document.getElementById(newDiv.id);
-	  parent.appendChild(button_data);
-	  i++ ;
-	}
-	function deleteAlcBtn(target) {
-	  var target_id = target.id;
-	  var parent = document.getElementById('alcohol');
-	  var ipt_id = document.getElementById('newAlc_' + target_id);
-	  var tgt_id = document.getElementById(target_id);
-	  parent.removeChild(ipt_id);
-	  parent.removeChild(tgt_id);
+	  parent.appendChild(newP);
+	  anum++ ;
 	}
 	
 	/* 摂取カロリー計算 */
@@ -428,6 +400,15 @@
 	/* 消費カロリー計算 */
 	function calcUsedCalorie(id) {
 		document.getElementById('calorie_' + id).innerHTML = document.getElementById('weightRecord').value * document.getElementById('mets_' + id).value * document.getElementById('time_' + id).value / 60 * 1.05;
+	}
+	
+	/* アルコール計算 */
+	function calcAlc(id) {
+		console.log(id);
+		console.log(document.getElementById('onceAmount_' + id).value);
+		console.log(document.getElementById('oncePer_' + id).value);
+		console.log(document.getElementById('alcoholAmount_' + id).className);
+		document.getElementById('alcoholAmount_' + id).innerHTML = document.getElementById('onceAmount_' + id).value * document.getElementById('oncePer_' + id).value * document.getElementById('amount_' + id).value / 100;
 	}
 	</script>
 	<script src="js/commons.js"></script>
