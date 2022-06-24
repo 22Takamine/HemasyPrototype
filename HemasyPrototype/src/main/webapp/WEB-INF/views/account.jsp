@@ -16,7 +16,7 @@
 <body>
 <header>
 	<div class="header-logo"><a href="./back">Hemasy</a></div>
-	<form:form action="hamburger" modelAttribute="account" method="post">
+	<form:form action="hamburger" modelAttribute="index" method="post">
 	    <button type="button" class="menu-btn">
 	      <i class="fa fa-bars" aria-hidden="true"></i>
 	    </button>
@@ -30,106 +30,123 @@
     </form:form>
 </header>
 	<div class="main">
-	<form:form action="recordRegist" modelAttribute="account" method="post">
-	<form:input path="id" type="hidden" value="${user.getId()}" />
+	<form:form action="accountRegist" modelAttribute="index" method="post">
+	<form:input path="userId" type="hidden" value="${user.getUserId()}" readonly="readonly" />
+<!-- 	UserFormの体重のバリデーションを通すために、仮のデータを挿入しています。 -->
+	<form:input path="weight" type="hidden" value="10" readonly="readonly" />
+
 	<div>
 		<fmt:message key="form.lbl.name"/>
-		<input type="text" name="name" value="${user.getUserName()}">      
+		<form:input type="text" path="name" value="${user.getUserName()}"/>
+		<form:errors path="name" cssStyle="color: red"/>
+<%-- 		<input type="text" name="name" value="${user.getUserName()}">       --%>
     </div>
     
     <div>
 		<fmt:message key="form.lbl.mail"/>
-		<input type="text" name="mail" value="${user.getMail()}">      
+		<form:input type="text" path="mail" value="${user.getMail()}"/>
+		<form:errors path="mail" cssStyle="color: red"/>
+<%-- 		<input type="text" name="mail" value="${user.getMail()}">       --%>
     </div>
     
     <div>
 		<fmt:message key="form.lbl.password"/>
-		<input type="text" name="pass" value="${user.getPassword()}">      
+		<form:input type="text" path="password" value="${user.getPassword()}"/>
+		<form:errors path="password" cssStyle="color: red"/>
+<%-- 		<input type="text" name="pass" value="${user.getPassword()}">       --%>
     </div>
     
     <div>
     	<fmt:message key="form.lbl.sex"/>
-    	<c:if test="${user.getSex() == 0}">   
-			<input type="radio" name="sex" value="men" checked>男      
-			<input type="radio" name="sex" value="women">女
+    	<c:if test="${user.getSex() == 0}">
+    		<form:radiobutton path="sex" value="0" checked="checked"/>男   
+    		<form:radiobutton path="sex" value="1"/>女   
+<!-- 			<input type="radio" name="sex" value="0" checked>男       -->
+<!-- 			<input type="radio" name="sex" value="1">女 -->
 		</c:if>
 		<c:if test="${user.getSex() == 1}">   
-			<input type="radio" name="sex" value="men">男      
-			<input type="radio" name="sex" value="women" checked>女 
+			<form:radiobutton path="sex" value="0"/>男   
+    		<form:radiobutton path="sex" value="1" checked="checked"/>女
 		</c:if>
     </div>
     
     <div>
 		<fmt:message key="form.lbl.birthDate"/>
-		<input type="date" name="birthDate" value="${user.getBirth()}">      
+		<form:input type="date" path="birthDate" value="${user.getBirth()}" readonly="readonly"/>
+		<form:errors path="birthDate" cssStyle="color: red"/>
+<%-- 		<input type="date" name="birthDate" value="${user.getBirth()}">       --%>
     </div>
     
     <div>
 		<fmt:message key="form.lbl.height"/>
-		<input type="text" name="height" value="${user.getHeight()}">      
+		<form:input type="text" path="height" value="${user.getHeight()}"/>cm
+		<form:errors path="height" cssStyle="color: red"/>
+<%-- 		<input type="text" name="height" value="${user.getHeight()}">       --%>
     </div>
     
     <div>
 		<fmt:message key="form.lbl.achievement"/>
-		<input type="text" name="achievementId" value="${user.getAchievementFlag()}">      
+		<form:input type="text" path="achievementId" value="${user.getAchievementId()}"/>
+		<form:errors path="achievementId" cssStyle="color: red"/>
+<%-- 		<input type="text" name="achievementId" value="${user.getAchievementFlag()}">       --%>
     </div>
     
     <div>
 		<fmt:message key="form.lbl.time"/>
-		<input type="text" name="goalExerciseTime" value="${user.getGoalExerciseTime()}">      
+		<form:input type="text" path="goalExerciseTime" value="${user.getGoalExerciseTime()}"/>分
+		<form:errors path="goalExerciseTime" cssStyle="color: red"/>
+<%-- 		<input type="text" name="goalExerciseTime" value="${user.getGoalExerciseTime()}">       --%>
     </div>
     
     <div>
 		<fmt:message key="form.lbl.calorie"/>
-		<input type="text" name="goalCalorise" value="${user.getGoalCalorie()}">      
+		<form:input type="text" path="goalCalorise" value="${user.getGoalCalorie()}"/>Kcal
+		<form:errors path="goalCalorise" cssStyle="color: red"/>
+<%-- 		<input type="text" name="goalCalorise" value="${user.getGoalCalorie()}">       --%>
     </div>
     
     <div>
     	<fmt:message key="form.lbl.rank"/>
-    	<c:if test="${user.getRankFlag() == 1}">   
-			<input type="radio" name="rank" value="yes" checked>参加する      
-			<input type="radio" name="rank" value="no">参加しない
+    	<c:if test="${user.getRankFlag() == 1}"> 
+    		<form:radiobutton path="rankFlag" value="1" checked="checked"/>参加する 
+    		<form:radiobutton path="rankFlag" value="0"/>参加しない     
+<!-- 			<input type="radio" name="rank" value="1" checked>参加する       -->
+<!-- 			<input type="radio" name="rank" value="0">参加しない -->
 		</c:if>
 		<c:if test="${user.getRankFlag() == 0}">   
-			<input type="radio" name="rank" value="yes">参加する      
-			<input type="radio" name="rank" value="no" checked>参加しない 
+			<form:radiobutton path="rankFlag" value="1" />参加する 
+    		<form:radiobutton path="rankFlag" value="0" checked="checked"/>参加しない
 		</c:if>
     </div>
     
     <div>
     	<fmt:message key="form.lbl.smoke"/>
-    	<c:if test="${user.getSmokeFlag() == 1}">   
-			<input type="radio" name="smoke" value="yes" checked>吸っている      
-			<input type="radio" name="smoke" value="no">吸わない
+    	<c:if test="${user.getSmokeFlag() == 1}"> 
+    		<form:radiobutton path="smokeFlag" value="1" checked="checked"/>吸っている 
+    		<form:radiobutton path="smokeFlag" value="0"/>吸わない   
+<!-- 			<input type="radio" name="smoke" value="1" checked>吸っている       -->
+<!-- 			<input type="radio" name="smoke" value="0">吸わない -->
 		</c:if>
 		<c:if test="${user.getSmokeFlag() == 0}">   
-			<input type="radio" name="smoke" value="yes">吸っている      
-			<input type="radio" name="smoke" value="no" checked>吸わない 
+			<form:radiobutton path="smokeFlag" value="1"/>吸っている 
+    		<form:radiobutton path="smokeFlag" value="0" checked="checked"/>吸わない  
 		</c:if>
     </div>
     
     <div>
     	<fmt:message key="form.lbl.alcohol"/>
-    	<c:if test="${user.getAlcoholFlag() == 1}">   
-			<input type="radio" name="alcohol" value="yes" checked>飲んでいる     
-			<input type="radio" name="alcohol" value="no">飲まない
+    	<c:if test="${user.getAlcoholFlag() == 1}">
+    		<form:radiobutton path="alcoholFlag" value="1" checked="checked"/>飲んでいる
+    		<form:radiobutton path="alcoholFlag" value="0"/>飲まない    
+<!-- 			<input type="radio" name="alcohol" value="1" checked>飲んでいる      -->
+<!-- 			<input type="radio" name="alcohol" value="0">飲まない -->
 		</c:if>
 		<c:if test="${user.getAlcoholFlag() == 0}">   
-			<input type="radio" name="alcohol" value="yes">飲んでいる      
-			<input type="radio" name="alcohol" value="no" checked>飲まない 
+			<form:radiobutton path="alcoholFlag" value="1"/>飲んでいる
+    		<form:radiobutton path="alcoholFlag" value="0" checked="checked"/>飲まない
 		</c:if>
     </div>
     
-    
-    
-    
-
-
-
-
-
-
-
 
 
 
@@ -137,7 +154,7 @@
     <form:button><fmt:message key="form.lbl.regist"/></form:button>
   </form:form>
   
-  <form:form action="back" modelAttribute="account" method="get">
+  <form:form action="back" modelAttribute="index" method="get">
     <form:button><fmt:message key="form.lbl.back"/></form:button>
   </form:form>
   </div>

@@ -9,5 +9,4 @@ public class HemasyPrototypeApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HemasyPrototypeApplication.class, args);
 	}
-
 }
