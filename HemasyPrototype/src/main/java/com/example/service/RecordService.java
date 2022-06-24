@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.dao.ListAndRecordDao;
-import com.example.entity.User;
 @Service
 public class RecordService {
 	@Autowired
@@ -12,9 +11,9 @@ public class RecordService {
 	
 	
 	//セッションからユーザー情報をとって、このメソッドの引数に渡して by kawamitsu
-	public void setZeroPastRecords(User user) {
+	public void setZeroPastRecords(int user_id) {
 		for(int i = 1 ; i < 6 ; i++) {
-			listAndRecord.setZero(user, i);
+			listAndRecord.setZero(user_id, i);
 		}		
 	}
 }

@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -29,30 +30,38 @@ public class RecordController {
     @Autowired
 	HttpSession session; 
     
-    @RequestMapping("/getFoodList")
-    public List<CommonRecord> getFoodList(@RequestParam("id") int id) {
-    	return listAndRecordDao.getFoodRecords(id);
+    @RequestMapping("/getFoodListWeek")
+    public List<CommonRecord> getFoodList(@RequestParam("id") int id, @RequestParam("day") Date day, @RequestParam("scope") String scopeStr) {
+    	int scope = Integer.parseInt(scopeStr);
+    	if (scope == 0) {
+    	return listAndRecordDao.getFoodRecordsOfWeek(id, day);
+    	}else if (scope == 1) {
+    		return listAndRecordDao.getFoodRecordsOfMonth(id,day);
+    	}else {
+    		return listAndRecordDao.getFoodRecordsOfYear(id,day);
+    	}
+	}
+    
+    @RequestMapping("/getExerciseListWeek")
+    public List<CommonRecord> getExerciseList(@RequestParam("id") int id, @RequestParam("day") Date day) {
+    	return listAndRecordDao.getExerciseRecordsOfWeek(id, day);
     }
     
-    @RequestMapping("/getExerciseList")
-    public List<CommonRecord> getExerciseList(@RequestParam("id") int id) {
-    	return listAndRecordDao.getExerciseRecords(id);
-    }
-    
-    @RequestMapping("/getAlcoholList")
-    public List<CommonRecord> getAlcoholList(@RequestParam("id") int id) {
-    	return listAndRecordDao.getAlcoholRecords(id);
+    @RequestMapping("/getAlcoholListWeek")
+    public List<CommonRecord> getAlcoholList(@RequestParam("id") int id, @RequestParam("day") Date day) {
+    	return listAndRecordDao.getAlcoholRecordsOfWeek(id, day);
     }
 
-    @RequestMapping("/getSmokeList")
-    public List<CommonRecord> getSmokeList(@RequestParam("id") int id) {
-    	return listAndRecordDao.getSmokeRecords(id);
+    @RequestMapping("/getSmokeListWeek")
+    public List<CommonRecord> getSmokeList(@RequestParam("id") int id, @RequestParam("day") Date day) {
+    	return listAndRecordDao.getSmokeRecordsOfWeek(id, day);
     }
     
-    @RequestMapping("/getBmiList")
-    public List<CommonRecord> getBmiList(@RequestParam("id") int id) {
-    	return listAndRecordDao.getBmiRecords(id);
+    @RequestMapping("/getBmiListWeek")
+    public List<CommonRecord> getBmiList(@RequestParam("id") int id, @RequestParam("day") Date day) {
+    	return listAndRecordDao.getBmiRecordsOfWeek(id, day);
     }
+
     
 }
 

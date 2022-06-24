@@ -44,6 +44,7 @@
 	<br>
 	<br>
 	<h1>統計</h1>
+	<input type="text" id="hide" value="0">
 	<div id="selectGraph">
 		<button data-index="food" onclick="entryClick(1)">食事</button>
 		<button data-index="exercise" onclick="entryClick(2)">運動</button>
@@ -51,14 +52,17 @@
 		<button data-index="smoke" onclick="entryClick(4)">タバコ</button>
 		<button data-index="bmi" onclick="entryClick(5)">体重</button>
 	</div>
-	<br>
+	<div onclick="poti()">
+<label><input type="radio" name="poti" value="0" checked>週</label>
+<label><input type="radio" name="poti" value="1">月</label>
+<label><input type="radio" name="poti" value="2">年</label>
+
+	</div>
 	<input type="button" value="左" onclick="getName()">
 	<input type="button" value="右"> ${name}
-<!-- 	<div> -->
-<!-- 		<input type="date" name="date" value="2022-01-01"> -->
-<!-- 		<p id="output">Change the Date</p> -->
-<!-- 		<input type="button" value="日付で検索" name="serch" onclick="serchByDate()"> -->
-<!-- 	</div> -->
+	<div>
+		<input type="date" id="date" value="${user.getCreatedAt()}">
+	</div>
 	<div style="width: 1000px">
 		<canvas id="foodGraph"></canvas>
 	</div>
@@ -74,24 +78,48 @@
 	<div style="width: 1000px">
 		<canvas id="bmiGraph"></canvas>
 	</div>
+	
+	<script>
+	window.addEventListener('load', function(e) {
+		  poti();
+	});
+	</script>
+<script>
+var checkValue;
+function poti() {
+	let elements = document.getElementsByName('poti');
+	let len = elements.length;
+	let checkValue = '';
+
+	for (let i = 0; i < len; i++){
+	    if (elements.item(i).checked){
+	        checkValue = elements.item(i).value;
+	        document.getElementById("hide").value = checkValue;
+	    }
+	}
+};
+</script>
 <script>
 //食事記録グラフの作成　ユーザーの目標摂取カロリーをセッションから取得するようにする。
 let foodList = [];
 let goalCalorie = [];
+var day = document.getElementById("date");
+var scope = document.getElementById("hide");
 //データの取得
 function getFoodList() {
-	fetch('/getFoodList?id=' + 1)
+	fetch('/getFoodListWeek?id=' + ${user.getUserId()} + '&day=' + day.value + '&scope=' + scope.value)
 	.then(res => res.json().then(data => {
 		foodList = data
-		console.log(data)
-		console.log(foodList)
-		foodList.forEach(function(createDate) {
-			goalCalorie.push(${user.getGoalCalorie()}); 
-		});
+		foodList.forEach(
+			function(createDay) {
+				goalCalorie.push(${user.getGoalCalorie()
+			}
+		); 
+	});
 	//食事記録グラフに使うデータ
 	var foodGraphData = {
 		//グラフの下　日付
-		labels: foodList.map(item => item.createDate),
+		labels: foodList.map(item => item.createDay),
 		datasets: [{
 			label: '摂取カロリーの推移',
 			data: foodList.map(item => item.value2),
@@ -126,7 +154,7 @@ let goalExerciseTime = [];
 //データの取得
 function getExerciseList() {
 
-	fetch('/getExerciseList?id=' + 1)
+	fetch('/getExerciseListWeek?id=' + ${user.getUserId()} + '&day=' + day.value)
 	.then(res => res.json().then(data => {
 		exerciseList = data
 		console.log(data)
@@ -176,10 +204,9 @@ function getExerciseList() {
 //アルコール記録グラフ
 let alcoholList = [];
 let deadLine = [];
-
 //データの取得
 function getAlcoholList() {
-	fetch('/getAlcoholList?id=' + 1)
+	fetch('/getAlcoholListWeek?id=' + ${user.getUserId()} + '&day=' + day.value)
 	.then(res => res.json().then(data => {
 		alcoholList = data
 		console.log(data)
@@ -221,7 +248,7 @@ function getAlcoholList() {
 let smokeList = [];
 //データの取得
 function getSmokeList() {
-	fetch('/getSmokeList?id=' + 1)
+	fetch('/getSmokeListWeek?id=' + ${user.getUserId()} + '&day=' + day.value)
 	.then(res => res.json().then(data => {
 		smokeList = data
 		console.log(data)
@@ -258,7 +285,7 @@ function getSmokeList() {
 let bmiList = [];
 //データの取得
 function getBmiList() {
-	fetch('/getBmiList?id=' + 1)
+	fetch('/getBmiListWeek?id=' + ${user.getUserId()} + '&day=' + day.value)
 	.then(res => res.json().then(data => {
 		bmiList = data
 		console.log(data)
@@ -332,7 +359,7 @@ function entryClick(id) {
 		document.getElementById('bmiGraph').style.display = "";
 	}
 }
-window.onload = entryClick;
+window.onload = entryClick(1);
 </script>
 
 <script>
