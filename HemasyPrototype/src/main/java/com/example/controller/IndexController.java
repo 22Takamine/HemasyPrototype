@@ -56,7 +56,7 @@ public class IndexController {
 	AchievementsDao achievementsDao;
 	
 
-	//最初にここにきて、login画面にいく
+	//最初にここにきて、login画面にいくyu
 	@RequestMapping({ "/", "/index" })
 	public String index(@ModelAttribute("index") IndexForm form, Model model) {
 		return "login";
