@@ -20,7 +20,7 @@
 	<h1>登録情報を入力してください</h1>
 
 	<form:form action="loginBack" modelAttribute="index" method="post">
-
+	<form:input path="achievementId" type="hidden" value="1" readonly="readonly" />
 		<div>
 			<fmt:message key="form.lbl.name" />
 			<form:input path="name" />

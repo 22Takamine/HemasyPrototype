@@ -89,6 +89,7 @@
     
     <div>
 		<fmt:message key="form.lbl.achievement"/>
+<%-- 		<input type="text" name="achievementId" value="${user.getAchievementFlag()}">       --%>
 		<div id="open">
 	      称号
 	    </div>
@@ -116,14 +117,14 @@
 	      </tbody>
 	    </table>
 	    
-	    <div id="close">
+	    <div id="close" onclick="getAchievementName()">
 	      閉じる
 	    </div>
 	    </section>
 	    
-		<form:input type="text" path="achievementId" value="${user.getAchievementId()}"/>
-		<form:errors path="achievementId" cssStyle="color: red"/>
-<%-- 		<input type="text" name="achievementId" value="${user.getAchievementFlag()}">       --%>
+	    <input type=text value="${achievementName}" readonly="readonly">
+	    <form:errors path="achievementId" cssStyle="color: red"/>
+	    
     </div>
     
     <div>
@@ -194,6 +195,23 @@
   </form:form>
   </div>
 
+<script>
+let achievementList;
+let achievementName;
+function getAchievementName() {
+	fetch('/getAchivementName?id=' + Array.from(document.getElementsByName("achievementId")).find(e => e.checked).value)
+	.then(
+		res => res.json().then(
+			data => {
+				achievementList = {id : 1, name : '名前'}
+				achievementName = achievementList.name
+				console.log(achievementName)
+				console.log(Array.from(document.getElementsByName("achievementId")).find(e => e.checked).value)
+			},
+		)
+	)
+};
+</script>
 <script src="js/commons.js"></script>
 </body>
 </html>

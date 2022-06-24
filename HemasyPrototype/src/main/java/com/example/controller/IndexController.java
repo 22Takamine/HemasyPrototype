@@ -136,10 +136,11 @@ public class IndexController {
 	//ハンバーガーメニューからアカウント管理へ
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
 	public String account(@ModelAttribute("index") UserForm form, Model model) {
+		User user = (User) session.getAttribute("user");
 		List<Achievements> achievements = null;
 		achievements = achievementsDao.findByAll();
-		model.addAttribute("achievementsList",achievements);
-		
+		session.setAttribute("achievementsList",achievements);
+		model.addAttribute("achievementName",achievementsDao.findById(user.getAchievementId()).getAchievementName());
 		return "account";
 	}
 		
@@ -165,7 +166,8 @@ public class IndexController {
     	Integer alcohol = form.getAlcoholFlag();
     	
     	userDao.update(id, name, mail, pass, sex, birthDate, height, achievementId, time, calorise, rank, smoke, alcohol);
-    	 
+    	User user = userDao.findById(id);
+    	session.setAttribute("user", user);
         return "menu";
     }
 	
