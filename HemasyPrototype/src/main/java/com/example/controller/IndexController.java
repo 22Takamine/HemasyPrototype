@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.dao.AchievementsDao;
+import com.example.dao.ColorDao;
 import com.example.dao.InformationDao;
 import com.example.dao.ListAndRecordDao;
 import com.example.dao.UserDao;
 import com.example.entity.Achievements;
+import com.example.entity.Color;
 import com.example.entity.Information;
 import com.example.entity.ListAndRecord;
 import com.example.entity.Rank;
@@ -35,6 +37,7 @@ import com.example.service.RecordService;
 
 @Controller
 public class IndexController {
+
 
     @Autowired
     MessageSource messageSource;
@@ -56,17 +59,19 @@ public class IndexController {
 	
 	@Autowired
 	AchievementsDao achievementsDao;
+	
+	@Autowired
+	ColorDao colorDao;
 
     @Autowired
     RecordService recordService;
 
-
-
-	//最初にここにきて、login画面にいくyu
-	@RequestMapping({ "/", "/index" })
+	//最初にここにきて、login画面にいくよ
+	@RequestMapping({ "/", "/index"})
 	public String index(@ModelAttribute("index") IndexForm form, Model model) {
 		return "login";
 	}
+
 	
 	//ログイン成功時にメニュー画面に遷移
 	@RequestMapping(value = "/result", params="login", method = RequestMethod.POST)
@@ -90,6 +95,40 @@ public class IndexController {
     		return "admin";
     	}
     	else {
+    		ListAndRecord userSmokeDate = listAndRecordDao.getLatestSmokeDateRecord(user.getUserId());
+    		ListAndRecord userAlcohol = listAndRecordDao.getLatestAlcoholDateRecord(user.getUserId());
+    		ListAndRecord userMetsAndTime = listAndRecordDao.getLatestMetsAndTimeRecord(user.getUserId());
+    		ListAndRecord userCalorieIntake = listAndRecordDao.getLatestCalorieIntake(user.getUserId());
+    		ListAndRecord userWeight = listAndRecordDao.getLatestWeightRecord(user.getUserId());
+    		
+    		Integer alcoholLevel;
+    		Double CaloriesBurned = userWeight.getValue2() * userMetsAndTime.getValue2() * userMetsAndTime.getValue3() * 1.05;
+    		Double height = (double) (user.getHeight()/100.0);
+    		Double bmi = (double) (userWeight.getValue2()/(height*height));
+    		Integer calorieLevel = (int) (Math.ceil(userCalorieIntake.getValue2() - CaloriesBurned)/user.getGoalCalorie()*10);
+    		
+    		if(userAlcohol.getValue2() >= 20) {
+    			alcoholLevel = 2;
+    		}
+    		else {
+    			alcoholLevel = 1;
+    		}
+    		
+    		Color SmokeColorLevel = colorDao.getSmokeColorLevel(userSmokeDate.getValue2());
+    		Color AlcoholColorLevel = colorDao.getAlcoholColorLevel(alcoholLevel);
+    		Color CalorieColorLevel = colorDao.getCalorieColorLevel(calorieLevel);
+    		bmi = Math.floor(bmi * 10)/10;
+
+    		System.out.println("カロリー: " + CalorieColorLevel.getColorPath());
+    		System.out.println("タバコ: " + SmokeColorLevel.getColorPath());
+    		System.out.println("アルコール: " + AlcoholColorLevel.getColorPath());
+    		System.out.println("BMI: " + bmi);
+    		
+    		session.setAttribute("bmi", bmi);
+			session.setAttribute("calorieColorPath", CalorieColorLevel.getColorPath());
+			session.setAttribute("smokeColorPath", SmokeColorLevel.getColorPath());
+			session.setAttribute("alcoholColorPath", AlcoholColorLevel.getColorPath());
+			session.setAttribute("user", user);
     		
     		session.setAttribute("user", user);
     		
@@ -142,24 +181,23 @@ public class IndexController {
     	}
     }
 	
-	//ログイン画面から、新規登録画面に遷移
-	@RequestMapping(value = "/result", params="register", method = RequestMethod.POST)
-	public String register(@ModelAttribute("index") UserForm form, Model model) {
-    	
-        return "register";
-    }
-	
 	//新規登録画面で登録ボタンを押した際に、ログイン画面に遷移
 	@RequestMapping(value = "/loginBack", method = RequestMethod.POST)
 	public String loginBack(@Validated @ModelAttribute("index") UserForm form,BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			return "register";
 		}
-		
+
 		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirthDate(),
 				form.getHeight(),form.getGoalExerciseTime(),form.getGoalCalorise(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
-		
+//				form.getHeight(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
+
+
 		userDao.insert(user);
+
+		User id = userDao.findIdAndPass(user.getMail(),user.getPassword());
+
+		listAndRecordDao.weightInsert(id.getUserId(),form.getWeight());
 
 		return "login";
     }
@@ -368,20 +406,32 @@ public class IndexController {
     	
     }
     
-    //統計画面に遷移（ゆうちゃんへ、GETにしてね）
-    @RequestMapping(value = "/statistics", method = RequestMethod.GET)
-    public String statistics(@ModelAttribute("index") UserForm form, Model model) {
-    	
-        return "statistics";
-    }
+		
 
-	// 記録画面から登録ボタンでメニュー画面に遷移
+	//記録＆リスト画面に遷移
+	@RequestMapping(value = "/record", method = RequestMethod.POST)
+	public String record(@ModelAttribute("index") UserForm form, Model model) {
+
+		return "record";
+	}
+
+	//統計画面に遷移
+	@RequestMapping(value = "/statistics", method = RequestMethod.POST)
+	public String statistics(@ModelAttribute("index") UserForm form, Model model) {
+
+
+		return "statistics";
+	}
+
+	//記録画面から登録ボタンでメニュー画面に遷移
 	@RequestMapping(value = "/recordRegist", method = RequestMethod.POST)
 	public String recordRegist(@ModelAttribute("index") UserForm form, Model model) {
 
-        return "menu";
-    }
-	
+		//メインメニュー画面に戻るときの処理をどうやるのかを周りの人に聞く。
+		return "menu";
+
+	}
+
 	//マイリスト編集画面から登録ボタンでメニュー画面に遷移
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public String registList(@ModelAttribute("index") UserForm form, Model model) {

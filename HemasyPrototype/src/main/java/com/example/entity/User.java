@@ -3,6 +3,7 @@ package com.example.entity;
 import java.sql.Date;
 
 public class User {
+
 	
 	
 	private Integer id;
@@ -11,8 +12,13 @@ public class User {
 	private String mail;
 	private String password;
 	private Integer sex;
-	private Date birth;
+
+//	private Date birth;
 	private Double height;
+	private Double weight;
+	//あとでまっしーに聞く予定
+	private Date birthDate;
+
 	private Date createdAt;
 	private Integer goalExerciseTime;
 	private Integer goalCalorie;
@@ -24,18 +30,24 @@ public class User {
 	private Integer achievementFlag;
 	private Double bmi;
 	
+
+	
+
 	
 	public User() {
 
 	}
 
 	public User(String userName, String mail, String password,Integer sex,
-			Date birth,Double height,Integer goalExerciseTime,Integer goalCalorie,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer roleId) {
+			Date birthDate,Double height,Integer goalExerciseTime,Integer goalCalorie,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer roleId) {
+
+//			Date birthDate,Integer height,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer roleId) {
+
 		this.userName = userName;
 		this.mail = mail;
 		this.password = password;
 		this.sex = sex;
-		this.birth = birth;
+		this.birthDate = birthDate;
 		this.height = height;
 		this.goalExerciseTime = goalExerciseTime;
 		this.goalCalorie = goalCalorie;
@@ -45,7 +57,7 @@ public class User {
 		this.roleId = roleId;
 	}
 	
-	public User(Integer id, Integer userId, String userName, String mail, String password, Integer sex, Date birth, Double height,
+	public User(Integer id, Integer userId, String userName, String mail, String password, Integer sex, Date birthDate, Double height,
 			Date createdAt, Integer goalExerciseTime, Integer goalCalorie, Integer rankFlag, Integer alcoholFlag, Integer smokeFlag,
 			Integer roleId, Integer achievementId, Integer achievementFlag, Double bmi) {
 		this.id = id;
@@ -54,7 +66,7 @@ public class User {
 		this.mail = mail;
 		this.password = password;
 		this.sex = sex;
-		this.birth = birth;
+		this.birthDate = birthDate;
 		this.height = height;
 		this.createdAt = createdAt;
 		this.goalExerciseTime = goalExerciseTime;
@@ -62,13 +74,10 @@ public class User {
 		this.rankFlag = rankFlag;
 		this.alcoholFlag = alcoholFlag;
 		this.smokeFlag = smokeFlag;
-		this.roleId = roleId;
-		this.achievementId = achievementId;
-		this.achievementFlag = achievementFlag;
-		this.bmi = bmi;
+		
 	}
-	
-	
+
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -76,6 +85,22 @@ public class User {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+
+	
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+
+		this.roleId = roleId;
+//		this.achievementId = achievementId;
+//		this.achievementFlag = achievementFlag;
+//		this.bmi = bmi;
+	}
+	
+	
+
 
 	public String getUserName() {
 		return userName;
@@ -117,13 +142,12 @@ public class User {
 		this.height = height;
 	}
 
-
-	public Date getBirth() {
-		return birth;
+	public Date getBirthDate() {
+		return birthDate;
 	}
 
-	public void setBirth(Date birth) {
-		this.birth = birth;
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	public Date getCreatedAt() {
@@ -173,14 +197,25 @@ public class User {
 	public void setSmokeFlag(Integer smokeFlag) {
 		this.smokeFlag = smokeFlag;
 	}
-	
-	public Integer getRoleId() {
-		return roleId;
+
+
+	public Double getWeight() {
+		return weight;
+
 	}
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
+	public void setWeight(Double weight) {
+		this.weight = weight;
 	}
+
+//	public Double getGoalCalorie() {
+//		return goalCalorie;
+//	}
+//
+//	public void setGoalCalorie(Double goalCalorie) {
+//		this.goalCalorie = goalCalorie;
+//
+//	}
 	
 	public Integer getAchievementId() {
 		return achievementId;

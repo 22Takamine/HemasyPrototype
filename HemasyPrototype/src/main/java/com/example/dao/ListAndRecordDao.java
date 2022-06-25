@@ -1,7 +1,8 @@
 package com.example.dao;
 
 
-import java.sql.Date;
+
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,8 +19,6 @@ import com.example.entity.ListAndRecord;
 import com.example.entity.Rank;
 import com.example.entity.User;
 
-
-
 @Repository
 public class ListAndRecordDao {
 
@@ -28,7 +27,9 @@ public class ListAndRecordDao {
     
     @Autowired
 	HttpSession session;
-	
+
+    
+    //りん
     private static final String GET_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND (type = 1 OR type = 2 OR type = 4) AND user_id = :userId AND create_date = :createDate";
 	private static final String GET_BREAKFAST_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 1 AND value4 = 1 AND user_id = :userId AND create_date = :createDate";
 	private static final String GET_LUNCH_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 1 AND value4 = 2 AND user_id = :userId AND create_date = :createDate";
@@ -39,10 +40,24 @@ public class ListAndRecordDao {
 	private static final String GET_SMOKE_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId AND create_date = :createDate";
 	private static final String GET_WEIGHT_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 5 AND user_id = :userId AND create_date = :createDate";
 	private static final String GET_LATEST_SMOKE_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId ORDER BY create_date DESC";
-	private static final String GET_LATEST_WEIGHT_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 5 AND user_id = :userId ORDER BY create_date DESC";
+	private static final String GET_LATEST_WEIGHT_RECORD1 = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 5 AND user_id = :userId ORDER BY create_date DESC";
 	private static final String INSERT_RECORD = "INSERT INTO lists_and_records (category, type, value1, value2, value3, value4, value5, value6, value7, value8, create_date, user_id) VALUES (:category, :type, :value1, :value2, :value3, :value4, :value5, :value6, :value7, :value8, :createDate, :userId)";
 	private static final String DELETE_RECORD_BY_DATE = "DELETE FROM lists_and_records WHERE create_date = :createDate AND user_id = :userID";
 	
+	//たかやす
+	private static final String WEIGHT_INSERT = "INSERT INTO lists_and_records (category,type,value2,create_date,user_id)"
+			+ "VALUES(2,5,:weight,:Date,:userId)";
+	private static final String GET_LATEST_WEIGHT_RECORD2 = "SELECT current_date - create_date as value2 FROM lists_and_records WHERE category = 2 AND type = 5 AND user_id = :userId ORDER BY create_date DESC";
+	
+	private static final String GET_LATEST_SMOKE_DATE_RECORD = "SELECT current_date - create_date as value2 FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId AND value3 <> '0' ORDER BY create_date DESC";
+	
+	private static final String GET_LATEST_ALCOHOL_DATE_RECORD = "SELECT sum(value2*value3*value4/100) AS value2 FROM lists_and_records WHERE category = 2 AND type = 4 AND user_id = :userId AND value2 <> '0' AND current_date = create_date";
+	
+	private static final String GET_LATEST_METS_AND_TIME_RECORD = "SELECT sum(value2) AS value2,sum(value3)/60 AS value3 FROM lists_and_records WHERE category = 2 AND type = 2 AND user_id = :userId AND value2 <> '0' AND current_date = create_date";
+
+	private static final String GET_LATEST_CALORIE_INTAKE = "SELECT sum(value2 * value3) AS value2 FROM lists_and_records WHERE category = 2 AND type = 1 AND user_id = :userId AND value2 <> '0' AND current_date = create_date";
+	
+	//かわみつ
 	//SQL
 	//ユーザーのuser_idを取得して、そのユーザーが登録した食事リストを取得するSQL。
 	String sql1 = "SELECT * FROM lists_and_records WHERE user_id = :user_id AND category = 1 AND type = 1;";
@@ -256,23 +271,23 @@ public class ListAndRecordDao {
 		//value 3 = 消費カロリー　
 		//value 4 = 体重
 		String sql = """
-select value3, value4,  left(create_date, 7) AS create_day from(
-    select
-    sum(ROUND(T1.value2 * T2.value2 * (T2.value3/60) * 1.05, 2)) value3
-    ,sum(T2.value3) value4
-    , to_char(T1.create_date, 'YYYY-MM') create_date
-    from lists_and_records T1
-    join lists_and_records T2
-    ON T2.create_date = T1.create_date
-    AND T2.category = 2
-    AND T2.type = 2
-    AND T1.category = 2
-    AND T1.type= 5
-    Where T2.user_id = 2
-    and left(to_char(T2.create_date, 'YYYY-MM'), 4) <= left('2022-02-02', 4)
-    group by to_char(T1.create_date, 'YYYY-MM')
-    order by to_char(T1.create_date, 'YYYY-MM') desc)c 
-order by create_date
+				select value3, value4,  left(create_date, 7) AS create_day from(
+				    select
+				    sum(ROUND(T1.value2 * T2.value2 * (T2.value3/60) * 1.05, 2)) value3
+				    ,sum(T2.value3) value4
+				    , to_char(T1.create_date, 'YYYY-MM') create_date
+				    from lists_and_records T1
+				    join lists_and_records T2
+				    ON T2.create_date = T1.create_date
+				    AND T2.category = 2
+				    AND T2.type = 2
+				    AND T1.category = 2
+				    AND T1.type= 5
+				    Where T2.user_id = 2
+				    and left(to_char(T2.create_date, 'YYYY-MM'), 4) <= left('2022-02-02', 4)
+				    group by to_char(T1.create_date, 'YYYY-MM')
+				    order by to_char(T1.create_date, 'YYYY-MM') desc)c 
+				order by create_date
 				""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("user_id", id);
@@ -499,7 +514,7 @@ order by create_date
 	public ListAndRecord getLatestWeightRecord(int userId) {
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("userId", userId);
-		List<ListAndRecord> list = jdbcTemplate.query(GET_LATEST_WEIGHT_RECORD, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+		List<ListAndRecord> list = jdbcTemplate.query(GET_LATEST_WEIGHT_RECORD1, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
         return list.isEmpty() ? null : list.get(0);
 	}
 	
@@ -517,6 +532,67 @@ order by create_date
 	        jdbcTemplate.update(INSERT_RECORD, paramSource);
 		}
 		return 1;
+	}
+
+	//たかやす------------------------------------------------------------------------------------------------------------
+	public void weightInsert(Integer userId,Double weight) {
+		String sql = WEIGHT_INSERT;
+
+		Date today = new Date();
+		
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("weight",weight);
+		param.addValue("Date", today);
+		param.addValue("userId",userId);
+		
+		jdbcTemplate.update(sql, param);
+
+		return;
+	}	
+	
+	public ListAndRecord getLatestWeightRecord(Integer userId) {
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("userId", userId);
+		
+		String sql = GET_LATEST_WEIGHT_RECORD2;
+		List<ListAndRecord> list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+        return list.isEmpty() ? null : list.get(0);
+	}
+	
+	public ListAndRecord getLatestSmokeDateRecord(Integer userId) {
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("userId", userId);
+		
+		String sql = GET_LATEST_SMOKE_DATE_RECORD;
+		List<ListAndRecord> list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+        return list.isEmpty() ? null : list.get(0);
+	}
+	
+	public ListAndRecord getLatestAlcoholDateRecord(Integer userId) {
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("userId", userId);
+		
+		String sql = GET_LATEST_ALCOHOL_DATE_RECORD;
+		List<ListAndRecord> list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+        return list.isEmpty() ? null : list.get(0);
+	}
+	
+	public ListAndRecord getLatestMetsAndTimeRecord(Integer userId) {
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("userId", userId);
+		
+		String sql = GET_LATEST_METS_AND_TIME_RECORD;
+		List<ListAndRecord> list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+        return list.isEmpty() ? null : list.get(0);
+	}
+	
+	public ListAndRecord getLatestCalorieIntake(Integer userId) {
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("userId", userId);
+		
+		String sql = GET_LATEST_CALORIE_INTAKE;
+		List<ListAndRecord> list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+        return list.isEmpty() ? null : list.get(0);
 	}
 
 }

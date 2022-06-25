@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import com.example.entity.User;
 
 @Repository
-
 public class UserDao {
 
 	private static final String SELECT_BY_PRODUCT_ID = "SELECT * FROM users WHERE user_id = :user_id";
@@ -25,6 +24,7 @@ public class UserDao {
 	private static final String UPDATE = "UPDATE users SET user_name = :name, mail = :mail, password = :pass, sex = :sex, birth = :birth, height = :height, goal_exercise_time = :time, goal_calorie = :calorise, rank_flag = :rank, alcohol_flag = :alcohol, smoke_flag = :smoke, achievement_id = :achievement WHERE user_id = :id";
 
 
+	private static final String SELECT_USER_ID = "";
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -53,17 +53,30 @@ public class UserDao {
 		return resultList.isEmpty() ? null:resultList.get(0);
 	}
 
+	public User findUser(Integer id) {
+		
+		MapSqlParameterSource param = new MapSqlParameterSource();
+
+		param.addValue("userId", id);
+		
+		String sql = SELECT_USER_ID;
+		List<User>resultList = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<User>(User.class));
+
+		return resultList.isEmpty() ? null:resultList.get(0);
+	}
+	
 	public void insert(User user) {
 		String sql = INSERT;
 
 		Date today = new Date();
 
+	
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("user_name", user.getUserName());
 		param.addValue("mail", user.getMail());
 		param.addValue("password", user.getPassword());
 		param.addValue("sex", user.getSex());
-		param.addValue("birth", user.getBirth());
+		param.addValue("birth", user.getBirthDate());
 		param.addValue("height", user.getHeight());
 		param.addValue("goal_exercise_time",user.getGoalExerciseTime());
 		param.addValue("createdAt", today);

@@ -7,9 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
-
 public class UserForm {
-
 
 	@NotBlank
 	private String name;
@@ -153,5 +151,4 @@ public class UserForm {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-    
 }
