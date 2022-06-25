@@ -39,41 +39,64 @@
 	          <th>No.</th>
 	          <th>ユーザー名</th>
 	          <th>メールアドレス</th>
-	          <th>チェック</th>
+	          <th>件名</th>
+	          <th>受け取り日時</th>
+	          <th>詳細</th>
+	          <th>既読</th>
+	          <th>済み</th>
 	        </tr>
 	      </thead>
 	      <tbody>
-	        	<c:forEach var="achievements" items="${achievementsList}">
-	          		<tr>
-			            <td>${achievements.achievementId}</td>
-			            <td>${achievements.achievementName}</td>
-			            <td>${achievements.requirementToGet}</td>
-			            <td>
-				            <c:choose>
-				            	<c:when test="${achievements.achievementId == user.getAchievementId()}">
-				            		<form:radiobutton path="achievementId" value="${achievements.achievementId}" checked="checked"/>
-				            	</c:when>
+	      		
+	        	<c:forEach var="info" items="${infoList}">
+	        		
+		          		<tr>
+				            <td>${info.information_id}</td>
+				            <td>${info.user_name}</td>
+				            <td>${info.mail}</td>
+				            <td>${info.title}</td>
+				            <td>${info.send_at}</td>
+				            <td>
+								<form:form action="informationDetail" modelAttribute="index" method="post">
+								 	<form:button><fmt:message key="form.lbl.detail"/></form:button>
+								 	<form:input path="informationId" type="hidden" value="${info.information_id}"/>
+								</form:form>
+				            </td>
 				            
-				            	<c:otherwise>
-				            		<form:radiobutton path="achievementId" value="${achievements.achievementId}"/>
-				            	</c:otherwise>
-				            	
-				            </c:choose>
-			            </td>
-	          		</tr>
+				            <td>
+			            		<c:if test="${info.read_flag == 1}">
+			            			<img src="/images/check.png">
+			            		</c:if>
+				            </td>
+				            
+				            <td>
+				            	<c:if test="${info.done_flag == 1}">
+			            			<img src="/images/check.png">
+			            		</c:if>
+				            </td>
+				            
+				            
+				            
+<%-- 				            <td>${info.read_flag}</td> --%>
+				            
+<%-- 				            <td>${info.done_flag}</td> --%>
+				            
+		          		</tr>
+	          		
 	          	</c:forEach>
+	          	
 	      </tbody>
 	</table>
   
   
   
   
-  <form:form action="process" modelAttribute="index" method="post">
-    <form:button><fmt:message key="form.lbl.process"/></form:button>
-  </form:form>
+<%--   <form:form action="process" modelAttribute="index" method="post"> --%>
+<%--     <form:button><fmt:message key="form.lbl.process"/></form:button> --%>
+<%--   </form:form> --%>
   
-  <form:form action="backList" modelAttribute="index" method="post">
-    <form:button><fmt:message key="form.lbl.backList"/></form:button>
+  <form:form action="backAdmin" modelAttribute="index" method="post">
+    <form:button><fmt:message key="form.lbl.back"/></form:button>
   </form:form>
   </div>
 <script src="js/commons.js"></script>

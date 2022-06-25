@@ -93,7 +93,6 @@ public class UserDao {
         param.addValue("rank", rank);
         param.addValue("smoke", smoke);
         param.addValue("alcohol", alcohol);
-        System.out.println(name);
         jdbcTemplate.update(sql, param);  
     	
     }
