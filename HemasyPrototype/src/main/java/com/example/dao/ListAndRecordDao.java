@@ -506,18 +506,18 @@ public class ListAndRecordDao {
 	
 	public void setZero(int user_id, int type) {
 		String sql = """
-			insert into lists_and_records (create_date, value2, value3, value4, value5, value6, value7, category, type, user_id)
+			insert into lists_and_records (create_date, value2, value3, value4, value5, value6, value7, value8, category, type, user_id)
 			select * from (
 			with recursive Dummy(i) as 
 			(select cast(to_char(now(), 'YYYY') || '-12-31' as date) i
 			union all
 			select cast(i + cast('-1 days ' as interval) as date) from Dummy where i > cast('2022-01-01' as date))
-			select i as days, 0 value2, 0 value3, 0 value4, 0 value5, 0 value6, 0 value7, 2 category, :type type, :user_id user_id from Dummy
+			select i as days, 0 value2, 0 value3, 0 value4, 0 value5, 0 value6, 0 value7, 0 value8, 2 category, :type type, :user_id user_id from Dummy
 			
 			except
 			
 			select
-			create_date days, 0 value2, 0 value3, 0 value4, 0 value5, 0 value6, 0 value7, 2 category, :type type, :user_id user_id
+			create_date days, 0 value2, 0 value3, 0 value4, 0 value5, 0 value6, 0 value7, 0 value8, 2 category, :type type, :user_id user_id
 			from
 			lists_and_records 
 			where
