@@ -63,7 +63,7 @@ public class UserDao {
 		param.addValue("mail", user.getMail());
 		param.addValue("password", user.getPassword());
 		param.addValue("sex", user.getSex());
-		param.addValue("birth", user.getBirth());
+		param.addValue("birth", user.getBirthDate());
 		param.addValue("height", user.getHeight());
 		param.addValue("goal_exercise_time",user.getGoalExerciseTime());
 		param.addValue("createdAt", today);

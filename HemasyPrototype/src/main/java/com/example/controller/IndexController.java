@@ -454,8 +454,8 @@ public class IndexController {
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
 	public String account(@ModelAttribute("index") UserForm form, Model model) {
 		User user = (User) session.getAttribute("user");
-		List<Achievements> achievements = achievementsDao.findByAll();
-		session.setAttribute("achievementsList",achievements);
+		List<Achievements> achievementList = achievementsDao.findByAll();
+		session.setAttribute("achievementsList",achievementList);
 		model.addAttribute("achievementName",achievementsDao.findById(user.getAchievementId()).getAchievementName());
 		return "account";
 	}
