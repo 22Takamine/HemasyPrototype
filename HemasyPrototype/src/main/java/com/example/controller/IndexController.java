@@ -83,7 +83,6 @@ public class IndexController {
 		
 		User user = userDao.findIdAndPass(form.getMail(), form.getPassword());
 
-
     	if(user == null) {
     		model.addAttribute("msg","メールアドレスまたはパスワードが間違っています");
     		return "login";
@@ -108,18 +107,23 @@ public class IndexController {
     		Double bmi = (double) (userWeight.getValue2()/(height*height));
     		Integer calorieLevel = (int) (Math.ceil(userCalorieIntake.getValue2() - CaloriesBurned)/user.getGoalCalorie()*10);
     		
+    		if(calorieLevel <= 0) {
+    			calorieLevel = 1;
+    		}
     		if(userAlcohol.getValue2() >= 20) {
     			alcoholLevel = 2;
     		}
     		else {
     			alcoholLevel = 1;
     		}
-    		
     		Color SmokeColorLevel = colorDao.getSmokeColorLevel(userSmokeDate.getValue2());
     		Color AlcoholColorLevel = colorDao.getAlcoholColorLevel(alcoholLevel);
     		Color CalorieColorLevel = colorDao.getCalorieColorLevel(calorieLevel);
     		bmi = Math.floor(bmi * 10)/10;
 
+    		System.out.println("height" + height);
+    		System.out.println("weight" + userWeight.getValue2());
+    		
     		System.out.println("カロリー: " + CalorieColorLevel.getColorPath());
     		System.out.println("タバコ: " + SmokeColorLevel.getColorPath());
     		System.out.println("アルコール: " + AlcoholColorLevel.getColorPath());
@@ -130,9 +134,7 @@ public class IndexController {
 			session.setAttribute("smokeColorPath", SmokeColorLevel.getColorPath());
 			session.setAttribute("alcoholColorPath", AlcoholColorLevel.getColorPath());
 			session.setAttribute("user", user);
-    		
-    		session.setAttribute("user", user);
-    		
+		
     		//以下にDBから取得してきた画像のパスを入れる。
     		//（まっしーへ　ここに取ってきた画像のパスを入れるまでお願いします。）
     		
@@ -192,7 +194,6 @@ public class IndexController {
 		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirthDate(),
 				form.getHeight(),form.getGoalExerciseTime(),form.getGoalCalorise(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
 //				form.getHeight(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
-
 
 		userDao.insert(user);
 

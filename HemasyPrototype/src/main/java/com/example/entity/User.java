@@ -30,10 +30,6 @@ public class User {
 	private Integer achievementFlag;
 	private Double bmi;
 	
-
-	
-
-	
 	public User() {
 
 	}

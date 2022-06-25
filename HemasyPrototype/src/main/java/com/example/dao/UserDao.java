@@ -20,15 +20,13 @@ public class UserDao {
 	private static final String SELECT_BY_PRODUCT_ID = "SELECT * FROM users WHERE user_id = :user_id";
 	private static final String SELECT_ID_AND_PASS = "SELECT * FROM users WHERE mail = :mail and password = :password";
 	private static final String INSERT = "INSERT INTO users(user_name,mail,password,sex,birth,height,goal_exercise_time,goal_calorie,created_at,rank_flag,alcohol_flag,smoke_flag,role_id,achievement_id,achievement_flag)"
-			+ " VALUES(:user_name, :mail,:password,:sex,:birth,:height,:goal_exercise_time,2000,:createdAt,:rankFlag,:alcoholFlag,:smokeFlag,1,1,0)";
+			+ " VALUES(:user_name, :mail,:password,:sex,:birth,:height,:goal_exercise_time,:goalCalorie,:createdAt,:rankFlag,:alcoholFlag,:smokeFlag,1,1,0)";
 	private static final String UPDATE = "UPDATE users SET user_name = :name, mail = :mail, password = :pass, sex = :sex, birth = :birth, height = :height, goal_exercise_time = :time, goal_calorie = :calorise, rank_flag = :rank, alcohol_flag = :alcohol, smoke_flag = :smoke, achievement_id = :achievement WHERE user_id = :id";
-
 
 	private static final String SELECT_USER_ID = "";
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
-	
 	public User findById(int userId) {
 		String sql = SELECT_BY_PRODUCT_ID;
 
@@ -78,7 +76,8 @@ public class UserDao {
 		param.addValue("sex", user.getSex());
 		param.addValue("birth", user.getBirthDate());
 		param.addValue("height", user.getHeight());
-		param.addValue("goal_exercise_time",user.getGoalExerciseTime());
+		param.addValue("goal_exercise_time",30);
+		param.addValue("goalCalorie", 2350);
 		param.addValue("createdAt", today);
 		param.addValue("rankFlag", user.getRankFlag());
 		param.addValue("alcoholFlag", user.getAlcoholFlag());
