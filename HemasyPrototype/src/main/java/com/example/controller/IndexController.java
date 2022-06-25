@@ -30,6 +30,7 @@ import com.example.form.IndexForm;
 import com.example.form.InformationForm;
 import com.example.form.ListAndRecordForm;
 import com.example.form.UserForm;
+import com.example.service.RecordService;
 
 @Controller
 public class IndexController {
@@ -54,7 +55,11 @@ public class IndexController {
 	
 	@Autowired
 	AchievementsDao achievementsDao;
-	
+
+    @Autowired
+    RecordService recordService;
+
+
 
 	//最初にここにきて、login画面にいくyu
 	@RequestMapping({ "/", "/index" })
@@ -353,6 +358,11 @@ public class IndexController {
 //    	System.out.println(request.getParameter("countBre1"));
 //    	System.out.println(request.getParameter("countBre"));
     	
+    	//実装時に使う(川満さんに聞いてね)
+//    	int userId = 1;
+//    	User user = userDao.findById(userId);
+//    	recordService.setZeroPastRecords(user);
+//    	
     	return "menu";
     	
     }

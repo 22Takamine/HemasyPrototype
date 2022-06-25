@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class Achievements {
 
+
 	private Integer achievementId;
 	private String achievementName;
 	private String requirementToGet;
@@ -12,6 +13,5 @@ public class Achievements {
 	private Integer score;
 	private Integer majorDivisions;
 	private Integer subDivisions;
-
-
+	
 }

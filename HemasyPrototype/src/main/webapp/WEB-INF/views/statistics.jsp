@@ -44,92 +44,110 @@
 	<br>
 	<br>
 	<h1>統計</h1>
+	<input type="text" id="hide" value="0">
+	<input type="text" id="hideType" value="1">
 	<div id="selectGraph">
-		<button data-index="food" onclick="entryClick(1)">食事</button>
-		<button data-index="exercise" onclick="entryClick(2)">運動</button>
-		<button data-index="alcohol" onclick="entryClick(3)">酒</button>
-		<button data-index="smoke" onclick="entryClick(4)">タバコ</button>
-		<button data-index="bmi" onclick="entryClick(5)">体重</button>
+		<button name="0" data-index="food" onclick="entryClick(1)">食事</button>
+		<button name="1" data-index="exercise" onclick="entryClick(2)">運動</button>
+		<button name="2"data-index="alcohol" onclick="entryClick(3)">酒</button>
+		<button name="3"data-index="smoke" onclick="entryClick(4)">タバコ</button>
+		<button name="4 "data-index="bmi" onclick="entryClick(5)">体重</button>
 	</div>
-	<br>
+	<div>
+<label><input type="radio" name="poti" value="0" checked onclick="poti(0)">週</label>
+<label><input type="radio" name="poti" value="1" onclick="poti(1)">月</label>
+<label><input type="radio" name="poti" value="2" onclick="poti(2)">年</label>
+
+	</div>
 	<input type="button" value="左" onclick="getName()">
 	<input type="button" value="右"> ${name}
 	<div>
-		<input type="date" name="date" value="2022-01-01">
-		<p id="output">Change the Date</p>
-		<input type="button" value="日付で検索" name="serch" onclick="serchByDate()">
+		<input type="date" id="date" value="${user.getCreatedAt()}">
 	</div>
-	<div style="width: 1000px">
+	<div style="width: 800px">
 		<canvas id="foodGraph"></canvas>
 	</div>
-	<div style="width: 1000px">
+	<div style="width: 800px">
 		<canvas id="exerciseGraph"></canvas>
 	</div>
-	<div style="width: 1000px">
+	<div style="width: 800px">
 		<canvas id="alcoholGraph"></canvas>
 	</div>
-	<div style="width: 1000px">
+	<div style="width: 800px">
 		<canvas id="smokeGraph"></canvas>
 	</div>
-	<div style="width: 1000px">
+	<div style="width: 800px">
 		<canvas id="bmiGraph"></canvas>
 	</div>
-<script type="text/javascript">
-var dateToSerch;
-document.addEventListener('change', e => {
-if(e.target.matches('[name=date]')){
-		dateToSerch = e.target.value;
-	}
-});
-</script>
+	
 <script>
-function serchByDate() {
-	console.log(dateToSerch)
-	fetch('get')
-};
-</script>	
+function poti(checkValue) {
+	let elements = document.getElementsByName('poti');
+	let len = elements.length;
+	document.getElementById("hide").value = checkValue;
+	
+	if(document.getElementById("hideType").value == 1){
+		getFoodList();
+	}else if(document.getElementById("hideType").value == 2){
+		getExerciseList();
+	}else if(document.getElementById("hideType").value == 3){
+		getAlcoholList();
+	}else if(document.getElementById("hideType").value == 4){
+		getSmokeList();
+	}else if(document.getElementById("hideType").value == 5){
+		getBmiList();
+	}
 
+};
+</script>
 <script>
 //食事記録グラフの作成　ユーザーの目標摂取カロリーをセッションから取得するようにする。
 let foodList = [];
 let goalCalorie = [];
+var day = document.getElementById("date");
+var scope = document.getElementById("hide");
 //データの取得
 function getFoodList() {
-	fetch('/getFoodList?id=' + 1)
-	.then(res => res.json().then(data => {
-		foodList = data
-		console.log(data)
-		console.log(foodList)
-		foodList.forEach(function(createDate) {
-			goalCalorie.push(${user.getGoalCalorie()}); 
-		});
-	//食事記録グラフに使うデータ
-	var foodGraphData = {
-		//グラフの下　日付
-		labels: foodList.map(item => item.createDate),
-		datasets: [{
-			label: '摂取カロリーの推移',
-			data: foodList.map(item => item.value2),
-			borderColor: '#484',
-		}, {
-			label: 'ユーザーの目標摂取カロリー',
-			data: goalCalorie,
-			borderColor: '#ff0000',
-		}],
-	}
-	//食事記録グラフの描画
-	var ctx = document.getElementById("foodGraph");
-	
-	if (typeof foodListChart !== 'undefined') {
-	    foodListChart.destroy();
-	}
-	
-	foodListChart = new Chart(ctx, {
-		type: 'line',
-		data: foodGraphData,
-		options: complexChartOption
-	})
-}))
+	console.log('day', day.value)
+	console.log('scope', scope.value)
+	fetch('/getFoodListWeek?id=' + ${user.getUserId()} + '&day=' + day.value + '&scope=' + scope.value)
+	.then(res => res.json()
+	.then(data => {
+					foodList = data
+					foodList.forEach(
+						function(createDay) {
+							goalCalorie.push(${user.getGoalCalorie()});
+						}
+					);
+					//食事記録グラフに使うデータ
+					var foodGraphData = {
+						//グラフの下　日付
+						labels: foodList.map(item => item.createDay),
+						datasets: [
+							{
+								label: '摂取カロリーの推移',
+								data: foodList.map(item => item.value2),
+								borderColor: '#484',
+							}, {
+								label: 'ユーザーの目標摂取カロリー',
+								data: goalCalorie,
+								borderColor: '#ff0000',
+							}
+						],
+					}
+					//食事記録グラフの描画
+					var ctx = document.getElementById("foodGraph");
+					
+					if (typeof foodListChart !== 'undefined') {
+					    foodListChart.destroy();
+					}
+					
+					foodListChart = new Chart(ctx, {
+						type: 'line',
+						data: foodGraphData,
+						options: complexChartOption
+					})
+	}))
 	.catch(error => console.log(error))
 };
 </script>
@@ -138,10 +156,11 @@ function getFoodList() {
 //運動記録グラフの作成　ユーザーの目標運動時間をセッションから取得するようにする。
 let exerciseList = [];
 let goalExerciseTime = [];
+var scope = document.getElementById("hide");
 //データの取得
 function getExerciseList() {
 
-	fetch('/getExerciseList?id=' + 1)
+	fetch('/getExerciseListWeek?id=' + ${user.getUserId()} + '&day=' + day.value + '&scope=' + scope.value)
 	.then(res => res.json().then(data => {
 		exerciseList = data
 		console.log(data)
@@ -153,7 +172,7 @@ function getExerciseList() {
 		//運動記録グラフに使うデータ
 		var exerciseGraphData = {
 			//グラフの下　日付
-			labels: exerciseList.map(item => item.createDate),
+			labels: exerciseList.map(item => item.createDay),
 			datasets: [{
 				label: '運動時間の推移',
 				data: exerciseList.map(item => item.value4),
@@ -191,10 +210,9 @@ function getExerciseList() {
 //アルコール記録グラフ
 let alcoholList = [];
 let deadLine = [];
-
 //データの取得
 function getAlcoholList() {
-	fetch('/getAlcoholList?id=' + 1)
+	fetch('/getAlcoholListWeek?id=' + ${user.getUserId()} + '&day=' + day.value)
 	.then(res => res.json().then(data => {
 		alcoholList = data
 		console.log(data)
@@ -236,7 +254,7 @@ function getAlcoholList() {
 let smokeList = [];
 //データの取得
 function getSmokeList() {
-	fetch('/getSmokeList?id=' + 1)
+	fetch('/getSmokeListWeek?id=' + ${user.getUserId()} + '&day=' + day.value)
 	.then(res => res.json().then(data => {
 		smokeList = data
 		console.log(data)
@@ -273,7 +291,7 @@ function getSmokeList() {
 let bmiList = [];
 //データの取得
 function getBmiList() {
-	fetch('/getBmiList?id=' + 1)
+	fetch('/getBmiListWeek?id=' + ${user.getUserId()} + '&day=' + day.value)
 	.then(res => res.json().then(data => {
 		bmiList = data
 		console.log(data)
@@ -309,6 +327,7 @@ function getBmiList() {
 </script>
 <script type="text/javascript">
 function entryClick(id) {
+	document.getElementById("hideType").value = id;
 	if (id == 1) {	
 		getFoodList();
 		console.log(foodList);
@@ -347,7 +366,7 @@ function entryClick(id) {
 		document.getElementById('bmiGraph').style.display = "";
 	}
 }
-window.onload = entryClick;
+window.onload = entryClick(1);
 </script>
 
 <script>

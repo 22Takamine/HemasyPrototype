@@ -1,7 +1,6 @@
 package com.example.dao;
 
 
-
 import java.sql.Date;
 import java.util.List;
 
@@ -18,6 +17,7 @@ import com.example.entity.CommonRecord;
 import com.example.entity.ListAndRecord;
 import com.example.entity.Rank;
 import com.example.entity.User;
+
 
 
 @Repository
@@ -79,24 +79,6 @@ public class ListAndRecordDao {
     	return 1;
 	}
 
-	public List<CommonRecord> getFoodRecords(int id) {
-		MapSqlParameterSource param = new MapSqlParameterSource();
-		//ToDo user_id を :user_id にして id を入れる。
-		String sql ="""
-				select  sum(value2*value3) value2
-				,create_date AS create_date
-				from lists_and_records
-				where category = 2
-				and type = 1
-				and user_id = :user_id
-				group by create_date
-				ORDER by create_date
-				LIMIT 7
-				""";
-		param.addValue("user_id", id);
-		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class));
-	}
-	
 	//ユーザーのuser_idを取得して、そのユーザーが登録した食事リストを取得する。
 	public List<ListAndRecord> FoodListById(int userId) {
 		
@@ -139,61 +121,218 @@ public class ListAndRecordDao {
 	}
 	
 	//かわみつ-------------------------------------------------------------------------------------------------------------
-	public List<CommonRecord> getExerciseRecords(int user_id) {
+	public List<CommonRecord> getFoodRecordsOfWeek(int id, Date day) {
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		//ToDo user_id を :user_id にして id を入れる。
+		String sql ="""
+				select value2, create_day from (
+					select  sum(value2*value3) value2
+					,create_date AS create_day
+					from lists_and_records
+					where category = 2
+					and type = 1
+					and user_id = :user_id
+					and create_date <= :day
+					group by create_date
+					ORDER by create_date desc
+					LIMIT 7) a
+					order by create_day
+				""";
+		param.addValue("user_id", id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class));
+	}
+	
+	public List<CommonRecord> getFoodRecordsOfMonth(int id, Date day) {
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		//ToDo user_id を :user_id にして id を入れる。
+		String sql ="""
+				select create_date AS create_day
+				, sum(value2*value3) value2
+				from lists_and_records 
+				where left(to_char(create_date, 'YYYY-MM'), 7) = left(:day, 7)
+				AND user_id = :user_id
+				AND category = 2
+				AND type = 1
+				group by create_date
+				ORDER BY create_date;
+				""";
+		param.addValue("user_id", id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class));
+	}
+	
+	public List<CommonRecord> getFoodRecordsOfYear(int id, Date day) {
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		//ToDo user_id を :user_id にして id を入れる。
+		String sql ="""
+					SELECT
+					 to_char(create_date, 'YYYY-MM') AS create_day,
+					sum(value2 * value3) value2
+					FROM lists_and_records
+					where category =2
+					AND type = 1
+					AND user_id = :user_id
+					AND left(to_char(create_date, 'YYYY-MM'), 4) = left(:day, 4)
+					GROUP BY to_char(create_date, 'YYYY-MM')
+					ORDER BY to_char(create_date, 'YYYY-MM');
+
+				""";
+		param.addValue("user_id", id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class));
+	}
+	
+	public List<CommonRecord> getExerciseRecordsOfWeek(int user_id, Date day) {
 		//ToDouser_id をidからとる
 		//value 2 = bmi
 		//value 3 = 消費カロリー　
 		//value 4 = 体重
 		String sql = """
-				select
-				sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value2   
-				, T2.create_date create_date 
-				, sum(ROUND(T2.value2 * T3.value2 * (T3.value3/60) * 1.05, 2)) value3
-				, sum(T3.value3) value4
-				from users T1	
-				Join lists_and_records T2
-				ON T1.user_id = T2.user_id
-				AND T2.category = 2
-				AND T2.type = 5
-				JOIN lists_and_records T3 
-				ON T1.user_id = T3.user_id
-				AND T3.category = 2
-				AND T3.type = 2
-				AND T2.create_date = T3.create_date
-				where T1.user_id = :user_id
-				group by T2.create_date
-				order by T2.create_date
-				LIMIT 7
+				select value2, create_day, value3, value4 from(
+					select
+					sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value2   
+					, T2.create_date AS create_day
+					, sum(ROUND(T2.value2 * T3.value2 * (T3.value3/60) * 1.05, 2)) value3
+					, sum(T3.value3) value4
+					from users T1	
+					Join lists_and_records T2
+					ON T1.user_id = T2.user_id
+					AND T2.category = 2
+					AND T2.type = 5
+					JOIN lists_and_records T3 
+					ON T1.user_id = T3.user_id
+					AND T3.category = 2
+					AND T3.type = 2
+					AND T2.create_date = T3.create_date
+					where T1.user_id = 2
+					and T2.create_date <= '2022-06-20'
+					group by create_day	
+					order by create_day desc
+					
+					LIMIT 7) c
+				order by create_day
 				""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("user_id", user_id);
+		param.addValue("day", day);
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
+	
+	public List<CommonRecord> getExerciseRecordsOfMonth(int user_id, Date day) {
+		//ToDouser_id をidからとる
+		//value 2 = bmi
+		//value 3 = 消費カロリー　
+		//value 4 = 体重
+		String sql = """
+				select value3, value4,  create_date AS create_day from(
+				    select
+				    ROUND(T1.value2 * T2.value2 * (T2.value3/60) * 1.05, 2) value3
+				    ,T2.value3 value4
+				    , T1.create_date create_date
+				    from lists_and_records T1
+				    join lists_and_records T2
+				    ON T2.create_date = T1.create_date
+				    AND T2.category = 2
+				    AND T2.type = 2
+				    AND T1.category = 2
+				    AND T1.type= 5
+				    Where T2.user_id = 2
+				    and left(to_char(T2.create_date, 'YYYY-MM'), 7) = left('2022-06-02', 7)
+				    order by to_char(T1.create_date, 'YYYY-MM') desc)c 
+				order by create_day
+				
 
-	public List<CommonRecord> getAlcoholRecords(int user_id) {
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", user_id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
+	
+	public List<CommonRecord> getExerciseRecordsOfYear(int id, Date day) {
+		//ToDouser_id をidからとる
+		//value 2 = bmi
+		//value 3 = 消費カロリー　
+		//value 4 = 体重
+		String sql = """
+select value3, value4,  left(create_date, 7) AS create_day from(
+    select
+    sum(ROUND(T1.value2 * T2.value2 * (T2.value3/60) * 1.05, 2)) value3
+    ,sum(T2.value3) value4
+    , to_char(T1.create_date, 'YYYY-MM') create_date
+    from lists_and_records T1
+    join lists_and_records T2
+    ON T2.create_date = T1.create_date
+    AND T2.category = 2
+    AND T2.type = 2
+    AND T1.category = 2
+    AND T1.type= 5
+    Where T2.user_id = 2
+    and left(to_char(T2.create_date, 'YYYY-MM'), 4) <= left('2022-02-02', 4)
+    group by to_char(T1.create_date, 'YYYY-MM')
+    order by to_char(T1.create_date, 'YYYY-MM') desc)c 
+order by create_date
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
+	
+
+	public List<CommonRecord> getAlcoholRecordsOfWeek(int user_id, Date day) {
 		//ToDo user_id をidからとる
 		//alcohol量
 		String sql = """
-				select
-				sum(ROUND(value2*value3*(value4/100), 2)) value2
-				,create_date
-				from lists_and_records
-				where category = 2
-				and type = 4
-				and user_id = :user_id
-				group by create_date
-				ORDER BY create_date
-				
-				LIMIT 7
+				select value2, create_date from (
+					select	
+					sum(ROUND(value2*value3*(value4/100), 2)) value2
+					,create_date
+					from lists_and_records
+					where category = 2
+					and type = 4
+					and user_id = :user_id
+					and create_date <= :day
+					group by create_date
+					ORDER BY create_date desc
+					LIMIT 7) c
+				order by create_date
 				""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("user_id", user_id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
+	
+	public List<CommonRecord> getAlcoholRecordsOf(int user_id, Date day) {
+		//ToDo user_id をidからとる
+		//alcohol量
+		String sql = """
+				select value2, create_date from (
+					select	
+					sum(ROUND(value2*value3*(value4/100), 2)) value2
+					,create_date
+					from lists_and_records
+					where category = 2
+					and type = 4
+					and user_id = :user_id
+					and create_date <= :day
+					group by create_date
+					ORDER BY create_date desc
+					LIMIT 7) c
+				order by create_date
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", user_id);
+		param.addValue("day", day);
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
 
-	public List<CommonRecord> getSmokeRecords(int user_id) {
+	public List<CommonRecord> getSmokeRecordsOfWeek(int user_id, Date day) {
 		//ToDo user_id をidからとる
 		String sql = """
+			select value3, create_date from(
 				select
 				sum(value3) value3
 				,create_date
@@ -201,39 +340,78 @@ public class ListAndRecordDao {
 				where category = 2
 				and type = 3
 				and user_id = :user_id
+				and create_date <= :day
 				group by create_date
-				ORDER BY create_date
-				LIMIT 7
+				ORDER BY create_date desc
+				LIMIT 7)c
+			order by create_date
 				""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("user_id", user_id);
+		param.addValue("day", day);
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
 
-	public List<CommonRecord> getBmiRecords(int user_id) {
+	public List<CommonRecord> getBmiRecordsOfWeek(int user_id, Date day) {
 		//value3 BMI
 		//valu2 体重
 		String sql = """
-			select
-			sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value3
-			, sum(T2.value2) value2
-			, T2.create_date 
-			FROM
-			users T1
-			JOIN lists_and_records T2
-			ON T1.user_id = T2.user_id
-			AND T2.category = 2
-			AND T2.type = 5
-			where T1.user_id = :user_id
-			group by T2.create_date
-			ORDER BY T2.create_date
-			LIMIT 7
+			select value3, value2, create_date from(
+				select
+				sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value3
+				, sum(T2.value2) value2
+				, T2.create_date 
+				FROM
+				users T1
+				JOIN lists_and_records T2
+				ON T1.user_id = T2.user_id
+				AND T2.category = 2
+				AND T2.type = 5
+				and create_date <= :day
+				where T1.user_id = :user_id
+				group by T2.create_date
+				ORDER BY T2.create_date desc
+				LIMIT 7) c
+			order by create_date
 			""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("user_id", user_id);
+		param.addValue("day", day);
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
 	
+
+	public void setZero(int user_id, int type) {
+		String sql = """
+			insert into lists_and_records (create_date, value2, value3, value4, value5, value6, value7, category, type, user_id)
+			select * from (
+			with recursive Dummy(i) as 
+			(select cast(now() as date) i
+			union all
+			select cast(i + cast('-1 days ' as interval) as date) from Dummy where i > cast('2022-01-01' as date)) 
+			select i as days, 0 value2, 0 value3, 0 value4, 0 value5, 0 value6, 0 value7, 2 category, :type type, :user_id user_id from Dummy
+			
+			except
+			
+			select
+			create_date days, 0 value2, 0 value3, 0 value4, 0 value5, 0 value6, 0 value7, 2 category, :type type, :user_id user_id
+			from
+			lists_and_records 
+			where
+			category = 2 
+			and type = :type
+			and user_id = :user_id
+			order by days) c;
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		
+		param.addValue("type", type);
+		param.addValue("user_id", user_id);
+		jdbcTemplate.update(sql, param);
+	}
+	
+
+
 	
 	//りん-------------------------------------------------------------------------------------------------------------
 	//日付とユーザーIDでアルコール、食事、運動をすべて取得
@@ -340,4 +518,5 @@ public class ListAndRecordDao {
 		}
 		return 1;
 	}
+
 }
