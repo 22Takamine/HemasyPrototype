@@ -87,7 +87,7 @@ public class IndexController {
     		//（まっしーへ　ここに取ってきた画像のパスを入れるまでお願いします。）
     		
     		String lungImg = "../../images/lung.png";
-    		String livarImg = "../../images/livar1.png" ;
+    		String livarImg = "../../images/livar0.png" ;
     		String stomachImg = "../../images/stomach.png" ;
     		String bmiImg = "../../images/bmi3.png" ;
     		
@@ -409,9 +409,13 @@ public class IndexController {
 				//String bmiImg = (String) session.getAttribute("bmiImg");
 				
 				String lungImg = "../../images/lung.png";
-				String livarImg = "../../images/livar1.png" ;
+				String livarImg = "../../images/livar0.png" ;
 				String stomachImg = "../../images/stomach.png" ;
-				String bmiImg = "../../images/BMI_under18.png" ;
+				String bmiImg = "../../images/bmi3.png";
+				
+				//ここはセッションに保存されているユーザーのBMIを取得してビュー側に値を渡す。
+				double bmiValue = 22.4;
+	    		model.addAttribute("bmiValue",bmiValue);
 				
 				model.addAttribute("lungImg",lungImg );
 				model.addAttribute("livarImg",livarImg );
