@@ -189,10 +189,10 @@ public class ListAndRecordDao {
 		//value 3 = 消費カロリー　
 		//value 4 = 体重
 		String sql = """
-				select value2, create_date, value3, value4 from(
+				select value2, create_day, value3, value4 from(
 					select
 					sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value2   
-					, T2.create_date create_date 
+					, T2.create_date AS create_day
 					, sum(ROUND(T2.value2 * T3.value2 * (T3.value3/60) * 1.05, 2)) value3
 					, sum(T3.value3) value4
 					from users T1	
@@ -205,10 +205,97 @@ public class ListAndRecordDao {
 					AND T3.category = 2
 					AND T3.type = 2
 					AND T2.create_date = T3.create_date
-					where T1.user_id = :user_id
-					and T2.create_date <= :day
-					group by T2.create_date
-					order by T2.create_date desc
+					where T1.user_id = 2
+					and T2.create_date <= '2022-06-20'
+					group by create_day	
+					order by create_day desc
+					
+					LIMIT 7) c
+				order by create_day
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", user_id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
+	
+	public List<CommonRecord> getExerciseRecordsOfMonth(int user_id, Date day) {
+		//ToDouser_id をidからとる
+		//value 2 = bmi
+		//value 3 = 消費カロリー　
+		//value 4 = 体重
+		String sql = """
+				select value3, value4,  create_date AS create_day from(
+				    select
+				    ROUND(T1.value2 * T2.value2 * (T2.value3/60) * 1.05, 2) value3
+				    ,T2.value3 value4
+				    , T1.create_date create_date
+				    from lists_and_records T1
+				    join lists_and_records T2
+				    ON T2.create_date = T1.create_date
+				    AND T2.category = 2
+				    AND T2.type = 2
+				    AND T1.category = 2
+				    AND T1.type= 5
+				    Where T2.user_id = 2
+				    and left(to_char(T2.create_date, 'YYYY-MM'), 7) = left('2022-06-02', 7)
+				    order by to_char(T1.create_date, 'YYYY-MM') desc)c 
+				order by create_day
+				
+
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", user_id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
+	
+	public List<CommonRecord> getExerciseRecordsOfYear(int id, Date day) {
+		//ToDouser_id をidからとる
+		//value 2 = bmi
+		//value 3 = 消費カロリー　
+		//value 4 = 体重
+		String sql = """
+select value3, value4,  left(create_date, 7) AS create_day from(
+    select
+    sum(ROUND(T1.value2 * T2.value2 * (T2.value3/60) * 1.05, 2)) value3
+    ,sum(T2.value3) value4
+    , to_char(T1.create_date, 'YYYY-MM') create_date
+    from lists_and_records T1
+    join lists_and_records T2
+    ON T2.create_date = T1.create_date
+    AND T2.category = 2
+    AND T2.type = 2
+    AND T1.category = 2
+    AND T1.type= 5
+    Where T2.user_id = 2
+    and left(to_char(T2.create_date, 'YYYY-MM'), 4) <= left('2022-02-02', 4)
+    group by to_char(T1.create_date, 'YYYY-MM')
+    order by to_char(T1.create_date, 'YYYY-MM') desc)c 
+order by create_date
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
+	
+
+	public List<CommonRecord> getAlcoholRecordsOfWeek(int user_id, Date day) {
+		//ToDo user_id をidからとる
+		//alcohol量
+		String sql = """
+				select value2, create_date from (
+					select	
+					sum(ROUND(value2*value3*(value4/100), 2)) value2
+					,create_date
+					from lists_and_records
+					where category = 2
+					and type = 4
+					and user_id = :user_id
+					and create_date <= :day
+					group by create_date
+					ORDER BY create_date desc
 					LIMIT 7) c
 				order by create_date
 				""";
@@ -217,8 +304,8 @@ public class ListAndRecordDao {
 		param.addValue("day", day);
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
-
-	public List<CommonRecord> getAlcoholRecordsOfWeek(int user_id, Date day) {
+	
+	public List<CommonRecord> getAlcoholRecordsOf(int user_id, Date day) {
 		//ToDo user_id をidからとる
 		//alcohol量
 		String sql = """
@@ -431,4 +518,5 @@ public class ListAndRecordDao {
 		}
 		return 1;
 	}
+
 }

@@ -43,12 +43,20 @@ public class RecordController {
 	}
     
     @RequestMapping("/getExerciseListWeek")
-    public List<CommonRecord> getExerciseList(@RequestParam("id") int id, @RequestParam("day") Date day) {
-    	return listAndRecordDao.getExerciseRecordsOfWeek(id, day);
+    public List<CommonRecord> getExerciseList(@RequestParam("id") int id, @RequestParam("day") Date day, @RequestParam("scope") String scopeStr) {
+    	int scope = Integer.parseInt(scopeStr);
+    	if (scope == 0) {
+    		return listAndRecordDao.getExerciseRecordsOfWeek(id, day);
+    	}else if (scope == 1) {
+    		return listAndRecordDao.getExerciseRecordsOfMonth(id,day);
+    	}else {
+    		return listAndRecordDao.getExerciseRecordsOfYear(id,day);
+    	}
     }
     
     @RequestMapping("/getAlcoholListWeek")
     public List<CommonRecord> getAlcoholList(@RequestParam("id") int id, @RequestParam("day") Date day) {
+    	
     	return listAndRecordDao.getAlcoholRecordsOfWeek(id, day);
     }
 
