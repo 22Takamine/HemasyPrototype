@@ -111,18 +111,18 @@ public class IndexController {
 		Color SmokeColorLevel = colorDao.getSmokeColorLevel(userSmokeDate.getValue2());
 		Color AlcoholColorLevel = colorDao.getAlcoholColorLevel(alcoholLevel);
 		Color CalorieColorLevel = colorDao.getCalorieColorLevel(calorieLevel);
-
-		System.out.println("colorLevel" + CalorieColorLevel.getColorPath());
-
 		bmi = Math.floor(bmi * 10)/10;
 
-		if(user.getRoleId() == 0) {
+		System.out.println("カロリー: " + CalorieColorLevel.getColorPath());
+		System.out.println("タバコ: " + SmokeColorLevel.getColorPath());
+		System.out.println("アルコール: " + AlcoholColorLevel.getColorPath());
+		System.out.println("BMI: " + bmi);
 
+		if(user.getRoleId() == 0) {
 			session.setAttribute("user", user);
 			return "admin";
 		}
 		else {
-
 			session.setAttribute("bmi", bmi);
 			session.setAttribute("calorieColorPath", CalorieColorLevel.getColorPath());
 			session.setAttribute("smokeColorPath", SmokeColorLevel.getColorPath());
