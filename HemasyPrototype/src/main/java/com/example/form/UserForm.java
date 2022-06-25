@@ -27,7 +27,7 @@ public class UserForm {
 
 	@NotNull
 	@Past
-	private Date birthDate;
+	private Date birth;
 
 	@NotNull
 	private Double height;
@@ -74,11 +74,11 @@ public class UserForm {
 
 	}
 
-	public Date getBirthDate() {
-		return birthDate;
+	public Date getBirth() {
+		return birth;
 	}
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
+	public void setBirth(Date birth) {
+		this.birth = birth;
 	}
 	
 	public Double getHeight() {

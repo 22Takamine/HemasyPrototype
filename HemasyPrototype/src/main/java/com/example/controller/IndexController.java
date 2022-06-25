@@ -155,7 +155,7 @@ public class IndexController {
 			return "register";
 		}
 		
-		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirthDate(),
+		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirth(),
 				form.getHeight(),form.getGoalExerciseTime(),form.getGoalCalorise(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
 		
 		userDao.insert(user);
@@ -475,7 +475,7 @@ public class IndexController {
     	String mail = form.getMail();
     	String pass = form.getPassword();
     	Integer sex = form.getSex();
-    	Date birthDate = form.getBirthDate();
+    	Date birthDate = form.getBirth();
     	Double height = form.getHeight();
     	Integer achievementId = form.getAchievementId();
     	Integer time = form.getGoalExerciseTime();
