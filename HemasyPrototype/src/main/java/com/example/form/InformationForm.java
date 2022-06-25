@@ -7,6 +7,9 @@ public class InformationForm {
 	private String title;
 	private String contents;
 	
+	private Integer informationId;
+	private Integer readFlag;
+	private Integer doneFlag;
 	
 	public int getUserId() {
 		return userId;
@@ -27,6 +30,27 @@ public class InformationForm {
 	}
 	public void setContents(String contents) {
 		this.contents = contents;
+	}
+	
+	public Integer getInformationId() {
+		return informationId;
+	}
+	public void setInformationId(Integer informationId) {
+		this.informationId = informationId;
+	}
+	
+	public Integer getReadFlag() {
+		return readFlag;
+	}
+	public void setReadFlag(Integer readFlag) {
+		this.readFlag = readFlag;
+	}
+	
+	public Integer getDoneFlag() {
+		return doneFlag;
+	}
+	public void setDoneFlag(Integer doneFlag) {
+		this.doneFlag = doneFlag;
 	}
 	
 }

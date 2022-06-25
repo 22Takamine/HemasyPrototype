@@ -23,6 +23,7 @@ import com.example.dao.InformationDao;
 import com.example.dao.ListAndRecordDao;
 import com.example.dao.UserDao;
 import com.example.entity.Achievements;
+import com.example.entity.Information;
 import com.example.entity.ListAndRecord;
 import com.example.entity.Rank;
 import com.example.entity.User;
@@ -453,8 +454,7 @@ public class IndexController {
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
 	public String account(@ModelAttribute("index") UserForm form, Model model) {
 		User user = (User) session.getAttribute("user");
-		List<Achievements> achievements = null;
-		achievements = achievementsDao.findByAll();
+		List<Achievements> achievements = achievementsDao.findByAll();
 		session.setAttribute("achievementsList",achievements);
 		model.addAttribute("achievementName",achievementsDao.findById(user.getAchievementId()).getAchievementName());
 		return "account";
@@ -535,26 +535,57 @@ public class IndexController {
 
 		return "admin";
 	}
+	
 	//ハンバーガーメニューから管理者お問い合わせへ
 	@RequestMapping(value = "/adminInformation", method = RequestMethod.GET)
-	public String adminInformation(@ModelAttribute("index") UserForm form, Model model) {
-
+	public String adminInformation(@ModelAttribute("index") InformationForm form, Model model) {
+		List<Information> infoList =informationDao.findByAll();
+		session.setAttribute("infoList",infoList);
 
 		return "adminInformation";
+	}
+	
+	//管理者お問い合わせから管理者お問い合わせ詳細へ
+	@RequestMapping(value = "/informationDetail", method = RequestMethod.POST)
+	public String informationDetail(@ModelAttribute("index") InformationForm form, Model model) {
+		Integer informationId = form.getInformationId();
+		Information information = informationDao.findById(informationId);
+		model.addAttribute("information",information);
+		return "informationDetail";
 	}
 
 	//対処済みにするを押すと、admin画面に遷移
 	@RequestMapping(value = "/process", method = RequestMethod.GET)
-	public String process(@ModelAttribute("index") UserForm form, Model model) {
+	public String process(@ModelAttribute("index") InformationForm form, Model model) {
+		Integer informationId = form.getInformationId();
+		
+		informationDao.update(informationId, 1, 1);
+		
+		List<Information> infoList =informationDao.findByAll();
+		session.setAttribute("infoList",infoList);
 
+		return "adminInformation";
+	}
+	
+	//一覧に戻るボタンを押すと、informationDetail画面に遷移
+	@RequestMapping(value = "/backList", method = RequestMethod.GET)
+	public String backList(@ModelAttribute("index") InformationForm form, Model model) {
+		Integer informationId = form.getInformationId();
+		Integer doneFlag = form.getDoneFlag();
+		
+		informationDao.update(informationId, 1, doneFlag);
+		
+		
+		List<Information> infoList =informationDao.findByAll();
+		session.setAttribute("infoList",infoList);
 
-		return "admin";
+		return "adminInformation";
 	}
 
-	//一覧に戻るボタンを押すと、admin画面に遷移
-	@RequestMapping(value = "/backList", method = RequestMethod.GET)
-	public String backList(@ModelAttribute("index") UserForm form, Model model) {
-
+	//戻るボタンを押すと、admin画面に遷移
+	@RequestMapping(value = "/backAdmin", method = RequestMethod.POST)
+	public String backAdmin(@ModelAttribute("index") UserForm form, Model model) {
+		
 
 		return "admin";
 	}

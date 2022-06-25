@@ -17,8 +17,15 @@ public class Information {
 	
 	private Date send_at;
 	
-	private int read_flag;
+	private Integer read_flag;
 	
-	private int done_flag;
+	private Integer done_flag;
+	
+	//userをジョインしたデータを保存
+	private String user_name;
+	
+	private String mail;
+	
+	
 
 }
