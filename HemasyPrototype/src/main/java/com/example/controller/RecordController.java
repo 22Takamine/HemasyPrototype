@@ -90,7 +90,7 @@ public class RecordController {
     }
     
     @RequestMapping("/getBmiListWeek")
-    public List<CommonRecord> getBmiList(@RequestParam("id") int id, @RequestParam("day") Date day) {
+    public List<CommonRecord> getBmiList(@RequestParam("id") int id, @RequestParam("day") Date day, @RequestParam("scope") String scopeStr) {
     	return listAndRecordDao.getBmiRecordsOfWeek(id, day);
 
     }

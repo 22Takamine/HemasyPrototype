@@ -452,7 +452,7 @@ order by create_date
 		//value3 BMI
 		//valu2 体重
 		String sql = """
-			select value3, value2, create_date from(
+            select value3, value2, create_date from(
 				select
 				sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value3
 				, sum(T2.value2) value2
@@ -463,11 +463,10 @@ order by create_date
 				ON T1.user_id = T2.user_id
 				AND T2.category = 2
 				AND T2.type = 5
-				and create_date <= :day
 				where T1.user_id = :user_id
+                AND left(to_char(create_date, 'YYYY-MM'), 7) = left(:day, 7)
 				group by T2.create_date
-				ORDER BY T2.create_date desc
-				LIMIT 7) c
+				ORDER BY T2.create_date desc) c
 			order by create_date
 			""";
 		MapSqlParameterSource param = new MapSqlParameterSource();

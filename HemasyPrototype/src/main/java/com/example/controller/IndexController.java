@@ -145,7 +145,6 @@ public class IndexController {
 	//ログイン画面から、新規登録画面に遷移
 	@RequestMapping(value = "/result", params="register", method = RequestMethod.POST)
 	public String register(@ModelAttribute("index") UserForm form, Model model) {
-    	
         return "register";
     }
 	
