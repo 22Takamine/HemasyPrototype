@@ -212,18 +212,18 @@ let alcoholList = [];
 let deadLine = [];
 //データの取得
 function getAlcoholList() {
-	fetch('/getAlcoholListWeek?id=' + ${user.getUserId()} + '&day=' + day.value)
+	fetch('/getAlcoholListWeek?id=' + ${user.getUserId()} + '&day=' + day.value + '&scope=' + scope.value)
 	.then(res => res.json().then(data => {
 		alcoholList = data
 		console.log(data)
 		console.log(exerciseList)
-		alcoholList.forEach(function(createDate) {
+		alcoholList.forEach(function(createDay) {
 			deadLine.push(20);
 		});
 		//アルコール量記録グラフに使うデータ
 		var alcoholGraphData = {
 			//グラフの下　日付
-			labels: alcoholList.map(item => item.createDate),
+			labels: alcoholList.map(item => item.createDay),
 			datasets: [{
 				label: '摂取アルコール量の推移',
 				data: alcoholList.map(item => item.value2),
@@ -254,7 +254,7 @@ function getAlcoholList() {
 let smokeList = [];
 //データの取得
 function getSmokeList() {
-	fetch('/getSmokeListWeek?id=' + ${user.getUserId()} + '&day=' + day.value)
+	fetch('/getSmokeListWeek?id=' + ${user.getUserId()} + '&day=' + day.value + '&scope=' + scope.value)
 	.then(res => res.json().then(data => {
 		smokeList = data
 		console.log(data)
@@ -262,7 +262,7 @@ function getSmokeList() {
 		//タバコ記録グラフに使うデータ
 		var smokeGraphData = {
 			//グラフの下　日付
-			labels: smokeList.map(item => item.createDate),
+			labels: smokeList.map(item => item.createDay),
 			datasets: [{
 				label: 'タバコを吸った本数',
 				data: smokeList.map(item => item.value3),

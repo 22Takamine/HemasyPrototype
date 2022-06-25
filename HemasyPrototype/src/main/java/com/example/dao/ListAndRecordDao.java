@@ -285,7 +285,7 @@ order by create_date
 		//ToDo user_id をidからとる
 		//alcohol量
 		String sql = """
-				select value2, create_date from (
+				select value2, create_date AS create_day from (
 					select	
 					sum(ROUND(value2*value3*(value4/100), 2)) value2
 					,create_date
@@ -297,6 +297,29 @@ order by create_date
 					group by create_date
 					ORDER BY create_date desc
 					LIMIT 7) c
+				order by create_day
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", user_id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
+	
+	public List<CommonRecord> getAlcoholRecordsOfMonth(int user_id, Date day) {
+		//ToDo user_id をidからとる
+		//alcohol量
+		String sql = """
+				select value2, create_date AS create_day from (
+					select	
+					sum(ROUND(value2*value3*(value4/100), 2)) value2
+					,create_date AS create_date
+					from lists_and_records
+					where category = 2
+					and type = 4
+					and user_id = 2 
+					and left(to_char(create_date, 'YYYY-MM'), 7) = left('2022-06-02', 7)
+					group by create_date
+					ORDER BY create_date desc) c
 				order by create_date
 				""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
@@ -305,34 +328,35 @@ order by create_date
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
 	
-	public List<CommonRecord> getAlcoholRecordsOf(int user_id, Date day) {
+	public List<CommonRecord> getAlcoholRecordsOfYear(int user_id, Date day) {
 		//ToDo user_id をidからとる
 		//alcohol量
 		String sql = """
-				select value2, create_date from (
+				select value2, create_date AS create_day from (
 					select	
 					sum(ROUND(value2*value3*(value4/100), 2)) value2
-					,create_date
+					,to_char(create_date, 'YYYY-MM') AS create_date
 					from lists_and_records
 					where category = 2
 					and type = 4
-					and user_id = :user_id
-					and create_date <= :day
-					group by create_date
-					ORDER BY create_date desc
-					LIMIT 7) c
-				order by create_date
+					and user_id = 2 
+					and left(to_char(create_date, 'YYYY-MM'), 4) = left('2022-06-02', 4)
+					group by to_char(create_date, 'YYYY-MM')
+					ORDER BY create_date desc) c
+				order by create_day
+               
 				""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("user_id", user_id);
 		param.addValue("day", day);
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
+	
 
 	public List<CommonRecord> getSmokeRecordsOfWeek(int user_id, Date day) {
 		//ToDo user_id をidからとる
 		String sql = """
-			select value3, create_date from(
+			select value3, create_date AS create_day from(
 				select
 				sum(value3) value3
 				,create_date
@@ -344,6 +368,50 @@ order by create_date
 				group by create_date
 				ORDER BY create_date desc
 				LIMIT 7)c
+			order by create_date
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", user_id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
+	
+	public List<CommonRecord> getSmokeRecordsOfMonth(int user_id, Date day) {
+		//ToDo user_id をidからとる
+		String sql = """
+			select value3, create_date AS create_day from(
+				select
+				sum(value3) value3
+				,create_date
+				from lists_and_records
+				where category = 2
+				and type = 3
+				and user_id = 2
+				and left(to_char(create_date, 'YYYY-MM'), 7) = left('2022-06-02', 7)
+				group by create_date
+				ORDER BY create_date desc)c
+			order by create_date
+				""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", user_id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
+	
+	public List<CommonRecord> getSmokeRecordsOfYear(int user_id, Date day) {
+		//ToDo user_id をidからとる
+		String sql = """
+			select value3, create_date AS create_day from(
+				select
+				sum(value3) value3
+				,to_char(create_date, 'YYYY-MM') create_date
+				from lists_and_records
+				where category = 2
+				and type = 3
+				and user_id = 2
+				AND left(to_char(create_date, 'YYYY-MM'), 4) = left('2022-04-23', 4)
+				group by to_char(create_date, 'YYYY-MM')
+				ORDER BY to_char(create_date, 'YYYY-MM') desc)c
 			order by create_date
 				""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
@@ -380,15 +448,43 @@ order by create_date
 		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
 	}
 	
+	public List<CommonRecord> getBmiRecordsOfMonth(int user_id, Date day) {
+		//value3 BMI
+		//valu2 体重
+		String sql = """
+			select value3, value2, create_date from(
+				select
+				sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value3
+				, sum(T2.value2) value2
+				, T2.create_date 
+				FROM
+				users T1
+				JOIN lists_and_records T2
+				ON T1.user_id = T2.user_id
+				AND T2.category = 2
+				AND T2.type = 5
+				and create_date <= :day
+				where T1.user_id = :user_id
+				group by T2.create_date
+				ORDER BY T2.create_date desc
+				LIMIT 7) c
+			order by create_date
+			""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", user_id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
+	
 
 	public void setZero(int user_id, int type) {
 		String sql = """
 			insert into lists_and_records (create_date, value2, value3, value4, value5, value6, value7, category, type, user_id)
 			select * from (
 			with recursive Dummy(i) as 
-			(select cast(now() as date) i
+			(select cast(to_char(now(), 'YYYY') || '-12-31' as date) i
 			union all
-			select cast(i + cast('-1 days ' as interval) as date) from Dummy where i > cast('2022-01-01' as date)) 
+			select cast(i + cast('-1 days ' as interval) as date) from Dummy where i > cast('2022-01-01' as date))
 			select i as days, 0 value2, 0 value3, 0 value4, 0 value5, 0 value6, 0 value7, 2 category, :type type, :user_id user_id from Dummy
 			
 			except

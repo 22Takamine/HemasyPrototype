@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dao.ListAndRecordDao;
 import com.example.entity.CommonRecord;
+import com.example.service.RecordService;
 
 
 
@@ -29,6 +30,9 @@ public class RecordController {
     
     @Autowired
 	HttpSession session; 
+    
+    @Autowired
+    RecordService recordService;
     
     @RequestMapping("/getFoodListWeek")
     public List<CommonRecord> getFoodList(@RequestParam("id") int id, @RequestParam("day") Date day, @RequestParam("scope") String scopeStr) {
@@ -55,14 +59,27 @@ public class RecordController {
     }
     
     @RequestMapping("/getAlcoholListWeek")
-    public List<CommonRecord> getAlcoholList(@RequestParam("id") int id, @RequestParam("day") Date day) {
-    	
-    	return listAndRecordDao.getAlcoholRecordsOfWeek(id, day);
+    public List<CommonRecord> getAlcoholList(@RequestParam("id") int id, @RequestParam("day") Date day, @RequestParam("scope") String scopeStr) {
+    	int scope = Integer.parseInt(scopeStr);
+    	if (scope == 0) {
+    		return listAndRecordDao.getAlcoholRecordsOfWeek(id, day);
+    	}else if (scope == 1) {
+    		return listAndRecordDao.getAlcoholRecordsOfMonth(id,day);
+    	}else {
+    		return listAndRecordDao.getAlcoholRecordsOfYear(id,day);
+    	}
     }
 
     @RequestMapping("/getSmokeListWeek")
-    public List<CommonRecord> getSmokeList(@RequestParam("id") int id, @RequestParam("day") Date day) {
-    	return listAndRecordDao.getSmokeRecordsOfWeek(id, day);
+    public List<CommonRecord> getSmokeList(@RequestParam("id") int id, @RequestParam("day") Date day, @RequestParam("scope") String scopeStr) {
+    	int scope = Integer.parseInt(scopeStr);
+    	if (scope == 0) {
+    		return listAndRecordDao.getSmokeRecordsOfWeek(id, day);
+    	}else if (scope == 1) {
+    		return listAndRecordDao.getSmokeRecordsOfMonth(id,day);
+    	}else {
+    		return listAndRecordDao.getSmokeRecordsOfYear(id,day);
+    	}
     }
     
     @RequestMapping("/getBmiListWeek")
