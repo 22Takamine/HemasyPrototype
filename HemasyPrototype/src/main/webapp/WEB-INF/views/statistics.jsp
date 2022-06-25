@@ -44,8 +44,8 @@
 	<br>
 	<br>
 	<h1>統計</h1>
-	<input type="text" id="hide" value="0">
-	<input type="text" id="hideType" value="1">
+	<input type="hidden" id="hide" value="0">
+	<input type="hidden" id="hideType" value="1">
 	<div id="selectGraph">
 		<button name="0" data-index="food" onclick="entryClick(1)">食事</button>
 		<button name="1" data-index="exercise" onclick="entryClick(2)">運動</button>
@@ -291,7 +291,7 @@ function getSmokeList() {
 let bmiList = [];
 //データの取得
 function getBmiList() {
-	fetch('/getBmiListWeek?id=' + ${user.getUserId()} + '&day=' + day.value)
+	fetch('/getBmiListWeek?id=' + ${user.getUserId()} + '&day=' + day.value  + '&scope=' + scope.value)
 	.then(res => res.json().then(data => {
 		bmiList = data
 		console.log(data)
@@ -299,7 +299,7 @@ function getBmiList() {
 		//体重記録グラフに使うデータ
 		var bmiGraphData = {
 			//グラフの下　日付
-			labels: bmiList.map(item => item.createDate),
+			labels: bmiList.map(item => item.createDay),
 			datasets: [{
 				label: 'BMIの推移',
 				data: bmiList.map(item => item.value3),

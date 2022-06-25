@@ -205,8 +205,8 @@ public class ListAndRecordDao {
 					AND T3.category = 2
 					AND T3.type = 2
 					AND T2.create_date = T3.create_date
-					where T1.user_id = 2
-					and T2.create_date <= '2022-06-20'
+					where T1.user_id = :user_id
+					and T2.create_date <= :day
 					group by create_day	
 					order by create_day desc
 					
@@ -237,8 +237,8 @@ public class ListAndRecordDao {
 				    AND T2.type = 2
 				    AND T1.category = 2
 				    AND T1.type= 5
-				    Where T2.user_id = 2
-				    and left(to_char(T2.create_date, 'YYYY-MM'), 7) = left('2022-06-02', 7)
+				    Where T2.user_id = :user_id
+				    and left(to_char(T2.create_date, 'YYYY-MM'), 7) = left(:day, 7)
 				    order by to_char(T1.create_date, 'YYYY-MM') desc)c 
 				order by create_day
 				
@@ -256,23 +256,23 @@ public class ListAndRecordDao {
 		//value 3 = 消費カロリー　
 		//value 4 = 体重
 		String sql = """
-select value3, value4,  left(create_date, 7) AS create_day from(
-    select
-    sum(ROUND(T1.value2 * T2.value2 * (T2.value3/60) * 1.05, 2)) value3
-    ,sum(T2.value3) value4
-    , to_char(T1.create_date, 'YYYY-MM') create_date
-    from lists_and_records T1
-    join lists_and_records T2
-    ON T2.create_date = T1.create_date
-    AND T2.category = 2
-    AND T2.type = 2
-    AND T1.category = 2
-    AND T1.type= 5
-    Where T2.user_id = 2
-    and left(to_char(T2.create_date, 'YYYY-MM'), 4) <= left('2022-02-02', 4)
-    group by to_char(T1.create_date, 'YYYY-MM')
-    order by to_char(T1.create_date, 'YYYY-MM') desc)c 
-order by create_date
+				select value3, value4,  left(create_date, 7) AS create_day from(
+				    select
+				    sum(ROUND(T1.value2 * T2.value2 * (T2.value3/60) * 1.05, 2)) value3
+				    ,sum(T2.value3) value4
+				    , to_char(T1.create_date, 'YYYY-MM') create_date
+				    from lists_and_records T1
+				    join lists_and_records T2
+				    ON T2.create_date = T1.create_date
+				    AND T2.category = 2
+				    AND T2.type = 2
+				    AND T1.category = 2
+				    AND T1.type= 5
+				    Where T2.user_id = :user_id
+				    and left(to_char(T2.create_date, 'YYYY-MM'), 4) <= left(:day, 4)
+				    group by to_char(T1.create_date, 'YYYY-MM')
+				    order by to_char(T1.create_date, 'YYYY-MM') desc)c 
+				order by create_date
 				""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("user_id", id);
@@ -316,8 +316,8 @@ order by create_date
 					from lists_and_records
 					where category = 2
 					and type = 4
-					and user_id = 2 
-					and left(to_char(create_date, 'YYYY-MM'), 7) = left('2022-06-02', 7)
+					and user_id = :user_id
+					and left(to_char(create_date, 'YYYY-MM'), 7) = left(:day, 7)
 					group by create_date
 					ORDER BY create_date desc) c
 				order by create_date
@@ -339,8 +339,8 @@ order by create_date
 					from lists_and_records
 					where category = 2
 					and type = 4
-					and user_id = 2 
-					and left(to_char(create_date, 'YYYY-MM'), 4) = left('2022-06-02', 4)
+					and user_id = :user_id
+					and left(to_char(create_date, 'YYYY-MM'), 4) = left(:day, 4)
 					group by to_char(create_date, 'YYYY-MM')
 					ORDER BY create_date desc) c
 				order by create_day
@@ -386,8 +386,8 @@ order by create_date
 				from lists_and_records
 				where category = 2
 				and type = 3
-				and user_id = 2
-				and left(to_char(create_date, 'YYYY-MM'), 7) = left('2022-06-02', 7)
+				and user_id = :user_id
+				and left(to_char(create_date, 'YYYY-MM'), 7) = left(:day, 7)
 				group by create_date
 				ORDER BY create_date desc)c
 			order by create_date
@@ -408,8 +408,8 @@ order by create_date
 				from lists_and_records
 				where category = 2
 				and type = 3
-				and user_id = 2
-				AND left(to_char(create_date, 'YYYY-MM'), 4) = left('2022-04-23', 4)
+				and user_id = :user_id
+				AND left(to_char(create_date, 'YYYY-MM'), 4) = left(:day, 4)
 				group by to_char(create_date, 'YYYY-MM')
 				ORDER BY to_char(create_date, 'YYYY-MM') desc)c
 			order by create_date
@@ -424,7 +424,7 @@ order by create_date
 		//value3 BMI
 		//valu2 体重
 		String sql = """
-			select value3, value2, create_date from(
+			select value3, value2, create_date AS create_day from(
 				select
 				sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value3
 				, sum(T2.value2) value2
@@ -452,7 +452,7 @@ order by create_date
 		//value3 BMI
 		//valu2 体重
 		String sql = """
-            select value3, value2, create_date from(
+            select value3, value2, create_date AS create_day from(
 				select
 				sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value3
 				, sum(T2.value2) value2
@@ -476,6 +476,34 @@ order by create_date
 	}
 	
 
+	public List<CommonRecord> getBmiRecordsOfYear(int user_id, Date day) {
+		//value3 BMI
+		//valu2 体重
+		String sql = """
+            select value3, value2, create_date AS create_day from(
+				select
+				sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value3
+				, sum(T2.value2) value2
+				, to_char(create_date, 'YYYY-MM') create_date
+				FROM
+				users T1
+				JOIN lists_and_records T2
+				ON T1.user_id = T2.user_id
+				AND T2.category = 2
+				AND T2.type = 5
+				where T1.user_id = :user_id
+                AND left(to_char(create_date, 'YYYY-MM'), 4) = left(:day, 4)
+				group by to_char(create_date, 'YYYY-MM')
+				ORDER BY to_char(create_date, 'YYYY-MM') )c
+			order by create_date;
+
+			""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", user_id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
+	
 	public void setZero(int user_id, int type) {
 		String sql = """
 			insert into lists_and_records (create_date, value2, value3, value4, value5, value6, value7, category, type, user_id)
