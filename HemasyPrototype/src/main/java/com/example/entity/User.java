@@ -11,7 +11,7 @@ public class User {
 	private String mail;
 	private String password;
 	private Integer sex;
-	private Date birthDate;
+	private Date birth;
 	private Double height;
 	private Date createdAt;
 	private Integer goalExerciseTime;
@@ -30,12 +30,12 @@ public class User {
 	}
 
 	public User(String userName, String mail, String password,Integer sex,
-			Date birthDate,Double height,Integer goalExerciseTime,Integer goalCalorie,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer roleId) {
+			Date birth,Double height,Integer goalExerciseTime,Integer goalCalorie,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer roleId) {
 		this.userName = userName;
 		this.mail = mail;
 		this.password = password;
 		this.sex = sex;
-		this.birthDate = birthDate;
+		this.birth = birth;
 		this.height = height;
 		this.goalExerciseTime = goalExerciseTime;
 		this.goalCalorie = goalCalorie;
@@ -45,7 +45,7 @@ public class User {
 		this.roleId = roleId;
 	}
 	
-	public User(Integer id, Integer userId, String userName, String mail, String password, Integer sex, Date birthDate, Double height,
+	public User(Integer id, Integer userId, String userName, String mail, String password, Integer sex, Date birth, Double height,
 			Date createdAt, Integer goalExerciseTime, Integer goalCalorie, Integer rankFlag, Integer alcoholFlag, Integer smokeFlag,
 			Integer roleId, Integer achievementId, Integer achievementFlag, Double bmi) {
 		this.id = id;
@@ -54,7 +54,7 @@ public class User {
 		this.mail = mail;
 		this.password = password;
 		this.sex = sex;
-		this.birthDate = birthDate;
+		this.birth = birth;
 		this.height = height;
 		this.createdAt = createdAt;
 		this.goalExerciseTime = goalExerciseTime;
@@ -118,12 +118,12 @@ public class User {
 	}
 
 
-	public Date getBirthDate() {
-		return birthDate;
+	public Date getBirth() {
+		return birth;
 	}
 
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
+	public void setBirth(Date birth) {
+		this.birth = birth;
 	}
 
 	public Date getCreatedAt() {
