@@ -51,11 +51,11 @@ public class ListAndRecordDao {
 	
 	private static final String GET_LATEST_SMOKE_DATE_RECORD = "SELECT current_date - create_date as value2 FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId AND value3 <> '0' ORDER BY create_date DESC";
 	
-	private static final String GET_LATEST_ALCOHOL_DATE_RECORD = "SELECT sum(value2*value3*value4/100) AS value2 FROM lists_and_records WHERE category = 2 AND type = 4 AND user_id = :userId AND value2 <> '0' AND current_date = create_date";
+	private static final String GET_LATEST_ALCOHOL_DATE_RECORD = "SELECT sum(value2*value3*value4/100) AS value2 FROM lists_and_records WHERE category = 2 AND type = 4 AND user_id = :userId  AND current_date = create_date";
 	
-	private static final String GET_LATEST_METS_AND_TIME_RECORD = "SELECT sum(value2) AS value2,sum(value3)/60 AS value3 FROM lists_and_records WHERE category = 2 AND type = 2 AND user_id = :userId AND value2 <> '0' AND current_date = create_date";
+	private static final String GET_LATEST_METS_AND_TIME_RECORD = "SELECT sum(value2) AS value2,sum(value3)/60 AS value3 FROM lists_and_records WHERE category = 2 AND type = 2 AND user_id = :userId  AND current_date = create_date";
 
-	private static final String GET_LATEST_CALORIE_INTAKE = "SELECT sum(value2 * value3) AS value2 FROM lists_and_records WHERE category = 2 AND type = 1 AND user_id = :userId AND value2 <> '0' AND current_date = create_date";
+	private static final String GET_LATEST_CALORIE_INTAKE = "SELECT sum(value2 * value3) AS value2 FROM lists_and_records WHERE category = 2 AND type = 1 AND user_id = :userId  AND current_date = create_date";
 	
 	//かわみつ
 	//SQL
@@ -401,9 +401,9 @@ public class ListAndRecordDao {
 			insert into lists_and_records (create_date, value2, value3, value4, value5, value6, value7, category, type, user_id)
 			select * from (
 			with recursive Dummy(i) as 
-			(select cast(now() as date) i
+			(select cast(to_char(now(), 'YYYY') || '-12-31' as date) i
 			union all
-			select cast(i + cast('-1 days ' as interval) as date) from Dummy where i > cast('2022-01-01' as date)) 
+			select cast(i + cast('-1 days ' as interval) as date) from Dummy where i > cast('2022-01-01' as date))
 			select i as days, 0 value2, 0 value3, 0 value4, 0 value5, 0 value6, 0 value7, 2 category, :type type, :user_id user_id from Dummy
 			
 			except
