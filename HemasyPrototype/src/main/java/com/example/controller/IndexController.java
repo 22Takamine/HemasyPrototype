@@ -47,7 +47,7 @@ public class IndexController {
 	public String index(@ModelAttribute("index") IndexForm form, Model model) {
 
 		//仮のデータ送信
-		User user = new User(1, 1, "管理者", "1", "1", 1, Date.valueOf("2022-06-20"), 1, Date.valueOf("2022-06-20"), 1, 1, 1, 1, 1, 1,1,1,1 );
+		User user = new User(2, 2, "一派ユーザ", "1", "1", 1, Date.valueOf("2022-06-20"), 1, Date.valueOf("2022-06-20"), 1, 1, 1, 1, 1, 1,1,1,1 );
 		session.setAttribute("user", user);
 		return "login";
 	}

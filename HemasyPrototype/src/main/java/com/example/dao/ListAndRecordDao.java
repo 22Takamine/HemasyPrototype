@@ -30,7 +30,8 @@ public class ListAndRecordDao {
 	private static final String GET_LATEST_SMOKE_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId ORDER BY create_date DESC";
 	private static final String GET_LATEST_WEIGHT_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 5 AND user_id = :userId ORDER BY create_date DESC";
 	private static final String INSERT_RECORD = "INSERT INTO lists_and_records (category, type, value1, value2, value3, value4, value5, value6, value7, value8, create_date, user_id) VALUES (:category, :type, :value1, :value2, :value3, :value4, :value5, :value6, :value7, :value8, :createDate, :userId)";
-	private static final String DELETE_RECORD_BY_DATE = "DELETE FROM lists_and_records WHERE create_date = :createDate AND user_id = :userID";
+	private static final String DELETE_RECORD_BY_DATE = "DELETE FROM lists_and_records WHERE create_date = :createDate AND user_id = :userId";
+	private static final String GET_LISTS = "SELECT * FROM lists_and_records WHERE category = 1 AND type = :type AND (user_id = 1 or user_id = :userId)";
 	
 	@Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -141,5 +142,14 @@ public class ListAndRecordDao {
 	        jdbcTemplate.update(INSERT_RECORD, paramSource);
 		}
 		return 1;
+	}
+	
+	//リストを取得
+	public List<ListAndRecord> getList(int type) {
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("type", type);
+		System.out.println("こいつのユーザid" + ((User) session.getAttribute("user")).getUserId());
+		param.addValue("userId", ((User) session.getAttribute("user")).getUserId());
+		return jdbcTemplate.query(GET_LISTS, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
 	}
 }
