@@ -138,6 +138,9 @@ public class IndexController {
     		if(calorieLevel <= 0) {
     			calorieLevel = 1;
     		}
+    		else if(calorieLevel >= 12) {
+    			calorieLevel = 11;
+    		}
     		if(smokeLevel <= 0) {
     			smokeLevel = 1;
     		}
@@ -147,7 +150,7 @@ public class IndexController {
     		else {
     			alcoholLevel = 1;
     		}
-    		
+    		System.out.println(calorieLevel);
     		Color SmokeColorLevel = colorDao.getSmokeColorLevel(smokeLevel);
     		Color AlcoholColorLevel = colorDao.getAlcoholColorLevel(alcoholLevel);
     		Color CalorieColorLevel = colorDao.getCalorieColorLevel(calorieLevel);

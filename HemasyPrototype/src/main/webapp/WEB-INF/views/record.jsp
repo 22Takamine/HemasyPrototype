@@ -61,7 +61,6 @@
 		<input type="hidden" value="${dataDate}" name="createDate">
 		<div id="food">
 			<h2>食事記録</h2>
-			<p>目安: ${2}kcal 摂取: ${2}kcal</p>
 			<div id="food_bre">
 				<p>
 					朝食
@@ -71,17 +70,17 @@
 					varStatus="bStatus">
 					<p class="breakfastData">
 						<input value="${breakfastRecord.value1}"
-							name="value1Bre${bStatus.index}" list="foodList" onchange="changeBre(${bStatus.index});calcCalorieMor(${bStatus.index})" id="nameMor_${bStatus.index}"> <input type="number"
+							name="value1Bre${bStatus.index}" list="foodList" onchange="changeBre(${bStatus.index});calcCalorieBre(${bStatus.index})" id="nameBre_${bStatus.index}"> <input type="number"
 							min="0" value="${breakfastRecord.value2}"
-							name="value2Bre${bStatus.index}" id="onceCalMor_${bStatus.index}"
-							onchange="calcCalorieMor(${bStatus.index})">kcal × <input
+							name="value2Bre${bStatus.index}" id="onceCalBre_${bStatus.index}"
+							onchange="calcCalorieBre(${bStatus.index})">kcal × <input
 							type="number" min="0.1" step="0.1"
 							value="${breakfastRecord.value3}"
-							name="value3Bre${bStatus.index}" id="amountMor_${bStatus.index}"
-							onchange="calcCalorieMor(${bStatus.index})">人前＝ <span
-							id="calorieMor_${bStatus.index}">${breakfastRecord.value2 * breakfastRecord.value3}</span>kcal
+							name="value3Bre${bStatus.index}" id="amountBre_${bStatus.index}"
+							onchange="calcCalorieBre(${bStatus.index})">人前＝ <span
+							id="calorieBre_${bStatus.index}">${breakfastRecord.value2 * breakfastRecord.value3}</span>kcal
 						<input type="checkbox" value="del" name="delBre${bStatus.index}">削除
-						<input type="checkbox" value="${1}">簡易登録<a
+						<input type="checkbox" value="add" name="addMyListBre${bStatus.index}">簡易登録<a
 							href="information.jsp">?</a>
 					</p>
 				</c:forEach>
@@ -104,7 +103,7 @@
 							onchange="calcCalorieLun(${lStatus.index})">人前＝ <span
 							id="calorieLun_${lStatus.index}">${lunchRecord.value2 * lunchRecord.value3}</span>kcal
 						<input type="checkbox" value="del" name="delLun${lStatus.index}">削除
-						<input type="checkbox" value="${1}">簡易登録<a
+						<input type="checkbox" value="add" name="addMyListLun${lStatus.index}">簡易登録<a
 							href="information.jsp">?</a>
 					</p>
 				</c:forEach>
@@ -128,7 +127,7 @@
 							id="calorieDin_${dStatus.index}">${dinnerRecord.value2 * dinnerRecord.value3}</span>kcal
 						<input type="checkbox" value="del" name="delDin${dStatus.index}">削除
 						<input type="hidden" value="${dStatus.index + 100}" id="dIndex">
-						<input type="checkbox" value="${1}">簡易登録<a
+						<input type="checkbox" value="add" name="addMyListDin${dStatus.index}">簡易登録<a
 							href="information.jsp">?</a>
 					</p>
 				</c:forEach>
@@ -151,7 +150,7 @@
 							onchange="calcCalorieSna(${sStatus.index})" />人前＝ <span
 							id="calorieSna_${sStatus.index}">${snackRecord.value2 * snackRecord.value3}</span>kcal
 						<input type="checkbox" value="del" name="delSna${sStatus.index}">削除
-						<input type="checkbox" value="${1}">簡易登録<a
+						<input type="checkbox" value="add" name="addMyListSna${sStatus.index}">簡易登録<a
 							href="information.jsp">?</a>
 					</p>
 				</c:forEach>
@@ -164,7 +163,6 @@
 				運動記録
 				<button type="button" id="add_spo" onclick="addSpoForm()">⊕</button>
 			</h2>
-			<p>目安: ${2}kcal 消費: ${2}kcal</p>
 			<c:forEach var="sportRecord" items="${sportRecordList}"
 				varStatus="spStatus">
 				<p class="sportData">
@@ -212,7 +210,7 @@
 						onchange="calcAlc(${aStatus.index})">杯飲みました。 アルコール <span
 						id="alcoholAmount_${aStatus.index}">${alcoholRecord.value2 * alcoholRecord.value3 * alcoholRecord.value4 / 100}</span>g
 					<input type="checkbox" value="del" name="delAlc${aStatus.index}">削除
-					<input type="checkbox" value="${1}">簡易登録<a
+					<input type="checkbox" value="add" name="addMyListAlc${aStatus.index}">簡易登録<a
 						href="information.jsp">?</a>
 				</p>
 			</c:forEach>
@@ -239,10 +237,10 @@
 	foodList = [];
 	
 	fetch("/getList?type=1")
-	.then(function(response1) { //成功時に実行される
+	.then(function(response1) {
 		return response1.json();
 	})
-	.then(function(data1) { //成功時に実行される
+	.then(function(data1) {
 		console.log(data1)
 		foodList = data1
 		console.log(foodList)
@@ -252,10 +250,10 @@
 	sportList = [];
 	
 	fetch("/getList?type=2")
-	.then(function(response2) { //成功時に実行される
+	.then(function(response2) {
 		return response2.json();
 	})
-	.then(function(data2) { //成功時に実行される
+	.then(function(data2) {
 		sportList = data2
 	})
 	
@@ -263,10 +261,10 @@
 	alcoholList = [];
 	
 	fetch("/getList?type=4")
-	.then(function(response3) { //成功時に実行される
+	.then(function(response3) {
 		return response3.json();
 	})
-	.then(function(data3) { //成功時に実行される
+	.then(function(data3) {
 		alcoholList = data3
 	})
 	
@@ -299,8 +297,8 @@
 	
 	/* 朝食をリストから選んだ際にカロリーを自動入力 */
 	function changeBre(id) {
-		var targetName = document.getElementById('nameMor_' + id);
-		var targetCalorie = document.getElementById('onceCalMor_' + id);
+		var targetName = document.getElementById('nameBre_' + id);
+		var targetCalorie = document.getElementById('onceCalBre_' + id);
 		for (let i = 0; i < foodList.length; i++) {
 			if (foodList[i]['value1'] == targetName.value) {
 				targetCalorie.value = foodList[i]['value2'];
@@ -386,18 +384,19 @@
 		  newP.innerHTML =
 		'<input name="value1Bre' + mnum +
 		'" list="foodList" onchange="changeBre(' + mnum +
-		');calcCalorieMor(' + mnum +
-		')" id="nameMor_' + mnum + 
+		');calcCalorieBre(' + mnum +
+		')" id="nameBre_' + mnum + 
 		'"><input type="number" min="0" name="value2Bre' + mnum + 
-		'" id="onceCalMor_' + mnum +
-		'" onchange="calcCalorieMor(' + mnum +
+		'" id="onceCalBre_' + mnum +
+		'" onchange="calcCalorieBre(' + mnum +
 		')">kcal ×<input type="number" min="0.1" step="0.1" name="value3Bre' + mnum + 
-		'" id="amountMor_' + mnum + 
-		'" onchange="calcCalorieMor(' + mnum +
-		')">人前＝ <span id="calorieMor_' + mnum +
+		'" id="amountBre_' + mnum + 
+		'" onchange="calcCalorieBre(' + mnum +
+		')">人前＝ <span id="calorieBre_' + mnum +
 		'"></span>kcal' +
 		'<input type="checkbox" value="del" name="delBre' + mnum +
-		'">削除<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>';
+		'">削除<input type="checkbox" value="add" name="addMyListBre' + mnum +
+		'">簡易登録<a href="information.jsp">?</a>';
 	  var parent = document.getElementById('food_bre');
 	  parent.appendChild(newP);
 	  mnum++ ;
@@ -422,7 +421,8 @@
 			')">人前＝ <span id="calorieLun_' + lnum +
 			'"></span>kcal' +
 			'<input type="checkbox" value="del" name="delLun' + lnum +
-			'">削除<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>';
+			'">削除<input type="checkbox" value="add" name="addMyListLun' + lnum +
+			'">簡易登録<a href="information.jsp">?</a>';
 	  var parent = document.getElementById('food_lun');
 	  parent.appendChild(newP);
 	  lnum++ ;
@@ -447,7 +447,8 @@
 			')">人前＝ <span id="calorieDin_' + dnum +
 			'"></span>kcal' +
 			'<input type="checkbox" value="del" name="delDin' + dnum +
-			'">削除<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>';
+			'">削除<input type="checkbox" value="add" name="addMyListDin' + dnum +
+			'">簡易登録<a href="information.jsp">?</a>';
 	  var parent = document.getElementById('food_din');
 	  parent.appendChild(newP);
 	  dnum++ ;
@@ -461,7 +462,7 @@
 	  newP.innerHTML =
 		    '<input name="value1Sna' + snum +
 			'" list="foodList" onchange="changeSna(' + snum +
-			');calcCalorieMor(' + snum +
+			');calcCalorieSna(' + snum +
 			')" id="nameSna_' + snum +
 			'"><input type="number" min="0" name="value2Sna' + snum + 
 			'" id="onceCalSna_' + snum +
@@ -472,7 +473,8 @@
 			')">人前＝ <span id="calorieSna_' + snum +
 			'"></span>kcal' +
 			'<input type="checkbox" value="del" name="delSna' + snum +
-			'">削除<input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>';
+			'">削除<input type="checkbox" value="add" name="addMyListSna' + snum +
+			'">簡易登録<a href="information.jsp">?</a>';
 	  var parent = document.getElementById('food_sna');
 	  parent.appendChild(newP);
 	  snum++ ;
@@ -523,18 +525,19 @@
 		  '" onchange="calcAlc(' + anum +
 		  ')">杯飲みました。 アルコール<span id="alcoholAmount_' + anum +
 		  '"></span>g<input type="checkbox" value="del" name="delAlc' + anum +
-		  '">削除 <input type="checkbox" value="${1}">簡易登録<a href="information.jsp">?</a>';
+		  '">削除<input type="checkbox" value="add" name="addMyListAlc' + anum +
+		  '">簡易登録<a href="information.jsp">?</a>';
 	  var parent = document.getElementById('alcohol');
 	  parent.appendChild(newP);
 	  anum++ ;
 	}
 	
 	/* 摂取カロリー計算 */
-	function calcCalorieMor(id){
+	function calcCalorieBre(id){
 		console.log(id);
-		console.log('一戸カロリー' + document.getElementById('onceCalMor_' + id).value);
-		console.log('人前' + document.getElementById('amountMor_' + id).value);
-	    document.getElementById('calorieMor_' + id).innerHTML = document.getElementById('onceCalMor_' + id).value * document.getElementById('amountMor_' + id).value;
+		console.log('一戸カロリー' + document.getElementById('onceCalBre_' + id).value);
+		console.log('人前' + document.getElementById('amountBre_' + id).value);
+	    document.getElementById('calorieBre_' + id).innerHTML = document.getElementById('onceCalBre_' + id).value * document.getElementById('amountBre_' + id).value;
 	}
 	
 	function calcCalorieLun(id){
@@ -577,8 +580,31 @@
 		console.log(document.getElementById('oncePer_' + id).value);
 		console.log(document.getElementById('alcoholAmount_' + id).className);
 		document.getElementById('alcoholAmount_' + id).innerHTML = document.getElementById('onceAmount_' + id).value * document.getElementById('oncePer_' + id).value * document.getElementById('amount_' + id).value / 100;
+		
 	}
+	/*ハンバーガーメニューの表示*/
+	function openModal() {
+	    let gray_out = document.getElementById("fadeLayer");
+	    gray_out.style.visibility = "visible";
+	    setTimeout(addClass, 200);
+	}
+
+	function closeModal() {
+	    let modal = document.getElementById('modal');
+	    let gray_out = document.getElementById("fadeLayer");
+	    modal.classList.remove('is-show');
+	    gray_out.style.visibility ="hidden";
+	}
+
+	function addClass() {
+	    let modal = document.getElementById('modal');
+	    modal.classList.add('is-show');
+	}
+
+	document.querySelector('.menu-btn').addEventListener('click', function(){
+	   document.querySelector('.menu').classList.toggle('is-active');
+	});
 	</script>
-	<script src="js/commons.js"></script>
+	
 </body>
 </html>

@@ -15,6 +15,7 @@ import com.example.dao.AchievementsDao;
 import com.example.dao.ListAndRecordDao;
 import com.example.entity.Achievements;
 import com.example.entity.CommonRecord;
+import com.example.entity.ListAndRecord;
 import com.example.service.RecordService;
 
 
@@ -101,6 +102,12 @@ public class RecordController {
     	return achievementsDao.findById(id);
 
     }
+    
+    @RequestMapping("/getList")
+    public List<ListAndRecord> getList(@RequestParam("type") int type) {
+    	return listAndRecordDao.getList(type);
+    }
+
 
 }
 
