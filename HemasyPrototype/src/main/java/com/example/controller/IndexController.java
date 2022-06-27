@@ -263,21 +263,17 @@ public class IndexController {
 
 		System.out.println(listAndRecordLists.size());
 
-		//    	listAndRecordDao.insertRecord(listAndRecordLists);
-
-		//    	System.out.println(request.getParameter("value1Bre0"));
-		//    	System.out.println(request.getParameter("value1Bre1"));
-		//    	System.out.println(request.getParameter("countBre0"));
-		//    	System.out.println(request.getParameter("countBre1"));
-		//    	System.out.println(request.getParameter("countBre"));
+		listAndRecordDao.insertRecord(((User) session.getAttribute("user")).getUserId(), listAndRecordLists, Date.valueOf(request.getParameter("createDate")));
 
 		return "menu";
 
 	}
 
 	//統計画面に遷移
-	@RequestMapping(value = "/statistics", method = RequestMethod.POST)
+	@RequestMapping(value = "/statistics", method = RequestMethod.GET)
 	public String statistics(@ModelAttribute("index") UserForm form, Model model) {
+		
+		model.addAttribute("statisticsDate", session.getAttribute("statisticsDate"));
 
 
 		return "statistics";

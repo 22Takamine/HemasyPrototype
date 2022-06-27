@@ -38,7 +38,8 @@
 	    <form:button><fmt:message key="form.lbl.record"/></form:button>
 	  </form:form>
   
-	  <form:form action="statistics" modelAttribute="index" method="post">
+	  <form:form action="statistics" modelAttribute="index" method="get">
+	  	<input type="hidden" id="todayDate" name="statisticsDate">
 	    <form:button><fmt:message key="form.lbl.statistics"/></form:button>
 	  </form:form>
   </div>

@@ -53,15 +53,14 @@
 	<a href="#alcohol">酒</a>
 	<a href="#smoke">たばこ</a>
 	<a href="#weight">体重</a>
-	<form action="record">
-		<input type="date" name="record_day" value="${dataDate}">の<input type="submit">
+	<form action="record" method="post">
+		<input type="date" name="recordDate" value="${dataDate}">の<input type="submit" value="データを確認・編集する">
 	</form>
-	<h1>${dataDate}の情報</h1>
+	<h1>${dataDate}の情報 <a href="statistics?statisticsDate=${dataDate}">統計</a> </h1>
 	<form action="recordCommit" method="post">
 		<input type="hidden" value="${dataDate}" name="createDate">
 		<div id="food">
 			<h2>食事記録</h2>
-			<a href="statistics">統計</a>
 			<p>目安: ${2}kcal 摂取: ${2}kcal</p>
 			<div id="food_bre">
 				<p>
@@ -165,7 +164,6 @@
 				運動記録
 				<button type="button" id="add_spo" onclick="addSpoForm()">⊕</button>
 			</h2>
-			<a href="statistics">統計</a>
 			<p>目安: ${2}kcal 消費: ${2}kcal</p>
 			<c:forEach var="sportRecord" items="${sportRecordList}"
 				varStatus="spStatus">
@@ -186,7 +184,6 @@
 		</div>
 		<div id="smoke">
 			<h2>たばこ</h2>
-			<a href="statistics">統計</a>
 			<p>
 				<input type="number" min="0" value="${smokeRecord.value3}"
 					name="value3Smo">本吸いました
@@ -197,7 +194,6 @@
 				アルコール
 				<button type="button" id="add_alc" onclick="addAlcForm()">⊕</button>
 			</h2>
-			<a href="statistics">統計</a>
 			<c:forEach var="alcoholRecord" items="${alcoholRecordList}"
 				varStatus="aStatus">
 				<p class="alcoholData">
@@ -225,10 +221,9 @@
 		</div>
 		<div id="weight">
 			<h2>体重</h2>
-			<a href="statistics">統計</a>
 			<p>
 				体重は<input type="number" min="1" value="${weightRecord.value2}"
-					name="value2Wei" id="weightRecord" step="0.1" />kg、体脂肪率は<input
+					name="value2Wei" id="weightRecord" step="0.1" onchange="calcUsedCalorieByWeight()"/>kg、体脂肪率は<input
 					type="number" min="0.1" value="${weightRecord.value3}"
 					name="value3Wei" step="0.1" />%です。
 			</p>
@@ -416,7 +411,7 @@
 	  	newP.innerHTML =
 		 	'<input name="value1Lun' + lnum +
 			'" list="foodList" onchange="changeLun(' + lnum +
-			';calcCalorieLun(' + lnum +
+			');calcCalorieLun(' + lnum +
 			')" id="nameLun_' + lnum +
 			'"><input type="number" min="0" name="value2Lun' + lnum + 
 			'" id="onceCalLun_' + lnum +
@@ -563,9 +558,16 @@
 	    document.getElementById('calorieSna_' + id).innerHTML = document.getElementById('onceCalSna_' + id).value * document.getElementById('amountSna_' + id).value;
 	}
 	
-	/* 消費カロリー計算 */
+	/* 消費カロリー計算(運動フォームが変更されたとき) */
 	function calcUsedCalorie(id) {
 		document.getElementById('calorie_' + id).innerHTML = document.getElementById('weightRecord').value * document.getElementById('mets_' + id).value * document.getElementById('time_' + id).value / 60 * 1.05;
+	}
+	
+	/* 体重が変更されたときの消費カロリー計算 */
+	function calcUsedCalorieByWeight() {
+		console.log(spnum);
+		for (let i = 0; i < spnum; i++)
+		document.getElementById('calorie_' + i).innerHTML = document.getElementById('weightRecord').value * document.getElementById('mets_' + i).value * document.getElementById('time_' + i).value / 60 * 1.05;
 	}
 	
 	/* アルコール計算 */

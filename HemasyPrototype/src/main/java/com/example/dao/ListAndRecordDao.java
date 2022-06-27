@@ -121,12 +121,11 @@ public class ListAndRecordDao {
 	}
 	
 	//リストを渡してレコード挿入(まず日付で全削除)
-	public int insertRecord(List<ListAndRecord> insertRecordList) {
+	public int insertRecord(int userId, List<ListAndRecord> insertRecordList, Date date) {
 		if (!insertRecordList.isEmpty()) {
 			MapSqlParameterSource param = new MapSqlParameterSource();
-			Date deleteDate = insertRecordList.get(0).getCreateDate();
-			param.addValue("createDate", deleteDate);
-			param.addValue("userId", ((User) session.getAttribute("user")).getUserId());
+			param.addValue("userId", userId);
+			param.addValue("createDate", date);
 			jdbcTemplate.update(DELETE_RECORD_BY_DATE, param);
 		}
 		for(ListAndRecord listAndRecord: insertRecordList) {
