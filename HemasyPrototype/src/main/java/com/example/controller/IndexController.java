@@ -135,10 +135,10 @@ public class IndexController {
 				continue;
 			}
 			if (request.getParameter("addMyListBre" + i) != null) {
-				ListAndRecord foodBreList = new ListAndRecord(0, 1, 1, request.getParameter("value1Bre" + i), Integer.parseInt(request.getParameter("value2Bre" + i)), null, null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+				ListAndRecord foodBreList = new ListAndRecord(0, 1, 1, request.getParameter("value1Bre" + i), Double.parseDouble(request.getParameter("value2Bre" + i)), null, null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
 				listsList.add(foodBreList);
 			}
-			ListAndRecord breakfastRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Bre" + i), Integer.parseInt(request.getParameter("value2Bre" + i)), Integer.parseInt(request.getParameter("value3Bre" + i)), 1, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+			ListAndRecord breakfastRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Bre" + i), Double.parseDouble(request.getParameter("value2Bre" + i)), Double.parseDouble(request.getParameter("value3Bre" + i)), 1.0, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
 			recordsList.add(breakfastRecord);
 			System.out.println(breakfastRecord.getListsAndRecordsId());
 			System.out.println(breakfastRecord.getCategory());
@@ -160,10 +160,10 @@ public class IndexController {
 				continue;
 			}
 			if (request.getParameter("addMyListLun" + i) != null) {
-				ListAndRecord foodLunList = new ListAndRecord(0, 1, 1, request.getParameter("value1Lun" + i), Integer.parseInt(request.getParameter("value2Lun" + i)), null, null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+				ListAndRecord foodLunList = new ListAndRecord(0, 1, 1, request.getParameter("value1Lun" + i), Double.parseDouble(request.getParameter("value2Lun" + i)), null, null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
 				listsList.add(foodLunList);
 			}
-			ListAndRecord lunchRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Lun" + i), Integer.parseInt(request.getParameter("value2Lun" + i)), Integer.parseInt(request.getParameter("value3Lun" + i)), 2, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+			ListAndRecord lunchRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Lun" + i), Double.parseDouble(request.getParameter("value2Lun" + i)), Double.parseDouble(request.getParameter("value3Lun" + i)), 2.0, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
 			recordsList.add(lunchRecord);
 			System.out.println(lunchRecord.getListsAndRecordsId());
 			System.out.println(lunchRecord.getCategory());
@@ -186,10 +186,10 @@ public class IndexController {
 				continue;
 			}
 			if (request.getParameter("addMyListDin" + i) != null) {
-				ListAndRecord foodDinList = new ListAndRecord(0, 1, 1, request.getParameter("value1Din" + i), Integer.parseInt(request.getParameter("value2Din" + i)), null, null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+				ListAndRecord foodDinList = new ListAndRecord(0, 1, 1, request.getParameter("value1Din" + i), Double.parseDouble(request.getParameter("value2Din" + i)), null, null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
 				listsList.add(foodDinList);
 			}
-			ListAndRecord dinnerRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Din" + i), Integer.parseInt(request.getParameter("value2Din" + i)), Integer.parseInt(request.getParameter("value3Din" + i)), 3, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+			ListAndRecord dinnerRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Din" + i), Double.parseDouble(request.getParameter("value2Din" + i)), Double.parseDouble(request.getParameter("value3Din" + i)), 3.0, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
 			recordsList.add(dinnerRecord);
 			System.out.println(dinnerRecord.getListsAndRecordsId());
 			System.out.println(dinnerRecord.getCategory());
@@ -211,10 +211,10 @@ public class IndexController {
 				continue;
 			}
 			if (request.getParameter("addMyListSna" + i) != null) {
-				ListAndRecord foodSnaList = new ListAndRecord(0, 1, 1, request.getParameter("value1Sna" + i), Integer.parseInt(request.getParameter("value2Sna" + i)), null, null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+				ListAndRecord foodSnaList = new ListAndRecord(0, 1, 1, request.getParameter("value1Sna" + i), Double.parseDouble(request.getParameter("value2Sna" + i)), null, null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
 				listsList.add(foodSnaList);
 			}
-			ListAndRecord snackRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Sna" + i), Integer.parseInt(request.getParameter("value2Sna" + i)), Integer.parseInt(request.getParameter("value3Sna" + i)), 4, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+			ListAndRecord snackRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Sna" + i), Double.parseDouble(request.getParameter("value2Sna" + i)), Double.parseDouble(request.getParameter("value3Sna" + i)), 4.0, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
 			recordsList.add(snackRecord);
 			System.out.println(snackRecord.getListsAndRecordsId());
 			System.out.println(snackRecord.getCategory());
@@ -235,7 +235,7 @@ public class IndexController {
 				System.out.println("けすぞ");
 				continue;
 			}
-			ListAndRecord sportRecord = new ListAndRecord(0, 2, 2, request.getParameter("value1Spo" + i), Integer.parseInt(request.getParameter("value2Spo" + i)), Integer.parseInt(request.getParameter("value3Spo" + i)), null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+			ListAndRecord sportRecord = new ListAndRecord(0, 2, 2, request.getParameter("value1Spo" + i), Double.parseDouble(request.getParameter("value2Spo" + i)), Double.parseDouble(request.getParameter("value3Spo" + i)), null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
 			recordsList.add(sportRecord);
 			System.out.println("はじまり" + sportRecord.getListsAndRecordsId());
 			System.out.println(sportRecord.getCategory());
@@ -250,7 +250,7 @@ public class IndexController {
 		}
 
 		//たばこ記録挿入
-		ListAndRecord smokeRecord = new ListAndRecord(0, 2, 3, null, null, Integer.parseInt(request.getParameter("value3Smo")), null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+		ListAndRecord smokeRecord = new ListAndRecord(0, 2, 3, null, null, Double.parseDouble(request.getParameter("value3Smo")), null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
 		recordsList.add(smokeRecord);
 
 		//アルコール記録挿入
@@ -261,10 +261,10 @@ public class IndexController {
 				continue;
 			}
 			if (request.getParameter("addMyListAlc" + i) != null) {
-				ListAndRecord alcList = new ListAndRecord(0, 1, 4, request.getParameter("value1Alc" + i), Integer.parseInt(request.getParameter("value2Alc" + i)), null, Integer.parseInt(request.getParameter("value4Alc" + i)), Integer.parseInt(request.getParameter("value5Alc" + i)), null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+				ListAndRecord alcList = new ListAndRecord(0, 1, 4, request.getParameter("value1Alc" + i), Double.parseDouble(request.getParameter("value2Alc" + i)), null, Double.parseDouble(request.getParameter("value4Alc" + i)), Double.parseDouble(request.getParameter("value5Alc" + i)), null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
 				listsList.add(alcList);
 			}
-			ListAndRecord alcoholRecord = new ListAndRecord(0, 2, 4, request.getParameter("value1Alc" + i), Integer.parseInt(request.getParameter("value2Alc" + i)), Integer.parseInt(request.getParameter("value3Alc" + i)), Integer.parseInt(request.getParameter("value4Alc" + i)), Integer.parseInt(request.getParameter("value5Alc" + i)), null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+			ListAndRecord alcoholRecord = new ListAndRecord(0, 2, 4, request.getParameter("value1Alc" + i), Double.parseDouble(request.getParameter("value2Alc" + i)), Double.parseDouble(request.getParameter("value3Alc" + i)), Double.parseDouble(request.getParameter("value4Alc" + i)), Double.parseDouble(request.getParameter("value5Alc" + i)), null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
 			recordsList.add(alcoholRecord);
 			System.out.println("はじまり" + alcoholRecord.getListsAndRecordsId());
 			System.out.println(alcoholRecord.getCategory());
@@ -280,7 +280,7 @@ public class IndexController {
 
 		//体重記録挿入
 		System.out.println(request.getParameter("value2Wei") + "aaa" +  request.getParameter("value3Wei"));
-		ListAndRecord weightRecord = new ListAndRecord(0, 2, 5, null, Integer.parseInt(request.getParameter("value2Wei")), Integer.parseInt(request.getParameter("value3Wei")), null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+		ListAndRecord weightRecord = new ListAndRecord(0, 2, 5, null, Double.parseDouble(request.getParameter("value2Wei")), Double.parseDouble(request.getParameter("value3Wei")), null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
 		recordsList.add(weightRecord);
 
 		System.out.println(recordsList.size());
@@ -362,10 +362,19 @@ public class IndexController {
 		return "rank";
 	}
 
-	//ハンバーガーメニューからリスト編集へ
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(@ModelAttribute("index") UserForm form, Model model) {
+	public String list(@ModelAttribute("index") ListAndRecordForm form, Model model) {
+		
+		User user = (User)session.getAttribute("user");
+		int user_id = user.getUserId();
+		
+		// user_id =1が登録した食事リストを取得する
+		List<ListAndRecord> foodList = listAndRecordDao.FoodListById(user_id);
+		model.addAttribute("foodList", foodList);
 
+		// user_id =1が登録したお酒リストを取得する(今は暫定でuser_idの部分に固定で２を入れている)
+		List<ListAndRecord> alcoholList = listAndRecordDao.AlcoholListById(user_id);
+		model.addAttribute("alcoholList", alcoholList);
 
 		return "list";
 	}

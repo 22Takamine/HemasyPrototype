@@ -11,13 +11,13 @@ public class ListAndRecord {
 	private int category;
 	private int type;
 	private String value1;
-	private Integer value2;
-	private Integer value3;
-	private Integer value4;
-	private Integer value5;
-	private Integer value6;
-	private Integer value7;
-	private Integer value8;
+	private Double value2;
+	private Double value3;
+	private Double value4;
+	private Double value5;
+	private Double value6;
+	private Double value7;
+	private Double value8;
 	private Date createDate;
 	private int userId;
 	
@@ -26,8 +26,8 @@ public class ListAndRecord {
 	}
 	
 	
-	public ListAndRecord(int listsAndRecordsId, int category, int type, String value1, Integer value2, Integer value3,
-			Integer value4, Integer value5, Integer value6, Integer value7, Integer value8, Date createDate,
+	public ListAndRecord(int listsAndRecordsId, int category, int type, String value1, Double value2, Double value3,
+			Double value4, Double value5, Double value6, Double value7, Double value8, Date createDate,
 			int userId) {
 		this.listsAndRecordsId = listsAndRecordsId;
 		this.category = category;

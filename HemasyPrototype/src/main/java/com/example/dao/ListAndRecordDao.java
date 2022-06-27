@@ -29,6 +29,8 @@ public class ListAndRecordDao {
 	private static final String GET_LISTS = "SELECT * FROM lists_and_records WHERE category = 1 AND type = :type AND (user_id = 1 or user_id = :userId)";
 	private static final String FIND_LIST_BY_NAME = "SELECT * FROM lists_and_records WHERE category = 1 AND type = :type AND value1 = :value1 AND user_id = :userId";
 	private static final String UPDATE_MY_LISTS = "UPDATE lists_and_records SET value2 = :value2, value3 = :value3, value4 = :value4, value5 = :value5 WHERE category = 1 AND type = :type AND value1 = :value1 AND user_id = :userId";
+	String sql1 = "SELECT * FROM lists_and_records WHERE user_id = :user_id AND category = 1 AND type = 1";
+	String sql2 = "SELECT * FROM lists_and_records WHERE user_id = :user_id AND category = 1 AND type = 4";
 	
 	@Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -142,5 +144,27 @@ public class ListAndRecordDao {
 			}
 		}
 		return 1;
+	}
+	
+public List<ListAndRecord> FoodListById(int userId) {
+		
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", userId);
+		
+		var list = jdbcTemplate.query(sql1, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class) );
+		return list.isEmpty() ? null :list;
+		
+	}
+	
+	//ユーザーのuser_idを取得して、そのユーザーが登録した食事リストを取得する。
+	public List<ListAndRecord> AlcoholListById(int userId) {
+		
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", userId);
+		
+		var list = jdbcTemplate.query(sql2, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class) );
+		
+		return list.isEmpty() ? null :list;
+		
 	}
 }
