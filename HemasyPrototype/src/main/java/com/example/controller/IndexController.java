@@ -91,6 +91,7 @@ public class IndexController {
 		if (bindingResult.hasErrors()) {
 			return "register";
 		}
+	
 
 		
 		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirth(),
@@ -126,7 +127,7 @@ public class IndexController {
     		return "admin";
     	}
     	else {
-    		session.setAttribute("user", user);
+    		//session.setAttribute("user", user);
     		recordService.setZeroPastRecords(user.getUserId());
     		ListAndRecord userSmokeDate = listAndRecordDao.getLatestSmokeDateRecord(user.getUserId());
     		ListAndRecord userAlcohol = listAndRecordDao.getLatestAlcoholRecord(user.getUserId());
@@ -161,8 +162,6 @@ public class IndexController {
 
     		System.out.println(calorieLevel);
 
-
-
     		Color SmokeColorLevel = colorDao.getSmokeColorLevel(smokeLevel);
     		Color AlcoholColorLevel = colorDao.getAlcoholColorLevel(alcoholLevel);
     		Color CalorieColorLevel = colorDao.getCalorieColorLevel(calorieLevel);
@@ -177,7 +176,7 @@ public class IndexController {
     		session.setAttribute("bmiValue",bmi);
 
     		//ツールチップに表示する項目をsessionに保存する
-    		session.setAttribute("lungWord", "禁煙"+smokeLevel+"日目です");
+    		session.setAttribute("lungWord", "禁煙"+ (20 - smokeLevel) +"日目です");
     		session.setAttribute("livarWord", "禁酒"+userAlcoholDate.getValue2()+"日目です。");
     		session.setAttribute("stomachGoalkcal", "目標摂取カロリーは"+goalCalorie+"Kcalです。");
     		session.setAttribute("stomachInputKcal", "摂取カロリーは"+ userCalorieIntake.getValue2()+"Kcalです。");
@@ -390,7 +389,75 @@ public class IndexController {
 		System.out.println(listAndRecordLists.size());
 
 		listAndRecordDao.insertRecord(((User) session.getAttribute("user")).getUserId(), listAndRecordLists, Date.valueOf(request.getParameter("createDate")));
+		
+		User user = (User) session.getAttribute("user");
+		
+		ListAndRecord userSmokeDate = listAndRecordDao.getLatestSmokeDateRecord(user.getUserId());
+		ListAndRecord userAlcohol = listAndRecordDao.getLatestAlcoholRecord(user.getUserId());
+		ListAndRecord userMetsAndTime = listAndRecordDao.getLatestMetsAndTimeRecord(user.getUserId());
+		ListAndRecord userCalorieIntake = listAndRecordDao.getLatestCalorieIntake(user.getUserId());
+		ListAndRecord userWeight = listAndRecordDao.getLatestWeightRecordM(user.getUserId());
+		ListAndRecord userAlcoholDate = listAndRecordDao.getLatestAlcoholDateRecord(user.getUserId());
 
+		Integer alcoholLevel;
+		Double CaloriesBurned = userWeight.getValue2() * userMetsAndTime.getValue2() * userMetsAndTime.getValue3() * 1.05;
+		Double height = (double) (user.getHeight()/100.0);
+		Double bmi = (double) (userWeight.getValue2()/(height*height));
+		Integer calorieLevel = (int) (Math.ceil(userCalorieIntake.getValue2() - CaloriesBurned)/user.getGoalCalorie()*10);
+		Integer smokeLevel = userSmokeDate.getValue2();
+		Double goalCalorie = (Math.ceil((height * height)*22)*30);
+		
+		if(calorieLevel <= 0) {
+			calorieLevel = 1;
+		}
+		else if(calorieLevel >= 12) {
+			calorieLevel = 11;
+		}
+		if(smokeLevel <= 0) {
+			smokeLevel = 1;
+		}
+		if(userAlcohol.getValue2() >= 20) {
+			alcoholLevel = 2;
+		}
+		else {
+			alcoholLevel = 1;
+		}
+
+		System.out.println(calorieLevel);
+
+		
+
+		Color SmokeColorLevel = colorDao.getSmokeColorLevel(smokeLevel);
+		Color AlcoholColorLevel = colorDao.getAlcoholColorLevel(alcoholLevel);
+		Color CalorieColorLevel = colorDao.getCalorieColorLevel(calorieLevel);
+		bmi = Math.floor(bmi * 10)/10;
+		System.out.println("カロリー: " + CalorieColorLevel.getColorPath());
+		System.out.println("タバコ: " + SmokeColorLevel.getColorPath());
+		System.out.println("アルコール: " + AlcoholColorLevel.getColorPath());
+		System.out.println("BMI: " + bmi);
+		Bmi bmipath = bmiDao.getBmiPath(bmi);
+		System.out.println(bmipath);
+		//計算したbmiをsessionに保存
+		session.setAttribute("bmiValue",bmi);
+
+		//ツールチップに表示する項目をsessionに保存する
+		session.setAttribute("lungWord", "禁煙"+(20 - smokeLevel) +"日目です");
+		session.setAttribute("livarWord", "禁酒"+userAlcoholDate.getValue2()+"日目です。");
+		session.setAttribute("stomachGoalkcal", "目標摂取カロリーは"+goalCalorie+"Kcalです。");
+		session.setAttribute("stomachInputKcal", "摂取カロリーは"+ userCalorieIntake.getValue2()+"Kcalです。");
+		session.setAttribute("stomachOutputKcal", "消費カロリーは" + CaloriesBurned + "Kcalです。" );
+		
+		session.setAttribute("lungImg","../../" + SmokeColorLevel.getColorPath());
+		session.setAttribute("livarImg","../../" + AlcoholColorLevel.getColorPath());
+		session.setAttribute("stomachImg",CalorieColorLevel.getColorPath());
+		session.setAttribute("bmiImg",bmipath.getImgPath());
+
+		session.setAttribute("calorieColorPath", CalorieColorLevel.getColorPath());
+		session.setAttribute("smokeColorPath", SmokeColorLevel.getColorPath());
+		session.setAttribute("alcoholColorPath", AlcoholColorLevel.getColorPath());
+		session.setAttribute("user", user);
+		
+		
 		return "menu";
 
 	}
@@ -575,6 +642,24 @@ public class IndexController {
 		List<Information> infoList =informationDao.findByAll();
 		session.setAttribute("infoList",infoList);
 
+		return "adminInformation";
+	}
+	
+	//管理者お問い合わせの検索
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String adminSearch(@ModelAttribute("index") InformationForm form, Model model) {
+		List<Information> infoList =informationDao.findBySearch(form.getKeyword());
+		session.setAttribute("infoList",infoList);
+		return "adminInformation";
+	}
+	
+	//管理者お問い合わせで既読にする
+	@RequestMapping(value = "/alreadyRead", method = RequestMethod.GET)
+	public String adminRead(@ModelAttribute("index") InformationForm form, Model model) {
+		informationDao.updateAll();
+		List<Information> infoList =informationDao.findByAll();
+		session.setAttribute("infoList",infoList);
+		
 		return "adminInformation";
 	}
 	

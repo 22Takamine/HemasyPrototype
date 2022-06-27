@@ -151,4 +151,5 @@ public class UserForm {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+	
 }

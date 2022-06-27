@@ -75,7 +75,7 @@ public class ListAndRecordDao {
 	
 	private static final String GET_LATEST_WEIGHT_RECORD_M = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 5 AND user_id = :userId AND current_date >= create_date AND value2 <> '0' ORDER BY create_date DESC";
 	
-	private static final String GET_LATEST_SMOKE_DATE_RECORD = "SELECT current_date - create_date as value2 FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId AND current_date >= create_date ORDER BY create_date DESC";
+	private static final String GET_LATEST_SMOKE_DATE_RECORD = "SELECT 20 - (current_date - create_date) as value2 FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId AND current_date >= create_date ORDER BY create_date DESC";
 	
 	private static final String GET_LATEST_ALCOHOL_RECORD = "SELECT sum(value2*value3*value4/100) AS value2 FROM lists_and_records WHERE category = 2 AND type = 4 AND user_id = :userId AND current_date = create_date";
 	

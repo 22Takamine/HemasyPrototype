@@ -200,11 +200,13 @@
 
   
     <form:button><fmt:message key="form.lbl.regist"/></form:button>
+    
+    <form:form action="back" modelAttribute="index" method="get">
+    	<form:button><fmt:message key="form.lbl.back"/></form:button>
+  	</form:form>
   </form:form>
   
-  <form:form action="back" modelAttribute="index" method="get">
-    <form:button><fmt:message key="form.lbl.back"/></form:button>
-  </form:form>
+  
   </div>
 
 <script src="js/commons.js"></script>

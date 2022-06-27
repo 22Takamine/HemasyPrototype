@@ -18,6 +18,9 @@
 </head>
 <body>
 	<h1>登録情報を入力してください</h1>
+	<c:if test="${not empty msgRegister}">
+  		<p>${fn:escapeXml(msgRegister)}</p>
+  	</c:if>
 
 	<form:form action="loginBack" modelAttribute="index" method="post">
 	<form:input path="achievementId" type="hidden" value="1" readonly="readonly" />
@@ -55,24 +58,24 @@
 
 		<div>
 			<fmt:message key="form.lbl.height" />
-			<form:input path="height" />
+			<form:input path="height" />cm
 			<form:errors path="height" cssStyle="color: red"/>
 		</div>
 
 		<div>
 			<fmt:message key="form.lbl.weight" />
-			<form:input path="weight" />
+			<form:input path="weight" />Kg
 			<form:errors path="weight" cssStyle="color: red"/>
 		</div>
 
 		<div>
 			<fmt:message key="form.lbl.bodyFatPercentage" />
-			<form:input path="bodyFatPercentage" />
+			<form:input path="bodyFatPercentage" />%
 		</div>
 		
 		<div>
 			<fmt:message key="form.lbl.time" />
-			<form:input path="goalExerciseTime" />
+			<form:input path="goalExerciseTime" />分
 		</div>
 
 		<div>
