@@ -188,8 +188,9 @@ public class IndexController {
 		
 		System.out.println("えええ" + sportRecordList.size());
 		
-		System.out.println(latestSmokeRecord.getValue3());
-		
+		/*
+		 * System.out.println(latestSmokeRecord.getValue3());
+		 */		
 		System.out.println(dinnerRecordList.size());
 		
 		System.out.println(snackRecordList.size());
