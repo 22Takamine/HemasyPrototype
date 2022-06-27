@@ -47,24 +47,24 @@
 	<main>
 		<div class="main-box">
 		
-			<div class="record-button-box">
+			<div class="button-box">
 				<form:form action="record" modelAttribute="index" method="get">
 				    <input type="hidden" id="todayDate" name="recordDate">
 				    <input type="image" src="../../images/record.png" alt="#" class="button-img">
 				</form:form>
-			 </div>
-			 <div class="statistics-button-box">
+			  
 				  <form:form action="statistics" modelAttribute="index" method="get">
 				  	<input type="hidden" id="todayDate" name="statisticsDate">
 				  	<input type="image" src="../../images/statistic.png" alt="#" class="button-img">
 				  </form:form>
-			 </div>
 <!-- 				<div class="record-button-box"> -->
 <!-- 					<a href="/record" class="link button"><img src="../../images/record.png" alt="#" class="button-img"></a> ここaタグに変えたよ -->
 <!-- 				</div> -->
 <!-- 				<div class="statistics-button-box"> -->
 <!-- 					<a href="/statistics" class="link button"><img src="../../images/statistic.png" alt="#" class="button-img"></a> ここaタグに変えたよ -->
 <!-- 				</div> -->
+			</div>
+			
 			<div class="human-box">
 				<div class="tooltip">
 					<div class="description">
