@@ -49,8 +49,8 @@
 
 		<div>
 			<fmt:message key="form.lbl.birthDate" />
-			<form:input type="date" path="birthDate" />
-			<form:errors path="birthDate" cssStyle="color: red"/>
+			<form:input type="date" path="birth" />
+			<form:errors path="birth" cssStyle="color: red"/>
 		</div>
 
 		<div>

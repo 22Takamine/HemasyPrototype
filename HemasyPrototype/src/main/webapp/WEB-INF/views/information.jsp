@@ -32,48 +32,32 @@
 	    </div>
     </form:form>
 </header>
-  <div class="main">
+<main class="information">
   <h2>お問い合わせ</h2>
-  
-  <div class="insert">
-    <div class="discription">
-      <p>お問い合わせ内容を入力してください</p>
-    </div>
-  
-    <div class="form_body">
-    
-      <c:if test="${not empty msg}"><p class="error">${msg}</p></c:if>
-      
-      <form:form action="information" method="post" modelAttribute="information">
-<%--       	<form:input path="userId" type="hidden" value="${userId}" /> --%>
-        <fieldset class="label-130">
-          <div>
-            <label class="required">件名</label>
-            <form:input path="title" type="text" class="base-text" />
-          </div>
-          <div>
-            <label class="required">お問い合わせ内容</label>
-            <form:textarea path="contents" name="お問い合わせ内容" cols="50" rows="5"></form:textarea>
-          </div>
-        </fieldset>
-        <div id="modal">
-          <div class="btns">
-           <form:button type="submit" class="basic_btn">登録</form:button>
-           <button type="button" onclick="location.href='/back'" class="cancel_btn">戻る</button>
-          </div>
+  <c:if test="${not empty msg}"><p class="error">${msg}</p></c:if>
+  <div class="form_body">
+    <form:form action="information" method="post" modelAttribute="information">
+	    <div class="title">
+	      <label>件名</label><br>
+	      <form:input path="title" type="text" />
+	    </div>
+	    <div class="contents">
+	      <label>内容</label><br>
+	      <form:textarea path="contents" name="お問い合わせ内容" cols="100" rows="10" placeholder="こちらに記述してください。"></form:textarea>
+	    </div>
+        <div class="btns">
+          <form:button type="submit" class="insert-button info-btn">登録</form:button>
+          <button type="button" onclick="location.href='/back'" class="back-button info-btn">戻る</button>
         </div>
-      </form:form>
-    </div>
+    </form:form>
   </div>
-  
-  <%-- <form:form action="information" modelAttribute="information" method="post">
-    <form:button><fmt:message key="form.lbl.regist"/></form:button>
-  </form:form>
-  
-  <form:form action="back" modelAttribute="information" method="get">
-    <form:button><fmt:message key="form.lbl.back"/></form:button>
-  </form:form> --%>
-  </div>
+</main>
+
+<footer>
+	<div>
+		<p>ここはfooterです。</p>
+	</div>
+</footer>
 <script src="js/commons.js"></script>
 </body>
 </html>

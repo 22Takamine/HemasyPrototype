@@ -177,7 +177,9 @@ main {
 	 align-items: center;
 }
 
-/* ツールチップのCSS */
+/*----------------------------
+* ツールチップ
+*----------------------------*/
 .tooltip{
     position: relative;
     cursor: pointer;
@@ -187,19 +189,24 @@ main {
     justify-content: center;
     align-items: center;
 }
-/* .tooltip-lung img{
-    width: 20px;
-} */
+
+
 .description {
     display: none;
     position: absolute;
     padding: 10px;
     font-size: 12px;
     line-height: 1.6em;
-    color: #fff;
+    color: #000;
     border-radius: 5px;
-    background: #000;
-    width: 100px;
+    background: #fff;
+    width: 200px;
+    height: 100px;
+    border: 1px solid;
+}
+
+.description p {
+	text-align: center;
 }
  
 .description:before {
@@ -209,14 +216,21 @@ main {
   	left: -30px;
   	margin-top: -15px;
   	border: 15px solid transparent;
-  	border-right: 15px solid #000;
+  	border-right: 15px solid #fff;
+  	border-top: 10px solid transparent;
+	/* border-right: 1.5em solid #222;  */
+	border-bottom: 10px solid transparent;
+  	/* display: flex;
+    justify-content: center;
+    align-items: center; */
+    
 }
 
   
 .tooltip:hover .description{
     display: inline-block;
     top: 50px;
-    right: -100px;
+    right: -150px;
 } 
 
 
@@ -229,8 +243,51 @@ main {
 
 .bmi-img{
 	width: 100%;
-	height: 70%;
+	height: 80%;
 }
+
+
+
+/*----------------------------
+* ランキングに自動連番で順位を振る。
+*----------------------------*/
+ 
+ table {
+  counter-reset: rowCount;
+}
+
+table > tbody > tr {
+  counter-increment: rowCount;
+}
+
+table > tbody > tr > td:first-child::before {
+  content: counter(rowCount);
+}
+ 
+/*----------------------------
+* お問い合わせページ CSS
+*----------------------------*/
+.information {
+	text-align: center;
+}
+
+.info-btn {
+  font-size: 16px;
+  display: inline-block;
+  padding: 0.8em 3em;
+  background-color: #fafbfb; /* 背景色 */
+  box-shadow: 0 5px 0 #23e7f1; /* 影の太さ・色 */
+  border-radius: 15px;
+  color: #000;
+  cursor: pointer;
+  text-decoration: none; /* 文字の下線を消す */
+}
+
+.info-btn:hover {
+  box-shadow: none;
+  transform: translateY(5px);
+}
+
 
 footer {
 	border-top: 1px solid;

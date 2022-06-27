@@ -73,13 +73,39 @@ public class IndexController {
 	}
 
 	
+	//ログイン画面から、新規登録画面に遷移
+	@RequestMapping(value = "/result", params="register", method = RequestMethod.POST)
+	public String register(@ModelAttribute("index") UserForm form, Model model) {
+    	
+        return "register";
+    }
+	
+	//新規登録画面で登録ボタンを押した際に、ログイン画面に遷移
+	@RequestMapping(value = "/loginBack", method = RequestMethod.POST)
+	public String loginBack(@Validated @ModelAttribute("index") UserForm form,BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			return "register";
+		}
+		
+		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirth(),
+				form.getHeight(),form.getGoalExerciseTime(),form.getGoalCalorise(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
+		
+		userDao.insert(user);
+		
+		User id = userDao.findIdAndPass(user.getMail(),user.getPassword());
+		
+		listAndRecordDao.weightInsert(id.getUserId(),form.getWeight());
+
+		return "login";
+    }
+	
+	
 	//ログイン成功時にメニュー画面に遷移
 	@RequestMapping(value = "/result", params="login", method = RequestMethod.POST)
 	public String login(@Validated @ModelAttribute("index") IndexForm form, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {	
 			return "login";
 		}
-		
 		
 		User user = userDao.findIdAndPass(form.getMail(), form.getPassword());
 
@@ -100,15 +126,20 @@ public class IndexController {
     		ListAndRecord userMetsAndTime = listAndRecordDao.getLatestMetsAndTimeRecord(user.getUserId());
     		ListAndRecord userCalorieIntake = listAndRecordDao.getLatestCalorieIntake(user.getUserId());
     		ListAndRecord userWeight = listAndRecordDao.getLatestWeightRecord(user.getUserId());
-    		
+
+
     		Integer alcoholLevel;
     		Double CaloriesBurned = userWeight.getValue2() * userMetsAndTime.getValue2() * userMetsAndTime.getValue3() * 1.05;
     		Double height = (double) (user.getHeight()/100.0);
     		Double bmi = (double) (userWeight.getValue2()/(height*height));
     		Integer calorieLevel = (int) (Math.ceil(userCalorieIntake.getValue2() - CaloriesBurned)/user.getGoalCalorie()*10);
+    		Integer smokeLevel = userSmokeDate.getValue2();
     		
     		if(calorieLevel <= 0) {
     			calorieLevel = 1;
+    		}
+    		if(smokeLevel <= 0) {
+    			smokeLevel = 1;
     		}
     		if(userAlcohol.getValue2() >= 20) {
     			alcoholLevel = 2;
@@ -116,30 +147,21 @@ public class IndexController {
     		else {
     			alcoholLevel = 1;
     		}
-    		Color SmokeColorLevel = colorDao.getSmokeColorLevel(userSmokeDate.getValue2());
+    		
+    		Color SmokeColorLevel = colorDao.getSmokeColorLevel(smokeLevel);
     		Color AlcoholColorLevel = colorDao.getAlcoholColorLevel(alcoholLevel);
     		Color CalorieColorLevel = colorDao.getCalorieColorLevel(calorieLevel);
     		bmi = Math.floor(bmi * 10)/10;
 
-    		System.out.println("height" + height);
-    		System.out.println("weight" + userWeight.getValue2());
-    		
     		System.out.println("カロリー: " + CalorieColorLevel.getColorPath());
     		System.out.println("タバコ: " + SmokeColorLevel.getColorPath());
     		System.out.println("アルコール: " + AlcoholColorLevel.getColorPath());
     		System.out.println("BMI: " + bmi);
-    		
-    		session.setAttribute("bmi", bmi);
-			session.setAttribute("calorieColorPath", CalorieColorLevel.getColorPath());
-			session.setAttribute("smokeColorPath", SmokeColorLevel.getColorPath());
-			session.setAttribute("alcoholColorPath", AlcoholColorLevel.getColorPath());
-			session.setAttribute("user", user);
-		
     		//以下にDBから取得してきた画像のパスを入れる。
     		//（まっしーへ　ここに取ってきた画像のパスを入れるまでお願いします。）
     		
     		String lungImg = "../../images/lung.png";
-    		String livarImg = "../../images/livar1.png" ;
+    		String livarImg = "../../images/livar0.png" ;
     		String stomachImg = "../../images/stomach.png" ;
     		String bmiImg = "../../images/bmi3.png" ;
     		
@@ -180,29 +202,16 @@ public class IndexController {
     		model.addAttribute("stomachInputKcal", stomachInputKcal);
     		model.addAttribute("stomachOutputKcal", stomachOutputKcal);
     		
+    		session.setAttribute("bmi", bmi);
+			session.setAttribute("calorieColorPath", CalorieColorLevel.getColorPath());
+			session.setAttribute("smokeColorPath", SmokeColorLevel.getColorPath());
+			session.setAttribute("alcoholColorPath", AlcoholColorLevel.getColorPath());
+			session.setAttribute("user", user);
+    		
     		return "menu";
     	}
     }
 	
-	//新規登録画面で登録ボタンを押した際に、ログイン画面に遷移
-	@RequestMapping(value = "/loginBack", method = RequestMethod.POST)
-	public String loginBack(@Validated @ModelAttribute("index") UserForm form,BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors()) {
-			return "register";
-		}
-
-		User user = new User(form.getName(),form.getMail(), form.getPassword(),form.getSex(),form.getBirthDate(),
-				form.getHeight(),form.getGoalExerciseTime(),form.getGoalCalorise(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
-//				form.getHeight(),form.getRankFlag(),form.getAlcoholFlag(),form.getSmokeFlag(),form.getRoleId());
-
-		userDao.insert(user);
-
-		User id = userDao.findIdAndPass(user.getMail(),user.getPassword());
-
-		listAndRecordDao.weightInsert(id.getUserId(),form.getWeight());
-
-		return "login";
-    }
 	
 	//記録＆リスト画面に遷移(ゆうちゃんへGETにしてね)
 	@RequestMapping(value = "/record", method = RequestMethod.GET)
@@ -247,7 +256,7 @@ public class IndexController {
 
 	}
     
-    
+    //記録画面から確定を押した際にメニュー画面に飛ぶ
     @RequestMapping(value = "/recordCommit", method = RequestMethod.POST)
     public String recordCommit(@ModelAttribute("index") UserForm form, Model model) {
     	
@@ -418,7 +427,7 @@ public class IndexController {
 	}
 
 	//統計画面に遷移
-	@RequestMapping(value = "/statistics", method = RequestMethod.POST)
+	@RequestMapping(value = "/statistics", method = RequestMethod.GET)
 	public String statistics(@ModelAttribute("index") UserForm form, Model model) {
 
 
@@ -476,9 +485,13 @@ public class IndexController {
 				//String bmiImg = (String) session.getAttribute("bmiImg");
 				
 				String lungImg = "../../images/lung.png";
-				String livarImg = "../../images/livar1.png" ;
+				String livarImg = "../../images/livar0.png" ;
 				String stomachImg = "../../images/stomach.png" ;
-				String bmiImg = "../../images/BMI_under18.png" ;
+				String bmiImg = "../../images/bmi3.png";
+				
+				//ここはセッションに保存されているユーザーのBMIを取得してビュー側に値を渡す。
+				double bmiValue = 22.4;
+	    		model.addAttribute("bmiValue",bmiValue);
 				
 				model.addAttribute("lungImg",lungImg );
 				model.addAttribute("livarImg",livarImg );
@@ -506,8 +519,8 @@ public class IndexController {
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
 	public String account(@ModelAttribute("index") UserForm form, Model model) {
 		User user = (User) session.getAttribute("user");
-		List<Achievements> achievements = achievementsDao.findByAll();
-		session.setAttribute("achievementsList",achievements);
+		List<Achievements> achievementList = achievementsDao.findByAll();
+		session.setAttribute("achievementsList",achievementList);
 		model.addAttribute("achievementName",achievementsDao.findById(user.getAchievementId()).getAchievementName());
 		return "account";
 	}
@@ -524,7 +537,7 @@ public class IndexController {
     	String mail = form.getMail();
     	String pass = form.getPassword();
     	Integer sex = form.getSex();
-    	Date birthDate = form.getBirthDate();
+    	Date birthDate = form.getBirth();
     	Double height = form.getHeight();
     	Integer achievementId = form.getAchievementId();
     	Integer time = form.getGoalExerciseTime();

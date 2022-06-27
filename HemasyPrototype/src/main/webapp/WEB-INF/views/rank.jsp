@@ -38,14 +38,16 @@
    <div class="caption"><p>検索結果：${DayRanking.size()}件</p></div>
     <thead>
       <tr>
-        <th>順位</th>
+        <th></th>
         <th>名前</th>
         <th>運動時間</th>
+        <th>ユーザーの称号</th>
       </tr>
     </thead>
     <tbody>
       <c:forEach var="DayRanking" items="${DayRanking}" varStatus="status">
         <tr>
+          <td></td>
           <td><c:out value="${DayRanking.getUser_name()}"/></td>
           <td><c:out value="${DayRanking.getSum_time()}"/></td>
           <td><c:out value="${DayRanking.getAchievement_name()}"/></td>
@@ -60,14 +62,16 @@
 	   <div class="caption"><p>検索結果：${WeekRanking.size()}件</p></div>
 	    <thead>
 	      <tr>
-	        <th>順位</th>
+	        <th></th>
         	<th>名前</th>
         	<th>運動時間</th>
+        	<th>ユーザーの称号</th>
 	      </tr>
 	    </thead>
 	    <tbody>
 	      <c:forEach var="WeekRanking" items="${WeekRanking}" varStatus="status">
 	        <tr>
+	          <td></td>
 	          <td><c:out value="${WeekRanking.getUser_name()}"/></td>
 	          <td><c:out value="${WeekRanking.getSum_time()}"/></td>
 	          <td><c:out value="${WeekRanking.getAchievement_name()}"/></td>
@@ -82,14 +86,16 @@
 	   <div class="caption"><p>検索結果：${AchievementRanking.size()}件</p></div>
 	    <thead>
 	      <tr>
-	        <th>順位</th>
+	        <th></th>
 	        <th>名前</th>
 	        <th>合計ポイント</th>
+	        <th>ユーザーの称号</th>
 	      </tr>
 	    </thead>
 	    <tbody>
 	      <c:forEach var="AchievementRanking" items="${AchievementRanking}" varStatus="status">
 	        <tr>
+	          <td></td>
 	          <td><c:out value="${AchievementRanking.getUser_name()}"/></td>
 	          <td><c:out value="${AchievementRanking.getSum_score()}"/></td>
 	          <td><c:out value="${AchievementRanking.getAchievement_name()}"/></td>

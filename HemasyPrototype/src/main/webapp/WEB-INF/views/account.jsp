@@ -75,8 +75,8 @@
     
     <div>
 		<fmt:message key="form.lbl.birthDate"/>
-		<form:input type="date" path="birthDate" value="${user.getBirth()}" readonly="readonly"/>
-		<form:errors path="birthDate" cssStyle="color: red"/>
+		<form:input type="date" path="birth" value="${user.getBirth()}" readonly="readonly"/>
+		<form:errors path="birth" cssStyle="color: red"/>
 <%-- 		<input type="date" name="birthDate" value="${user.getBirth()}">       --%>
     </div>
     

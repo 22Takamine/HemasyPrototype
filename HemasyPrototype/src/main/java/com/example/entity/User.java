@@ -13,11 +13,10 @@ public class User {
 	private String password;
 	private Integer sex;
 
-//	private Date birth;
+	private Date birth;
 	private Double height;
 	private Double weight;
-	//あとでまっしーに聞く予定
-	private Date birthDate;
+
 
 	private Date createdAt;
 	private Integer goalExerciseTime;
@@ -35,7 +34,7 @@ public class User {
 	}
 
 	public User(String userName, String mail, String password,Integer sex,
-			Date birthDate,Double height,Integer goalExerciseTime,Integer goalCalorie,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer roleId) {
+			Date birth,Double height,Integer goalExerciseTime,Integer goalCalorie,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer roleId) {
 
 //			Date birthDate,Integer height,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer roleId) {
 
@@ -43,7 +42,7 @@ public class User {
 		this.mail = mail;
 		this.password = password;
 		this.sex = sex;
-		this.birthDate = birthDate;
+		this.birth = birth;
 		this.height = height;
 		this.goalExerciseTime = goalExerciseTime;
 		this.goalCalorie = goalCalorie;
@@ -53,7 +52,7 @@ public class User {
 		this.roleId = roleId;
 	}
 	
-	public User(Integer id, Integer userId, String userName, String mail, String password, Integer sex, Date birthDate, Double height,
+	public User(Integer id, Integer userId, String userName, String mail, String password, Integer sex, Date birth, Double height,
 			Date createdAt, Integer goalExerciseTime, Integer goalCalorie, Integer rankFlag, Integer alcoholFlag, Integer smokeFlag,
 			Integer roleId, Integer achievementId, Integer achievementFlag, Double bmi) {
 		this.id = id;
@@ -62,7 +61,7 @@ public class User {
 		this.mail = mail;
 		this.password = password;
 		this.sex = sex;
-		this.birthDate = birthDate;
+		this.birth = birth;
 		this.height = height;
 		this.createdAt = createdAt;
 		this.goalExerciseTime = goalExerciseTime;
@@ -138,12 +137,12 @@ public class User {
 		this.height = height;
 	}
 
-	public Date getBirthDate() {
-		return birthDate;
+	public Date getBirth() {
+		return birth;
 	}
 
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
+	public void setBirth(Date birth) {
+		this.birth = birth;
 	}
 
 	public Date getCreatedAt() {
