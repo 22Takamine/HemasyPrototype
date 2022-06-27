@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.dao.ListAndRecordDao;
+import com.example.dao.UserDao;
 import com.example.entity.ListAndRecord;
 import com.example.entity.User;
 import com.example.form.IndexForm;
@@ -40,15 +41,16 @@ public class IndexController {
 
 	@Autowired
 	ListAndRecordDao listAndRecordDao;
+	
+	@Autowired
+	UserDao userDao;
 
 
 	//最初にここにきて、login画面にいくよ
 	@RequestMapping({ "/", "/index"})
 	public String index(@ModelAttribute("index") IndexForm form, Model model) {
 
-		//仮のデータ送信
-		User user = new User(2, 2, "一派ユーザ", "1", "1", 1, Date.valueOf("2022-06-20"), 1, Date.valueOf("2022-06-20"), 1, 1, 1, 1, 1, 1,1,1,1 );
-		session.setAttribute("user", user);
+		
 		return "login";
 	}
 	//ログイン成功時にメニュー画面に遷移
@@ -57,8 +59,30 @@ public class IndexController {
 		if (bindingResult.hasErrors()) {	
 			return "login";
 		}
+		
+		//仮のデータ送信
+		User user = new User(1, 1, "一派ユーザ", "1", "1", 1, Date.valueOf("2022-06-20"), 1.0, Date.valueOf("2022-06-20"), 1, 1, 1, 1, 1, null, null, null, null);
+		session.setAttribute("user", user);
 
+		//管理者ページへ
 		if(form.getMail().equals("1") && form.getPass().equals("1")) {
+			
+			List<User> userList = userDao.getAllUser();
+			
+			List<ListAndRecord> foodList = listAndRecordDao.FoodListById(user.getUserId());
+			
+			List<ListAndRecord> alcoholList = listAndRecordDao.AlcoholListById(user.getUserId());
+			
+			List<ListAndRecord> sportList = listAndRecordDao.SportListById(user.getUserId());
+			
+			System.out.println(sportList.size());
+			
+			
+			session.setAttribute("userList", userList);
+			session.setAttribute("foodList", foodList);
+			session.setAttribute("alcoholList", alcoholList);
+			session.setAttribute("sportList", sportList);
+			
 			return "admin";
 		}
 
@@ -74,7 +98,7 @@ public class IndexController {
 	}
 	
 	//メニューから記録＆リスト画面に遷移(当日のデータ)
-		@RequestMapping(value = "/record", method = RequestMethod.POST)
+		@RequestMapping(value = "/record", method = RequestMethod.GET)
 		public String record(@ModelAttribute("record") ListAndRecordForm form, Model model) {
 			
 			User user = (User) session.getAttribute("user");
@@ -370,13 +394,78 @@ public class IndexController {
 		
 		// user_id =1が登録した食事リストを取得する
 		List<ListAndRecord> foodList = listAndRecordDao.FoodListById(user_id);
+		if (foodList != null) {
+			for (ListAndRecord foodData : foodList) {
+				foodData.setValue1(foodData.getValue1().substring(0, foodData.getValue1().length()-8));
+			}
+		}
 		model.addAttribute("foodList", foodList);
 
-		// user_id =1が登録したお酒リストを取得する(今は暫定でuser_idの部分に固定で２を入れている)
+		// user_id =1が登録したお酒リストを取得する
 		List<ListAndRecord> alcoholList = listAndRecordDao.AlcoholListById(user_id);
+		if (alcoholList != null) {
+			for (ListAndRecord alcoholData : alcoholList) {
+				alcoholData.setValue1(alcoholData.getValue1().substring(0, alcoholData.getValue1().length()-8));
+			}
+		}
 		model.addAttribute("alcoholList", alcoholList);
 
 		return "list";
+	}
+	
+	
+	//マイリスト確定時
+	@RequestMapping(value = "/listCommit", method = RequestMethod.POST)
+	public String listCommit(@ModelAttribute("index") UserForm form, Model model) {
+
+		List<ListAndRecord> listsList = new ArrayList<ListAndRecord>();
+
+		//朝食記録追加
+		for (int i = 0; request.getParameter("value1Food" + i) != null; i++) {
+			System.out.println(request.getParameter("delFood" + i) + i + "食べ物かくにん");
+			if (request.getParameter("delFood" + i) != null) {
+				System.out.println("けすぞ");
+				continue;
+			}
+			ListAndRecord foodData = new ListAndRecord(0, 1, 1, request.getParameter("value1Food" + i), Double.parseDouble(request.getParameter("value2Food" + i)), null, 1.0, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+			listsList.add(foodData);
+			System.out.println(foodData.getListsAndRecordsId());
+			System.out.println(foodData.getCategory());
+			System.out.println(foodData.getType());
+			System.out.println(foodData.getValue1());
+			System.out.println(foodData.getValue2());
+			System.out.println(foodData.getValue3());
+			System.out.println(foodData.getValue4());
+			System.out.println(foodData.getValue5());
+			System.out.println(foodData.getCreateDate());
+			System.out.println(foodData.getUserId());
+		}
+
+		//アルコール記録挿入
+		for (int i = 0; request.getParameter("value1Alc" + i) != null; i++) {
+			System.out.println(request.getParameter("delAlc" + i) + "おさけかくにん");
+			if (request.getParameter("delAlc" + i) != null) {
+				System.out.println("けすぞ");
+				continue;
+			}
+			ListAndRecord alcoholData = new ListAndRecord(0, 1, 4, request.getParameter("value1Alc" + i), Double.parseDouble(request.getParameter("value2Alc" + i)), null, Double.parseDouble(request.getParameter("value4Alc" + i)), Double.parseDouble(request.getParameter("value5Alc" + i)), null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+			listsList.add(alcoholData);
+			System.out.println("はじまり" + alcoholData.getListsAndRecordsId());
+			System.out.println(alcoholData.getCategory());
+			System.out.println(alcoholData.getType());
+			System.out.println(alcoholData.getValue1());
+			System.out.println(alcoholData.getValue2());
+			System.out.println(alcoholData.getValue3());
+			System.out.println(alcoholData.getValue4());
+			System.out.println(alcoholData.getValue5());
+			System.out.println(alcoholData.getCreateDate());
+			System.out.println(alcoholData.getUserId());
+		}
+		
+		listAndRecordDao.ediMyList(((User) session.getAttribute("user")).getUserId(), listsList);
+
+		return "menu";
+
 	}
 
 	//ハンバーガーメニューからお問い合わせへ

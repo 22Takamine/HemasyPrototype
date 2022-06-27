@@ -33,7 +33,7 @@
     </form:form>
 </header>
   <div class="main">
-	  <form:form action="record" modelAttribute="index" method="post">
+	  <form:form action="record" modelAttribute="index" method="get">
 	    <input type="hidden" id="todayDate" name="recordDate">
 	    <form:button><fmt:message key="form.lbl.record"/></form:button>
 	  </form:form>

@@ -64,7 +64,7 @@
 			<div id="food_bre">
 				<p>
 					朝食
-					<button type="button" id="add_bre" onclick="addBreForm()">⊕</button>
+					<button type="button" onclick="addBreForm()">⊕</button>
 				</p>
 				<c:forEach var="breakfastRecord" items="${breakfastRecordList}"
 					varStatus="bStatus">
@@ -88,7 +88,7 @@
 			<div id="food_lun">
 				<p>
 					昼食
-					<button type="button" id="add_lun" onclick="addLunForm()">⊕</button>
+					<button type="button" onclick="addLunForm()">⊕</button>
 				</p>
 				<c:forEach var="lunchRecord" items="${lunchRecordList}"
 					varStatus="lStatus">
@@ -111,7 +111,7 @@
 			<div id="food_din">
 				<p>
 					夕食
-					<button type="button" id="add_din" onclick="addDinForm()">⊕</button>
+					<button type="button" onclick="addDinForm()">⊕</button>
 				</p>
 				<c:forEach var="dinnerRecord" items="${dinnerRecordList}"
 					varStatus="dStatus">
@@ -135,7 +135,7 @@
 			<div id="food_sna">
 				<p>
 					間食
-					<button type="button" id="add_sna" onclick="addSnaForm()">⊕</button>
+					<button type="button" onclick="addSnaForm()">⊕</button>
 				</p>
 				<c:forEach var="snackRecord" items="${snackRecordList}"
 					varStatus="sStatus">
@@ -161,7 +161,7 @@
 		<div id="sport">
 			<h2>
 				運動記録
-				<button type="button" id="add_spo" onclick="addSpoForm()">⊕</button>
+				<button type="button" onclick="addSpoForm()">⊕</button>
 			</h2>
 			<c:forEach var="sportRecord" items="${sportRecordList}"
 				varStatus="spStatus">
@@ -190,7 +190,7 @@
 		<div id="alcohol">
 			<h2>
 				アルコール
-				<button type="button" id="add_alc" onclick="addAlcForm()">⊕</button>
+				<button type="button" onclick="addAlcForm()">⊕</button>
 			</h2>
 			<c:forEach var="alcoholRecord" items="${alcoholRecordList}"
 				varStatus="aStatus">

@@ -1,5 +1,7 @@
 package com.example.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -14,6 +16,9 @@ public class UserDao {
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
+	
+	private static final String GET_ALL_USER = "SELECT * FROM users";
+	
 	public User findById(int userId) {
 		String sql = """
 						select * from users
@@ -25,5 +30,10 @@ public class UserDao {
 		var list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<User>(User.class) );
 		return list.isEmpty() ? null :list.get(0);
 		
+	}
+	
+	//リン作成。すべてのユーザーを取得。管理者ページで利用。
+	public List<User> getAllUser() {
+		return jdbcTemplate.query(GET_ALL_USER, new BeanPropertyRowMapper<User>(User.class));
 	}
 }

@@ -18,19 +18,21 @@ import com.example.entity.User;
 @Repository
 public class ListAndRecordDao {
 	
-	private static final String GET_FOOD_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND type = :type AND value4 = :value4 AND user_id = :userId AND create_date = :createDate";
-	private static final String GET_SPORT_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 2 AND user_id = :userId AND create_date = :createDate";
-	private static final String GET_ALCOHOL_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 4 AND user_id = :userId AND create_date = :createDate";
-	private static final String GET_SMOKE_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId AND create_date = :createDate";
-	private static final String GET_WEIGHT_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 5 AND user_id = :userId AND create_date = :createDate";
+	private static final String GET_FOOD_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND type = :type AND value1 IS NOT NULL AND value4 = :value4 AND user_id = :userId AND create_date = :createDate";
+	private static final String GET_SPORT_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 2 AND value1 IS NOT NULL AND user_id = :userId AND create_date = :createDate";
+	private static final String GET_ALCOHOL_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 4 AND value1 IS NOT NULL AND user_id = :userId AND create_date = :createDate";
+	private static final String GET_SMOKE_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 3 AND value2 IS NULL AND user_id = :userId AND create_date = :createDate";
 	private static final String GET_LATEST_WEIGHT_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 5 AND value2 <> 0 AND create_date <= :createDate AND user_id = :userId ORDER BY create_date DESC";
 	private static final String INSERT_LIST_AND_RECORD = "INSERT INTO lists_and_records (category, type, value1, value2, value3, value4, value5, value6, value7, value8, create_date, user_id) VALUES (:category, :type, :value1, :value2, :value3, :value4, :value5, :value6, :value7, :value8, :createDate, :userId)";
 	private static final String DELETE_RECORD_BY_DATE = "DELETE FROM lists_and_records WHERE create_date = :createDate AND user_id = :userId";
-	private static final String GET_LISTS = "SELECT * FROM lists_and_records WHERE category = 1 AND type = :type AND (user_id = 1 or user_id = :userId)";
+	private static final String GET_LISTS = "SELECT * FROM lists_and_records WHERE category = 1 AND type = :type AND (user_id = 1 or user_id = :userId) ORDER BY value1";
 	private static final String FIND_LIST_BY_NAME = "SELECT * FROM lists_and_records WHERE category = 1 AND type = :type AND value1 = :value1 AND user_id = :userId";
 	private static final String UPDATE_MY_LISTS = "UPDATE lists_and_records SET value2 = :value2, value3 = :value3, value4 = :value4, value5 = :value5 WHERE category = 1 AND type = :type AND value1 = :value1 AND user_id = :userId";
+	private static final String DELETE_LISTS = "DELETE FROM lists_and_records WHERE category = 1 AND user_id = :userId ";
+	
 	String sql1 = "SELECT * FROM lists_and_records WHERE user_id = :user_id AND category = 1 AND type = 1";
 	String sql2 = "SELECT * FROM lists_and_records WHERE user_id = :user_id AND category = 1 AND type = 4";
+	String sql3 = "SELECT * FROM lists_and_records WHERE user_id = :user_id AND category = 1 AND type = 2";
 	
 	@Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -73,14 +75,6 @@ public class ListAndRecordDao {
         return list.isEmpty() ? null : list.get(0);
 	}
 	
-	public ListAndRecord getWeightRecord(int userId, Date date) {
-		MapSqlParameterSource param = new MapSqlParameterSource();
-		param.addValue("userId", userId);
-		param.addValue("createDate", date);
-		List<ListAndRecord> list = jdbcTemplate.query(GET_WEIGHT_RECORD, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
-        return list.isEmpty() ? null : list.get(0);
-	}
-	
 	//入力日以前の最新体重取得
 	public ListAndRecord getLatestWeightRecord(int userId, Date date) {
 		MapSqlParameterSource param = new MapSqlParameterSource();
@@ -114,7 +108,7 @@ public class ListAndRecordDao {
 		return jdbcTemplate.query(GET_LISTS, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
 	}
 	
-	//マイリストに追加
+	//記録ページから簡易登録でマイリストに追加
 	public int insertMyList(int userId, List<ListAndRecord> insertListsList) {
 		if (!insertListsList.isEmpty()) {
 			for (ListAndRecord insertListList: insertListsList) {
@@ -166,5 +160,31 @@ public List<ListAndRecord> FoodListById(int userId) {
 		
 		return list.isEmpty() ? null :list;
 		
+	}
+	
+public List<ListAndRecord> SportListById(int userId) {
+		
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", userId);
+		
+		var list = jdbcTemplate.query(sql3, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class) );
+		
+		return list.isEmpty() ? null :list;
+		
+	}
+	
+	//マイリスト編集
+	public int ediMyList(int userId, List<ListAndRecord> myListsList) {
+		if (!myListsList.isEmpty()) {
+			MapSqlParameterSource param = new MapSqlParameterSource();
+			param.addValue("userId", userId);
+			jdbcTemplate.update(DELETE_LISTS, param);
+		}
+		for(ListAndRecord myList: myListsList) {
+			myList.setValue1(myList.getValue1() + "(ユーザー定義)");
+			BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(myList);
+	        jdbcTemplate.update(INSERT_LIST_AND_RECORD, paramSource);
+		}
+		return 1;
 	}
 }
