@@ -214,216 +214,207 @@ public class IndexController {
     	}
     }
 	
-	
-	
-	//記録＆リスト画面に遷移(ゆうちゃんへGETにしてね)
-	@RequestMapping(value = "/record", method = RequestMethod.GET)
+	//メニューから記録＆リスト画面に遷移(当日のデータ)
+	@RequestMapping(value = "/record", method = RequestMethod.POST)
 	public String record(@ModelAttribute("record") ListAndRecordForm form, Model model) {
 		
-		List<ListAndRecord> breakfastRecordList = listAndRecordDao.getBreakfastRecords(2, Date.valueOf("2022-06-20"));
+		User user = (User) session.getAttribute("user");
 		
-		List<ListAndRecord> lunchRecordList = listAndRecordDao.getLunchRecords(2, Date.valueOf("2022-06-20"));
+		Date recordDate = Date.valueOf(request.getParameter("recordDate"));
 		
-		List<ListAndRecord> dinnerRecordList = listAndRecordDao.getDinnerRecords(2, Date.valueOf("2022-06-20"));
-		
-		List<ListAndRecord> snackRecordList = listAndRecordDao.getSnackRecords(2, Date.valueOf("2022-06-20"));
-		
-		List<ListAndRecord> sportRecordList = listAndRecordDao.getSportRecords(2, Date.valueOf("2022-06-20"));
-		
-		List<ListAndRecord> alcoholRecordList = listAndRecordDao.getAlcoholRecords(2, Date.valueOf("2022-06-20"));
-		
-		ListAndRecord latestSmokeRecord = listAndRecordDao.getSmokeRecord(2, Date.valueOf("2022-6-20"));
-		
-		//ListAndRecord latestWeightRecord = listAndRecordDao.getLatestWeightRecord(2);
-		
-		System.out.println(Date.valueOf("2022-06-20"));
-		
+		System.out.println(recordDate);
+
+		List<ListAndRecord> breakfastRecordList = listAndRecordDao.getBreakfastRecords(user.getUserId(), recordDate);
+
+		List<ListAndRecord> lunchRecordList = listAndRecordDao.getLunchRecords(user.getUserId(), recordDate);
+
+		List<ListAndRecord> dinnerRecordList = listAndRecordDao.getDinnerRecords(user.getUserId(), recordDate);
+
+		List<ListAndRecord> snackRecordList = listAndRecordDao.getSnackRecords(user.getUserId(), recordDate);
+
+		List<ListAndRecord> sportRecordList = listAndRecordDao.getSportRecords(user.getUserId(), recordDate);
+
+		List<ListAndRecord> alcoholRecordList = listAndRecordDao.getAlcoholRecords(user.getUserId(), recordDate);
+
+		ListAndRecord smokeRecord = listAndRecordDao.getSmokeRecord(user.getUserId(), recordDate);
+
+		ListAndRecord weightRecord = listAndRecordDao.getLatestWeightRecord(user.getUserId(), recordDate);
+
 		System.out.println("えええ" + sportRecordList.size());
-		
-		System.out.println(latestSmokeRecord.getValue3());
-		
+
+		System.out.println(smokeRecord.getValue3());
+
 		System.out.println(dinnerRecordList.size());
-		
+
 		System.out.println(snackRecordList.size());
 		
+		model.addAttribute("dataDate", recordDate);
 		model.addAttribute("breakfastRecordList", breakfastRecordList);
 		model.addAttribute("lunchRecordList", lunchRecordList);
 		model.addAttribute("dinnerRecordList", dinnerRecordList);
 		model.addAttribute("snackRecordList", snackRecordList);
 		model.addAttribute("sportRecordList", sportRecordList);
 		model.addAttribute("alcoholRecordList", alcoholRecordList);
-		model.addAttribute("smokeRecord", latestSmokeRecord);
-		//model.addAttribute("weightRecord", latestWeightRecord);
-		
-	    return "record";
+		model.addAttribute("smokeRecord", smokeRecord);
+		model.addAttribute("weightRecord", weightRecord);
 
+		return "record";
 	}
     
     //記録画面から確定を押した際にメニュー画面に飛ぶ
-    @RequestMapping(value = "/recordCommit", method = RequestMethod.POST)
-    public String recordCommit(@ModelAttribute("index") UserForm form, Model model) {
-    	
-    	List<ListAndRecord> listAndRecordLists = new ArrayList<ListAndRecord>();
-    	
-    	//朝食記録追加
-    	for (int i = 0; request.getParameter("value1Bre" + i) != null; i++) {
-    		System.out.println(request.getParameter("delBre" + i) + "かくにん");
-    		if (request.getParameter("delBre" + i) != null) {
-    			System.out.println("けすぞ");
-    			continue;
-    		}
-    		ListAndRecord breakfastRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Bre" + i), Integer.parseInt(request.getParameter("value2Bre" + i)), Integer.parseInt(request.getParameter("value3Bre" + i)), 1, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
-    		listAndRecordLists.add(breakfastRecord);
-    		System.out.println("はじまり" + breakfastRecord.getListsAndRecordsId());
-    		System.out.println(breakfastRecord.getCategory());
-    		System.out.println(breakfastRecord.getType());
-    		System.out.println(breakfastRecord.getValue1());
-    		System.out.println(breakfastRecord.getValue2());
-    		System.out.println(breakfastRecord.getValue3());
-    		System.out.println(breakfastRecord.getValue4());
-    		System.out.println(breakfastRecord.getValue5());
-    		System.out.println(breakfastRecord.getCreateDate());
-    		System.out.println(breakfastRecord.getUserId());
-    	}
-    	
-    	//昼食記録追加
-    	for (int i = 0; request.getParameter("value1Lun" + i) != null; i++) {
-    		System.out.println(request.getParameter("delLun" + i) + "かくにん");
-    		if (request.getParameter("delLun" + i) != null) {
-    			System.out.println("けすぞ");
-    			continue;
-    		}
-    		ListAndRecord lunchRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Lun" + i), Integer.parseInt(request.getParameter("value2Lun" + i)), Integer.parseInt(request.getParameter("value3Lun" + i)), 2, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
-    		listAndRecordLists.add(lunchRecord);
-    		System.out.println("はじまり" + lunchRecord.getListsAndRecordsId());
-    		System.out.println(lunchRecord.getCategory());
-    		System.out.println(lunchRecord.getType());
-    		System.out.println(lunchRecord.getValue1());
-    		System.out.println(lunchRecord.getValue2());
-    		System.out.println(lunchRecord.getValue3());
-    		System.out.println(lunchRecord.getValue4());
-    		System.out.println(lunchRecord.getValue5());
-    		System.out.println(lunchRecord.getCreateDate());
-    		System.out.println(lunchRecord.getUserId());
-    	}
-    	
-    	
-    	//夕食記録追加
-    	for (int i = 0; request.getParameter("value1Din" + i) != null; i++) {
-    		System.out.println(request.getParameter("delDin" + i) + "かくにん");
-    		if (request.getParameter("delDin" + i) != null) {
-    			System.out.println("けすぞ");
-    			continue;
-    		}
-    		ListAndRecord dinnerRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Din" + i), Integer.parseInt(request.getParameter("value2Din" + i)), Integer.parseInt(request.getParameter("value3Din" + i)), 3, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
-    		listAndRecordLists.add(dinnerRecord);
-    		System.out.println("はじまり" + dinnerRecord.getListsAndRecordsId());
-    		System.out.println(dinnerRecord.getCategory());
-    		System.out.println(dinnerRecord.getType());
-    		System.out.println(dinnerRecord.getValue1());
-    		System.out.println(dinnerRecord.getValue2());
-    		System.out.println(dinnerRecord.getValue3());
-    		System.out.println(dinnerRecord.getValue4());
-    		System.out.println(dinnerRecord.getValue5());
-    		System.out.println(dinnerRecord.getCreateDate());
-    		System.out.println(dinnerRecord.getUserId());
-    	}
-    	
-    	//間食記録追加
-    	for (int i = 0; request.getParameter("value1Sna" + i) != null; i++) {
-    		System.out.println(request.getParameter("delSna" + i) + "かくにん");
-    		if (request.getParameter("delSna" + i) != null) {
-    			System.out.println("けすぞ");
-    			continue;
-    		}
-    		ListAndRecord snackRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Sna" + i), Integer.parseInt(request.getParameter("value2Sna" + i)), Integer.parseInt(request.getParameter("value3Sna" + i)), 4, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
-    		listAndRecordLists.add(snackRecord);
-    		System.out.println("はじまり" + snackRecord.getListsAndRecordsId());
-    		System.out.println(snackRecord.getCategory());
-    		System.out.println(snackRecord.getType());
-    		System.out.println(snackRecord.getValue1());
-    		System.out.println(snackRecord.getValue2());
-    		System.out.println(snackRecord.getValue3());
-    		System.out.println(snackRecord.getValue4());
-    		System.out.println(snackRecord.getValue5());
-    		System.out.println(snackRecord.getCreateDate());
-    		System.out.println(snackRecord.getUserId());
-    	}
-    	
-    	//運動記録追加
-    	for (int i = 0; request.getParameter("value1Spo" + i) != null; i++) {
-    		System.out.println(request.getParameter("delSpo" + i) + "かくにん");
-    		if (request.getParameter("delSpo" + i) != null) {
-    			System.out.println("けすぞ");
-    			continue;
-    		}
-    		ListAndRecord sportRecord = new ListAndRecord(0, 2, 2, request.getParameter("value1Spo" + i), Integer.parseInt(request.getParameter("value2Spo" + i)), Integer.parseInt(request.getParameter("value3Spo" + i)), null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
-    		listAndRecordLists.add(sportRecord);
-    		System.out.println("はじまり" + sportRecord.getListsAndRecordsId());
-    		System.out.println(sportRecord.getCategory());
-    		System.out.println(sportRecord.getType());
-    		System.out.println(sportRecord.getValue1());
-    		System.out.println(sportRecord.getValue2());
-    		System.out.println(sportRecord.getValue3());
-    		System.out.println(sportRecord.getValue4());
-    		System.out.println(sportRecord.getValue5());
-    		System.out.println(sportRecord.getCreateDate());
-    		System.out.println(sportRecord.getUserId());
-    	}
-    	
-    	//たばこ記録挿入
-    	ListAndRecord smokeRecord = new ListAndRecord(0, 2, 3, null, null, Integer.parseInt(request.getParameter("value3Smo")), null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
-    	listAndRecordLists.add(smokeRecord);
-    	
-    	//アルコール記録挿入
-    	for (int i = 0; request.getParameter("value1Alc" + i) != null; i++) {
-    		System.out.println(request.getParameter("delAlc" + i) + "かくにん");
-    		if (request.getParameter("delAlc" + i) != null) {
-    			System.out.println("けすぞ");
-    			continue;
-    		}
-    		ListAndRecord alcoholRecord = new ListAndRecord(0, 2, 4, request.getParameter("value1Alc" + i), Integer.parseInt(request.getParameter("value2Alc" + i)), Integer.parseInt(request.getParameter("value3Alc" + i)), Integer.parseInt(request.getParameter("value4Alc" + i)), Integer.parseInt(request.getParameter("value5Alc" + i)), null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
-    		listAndRecordLists.add(alcoholRecord);
-    		System.out.println("はじまり" + alcoholRecord.getListsAndRecordsId());
-    		System.out.println(alcoholRecord.getCategory());
-    		System.out.println(alcoholRecord.getType());
-    		System.out.println(alcoholRecord.getValue1());
-    		System.out.println(alcoholRecord.getValue2());
-    		System.out.println(alcoholRecord.getValue3());
-    		System.out.println(alcoholRecord.getValue4());
-    		System.out.println(alcoholRecord.getValue5());
-    		System.out.println(alcoholRecord.getCreateDate());
-    		System.out.println(alcoholRecord.getUserId());
-    	}
-    	
-    	//体重記録挿入
-    	System.out.println(request.getParameter("value2Wei") + "aaa" +  request.getParameter("value3Wei"));
-    	ListAndRecord weightRecord = new ListAndRecord(0, 2, 5, null, Integer.parseInt(request.getParameter("value2Wei")), Integer.parseInt(request.getParameter("value3Wei")), null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
-    	listAndRecordLists.add(weightRecord);
-    	
-    	System.out.println(listAndRecordLists.size());
-    	
-//    	listAndRecordDao.insertRecord(listAndRecordLists);
-    	
-//    	System.out.println(request.getParameter("value1Bre0"));
-//    	System.out.println(request.getParameter("value1Bre1"));
-//    	System.out.println(request.getParameter("countBre0"));
-//    	System.out.println(request.getParameter("countBre1"));
-//    	System.out.println(request.getParameter("countBre"));
-    	
-    	//実装時に使う(川満さんに聞いてね)
-//    	int userId = 1;
-//    	User user = userDao.findById(userId);
-//    	recordService.setZeroPastRecords(user);
-//    	
-    	return "menu";
-    	
-    }
+	@RequestMapping(value = "/recordCommit", method = RequestMethod.POST)
+	public String recordCommit(@ModelAttribute("index") UserForm form, Model model) {
+
+		List<ListAndRecord> listAndRecordLists = new ArrayList<ListAndRecord>();
+
+		//朝食記録追加
+		for (int i = 0; request.getParameter("value1Bre" + i) != null; i++) {
+			System.out.println(request.getParameter("delBre" + i) + i + "朝食かくにん");
+			if (request.getParameter("delBre" + i) != null) {
+				System.out.println("けすぞ");
+				continue;
+			}
+			ListAndRecord breakfastRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Bre" + i), Integer.parseInt(request.getParameter("value2Bre" + i)), Integer.parseInt(request.getParameter("value3Bre" + i)), 1, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+			listAndRecordLists.add(breakfastRecord);
+			System.out.println(breakfastRecord.getListsAndRecordsId());
+			System.out.println(breakfastRecord.getCategory());
+			System.out.println(breakfastRecord.getType());
+			System.out.println(breakfastRecord.getValue1());
+			System.out.println(breakfastRecord.getValue2());
+			System.out.println(breakfastRecord.getValue3());
+			System.out.println(breakfastRecord.getValue4());
+			System.out.println(breakfastRecord.getValue5());
+			System.out.println(breakfastRecord.getCreateDate());
+			System.out.println(breakfastRecord.getUserId());
+		}
+
+		//昼食記録追加
+		for (int i = 0; request.getParameter("value1Lun" + i) != null; i++) {
+			System.out.println(request.getParameter("delLun" + i) + i + "昼食かくにん");
+			if (request.getParameter("delLun" + i) != null) {
+				System.out.println("けすぞ");
+				continue;
+			}
+			ListAndRecord lunchRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Lun" + i), Integer.parseInt(request.getParameter("value2Lun" + i)), Integer.parseInt(request.getParameter("value3Lun" + i)), 2, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+			listAndRecordLists.add(lunchRecord);
+			System.out.println(lunchRecord.getListsAndRecordsId());
+			System.out.println(lunchRecord.getCategory());
+			System.out.println(lunchRecord.getType());
+			System.out.println(lunchRecord.getValue1());
+			System.out.println(lunchRecord.getValue2());
+			System.out.println(lunchRecord.getValue3());
+			System.out.println(lunchRecord.getValue4());
+			System.out.println(lunchRecord.getValue5());
+			System.out.println(lunchRecord.getCreateDate());
+			System.out.println(lunchRecord.getUserId());
+		}
+
+
+		//夕食記録追加
+		for (int i = 0; request.getParameter("value1Din" + i) != null; i++) {
+			System.out.println(request.getParameter("delDin" + i) + i + "夕食かくにん");
+			if (request.getParameter("delDin" + i) != null) {
+				System.out.println("けすぞ");
+				continue;
+			}
+			ListAndRecord dinnerRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Din" + i), Integer.parseInt(request.getParameter("value2Din" + i)), Integer.parseInt(request.getParameter("value3Din" + i)), 3, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+			listAndRecordLists.add(dinnerRecord);
+			System.out.println(dinnerRecord.getListsAndRecordsId());
+			System.out.println(dinnerRecord.getCategory());
+			System.out.println(dinnerRecord.getType());
+			System.out.println(dinnerRecord.getValue1());
+			System.out.println(dinnerRecord.getValue2());
+			System.out.println(dinnerRecord.getValue3());
+			System.out.println(dinnerRecord.getValue4());
+			System.out.println(dinnerRecord.getValue5());
+			System.out.println(dinnerRecord.getCreateDate());
+			System.out.println(dinnerRecord.getUserId());
+		}
+
+		//間食記録追加
+		for (int i = 0; request.getParameter("value1Sna" + i) != null; i++) {
+			System.out.println(request.getParameter("delSna" + i) + i + "間食かくにん");
+			if (request.getParameter("delSna" + i) != null) {
+				System.out.println("けすぞ");
+				continue;
+			}
+			ListAndRecord snackRecord = new ListAndRecord(0, 2, 1, request.getParameter("value1Sna" + i), Integer.parseInt(request.getParameter("value2Sna" + i)), Integer.parseInt(request.getParameter("value3Sna" + i)), 4, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+			listAndRecordLists.add(snackRecord);
+			System.out.println(snackRecord.getListsAndRecordsId());
+			System.out.println(snackRecord.getCategory());
+			System.out.println(snackRecord.getType());
+			System.out.println(snackRecord.getValue1());
+			System.out.println(snackRecord.getValue2());
+			System.out.println(snackRecord.getValue3());
+			System.out.println(snackRecord.getValue4());
+			System.out.println(snackRecord.getValue5());
+			System.out.println(snackRecord.getCreateDate());
+			System.out.println(snackRecord.getUserId());
+		}
+
+		//運動記録追加
+		for (int i = 0; request.getParameter("value1Spo" + i) != null; i++) {
+			System.out.println(request.getParameter("delSpo" + i) + "かくにん");
+			if (request.getParameter("delSpo" + i) != null) {
+				System.out.println("けすぞ");
+				continue;
+			}
+			ListAndRecord sportRecord = new ListAndRecord(0, 2, 2, request.getParameter("value1Spo" + i), Integer.parseInt(request.getParameter("value2Spo" + i)), Integer.parseInt(request.getParameter("value3Spo" + i)), null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+			listAndRecordLists.add(sportRecord);
+			System.out.println("はじまり" + sportRecord.getListsAndRecordsId());
+			System.out.println(sportRecord.getCategory());
+			System.out.println(sportRecord.getType());
+			System.out.println(sportRecord.getValue1());
+			System.out.println(sportRecord.getValue2());
+			System.out.println(sportRecord.getValue3());
+			System.out.println(sportRecord.getValue4());
+			System.out.println(sportRecord.getValue5());
+			System.out.println(sportRecord.getCreateDate());
+			System.out.println(sportRecord.getUserId());
+		}
+
+		//たばこ記録挿入
+		ListAndRecord smokeRecord = new ListAndRecord(0, 2, 3, null, null, Integer.parseInt(request.getParameter("value3Smo")), null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+		listAndRecordLists.add(smokeRecord);
+
+		//アルコール記録挿入
+		for (int i = 0; request.getParameter("value1Alc" + i) != null; i++) {
+			System.out.println(request.getParameter("delAlc" + i) + "かくにん");
+			if (request.getParameter("delAlc" + i) != null) {
+				System.out.println("けすぞ");
+				continue;
+			}
+			ListAndRecord alcoholRecord = new ListAndRecord(0, 2, 4, request.getParameter("value1Alc" + i), Integer.parseInt(request.getParameter("value2Alc" + i)), Integer.parseInt(request.getParameter("value3Alc" + i)), Integer.parseInt(request.getParameter("value4Alc" + i)), Integer.parseInt(request.getParameter("value5Alc" + i)), null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+			listAndRecordLists.add(alcoholRecord);
+			System.out.println("はじまり" + alcoholRecord.getListsAndRecordsId());
+			System.out.println(alcoholRecord.getCategory());
+			System.out.println(alcoholRecord.getType());
+			System.out.println(alcoholRecord.getValue1());
+			System.out.println(alcoholRecord.getValue2());
+			System.out.println(alcoholRecord.getValue3());
+			System.out.println(alcoholRecord.getValue4());
+			System.out.println(alcoholRecord.getValue5());
+			System.out.println(alcoholRecord.getCreateDate());
+			System.out.println(alcoholRecord.getUserId());
+		}
+
+		//体重記録挿入
+		System.out.println(request.getParameter("value2Wei") + "aaa" +  request.getParameter("value3Wei"));
+		ListAndRecord weightRecord = new ListAndRecord(0, 2, 5, null, Integer.parseInt(request.getParameter("value2Wei")), Integer.parseInt(request.getParameter("value3Wei")), null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+		listAndRecordLists.add(weightRecord);
+
+		System.out.println(listAndRecordLists.size());
+
+		listAndRecordDao.insertRecord(((User) session.getAttribute("user")).getUserId(), listAndRecordLists, Date.valueOf(request.getParameter("createDate")));
+
+		return "menu";
+
+	}
     
     //統計画面に遷移（ゆうちゃんへ、GETにしてね）
     @RequestMapping(value = "/statistics", method = RequestMethod.GET)
     public String statistics(@ModelAttribute("index") UserForm form, Model model) {
-    	
+    	model.addAttribute("statisticsDate", session.getAttribute("statisticsDate"));
         return "statistics";
     }
 
