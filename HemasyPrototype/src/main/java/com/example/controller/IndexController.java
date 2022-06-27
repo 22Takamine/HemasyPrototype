@@ -134,17 +134,19 @@ public class IndexController {
     		session.setAttribute("user", user);
     		recordService.setZeroPastRecords(user.getUserId());
     		ListAndRecord userSmokeDate = listAndRecordDao.getLatestSmokeDateRecord(user.getUserId());
-    		ListAndRecord userAlcohol = listAndRecordDao.getLatestAlcoholDateRecord(user.getUserId());
+    		ListAndRecord userAlcohol = listAndRecordDao.getLatestAlcoholRecord(user.getUserId());
     		ListAndRecord userMetsAndTime = listAndRecordDao.getLatestMetsAndTimeRecord(user.getUserId());
     		ListAndRecord userCalorieIntake = listAndRecordDao.getLatestCalorieIntake(user.getUserId());
     		ListAndRecord userWeight = listAndRecordDao.getLatestWeightRecordM(user.getUserId());
-
+    		ListAndRecord userAlcoholDate = listAndRecordDao.getLatestAlcoholDateRecord(user.getUserId());
+    		
     		Integer alcoholLevel;
     		Double CaloriesBurned = userWeight.getValue2() * userMetsAndTime.getValue2() * userMetsAndTime.getValue3() * 1.05;
     		Double height = (double) (user.getHeight()/100.0);
     		Double bmi = (double) (userWeight.getValue2()/(height*height));
     		Integer calorieLevel = (int) (Math.ceil(userCalorieIntake.getValue2() - CaloriesBurned)/user.getGoalCalorie()*10);
     		Integer smokeLevel = userSmokeDate.getValue2();
+    		Double goalCalorie = (Math.ceil((height * height)*22)*30);
     		
     		if(calorieLevel <= 0) {
     			calorieLevel = 1;
@@ -168,53 +170,30 @@ public class IndexController {
     		System.out.println("タバコ: " + SmokeColorLevel.getColorPath());
     		System.out.println("アルコール: " + AlcoholColorLevel.getColorPath());
     		System.out.println("BMI: " + bmi);
-    		//以下にDBから取得してきた画像のパスを入れる。
-    		//（まっしーへ　ここに取ってきた画像のパスを入れるまでお願いします。）
-    		
-    		String lungImg = "../../" + SmokeColorLevel.getColorPath();
-    		String liverImg = "../../" + AlcoholColorLevel.getColorPath();
-    		String stomachImg = "../../" + CalorieColorLevel.getColorPath();
-    		String bmiImg = "../../"+ bmipath.getImgPath();
-    		
-    		//ここでsessionに画像のパスを保存する。
-    		//session.setAttribute("lungImg", lungImg);
-    		//session.setAttribute("livarImg", livarImg);
-    		//session.setAttribute("stomachImg", stomachImg);
-    		//session.setAttribute("bmiImg", bmiImg);
-    		
+
     		//計算したbmiをsessionに保存
     		session.setAttribute("bmiValue",bmi);
-    		
-    		String lungWord = "禁煙"+smokeLevel+"日目です";
-    		String liverWord = "禁酒○○日目です。" ;
-    		String stomachGoalkcal = "目標摂取カロリーは○○Kcalです。" ;
-    		String stomachInputKcal = "摂取カロリーは"+ userCalorieIntake.getValue2()+"Kcalです。" ;
-    		String stomachOutputKcal = "消費カロリーは" + CaloriesBurned + "Kcalです。" ;
-    		
+
     		//ツールチップに表示する項目をsessionに保存する
-    		session.setAttribute("lungWord", lungWord);
-    		session.setAttribute("liverWord", liverWord);
-    		session.setAttribute("stomachGoalkcal", stomachGoalkcal);
-    		session.setAttribute("stomachInputKcal", stomachInputKcal);
-    		session.setAttribute("stomachOutputKcal", stomachOutputKcal);
+    		session.setAttribute("lungWord", "禁煙"+smokeLevel+"日目です");
+    		session.setAttribute("livarWord", "禁酒"+userAlcoholDate.getValue2()+"日目です。");
+    		session.setAttribute("stomachGoalkcal", "目標摂取カロリーは"+goalCalorie+"Kcalです。");
+    		session.setAttribute("stomachInputKcal", "摂取カロリーは"+ userCalorieIntake.getValue2()+"Kcalです。");
+    		session.setAttribute("stomachOutputKcal", "消費カロリーは" + CaloriesBurned + "Kcalです。" );
     		
-    		session.setAttribute("lungImg",lungImg );
-    		session.setAttribute("livarImg",liverImg );
-    		session.setAttribute("stomachImg",stomachImg );
-    		session.setAttribute("bmiImg",bmiImg );
-    		
-    		session.setAttribute("bmi", bmi);
+    		session.setAttribute("lungImg","../../" + SmokeColorLevel.getColorPath());
+    		session.setAttribute("livarImg","../../" + AlcoholColorLevel.getColorPath());
+    		session.setAttribute("stomachImg",CalorieColorLevel.getColorPath());
+    		session.setAttribute("bmiImg",bmipath.getImgPath());
+
 			session.setAttribute("calorieColorPath", CalorieColorLevel.getColorPath());
 			session.setAttribute("smokeColorPath", SmokeColorLevel.getColorPath());
 			session.setAttribute("alcoholColorPath", AlcoholColorLevel.getColorPath());
 			session.setAttribute("user", user);
     		
     		return "menu";
-    		
 		}
     }
-	
-	
 	
 	//記録＆リスト画面に遷移(ゆうちゃんへGETにしてね)
 	@RequestMapping(value = "/record", method = RequestMethod.GET)
