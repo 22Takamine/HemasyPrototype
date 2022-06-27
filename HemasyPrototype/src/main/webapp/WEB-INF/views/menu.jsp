@@ -34,6 +34,7 @@
 </header>
   <div class="main">
 	  <form:form action="record" modelAttribute="index" method="post">
+	    <input type="hidden" id="todayDate" name="recordDate">
 	    <form:button><fmt:message key="form.lbl.record"/></form:button>
 	  </form:form>
   
@@ -65,6 +66,15 @@
   	  	
   	  	</div>
   	  </div>
+  	  <script>
+  		var date = new Date();
+
+    	var yyyy = date.getFullYear();
+    	var mm = ("0"+(date.getMonth()+1)).slice(-2);
+    	var dd = ("0"+date.getDate()).slice(-2);
+
+		document.getElementById("todayDate").value=yyyy+'-'+mm+'-'+dd;
+  	  </script>
 <script src="js/commons.js"></script>
 </body>
 </html>

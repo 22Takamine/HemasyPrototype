@@ -72,49 +72,53 @@ public class IndexController {
 
 		return "register";
 	}
+	
+	//メニューから記録＆リスト画面に遷移(当日のデータ)
+		@RequestMapping(value = "/record", method = RequestMethod.POST)
+		public String record(@ModelAttribute("record") ListAndRecordForm form, Model model) {
+			
+			User user = (User) session.getAttribute("user");
+			
+			Date recordDate = Date.valueOf(request.getParameter("recordDate"));
+			
+			System.out.println(recordDate);
 
-	//記録＆リスト画面に遷移
-	@RequestMapping(value = "/record", method = RequestMethod.POST)
-	public String record(@ModelAttribute("record") ListAndRecordForm form, Model model) {
+			List<ListAndRecord> breakfastRecordList = listAndRecordDao.getBreakfastRecords(user.getUserId(), recordDate);
 
-		List<ListAndRecord> breakfastRecordList = listAndRecordDao.getBreakfastRecords(2, Date.valueOf("2022-06-20"));
+			List<ListAndRecord> lunchRecordList = listAndRecordDao.getLunchRecords(user.getUserId(), recordDate);
 
-		List<ListAndRecord> lunchRecordList = listAndRecordDao.getLunchRecords(2, Date.valueOf("2022-06-20"));
+			List<ListAndRecord> dinnerRecordList = listAndRecordDao.getDinnerRecords(user.getUserId(), recordDate);
 
-		List<ListAndRecord> dinnerRecordList = listAndRecordDao.getDinnerRecords(2, Date.valueOf("2022-06-20"));
+			List<ListAndRecord> snackRecordList = listAndRecordDao.getSnackRecords(user.getUserId(), recordDate);
 
-		List<ListAndRecord> snackRecordList = listAndRecordDao.getSnackRecords(2, Date.valueOf("2022-06-20"));
+			List<ListAndRecord> sportRecordList = listAndRecordDao.getSportRecords(user.getUserId(), recordDate);
 
-		List<ListAndRecord> sportRecordList = listAndRecordDao.getSportRecords(2, Date.valueOf("2022-06-20"));
+			List<ListAndRecord> alcoholRecordList = listAndRecordDao.getAlcoholRecords(user.getUserId(), recordDate);
 
-		List<ListAndRecord> alcoholRecordList = listAndRecordDao.getAlcoholRecords(2, Date.valueOf("2022-06-20"));
+			ListAndRecord smokeRecord = listAndRecordDao.getSmokeRecord(user.getUserId(), recordDate);
 
-		ListAndRecord latestSmokeRecord = listAndRecordDao.getSmokeRecord(2, Date.valueOf("2022-6-20"));
+			ListAndRecord weightRecord = listAndRecordDao.getLatestWeightRecord(user.getUserId(), recordDate);
 
-		ListAndRecord latestWeightRecord = listAndRecordDao.getLatestWeightRecord(2);
+			System.out.println("えええ" + sportRecordList.size());
 
-		System.out.println(Date.valueOf("2022-06-20"));
+			System.out.println(smokeRecord.getValue3());
 
-		System.out.println("えええ" + sportRecordList.size());
+			System.out.println(dinnerRecordList.size());
 
-		System.out.println(latestSmokeRecord.getValue3());
+			System.out.println(snackRecordList.size());
+			
+			model.addAttribute("dataDate", recordDate);
+			model.addAttribute("breakfastRecordList", breakfastRecordList);
+			model.addAttribute("lunchRecordList", lunchRecordList);
+			model.addAttribute("dinnerRecordList", dinnerRecordList);
+			model.addAttribute("snackRecordList", snackRecordList);
+			model.addAttribute("sportRecordList", sportRecordList);
+			model.addAttribute("alcoholRecordList", alcoholRecordList);
+			model.addAttribute("smokeRecord", smokeRecord);
+			model.addAttribute("weightRecord", weightRecord);
 
-		System.out.println(dinnerRecordList.size());
-
-		System.out.println(snackRecordList.size());
-		
-		model.addAttribute("dataDate", Date.valueOf("2022-06-20"));
-		model.addAttribute("breakfastRecordList", breakfastRecordList);
-		model.addAttribute("lunchRecordList", lunchRecordList);
-		model.addAttribute("dinnerRecordList", dinnerRecordList);
-		model.addAttribute("snackRecordList", snackRecordList);
-		model.addAttribute("sportRecordList", sportRecordList);
-		model.addAttribute("alcoholRecordList", alcoholRecordList);
-		model.addAttribute("smokeRecord", latestSmokeRecord);
-		model.addAttribute("weightRecord", latestWeightRecord);
-
-		return "record";
-	}
+			return "record";
+		}
 
 	@RequestMapping(value = "/recordCommit", method = RequestMethod.POST)
 	public String recordCommit(@ModelAttribute("index") UserForm form, Model model) {

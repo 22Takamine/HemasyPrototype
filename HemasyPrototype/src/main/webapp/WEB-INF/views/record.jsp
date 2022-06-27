@@ -54,8 +54,9 @@
 	<a href="#smoke">たばこ</a>
 	<a href="#weight">体重</a>
 	<form action="record">
-		<input type="date" name="record_day">
+		<input type="date" name="record_day" value="${dataDate}">の<input type="submit">
 	</form>
+	<h1>${dataDate}の情報</h1>
 	<form action="recordCommit" method="post">
 		<input type="hidden" value="${dataDate}" name="createDate">
 		<div id="food">
@@ -71,7 +72,7 @@
 					varStatus="bStatus">
 					<p class="breakfastData">
 						<input value="${breakfastRecord.value1}"
-							name="value1Bre${bStatus.index}" list="foodList" onchange="changeBre(${bStatus.index})" id="nameMor_${bStatus.index}"> <input type="number"
+							name="value1Bre${bStatus.index}" list="foodList" onchange="changeBre(${bStatus.index});calcCalorieMor(${bStatus.index})" id="nameMor_${bStatus.index}"> <input type="number"
 							min="0" value="${breakfastRecord.value2}"
 							name="value2Bre${bStatus.index}" id="onceCalMor_${bStatus.index}"
 							onchange="calcCalorieMor(${bStatus.index})">kcal × <input
@@ -95,7 +96,7 @@
 					varStatus="lStatus">
 					<p class="lunchData">
 						<input value="${lunchRecord.value1}"
-							name="value1Lun${lStatus.index}" list="foodList"> <input type="number"
+							name="value1Lun${lStatus.index}" list="foodList" onchange="changeLun(${lStatus.index});calcCalorieLun(${lStatus.index})" id="nameLun_${lStatus.index}"> <input type="number"
 							min="0" value="${lunchRecord.value2}"
 							name="value2Lun${lStatus.index}" id="onceCalLun_${lStatus.index}"
 							onchange="calcCalorieLun(${lStatus.index})">kcal × <input
@@ -118,7 +119,7 @@
 					varStatus="dStatus">
 					<p class="dinnerData">
 						<input value="${dinnerRecord.value1}"
-							name="value1Din${dStatus.index}" list="foodList"> <input type="number"
+							name="value1Din${dStatus.index}" list="foodList" onchange="changeDin(${dStatus.index});calcCalorieDin(${dStatus.index})" id="nameDin_${dStatus.index}"> <input type="number"
 							min="0" value="${dinnerRecord.value2}"
 							name="value2Din${dStatus.index}" id="onceCalDin_${dStatus.index}"
 							onchange="calcCalorieDin(${dStatus.index})" />kcal × <input
@@ -142,7 +143,7 @@
 					varStatus="sStatus">
 					<p class="snackData">
 						<input value="${snackRecord.value1}"
-							name="value1Sna${sStatus.index}" list="foodList"> <input type="number"
+							name="value1Sna${sStatus.index}" list="foodList" onchange="changeSna(${sStatus.index});calcCalorieSna(${sStatus.index})" id="nameSna_${sStatus.index}"> <input type="number"
 							min="0" value="${snackRecord.value2}"
 							name="value2Sna${sStatus.index}" id="onceCalSna_${sStatus.index}"
 							onchange="calcCalorieSna(${sStatus.index})" />kcal × <input
@@ -170,7 +171,7 @@
 				varStatus="spStatus">
 				<p class="sportData">
 					<input value="${sportRecord.value1}"
-						name="value1Spo${spStatus.index}" list="sportList">を <input type="hidden"
+						name="value1Spo${spStatus.index}" list="sportList" onchange="changeSpo(${spStatus.index});calcUsedCalorie(${spStatus.index})" id="nameSpo_${spStatus.index}">を <input type="hidden"
 						value="${sportRecord.value2}" name="value2Spo${spStatus.index}"
 						id="mets_${spStatus.index}"> <input type="number" min="1"
 						value="${sportRecord.value3}" name="value3Spo${spStatus.index}"
@@ -201,12 +202,12 @@
 				varStatus="aStatus">
 				<p class="alcoholData">
 					<input value="${alcoholRecord.value1}"
-						name="value1Alc${aStatus.index}" list="alcoholList"> <input type="number"
+						name="value1Alc${aStatus.index}" list="alcoholList" onchange="changeAlc(${aStatus.index});calcAlc(${aStatus.index})" id="nameAlc_${aStatus.index}"> <input type="number"
 						min="0.1" max="100" value="${alcoholRecord.value4}"
 						name="value4Alc${aStatus.index}" id="oncePer_${aStatus.index}"
 						step="0.1" onchange="calcAlc(${aStatus.index})">% <input
 						type="number" min="0" value="${alcoholRecord.value5}"
-						name="value5Alc${aStatus.index}">kcal/杯 <input
+						name="value5Alc${aStatus.index}" id="onceCal_${aStatus.index}">kcal/杯 <input
 						type="number" min="1" value="${alcoholRecord.value2}"
 						name="value2Alc${aStatus.index}" id="onceAmount_${aStatus.index}"
 						onchange="calcAlc(${aStatus.index})">ml/杯を <input
@@ -313,6 +314,75 @@
 		}
 	}
 	
+	/* 昼食をリストから選んだ際にカロリーを自動入力 */
+	function changeLun(id) {
+		console.log('かえたね');
+		var targetName = document.getElementById('nameLun_' + id);
+		var targetCalorie = document.getElementById('onceCalLun_' + id);
+		for (let i = 0; i < foodList.length; i++) {
+			if (foodList[i]['value1'] == targetName.value) {
+				targetCalorie.value = foodList[i]['value2'];
+				break;
+			}
+		}
+	}
+	
+	/* 夕食をリストから選んだ際にカロリーを自動入力 */
+	function changeDin(id) {
+		var targetName = document.getElementById('nameDin_' + id);
+		var targetCalorie = document.getElementById('onceCalDin_' + id);
+		for (let i = 0; i < foodList.length; i++) {
+			if (foodList[i]['value1'] == targetName.value) {
+				targetCalorie.value = foodList[i]['value2'];
+				break;
+			}
+		}
+	}
+	
+	/* 間食をリストから選んだ際にカロリーを自動入力 */
+	function changeSna(id) {
+		var targetName = document.getElementById('nameSna_' + id);
+		var targetCalorie = document.getElementById('onceCalSna_' + id);
+		for (let i = 0; i < foodList.length; i++) {
+			if (foodList[i]['value1'] == targetName.value) {
+				targetCalorie.value = foodList[i]['value2'];
+				break;
+			}
+		}
+	}
+	
+	/* 運動をリストから選んだ際の動き */
+	function changeSpo(id) {
+		console.log('かえたね');
+		var targetName = document.getElementById('nameSpo_' + id);
+		var targetMets = document.getElementById('mets_' + id);
+		for (let i = 0; i < sportList.length; i++) {
+			if (sportList[i]['value1'] == targetName.value) {
+				console.log(sportList[i]['value2']);
+				targetMets.value = sportList[i]['value2'];
+				break;
+			}
+		}
+	}
+	
+	/* アルコールから選んだ際の動き */
+	function changeAlc(id) {
+		console.log('アルコールかえたね');
+		var targetName = document.getElementById('nameAlc_' + id);
+		var targetPer = document.getElementById('oncePer_' + id);
+		var targetCal = document.getElementById('onceCal_' + id);
+		var targetAmo = document.getElementById('onceAmount_' + id);
+		for (let i = 0; i < alcoholList.length; i++) {
+			if (alcoholList[i]['value1'] == targetName.value) {
+				console.log(alcoholList[i]['value2']);
+				targetPer.value = alcoholList[i]['value4'];
+				targetCal.value = alcoholList[i]['value5'];
+				targetAmo.value = alcoholList[i]['value2'];
+				break;
+			}
+		}
+	}
+	
 	/* 朝食用処理追加処理 */
 	var mnum = document.getElementsByClassName('breakfastData').length;
 	function addBreForm() {
@@ -321,6 +391,7 @@
 		  newP.innerHTML =
 		'<input name="value1Bre' + mnum +
 		'" list="foodList" onchange="changeBre(' + mnum +
+		');calcCalorieMor(' + mnum +
 		')" id="nameMor_' + mnum + 
 		'"><input type="number" min="0" name="value2Bre' + mnum + 
 		'" id="onceCalMor_' + mnum +
@@ -344,7 +415,10 @@
 	  	var newP = document.createElement('p');
 	  	newP.innerHTML =
 		 	'<input name="value1Lun' + lnum +
-			'" list="foodList"><input type="number" min="0" name="value2Lun' + lnum + 
+			'" list="foodList" onchange="changeLun(' + lnum +
+			';calcCalorieLun(' + lnum +
+			')" id="nameLun_' + lnum +
+			'"><input type="number" min="0" name="value2Lun' + lnum + 
 			'" id="onceCalLun_' + lnum +
 			'" onchange="calcCalorieLun(' + lnum +
 			')">kcal ×<input type="number" min="0.1" step="0.1" name="value3Lun' + lnum + 
@@ -366,7 +440,10 @@
 	  var newP = document.createElement('p');
 	  newP.innerHTML =
 		    '<input name="value1Din' + dnum +
-			'" list="foodList"><input type="number" min="0" name="value2Din' + dnum + 
+			'" list="foodList" onchange="changeDin(' + dnum +
+			');calcCalorieDin(' + dnum +
+			')" id="nameDin_' + dnum +
+			'"><input type="number" min="0" name="value2Din' + dnum + 
 			'" id="onceCalDin_' + dnum +
 			'" onchange="calcCalorieDin(' + dnum +
 			')">kcal ×<input type="number" min="0.1" step="0.1" name="value3Din' + dnum + 
@@ -388,7 +465,10 @@
 	  var newP = document.createElement('p');
 	  newP.innerHTML =
 		    '<input name="value1Sna' + snum +
-			'" list="foodList"><input type="number" min="0" name="value2Sna' + snum + 
+			'" list="foodList" onchange="changeSna(' + snum +
+			');calcCalorieMor(' + snum +
+			')" id="nameSna_' + snum +
+			'"><input type="number" min="0" name="value2Sna' + snum + 
 			'" id="onceCalSna_' + snum +
 			'" onchange="calcCalorieSna(' + snum +
 			')">kcal ×<input type="number" min="0.1" step="0.1" name="value3Sna' + snum + 
@@ -409,13 +489,16 @@
 	  var newP = document.createElement('p');
 	  newP.innerHTML =
 		  '<input name="value1Spo' + spnum +
-		  '" list="sportList">を <input type="hidden" name="value2Spo' + spnum +
+		  '" list="sportList" onchange="changeSpo(' + spnum +
+		  ');calcUsedCalorie(' + spnum +
+		  ')" id="nameSpo_' + spnum +
+		  '">を <input type="hidden" name="value2Spo' + spnum +
 		  '"id="mets_' + spnum +
 		  '"> <input type="number" min="1" name="value3Spo' + spnum +
 		  '" id="time_' + spnum +
 		  '" onchange="calcUsedCalorie(' + spnum +
 		  ')" />分運動しました。<span id="calorie_' + spnum +
-		  '">${weightRecord.value2 * sportRecord.value2 * sportRecord.value3 / 60 * 1.05}</span>kcal消費' +
+		  '"></span>kcal消費' +
 		  '<input type="checkbox" value="del" name="delSpo' + spnum +
 		  '">削除';
 	  var parent = document.getElementById('sport');
@@ -429,10 +512,14 @@
 	  var newP = document.createElement('p');
 	  newP.innerHTML = 
 		  '<input name="value1Alc' + anum +
-		  '" list="alcoholList"> <input type="number" min="0.1" max="100" name="value4Alc' + anum +
+		  '" list="alcoholList" onchange="changeAlc(' + anum +
+		  ');calcAlc(' + anum +
+		  ')" id="nameAlc_' + anum +
+		  '"> <input type="number" min="0.1" max="100" name="value4Alc' + anum +
 		  '"id="oncePer_' + anum +
 		  '" step="0.1" onchange="calcAlc(' + anum +
 		  ')">% <input type="number" min="0" name="value5Alc' + anum + 
+		  '" id="onceCal_' + anum +
 		  '">kcal/杯 <input type="number" min="1" name="value2Alc' + anum +
 		  '"id="onceAmount_' + anum + 
 		  '" onchange="calcAlc(' + anum +
