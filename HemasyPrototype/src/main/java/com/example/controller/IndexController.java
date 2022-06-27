@@ -129,11 +129,6 @@ public class IndexController {
     		ListAndRecord userMetsAndTime = listAndRecordDao.getLatestMetsAndTimeRecord(user.getUserId());
     		ListAndRecord userCalorieIntake = listAndRecordDao.getLatestCalorieIntake(user.getUserId());
     		ListAndRecord userWeight = listAndRecordDao.getLatestWeightRecordM(user.getUserId());
-    		System.out.println(userWeight.getValue2());
-    		System.out.println(userMetsAndTime.getValue2());
-    		System.out.println(userCalorieIntake.getValue2());
-    		System.out.println(userSmokeDate.getValue2());
-    		
     		Integer alcoholLevel;
     		Double CaloriesBurned = userWeight.getValue2() * userMetsAndTime.getValue2() * userMetsAndTime.getValue3() * 1.05;
     		Double height = (double) (user.getHeight()/100.0);
@@ -159,14 +154,14 @@ public class IndexController {
     		Color CalorieColorLevel = colorDao.getCalorieColorLevel(calorieLevel);
     		bmi = Math.floor(bmi * 10)/10;
 
-    		System.out.println("カロリー: " + CalorieColorLevel.getColorPath());
-    		System.out.println("タバコ: " + SmokeColorLevel.getColorPath());
-    		System.out.println("アルコール: " + AlcoholColorLevel.getColorPath());
-    		System.out.println("BMI: " + bmi);
+//    		System.out.println("カロリー: " + CalorieColorLevel.getColorPath());
+//    		System.out.println("タバコ: " + SmokeColorLevel.getColorPath());
+//    		System.out.println("アルコール: " + AlcoholColorLevel.getColorPath());
+//    		System.out.println("BMI: " + bmi);
     		//以下にDBから取得してきた画像のパスを入れる。
     		//（まっしーへ　ここに取ってきた画像のパスを入れるまでお願いします。）
     		
-    		String lungImg = "../../images/lung.png";
+    		String lungImg = "../../" + SmokeColorLevel.getColorPath();
     		String livarImg = "../../images/livar0.png" ;
     		String stomachImg = "../../images/stomach.png" ;
     		String bmiImg = "../../images/bmi3.png" ;
@@ -180,12 +175,13 @@ public class IndexController {
     		//計算したbmiをsessionに保存
     		//session.setAttribute("bmiValue", bmiValue);
     		
-    		double bmiValue = 22.4;
-    		model.addAttribute("bmiValue",bmiValue);
+//    		double bmiValue = 22.4;
+//    		model.addAttribute("bmiValue",bmiValue);
+    		model.addAttribute("bmiValue",bmi);
     		
     		
-    		String lungWord = "禁煙○○日目です";
-    		String livarWord = "禁酒○○日目です。" ;
+    		String lungWord = "禁煙" + smokeLevel +"日目です";
+    		String livarWord = "禁酒" + "日目です。" ;
     		String stomachGoalkcal = "目標摂取カロリーは○○Kcalです。" ;
     		String stomachInputKcal = "摂取カロリーは○○Kcalです。" ;
     		String stomachOutputKcal = "消費カロリーは○○Kcalです。" ;
