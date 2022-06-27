@@ -83,13 +83,13 @@ public class IndexController {
 			
 			System.out.println(recordDate);
 
-			List<ListAndRecord> breakfastRecordList = listAndRecordDao.getBreakfastRecords(user.getUserId(), recordDate);
+			List<ListAndRecord> breakfastRecordList = listAndRecordDao.getFoodRecords(user.getUserId(), 1, 1, recordDate);
 
-			List<ListAndRecord> lunchRecordList = listAndRecordDao.getLunchRecords(user.getUserId(), recordDate);
+			List<ListAndRecord> lunchRecordList = listAndRecordDao.getFoodRecords(user.getUserId(), 1, 2, recordDate);
 
-			List<ListAndRecord> dinnerRecordList = listAndRecordDao.getDinnerRecords(user.getUserId(), recordDate);
+			List<ListAndRecord> dinnerRecordList = listAndRecordDao.getFoodRecords(user.getUserId(), 1, 3, recordDate);
 
-			List<ListAndRecord> snackRecordList = listAndRecordDao.getSnackRecords(user.getUserId(), recordDate);
+			List<ListAndRecord> snackRecordList = listAndRecordDao.getFoodRecords(user.getUserId(), 1, 4, recordDate);
 
 			List<ListAndRecord> sportRecordList = listAndRecordDao.getSportRecords(user.getUserId(), recordDate);
 

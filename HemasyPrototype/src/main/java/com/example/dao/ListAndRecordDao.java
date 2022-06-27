@@ -18,11 +18,7 @@ import com.example.entity.User;
 @Repository
 public class ListAndRecordDao {
 	
-	private static final String GET_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND (type = 1 OR type = 2 OR type = 4) AND user_id = :userId AND create_date = :createDate";
-	private static final String GET_BREAKFAST_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 1 AND value4 = 1 AND user_id = :userId AND create_date = :createDate";
-	private static final String GET_LUNCH_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 1 AND value4 = 2 AND user_id = :userId AND create_date = :createDate";
-	private static final String GET_DINNER_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 1 AND value4 = 3 AND user_id = :userId AND create_date = :createDate";
-	private static final String GET_SNACK_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 1 AND value4 = 4 AND user_id = :userId AND create_date = :createDate";
+	private static final String GET_FOOD_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND type = :type AND value4 = :value4 AND user_id = :userId AND create_date = :createDate";
 	private static final String GET_SPORT_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 2 AND user_id = :userId AND create_date = :createDate";
 	private static final String GET_ALCOHOL_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 4 AND user_id = :userId AND create_date = :createDate";
 	private static final String GET_SMOKE_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId AND create_date = :createDate";
@@ -40,44 +36,14 @@ public class ListAndRecordDao {
 	@Autowired
 	HttpSession session;
 	
-	//日付とユーザーIDでアルコール、食事、運動をすべて取得
-	public List<ListAndRecord> getRecords(int userId, Date date) {
+	//日付とユーザーIDで食事をすべて取得
+	public List<ListAndRecord> getFoodRecords(int userId, int type, int value4, Date date) {
     	MapSqlParameterSource param = new MapSqlParameterSource();
     	param.addValue("userId", userId);
+    	param.addValue("type", type);
+    	param.addValue("value4", value4);
     	param.addValue("createDate", date);
-		List<ListAndRecord> recordList = jdbcTemplate.query(GET_RECORD, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
-    	return recordList;
-    }
-	
-	public List<ListAndRecord> getBreakfastRecords(int userId, Date date) {
-    	MapSqlParameterSource param = new MapSqlParameterSource();
-    	param.addValue("userId", userId);
-    	param.addValue("createDate", date);
-		List<ListAndRecord> recordList = jdbcTemplate.query(GET_BREAKFAST_RECORDS, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
-    	return recordList;
-    }
-	
-	public List<ListAndRecord> getLunchRecords(int userId, Date date) {
-    	MapSqlParameterSource param = new MapSqlParameterSource();
-    	param.addValue("userId", userId);
-    	param.addValue("createDate", date);
-		List<ListAndRecord> recordList = jdbcTemplate.query(GET_LUNCH_RECORDS, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
-    	return recordList;
-    }
-	
-	public List<ListAndRecord> getDinnerRecords(int userId, Date date) {
-    	MapSqlParameterSource param = new MapSqlParameterSource();
-    	param.addValue("userId", userId);
-    	param.addValue("createDate", date);
-		List<ListAndRecord> recordList = jdbcTemplate.query(GET_DINNER_RECORDS, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
-    	return recordList;
-    }
-	
-	public List<ListAndRecord> getSnackRecords(int userId, Date date) {
-    	MapSqlParameterSource param = new MapSqlParameterSource();
-    	param.addValue("userId", userId);
-    	param.addValue("createDate", date);
-		List<ListAndRecord> recordList = jdbcTemplate.query(GET_SNACK_RECORDS, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+		List<ListAndRecord> recordList = jdbcTemplate.query(GET_FOOD_RECORD, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
     	return recordList;
     }
 	
