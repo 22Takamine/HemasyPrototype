@@ -20,7 +20,7 @@
 	<h1>登録情報を入力してください</h1>
 
 	<form:form action="loginBack" modelAttribute="index" method="post">
-
+	<form:input path="achievementId" type="hidden" value="1" readonly="readonly" />
 		<div>
 			<fmt:message key="form.lbl.name" />
 			<form:input path="name" />
@@ -49,8 +49,8 @@
 
 		<div>
 			<fmt:message key="form.lbl.birthDate" />
-			<form:input type="date" path="birthDate" />
-			<form:errors path="birthDate" cssStyle="color: red"/>
+			<form:input type="date" path="birth" />
+			<form:errors path="birth" cssStyle="color: red"/>
 		</div>
 
 		<div>
@@ -68,6 +68,11 @@
 		<div>
 			<fmt:message key="form.lbl.bodyFatPercentage" />
 			<form:input path="bodyFatPercentage" />
+		</div>
+		
+		<div>
+			<fmt:message key="form.lbl.time" />
+			<form:input path="goalExerciseTime" />
 		</div>
 
 		<div>

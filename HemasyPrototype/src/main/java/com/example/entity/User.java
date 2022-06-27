@@ -3,55 +3,79 @@ package com.example.entity;
 import java.sql.Date;
 
 public class User {
+	
+	private Integer id;
+	private Integer userId;
 
 	private String userName;
 	private String mail;
 	private String password;
 	private Integer sex;
-	private Date birthDate;
-	private Integer height;
+	private Date birth;
+	private Double height;
 	private Date createdAt;
+	private Integer goalExerciseTime;
+	private Integer goalCalorie;
 	private Integer rankFlag;
 	private Integer alcoholFlag;
 	private Integer smokeFlag;
 	private Integer roleId;
 	private Double weight;
-	private Integer userId;
-	private Double goalCalorie;
+	private Integer achievementId;
+	private Integer achievementFlag;
+	private Double bmi;
+
 	
 	public User() {
 
 	}
 
 	public User(String userName, String mail, String password,Integer sex,
-			Date birthDate,Integer height,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer roleId) {
+			Date birth,Double height,Integer goalExerciseTime,Integer goalCalorie,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer roleId) {
 		this.userName = userName;
 		this.mail = mail;
 		this.password = password;
 		this.sex = sex;
-		this.birthDate = birthDate;
+		this.birth = birth;
 		this.height = height;
+		this.goalExerciseTime = goalExerciseTime;
+		this.goalCalorie = goalCalorie;
 		this.rankFlag = rankFlag;
 		this.alcoholFlag = alcoholFlag;
 		this.smokeFlag = smokeFlag;
 		this.roleId = roleId;
 	}
-
+	
+	public User(Integer id, Integer userId, String userName, String mail, String password, Integer sex, Date birth, Double height,
+			Date createdAt, Integer goalExerciseTime, Integer goalCalorie, Integer rankFlag, Integer alcoholFlag, Integer smokeFlag,
+			Integer roleId, Integer achievementId, Integer achievementFlag, Double bmi) {
+		this.id = id;
+		this.userId = userId;
+		this.userName = userName;
+		this.mail = mail;
+		this.password = password;
+		this.sex = sex;
+		this.birth = birth;
+		this.height = height;
+		this.createdAt = createdAt;
+		this.goalExerciseTime = goalExerciseTime;
+		this.goalCalorie = goalCalorie;
+		this.rankFlag = rankFlag;
+		this.alcoholFlag = alcoholFlag;
+		this.smokeFlag = smokeFlag;
+		this.roleId = roleId;
+		this.achievementId = achievementId;
+		this.achievementFlag = achievementFlag;
+		this.bmi = bmi;
+	}
+	
+	
 	public Integer getUserId() {
 		return userId;
 	}
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
-	}
-
-	
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
 	}
 
 	public String getUserName() {
@@ -86,20 +110,21 @@ public class User {
 		this.sex = sex;
 	}
 
-	public Integer getHeight() {
+	public Double getHeight() {
 		return height;
 	}
 
-	public void setHeight(Integer height) {
+	public void setHeight(Double height) {
 		this.height = height;
 	}
 
-	public Date getBirthDate() {
-		return birthDate;
+	public Date getBirth() {
+		return birth;
+
 	}
 
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
+	public void setBirth(Date birth) {
+		this.birth = birth;
 	}
 
 	public Date getCreatedAt() {
@@ -109,7 +134,23 @@ public class User {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+	
+	public Integer getGoalExerciseTime() {
+		return goalExerciseTime;
+	}
 
+	public void setGoalExerciseTime(Integer goalExerciseTime) {
+		this.goalExerciseTime = goalExerciseTime;
+	}
+	
+	public Integer getGoalCalorie() {
+		return goalCalorie;
+	}
+
+	public void setGoalCalorie(Integer goalCalorie) {
+		this.goalCalorie = goalCalorie;
+	}
+	
 	public Integer getRankFlag() {
 		return rankFlag;
 	}
@@ -134,26 +175,39 @@ public class User {
 		this.smokeFlag = smokeFlag;
 	}
 
-	public Double getWeight() {
-		return weight;
+	
+	public Integer getRoleId() {
+		return roleId;
+
 	}
 
-	public void setWeight(Double weight) {
-		this.weight = weight;
-	}
 
-	public Double getGoalCalorie() {
-		return goalCalorie;
-	}
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 
-	public void setGoalCalorie(Double goalCalorie) {
-		this.goalCalorie = goalCalorie;
 	}
+	
+	public Integer getAchievementId() {
+		return achievementId;
+	}
+	
+	public void setAchievementId(Integer achievementId) {
+		this.achievementId = achievementId;
+	}
+	
+	public Integer getAchievementFlag() {
+		return achievementFlag;
+	}
+	
+	public void setAchievementFlag(Integer achievementFlag) {
+		this.achievementFlag = achievementFlag;
+	}
+	
 
 	//	// 全フィールドが未入力かの判断
 	//	public boolean isEmptyCondition() {
 	//		return id == null && ParamUtil.isNullOrEmpty(name) && score == null;
 	//	}
+	
 }
-
 

@@ -19,3 +19,43 @@ function addClass() {
 document.querySelector('.menu-btn').addEventListener('click', function(){
    document.querySelector('.menu').classList.toggle('is-active');
 });
+
+'use strict';
+{
+  const open = document.getElementById('open');
+  const close = document.getElementById('close');
+  const modal = document.getElementById('modal');
+  const mask = document.getElementById('mask');
+
+  open.addEventListener('click', function () {
+    modal.classList.remove('hidden');
+    mask.classList.remove('hidden');
+  });
+  close.addEventListener('click', function () {
+    modal.classList.add('hidden');
+    mask.classList.add('hidden');
+  });
+  mask.addEventListener('click', function () {
+    modal.classList.add('hidden');
+    mask.classList.add('hidden');
+  });
+}
+
+
+let achievementList;
+let achievementName;
+function getAchievementName() {
+	fetch('/getAchivementName?id=' + Array.from(document.getElementsByName("achievementId")).find(e => e.checked).value)
+	.then(res => res.json().then(data => {
+				achievementList = data
+				achievementName = achievementList.achievementName
+				console.log(achievementName)
+				console.log(Array.from(document.getElementsByName("achievementId")).find(e => e.checked).value)
+				let tatsuki = document.getElementById("tatsuki");
+				tatsuki.value= (achievementName);
+			},
+
+		)
+	)
+};
+

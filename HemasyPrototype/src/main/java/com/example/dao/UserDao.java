@@ -1,3 +1,4 @@
+
 package com.example.dao;
 
 
@@ -18,8 +19,8 @@ public class UserDao {
 
 	private static final String SELECT_BY_PRODUCT_ID = "SELECT * FROM users WHERE user_id = :user_id";
 	private static final String SELECT_ID_AND_PASS = "SELECT * FROM users WHERE mail = :mail and password = :password";
-	private static final String INSERT = "INSERT INTO users(user_name,mail,password,sex,birth,height,created_at,rank_flag,alcohol_flag,smoke_flag,role_id )"
-			+ " VALUES(:user_name, :mail,:password,:sex,:birth,:height,:createdAt,:rankFlag,:alcoholFlag,:smokeFlag,1)";
+	private static final String INSERT = "INSERT INTO users(user_name,mail,password,sex,birth,height,goal_exercise_time,goal_calorie,created_at,rank_flag,alcohol_flag,smoke_flag,role_id,achievement_id,achievement_flag)"
+			+ " VALUES(:user_name, :mail,:password,:sex,:birth,:height,:goal_exercise_time,2000,:createdAt,:rankFlag,:alcoholFlag,:smokeFlag,1,1,0)";
 	private static final String UPDATE = "UPDATE users SET user_name = :name, mail = :mail, password = :pass, sex = :sex, birth = :birth, height = :height, goal_exercise_time = :time, goal_calorie = :calorise, rank_flag = :rank, alcohol_flag = :alcohol, smoke_flag = :smoke, achievement_id = :achievement WHERE user_id = :id";
 
 
@@ -75,8 +76,9 @@ public class UserDao {
 		param.addValue("mail", user.getMail());
 		param.addValue("password", user.getPassword());
 		param.addValue("sex", user.getSex());
-		param.addValue("birth", user.getBirthDate());
+		param.addValue("birth", user.getBirth());
 		param.addValue("height", user.getHeight());
+		param.addValue("goal_exercise_time",user.getGoalExerciseTime());
 		param.addValue("createdAt", today);
 		param.addValue("rankFlag", user.getRankFlag());
 		param.addValue("alcoholFlag", user.getAlcoholFlag());
@@ -87,7 +89,7 @@ public class UserDao {
 		return;
 	}
 	
-	public void update(Integer id, String name, String mail, String pass, Integer sex, Date birth, Integer height, Integer achievement, Integer time, Integer calorise, Integer rank, Integer smoke, Integer alcohol) {
+	public void update(Integer id, String name, String mail, String pass, Integer sex, Date birth, Double height, Integer achievement, Integer time, Integer calorise, Integer rank, Integer smoke, Integer alcohol) {
     	String sql = UPDATE;
     	
     	MapSqlParameterSource param = new MapSqlParameterSource();
@@ -104,8 +106,8 @@ public class UserDao {
         param.addValue("rank", rank);
         param.addValue("smoke", smoke);
         param.addValue("alcohol", alcohol);
-        System.out.println(name);
         jdbcTemplate.update(sql, param);  
     	
     }
 }
+

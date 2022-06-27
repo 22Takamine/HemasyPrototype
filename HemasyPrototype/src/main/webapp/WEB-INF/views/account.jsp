@@ -12,6 +12,9 @@
 <link href="css/commons.css" rel="stylesheet">
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header>
@@ -31,10 +34,10 @@
 </header>
 	<div class="main">
 	<form:form action="accountRegist" modelAttribute="index" method="post">
-	<form:input path="id" type="hidden" value="${user.getUserId()}" readonly="readonly" />
-	
+	<form:input path="userId" type="hidden" value="${user.getUserId()}" readonly="readonly" />
 <!-- 	UserFormの体重のバリデーションを通すために、仮のデータを挿入しています。 -->
 	<form:input path="weight" type="hidden" value="10" readonly="readonly" />
+
 	<div>
 		<fmt:message key="form.lbl.name"/>
 		<form:input type="text" path="name" value="${user.getUserName()}"/>
@@ -51,8 +54,8 @@
     
     <div>
 		<fmt:message key="form.lbl.password"/>
-		<form:input type="text" path="pass" value="${user.getPassword()}"/>
-		<form:errors path="pass" cssStyle="color: red"/>
+		<form:input type="text" path="password" value="${user.getPassword()}"/>
+		<form:errors path="password" cssStyle="color: red"/>
 <%-- 		<input type="text" name="pass" value="${user.getPassword()}">       --%>
     </div>
     
@@ -72,8 +75,8 @@
     
     <div>
 		<fmt:message key="form.lbl.birthDate"/>
-		<form:input type="date" path="birthDate" value="${user.getBirth()}"/>
-		<form:errors path="birthDate" cssStyle="color: red"/>
+		<form:input type="date" path="birth" value="${user.getBirth()}" readonly="readonly"/>
+		<form:errors path="birth" cssStyle="color: red"/>
 <%-- 		<input type="date" name="birthDate" value="${user.getBirth()}">       --%>
     </div>
     
@@ -86,9 +89,54 @@
     
     <div>
 		<fmt:message key="form.lbl.achievement"/>
-		<form:input type="text" path="achievementId" value="${user.getAchievementFlag()}"/>
-		<form:errors path="achievementId" cssStyle="color: red"/>
 <%-- 		<input type="text" name="achievementId" value="${user.getAchievementFlag()}">       --%>
+		<div id="open">
+	      称号
+	    </div>
+	    <div id="mask" class="hidden"></div>
+	    <section id="modal" class="hidden">
+	    
+	    <table>
+	      <thead>
+	        <tr>
+	          <th>称号ID</th>
+	          <th>称号名</th>
+	          <th>条件</th>
+	          <th>チェック</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        	<c:forEach var="achievements" items="${achievementsList}">
+	          		<tr>
+			            <td>${achievements.achievementId}</td>
+			            <td>${achievements.achievementName}</td>
+			            <td>${achievements.requirementToGet}</td>
+			            <td>
+				            <c:choose>
+				            	<c:when test="${achievements.achievementId == user.getAchievementId()}">
+				            		<form:radiobutton path="achievementId" value="${achievements.achievementId}" checked="checked"/>
+				            	</c:when>
+				            
+				            	<c:otherwise>
+				            		<form:radiobutton path="achievementId" value="${achievements.achievementId}"/>
+				            	</c:otherwise>
+				            	
+				            </c:choose>
+			            </td>
+	          		</tr>
+	          	</c:forEach>
+	      </tbody>
+	    </table>
+	    
+	    <div id="close" onclick="getAchievementName()">
+	      登録
+	    </div>
+	    
+	    </section>
+	    
+	    <input type=text value="${achievementName}" readonly="readonly" id="tatsuki">
+	    <form:errors path="achievementId" cssStyle="color: red"/>
+	    
     </div>
     
     <div>
@@ -108,42 +156,42 @@
     <div>
     	<fmt:message key="form.lbl.rank"/>
     	<c:if test="${user.getRankFlag() == 1}"> 
-    		<form:radiobutton path="rank" value="1" checked="checked"/>参加する 
-    		<form:radiobutton path="rank" value="0"/>参加しない     
+    		<form:radiobutton path="rankFlag" value="1" checked="checked"/>参加する 
+    		<form:radiobutton path="rankFlag" value="0"/>参加しない     
 <!-- 			<input type="radio" name="rank" value="1" checked>参加する       -->
 <!-- 			<input type="radio" name="rank" value="0">参加しない -->
 		</c:if>
 		<c:if test="${user.getRankFlag() == 0}">   
-			<form:radiobutton path="rank" value="1" />参加する 
-    		<form:radiobutton path="rank" value="0" checked="checked"/>参加しない
+			<form:radiobutton path="rankFlag" value="1" />参加する 
+    		<form:radiobutton path="rankFlag" value="0" checked="checked"/>参加しない
 		</c:if>
     </div>
     
     <div>
     	<fmt:message key="form.lbl.smoke"/>
     	<c:if test="${user.getSmokeFlag() == 1}"> 
-    		<form:radiobutton path="smoke" value="1" checked="checked"/>吸っている 
-    		<form:radiobutton path="smoke" value="0"/>吸わない   
+    		<form:radiobutton path="smokeFlag" value="1" checked="checked"/>吸っている 
+    		<form:radiobutton path="smokeFlag" value="0"/>吸わない   
 <!-- 			<input type="radio" name="smoke" value="1" checked>吸っている       -->
 <!-- 			<input type="radio" name="smoke" value="0">吸わない -->
 		</c:if>
 		<c:if test="${user.getSmokeFlag() == 0}">   
-			<form:radiobutton path="smoke" value="1"/>吸っている 
-    		<form:radiobutton path="smoke" value="0" checked="checked"/>吸わない  
+			<form:radiobutton path="smokeFlag" value="1"/>吸っている 
+    		<form:radiobutton path="smokeFlag" value="0" checked="checked"/>吸わない  
 		</c:if>
     </div>
     
     <div>
     	<fmt:message key="form.lbl.alcohol"/>
     	<c:if test="${user.getAlcoholFlag() == 1}">
-    		<form:radiobutton path="alcohol" value="1" checked="checked"/>飲んでいる
-    		<form:radiobutton path="alcohol" value="0"/>飲まない    
+    		<form:radiobutton path="alcoholFlag" value="1" checked="checked"/>飲んでいる
+    		<form:radiobutton path="alcoholFlag" value="0"/>飲まない    
 <!-- 			<input type="radio" name="alcohol" value="1" checked>飲んでいる      -->
 <!-- 			<input type="radio" name="alcohol" value="0">飲まない -->
 		</c:if>
 		<c:if test="${user.getAlcoholFlag() == 0}">   
-			<form:radiobutton path="alcohol" value="1"/>飲んでいる
-    		<form:radiobutton path="alcohol" value="0" checked="checked"/>飲まない
+			<form:radiobutton path="alcoholFlag" value="1"/>飲んでいる
+    		<form:radiobutton path="alcoholFlag" value="0" checked="checked"/>飲まない
 		</c:if>
     </div>
     

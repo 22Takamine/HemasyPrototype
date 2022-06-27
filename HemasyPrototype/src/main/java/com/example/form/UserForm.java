@@ -25,16 +25,18 @@ public class UserForm {
 
 	@NotNull
 	@Past
-	private Date birthDate;
+	private Date birth;
 
 	@NotNull
-	private Integer height;
+	private Double height;
 
 	@NotNull
 	private Double weight;
 
-	private Integer userId;
+	@NotNull
 	private Integer achievementId;
+	
+	private Integer userId;
 	private Integer goalExerciseTime;
 	private Integer goalCalorise;
 	private Integer rankFlag;
@@ -70,17 +72,17 @@ public class UserForm {
 
 	}
 
-	public Date getBirthDate() {
-		return birthDate;
+	public Date getBirth() {
+		return birth;
 	}
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
+	public void setBirth(Date birth) {
+		this.birth = birth;
 	}
 	
-	public Integer getHeight() {
+	public Double getHeight() {
 		return height;
 	}
-	public void setHeight(Integer height) {
+	public void setHeight(Double height) {
 		this.height = height;
 	}
 	public Double getWeight() {

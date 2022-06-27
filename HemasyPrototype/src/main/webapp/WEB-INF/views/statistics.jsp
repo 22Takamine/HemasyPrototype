@@ -8,13 +8,13 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <title>統計画面</title>
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link href="css/commons.css" rel="stylesheet">
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
 	integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
@@ -22,6 +22,7 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 </head>
+
 <body>
 <header>
 	<div class="header-logo"><a href="./back">Hemasy</a></div>
@@ -38,308 +39,391 @@
 	    </div>
     </form:form>
 </header>
+<script src="js/commons.js"></script>
 
-	<div><b>統計</b></div>
+	<br>
+	<br>
+	<h1>統計</h1>
+	<input type="text" id="hide" value="0">
+	<input type="text" id="hideType" value="1">
 	<div id="selectGraph">
-		<button data-index="food" onclick="entryClick(1)">食事</button>
-		<button data-index="exercise" onclick="entryClick(2)">運動</button>
-		<button data-index="alcohol" onclick="entryClick(3)">酒</button>
-		<button data-index="smoke" onclick="entryClick(4)">タバコ</button>
-		<button data-index="bmi" onclick="entryClick(5)">体重</button>
+		<button name="0" data-index="food" onclick="entryClick(1)">食事</button>
+		<button name="1" data-index="exercise" onclick="entryClick(2)">運動</button>
+		<button name="2"data-index="alcohol" onclick="entryClick(3)">酒</button>
+		<button name="3"data-index="smoke" onclick="entryClick(4)">タバコ</button>
+		<button name="4 "data-index="bmi" onclick="entryClick(5)">体重</button>
 	</div>
-	<br><input type="button" value="左"><input type="button" value="右">
-	<div style="width: 400px">
+	<div>
+<label><input type="radio" name="poti" value="0" checked onclick="poti(0)">週</label>
+<label><input type="radio" name="poti" value="1" onclick="poti(1)">月</label>
+<label><input type="radio" name="poti" value="2" onclick="poti(2)">年</label>
+
+	</div>
+	<input type="button" value="左" onclick="getName()">
+	<input type="button" value="右"> ${name}
+	<div>
+		<input type="date" id="date" value="${user.getCreatedAt()}">
+	</div>
+	<div style="width: 800px">
 		<canvas id="foodGraph"></canvas>
 	</div>
-	<div style="width: 400px">
+	<div style="width: 800px">
 		<canvas id="exerciseGraph"></canvas>
 	</div>
-	<div style="width: 400px">
+	<div style="width: 800px">
 		<canvas id="alcoholGraph"></canvas>
 	</div>
-	<div style="width: 400px">
+	<div style="width: 800px">
 		<canvas id="smokeGraph"></canvas>
 	</div>
-	<div style="width: 400px">
+	<div style="width: 800px">
 		<canvas id="bmiGraph"></canvas>
 	</div>
-	<script>
-	//食事用のグラフ
-window.addEventListener('load', makeChart);
-	function makeChart(){		
-	var ctx = document.getElementById("foodGraph");
-			var myChart = new Chart(ctx, {
-				type : 'line',
-				data : foodGraphData,
-				options : complexChartOption
-			})
-	};
-			document.getElementById('canvas').addEventListener('click', e => {
-					console.log(e)
-		    	  const elements = window.myCanvas.getElementAtEvent(e);
-		    	  if (elements[0]._model.label.length) {
-		    		  window.location.href = './eat?day=' + [elements[0]._model.label];
-	    			  console.log('elements', [elements[0]._model.label]);
-		    	  }else {
-		    		  alert('aa');
-		     	 }
-			
-		    	});
-	</script>
+	
+<script>
+function poti(checkValue) {
+	let elements = document.getElementsByName('poti');
+	let len = elements.length;
+	document.getElementById("hide").value = checkValue;
+	
+	if(document.getElementById("hideType").value == 1){
+		getFoodList();
+	}else if(document.getElementById("hideType").value == 2){
+		getExerciseList();
+	}else if(document.getElementById("hideType").value == 3){
+		getAlcoholList();
+	}else if(document.getElementById("hideType").value == 4){
+		getSmokeList();
+	}else if(document.getElementById("hideType").value == 5){
+		getBmiList();
+	}
 
-	<script>
-	//運動用のグラフ
-window.addEventListener('load', makeChart);
-	function makeChart(){		
-	var ctx = document.getElementById("exerciseGraph");
-			var myChart = new Chart(ctx, {
-				type : 'line',
-				data : exerciseGraphData,
-				options : complexChartOption
-			})
-	};
-			document.getElementById('canvas').addEventListener('click', e => {
-					console.log(e)
-		    	  const elements = window.myCanvas.getElementAtEvent(e);
-		    	  if (elements[0]._model.label.length) {
-		    		  window.location.href = './eat?day=' + [elements[0]._model.label];
-	    			  console.log('elements', [elements[0]._model.label]);
-		    	  }else {
-		    		  alert('aa');
-		     	 }
-			
-		    	});
-	</script>
-	<script>
-	//アルコール用のグラフ
-window.addEventListener('load', makeChart);
-	function makeChart(){		
-	var ctx = document.getElementById("alcoholGraph");
-			var myChart = new Chart(ctx, {
-				type : 'line',
-				data : alcoholGraphData,
-				options : complexChartOption
-			})
-	};
-			document.getElementById('canvas').addEventListener('click', e => {
-					console.log(e)
-		    	  const elements = window.myCanvas.getElementAtEvent(e);
-		    	  if (elements[0]._model.label.length) {
-		    		  window.location.href = './eat?day=' + [elements[0]._model.label];
-	    			  console.log('elements', [elements[0]._model.label]);
-		    	  }else {
-		    		  alert('aa');
-		     	 }
-			
-		    	});
-	</script>
-	<script>
-	//タバコ用のグラフ
-window.addEventListener('load', makeChart);
-	function makeChart(){		
-	var ctx = document.getElementById("smokeGraph");
-			var myChart = new Chart(ctx, {
-				type : 'line',
-				data : smokeGraphData,
-				options : complexChartOption
-			})
-	};
-			document.getElementById('canvas').addEventListener('click', e => {
-					console.log(e)
-		    	  const elements = window.myCanvas.getElementAtEvent(e);
-		    	  if (elements[0]._model.label.length) {
-		    		  window.location.href = './eat?day=' + [elements[0]._model.label];
-	    			  console.log('elements', [elements[0]._model.label]);
-		    	  }else {
-		    		  alert('aa');
-		     	 }
-			
-		    	});
-	</script>
-	<script>
-	//体重用のグラフ
-window.addEventListener('load', makeChart);
-	function makeChart(){		
-	var ctx = document.getElementById("bmiGraph");
-			var myChart = new Chart(ctx, {
-				type : 'line',
-				data : bmiGraphData,
-				options : complexChartOption
-			})
-	};
-			document.getElementById('canvas').addEventListener('click', e => {
-					console.log(e)
-		    	  const elements = window.myCanvas.getElementAtEvent(e);
-		    	  if (elements[0]._model.label.length) {
-		    		  window.location.href = './eat?day=' + [elements[0]._model.label];
-	    			  console.log('elements', [elements[0]._model.label]);
-		    	  }else {
-		    		  alert('aa');
-		     	 }
-			
-		    	});
-	</script>
-		<script>
-		//食事用のデータ
-		var foodGraphData = {
-			labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-			datasets: [{
-			      label: '食事',
-			      data: [20, 35, 40, 30, 45, 35, 40],
-			      borderColor: '#f88',
-			    }, {
-			      label: 'Green',
-			      data: [20, 15, 30, 25, 30, 40, 35],
-			      borderColor: '#484',
-			    }, {
-			      label: 'Blue',
-			      data: [30, 25, 10, 5, 25, 30, 20],
-			      borderColor: '#48f',
-			    }],
-		};
-	</script>
-		<script>
-		//運動用のデータ
+};
+</script>
+<script>
+//食事記録グラフの作成　ユーザーの目標摂取カロリーをセッションから取得するようにする。
+let foodList = [];
+let goalCalorie = [];
+var day = document.getElementById("date");
+var scope = document.getElementById("hide");
+//データの取得
+function getFoodList() {
+	console.log('day', day.value)
+	console.log('scope', scope.value)
+	fetch('/getFoodListWeek?id=' + ${user.getUserId()} + '&day=' + day.value + '&scope=' + scope.value)
+	.then(res => res.json()
+	.then(data => {
+					foodList = data
+					foodList.forEach(
+						function(createDay) {
+							goalCalorie.push(${user.getGoalCalorie()});
+						}
+					);
+					//食事記録グラフに使うデータ
+					var foodGraphData = {
+						//グラフの下　日付
+						labels: foodList.map(item => item.createDay),
+						datasets: [
+							{
+								label: '摂取カロリーの推移',
+								data: foodList.map(item => item.value2),
+								borderColor: '#484',
+							}, {
+								label: 'ユーザーの目標摂取カロリー',
+								data: goalCalorie,
+								borderColor: '#ff0000',
+							}
+						],
+					}
+					//食事記録グラフの描画
+					var ctx = document.getElementById("foodGraph");
+					
+					if (typeof foodListChart !== 'undefined') {
+					    foodListChart.destroy();
+					}
+					
+					foodListChart = new Chart(ctx, {
+						type: 'line',
+						data: foodGraphData,
+						options: complexChartOption
+					})
+	}))
+	.catch(error => console.log(error))
+};
+</script>
+
+<script>
+//運動記録グラフの作成　ユーザーの目標運動時間をセッションから取得するようにする。
+let exerciseList = [];
+let goalExerciseTime = [];
+var scope = document.getElementById("hide");
+//データの取得
+function getExerciseList() {
+
+	fetch('/getExerciseListWeek?id=' + ${user.getUserId()} + '&day=' + day.value + '&scope=' + scope.value)
+	.then(res => res.json().then(data => {
+		exerciseList = data
+		console.log(data)
+		console.log(exerciseList)
+		exerciseList.forEach(function(createDate) {
+			goalExerciseTime.push(${user.getGoalExerciseTime()});
+		});
+
+		//運動記録グラフに使うデータ
 		var exerciseGraphData = {
-			labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+			//グラフの下　日付
+			labels: exerciseList.map(item => item.createDay),
 			datasets: [{
-			      label: '運動',
-			      data: [20, 35, 40, 30, 45, 35, 40],
-			      borderColor: '#f88',
-			    }, {
-			      label: 'Green',
-			      data: [20, 15, 30, 25, 30, 40, 35],
-			      borderColor: '#484',
-			    }, {
-			      label: 'Blue',
-			      data: [30, 25, 10, 5, 25, 30, 20],
-			      borderColor: '#48f',
-			    }],
-		};
-	</script>
-		<script>
-		//酒用のデータ
-		var alcoholGraphData = {
-			labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-			datasets: [{
-			      label: '酒',
-			      data: [20, 35, 40, 30, 45, 35, 40],
-			      borderColor: '#f88',
-			    }, {
-			      label: 'Green',
-			      data: [20, 15, 30, 25, 30, 40, 35],
-			      borderColor: '#484',
-			    }, {
-			      label: 'Blue',
-			      data: [30, 25, 10, 5, 25, 30, 20],
-			      borderColor: '#48f',
-			    }],
-		};
-	</script>
-		<script>
-		//タバコ用のデータ
-		var smokeGraphData = {
-			labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-			datasets: [{
-			      label: 'タバコ',
-			      data: [20, 35, 40, 30, 45, 35, 40],
-			      borderColor: '#f88',
-			    }, {
-			      label: 'Green',
-			      data: [20, 15, 30, 25, 30, 40, 35],
-			      borderColor: '#484',
-			    }, {
-			      label: 'Blue',
-			      data: [30, 25, 10, 5, 25, 30, 20],
-			      borderColor: '#48f',
-			    }],
-		};
-	</script>
-		<script>
-		//体重用のデータ
-		var bmiGraphData = {
-			labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-			datasets: [{
-			      label: '体重',
-			      data: [20, 35, 40, 30, 45, 35, 40],
-			      borderColor: '#f88',
-			    }, {
-			      label: 'Green',
-			      data: [20, 15, 30, 25, 30, 40, 35],
-			      borderColor: '#484',
-			    }, {
-			      label: 'Blue',
-			      data: [30, 25, 10, 5, 25, 30, 20],
-			      borderColor: '#48f',
-			    }],
-		};
-	</script>
-	<script type="text/javascript">
-function entryClick(id){
-		if(id == 1){
-			document.getElementById('foodGraph').style.display = "";
-			document.getElementById('exerciseGraph').style.display = "none";
-			document.getElementById('alcoholGraph').style.display = "none";
-			document.getElementById('smokeGraph').style.display = "none";
-			document.getElementById('bmiGraph').style.display = "none";
-		}else if(id == 2){
-			document.getElementById('foodGraph').style.display = "none";
-			document.getElementById('exerciseGraph').style.display = "";
-			document.getElementById('alcoholGraph').style.display = "none";
-			document.getElementById('smokeGraph').style.display = "none";
-			document.getElementById('bmiGraph').style.display = "none";
-		}else if(id == 3){
-			document.getElementById('foodGraph').style.display = "none";
-			document.getElementById('exerciseGraph').style.display = "none";
-			document.getElementById('alcoholGraph').style.display = "";
-			document.getElementById('smokeGraph').style.display = "none";
-			document.getElementById('bmiGraph').style.display = "none";
-		}else if(id == 4){
-			document.getElementById('foodGraph').style.display = "none";
-			document.getElementById('exerciseGraph').style.display = "none";
-			document.getElementById('alcoholGraph').style.display = "none";
-			document.getElementById('smokeGraph').style.display = "";
-			document.getElementById('bmiGraph').style.display = "none";
-		}else if(id == 5){
-			document.getElementById('foodGraph').style.display = "none";
-			document.getElementById('exerciseGraph').style.display = "none";
-			document.getElementById('alcoholGraph').style.display = "none";
-			document.getElementById('smokeGraph').style.display = "none";
-			document.getElementById('bmiGraph').style.display = "";
+				label: '運動時間の推移',
+				data: exerciseList.map(item => item.value4),
+				borderColor: '#F36C21',
+				yAxisID : "exerciseTimeShaft",// 追加
+			},{
+				label: 'ユーザーの目標運動時間',
+				data: goalExerciseTime,
+				borderColor: '#ff0000',
+				yAxisID : "exerciseTimeShaft",// 追加
+			}, {
+				label: '消費カロリーの推移',
+				data: exerciseList.map(item => item.value3),
+				borderColor: '#48f',
+				yAxisID : "y-axis-2",// 追加
+			}],
 		}
+		var ctx = document.getElementById("exerciseGraph");
+		
+		
+		if (typeof exerciseListChart !== 'undefined') {
+		    exerciseListChart.destroy();
+		}
+		exerciseListChart = new Chart(ctx, {
+			type: 'line',
+			data: exerciseGraphData,
+			options: exerciseChartOption
+		})
+	}))
+	.catch(error => console.log(error))
+};
+</script>
+
+<script>
+//アルコール記録グラフ
+let alcoholList = [];
+let deadLine = [];
+//データの取得
+function getAlcoholList() {
+	fetch('/getAlcoholListWeek?id=' + ${user.getUserId()} + '&day=' + day.value + '&scope=' + scope.value)
+	.then(res => res.json().then(data => {
+		alcoholList = data
+		console.log(data)
+		console.log(exerciseList)
+		alcoholList.forEach(function(createDay) {
+			deadLine.push(20);
+		});
+		//アルコール量記録グラフに使うデータ
+		var alcoholGraphData = {
+			//グラフの下　日付
+			labels: alcoholList.map(item => item.createDay),
+			datasets: [{
+				label: '摂取アルコール量の推移',
+				data: alcoholList.map(item => item.value2),
+				borderColor: '#F36C21',
+			},{
+				label: 'デッドライン',
+				data: deadLine,
+				borderColor: '#ff0000',
+			}],
+		}
+	var ctx = document.getElementById("alcoholGraph");
+		
+	if (typeof alcoholListChart !== 'undefined') {
+	    alcoholListChart.destroy();
+	}
+		
+	alcoholListChart = new Chart(ctx, {
+		type: 'line',
+		data: alcoholGraphData,
+		options: complexChartOption
+	})
+}))
+	.catch(error => console.log(error))
+};
+</script>
+<script>
+//タバコ記録グラフ
+let smokeList = [];
+//データの取得
+function getSmokeList() {
+	fetch('/getSmokeListWeek?id=' + ${user.getUserId()} + '&day=' + day.value + '&scope=' + scope.value)
+	.then(res => res.json().then(data => {
+		smokeList = data
+		console.log(data)
+		console.log(smokeList)
+		//タバコ記録グラフに使うデータ
+		var smokeGraphData = {
+			//グラフの下　日付
+			labels: smokeList.map(item => item.createDay),
+			datasets: [{
+				label: 'タバコを吸った本数',
+				data: smokeList.map(item => item.value3),
+				 backgroundColor: 'black',
+				yAxisID : "smokeShaft",// 追加
+				
+			}],
+		}
+	var ctx = document.getElementById("smokeGraph");
+		
+	if (typeof smokeListChart !== 'undefined') {
+	    smokeListChart.destroy();
+	}
+		
+	smokeListChart = new Chart(ctx, {
+		type: 'bar',
+		data: smokeGraphData,
+		options: smokeChartOption
+	})
+}))
+	.catch(error => console.log(error))
+};
+</script>
+<script>
+//体重記録グラフ
+let bmiList = [];
+//データの取得
+function getBmiList() {
+	fetch('/getBmiListWeek?id=' + ${user.getUserId()} + '&day=' + day.value)
+	.then(res => res.json().then(data => {
+		bmiList = data
+		console.log(data)
+		console.log(bmiList)
+		//体重記録グラフに使うデータ
+		var bmiGraphData = {
+			//グラフの下　日付
+			labels: bmiList.map(item => item.createDate),
+			datasets: [{
+				label: 'BMIの推移',
+				data: bmiList.map(item => item.value3),
+				borderColor: 'red',				
+			},{
+				label: '体重の推移',
+				data: bmiList.map(item => item.value2),
+				borderColor: 'blue',				
+			}],
+		}
+	var ctx = document.getElementById("bmiGraph");
+		
+	if (typeof bmiListChart !== 'undefined') {
+	    bmiListChart.destroy();
+	}
+	
+	bmiListChart = new Chart(ctx, {
+		type: 'line',
+		data: bmiGraphData,
+		options: complexChartOption
+	})
+}))
+	.catch(error => console.log(error))
+};
+</script>
+<script type="text/javascript">
+function entryClick(id) {
+	document.getElementById("hideType").value = id;
+	if (id == 1) {	
+		getFoodList();
+		console.log(foodList);
+		document.getElementById('foodGraph').style.display = "";
+		document.getElementById('exerciseGraph').style.display = "none";
+		document.getElementById('alcoholGraph').style.display = "none";
+		document.getElementById('smokeGraph').style.display = "none";
+		document.getElementById('bmiGraph').style.display = "none";
+	} else if (id == 2) {
+		getExerciseList();
+		document.getElementById('foodGraph').style.display = "none";
+		document.getElementById('exerciseGraph').style.display = "";
+		document.getElementById('alcoholGraph').style.display = "none";
+		document.getElementById('smokeGraph').style.display = "none";
+		document.getElementById('bmiGraph').style.display = "none";
+	} else if (id == 3) {
+		getAlcoholList();
+		document.getElementById('foodGraph').style.display = "none";
+		document.getElementById('exerciseGraph').style.display = "none";
+		document.getElementById('alcoholGraph').style.display = "";
+		document.getElementById('smokeGraph').style.display = "none";
+		document.getElementById('bmiGraph').style.display = "none";
+	} else if (id == 4) {
+		getSmokeList();
+		document.getElementById('foodGraph').style.display = "none";
+		document.getElementById('exerciseGraph').style.display = "none";
+		document.getElementById('alcoholGraph').style.display = "none";
+		document.getElementById('smokeGraph').style.display = "";
+		document.getElementById('bmiGraph').style.display = "none";
+	} else if (id == 5) {
+		getBmiList();
+		document.getElementById('foodGraph').style.display = "none";
+		document.getElementById('exerciseGraph').style.display = "none";
+		document.getElementById('alcoholGraph').style.display = "none";
+		document.getElementById('smokeGraph').style.display = "none";
+		document.getElementById('bmiGraph').style.display = "";
+	}
 }
-// window.onload = entryChange;
+window.onload = entryClick(1);
+</script>
+
+<script>
+var exerciseChartOption = {
+	responsive: true,
+	scales: {
+		'exerciseTimeShaft': {
+			type: 'linear',
+			position: 'right',
+			min: 0,      // 最小値
+			//ユーザーの目標消費運動時間を100に入れる。
+			max: 1.5*100,    // 最大値
+			display: false,
+		},
+		'y-axis-2': {
+			type: 'linear',
+			position: 'left'
+		}
+	}
+};
+</script>
+
+<script>	
+var complexChartOption = {
+	responsive: true,
+	scales: {
+		yAxes: [{
+			id: "y-axis-1",
+			type: "linear",
+			position: "left"
+		}, {
+			id: "y-axis-2",
+			type: "linear",
+			position: "right",
+			ticks: {
+				//max : 1.5,
+				//min : 0,
+				// stepSize : .5
+			},
+			gridLines: {
+				drawOnChartArea: false,
+			},
+		}],
+	}
+};
 </script>
 
 	<script>
-		var complexChartOption = {
-			responsive : true,
-			scales : {
-				yAxes : [ {
-					id : "y-axis-1",
-					type : "linear",
-					position : "left",
-					ticks : {
-						max : 2000,
- 						min : 0,
-// 						stepSize : 0.1
-					},
-				}, {
-					id : "y-axis-2",
-					type : "linear",
-					position : "right",
-					ticks : {
-// 						max : 1.5,
-// 						min : 0,
-// 						stepSize : .5
-					},
-					gridLines : {
-						drawOnChartArea : false,
-					},
-				} ],
-			}
-		};
-	</script>
-<script src="js/commons.js"></script>
-</body>
+var smokeChartOption = {
+	responsive: true,
+	scales: {
+		'smokeShaft': {
+			type: 'linear',
+			position: 'left',
+			min: 0,      // 最小値
+		},
+	}
+};
+</script>
 </html>
