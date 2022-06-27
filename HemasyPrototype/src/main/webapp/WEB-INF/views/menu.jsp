@@ -17,7 +17,6 @@
 <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 </head>
 <body>
-<<<<<<< HEAD
 	<header>
 		<div class="header-logo">
 			<a href="./back">Hemasy</a>
@@ -98,59 +97,7 @@
 			<p>ここはfooterです。</p>
 		</div>
 	</footer>
-	<script src="js/commons.js"></script>
-=======
-<header>
-	<div class="header-logo"><a href="./back">Hemasy</a></div>
-	<form:form action="hamburger" modelAttribute="index" method="post">
-	    <button type="button" class="menu-btn">
-	      <i class="fa fa-bars" aria-hidden="true"></i>
-	    </button>
-	    <div class="menu">
-	      <div class="menu__item"><a href="./account">アカウント管理</a></div>
-	      <div class="menu__item"><a href="./rank">ランキング</a></div>
-	      <div class="menu__item"><a href="./list">リスト編集</a></div>
-	      <div class="menu__item"><a href="./information">お問い合わせ</a></div>
-	      <div class="menu__item"><a href="./logout">ログアウト</a></div>
-	    </div>
-    </form:form>
-</header>
-  <div class="main">
-	  <form:form action="record" modelAttribute="index" method="post">
-	    <input type="hidden" id="todayDate" name="recordDate">
-	    <form:button><fmt:message key="form.lbl.record"/></form:button>
-	  </form:form>
-  
-	  <form:form action="statistics" modelAttribute="index" method="get">
-	  	<input type="hidden" id="todayDate" name="statisticsDate">
-	    <form:button><fmt:message key="form.lbl.statistics"/></form:button>
-	  </form:form>
-  </div>
-  
-  <div class="body_container box1">
-  	  	<div class="box2 lung">
-  	  		<div class="lung_right_box">
-  	  		
-  	  		</div>
-  	  		<div class="lung_left_box">
-  	  		
-  	  		</div>
-  	  	</div>
-  	  	
-  	  	<div class="box2">
-  	  		<div class="liver_box">
-  	  		
-  	  		</div>
-  	  	</div>
-  	  	
-  	  	<div class="box2">
-  	  		<div class="stomach_box">
-  	  		
-  	  		</div>
-  	  	
-  	  	</div>
-  	  </div>
-  	  <script>
+	<script>
   		var date = new Date();
 
     	var yyyy = date.getFullYear();
@@ -159,7 +106,7 @@
 
 		document.getElementById("todayDate").value=yyyy+'-'+mm+'-'+dd;
   	  </script>
-<script src="js/commons.js"></script>
->>>>>>> refs/heads/rin
+	<script src="js/commons.js"></script>
+
 </body>
 </html>
