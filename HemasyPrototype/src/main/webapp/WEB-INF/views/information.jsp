@@ -11,7 +11,8 @@
 <head>
 <meta charset="UTF-8">
 <title>お問い合わせ画面</title>
-<link href="css/commons.css" rel="stylesheet">
+<link href="css/common.css" rel="stylesheet">
+<link href="css/ameku.css" rel="stylesheet">
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <meta name="viewport" content="width=device-width">
 <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
@@ -43,7 +44,7 @@
 	    </div>
 	    <div class="contents">
 	      <label>内容</label><br>
-	      <form:textarea path="contents" name="お問い合わせ内容" cols="100" rows="10" placeholder="こちらに記述してください。"></form:textarea>
+	      <form:textarea id="textarea" path="contents" name="お問い合わせ内容" cols="100" rows="10" placeholder="こちらに記述してください。"></form:textarea>
 	    </div>
         <div class="btns">
           <form:button type="submit" class="insert-button info-btn"><fmt:message key="form.lbl.regist"/></form:button>
@@ -53,11 +54,6 @@
   </div>
 </main>
 
-<footer>
-	<div>
-		<p>ここはfooterです。</p>
-	</div>
-</footer>
 <script src="js/commons.js"></script>
 </body>
 </html>
