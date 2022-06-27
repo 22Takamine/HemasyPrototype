@@ -47,7 +47,7 @@
     <tbody>
       <c:forEach var="DayRanking" items="${DayRanking}" varStatus="status">
         <tr>
-          <td></td>
+          <td><div></div></td>
           <td><c:out value="${DayRanking.getUser_name()}"/></td>
           <td><c:out value="${DayRanking.getSum_time()}"/></td>
           <td><c:out value="${DayRanking.getAchievement_name()}"/></td>
@@ -71,7 +71,7 @@
 	    <tbody>
 	      <c:forEach var="WeekRanking" items="${WeekRanking}" varStatus="status">
 	        <tr>
-	          <td></td>
+	          <td><div></div></td>
 	          <td><c:out value="${WeekRanking.getUser_name()}"/></td>
 	          <td><c:out value="${WeekRanking.getSum_time()}"/></td>
 	          <td><c:out value="${WeekRanking.getAchievement_name()}"/></td>
@@ -95,7 +95,7 @@
 	    <tbody>
 	      <c:forEach var="AchievementRanking" items="${AchievementRanking}" varStatus="status">
 	        <tr>
-	          <td></td>
+	          <td><div></div></td>
 	          <td><c:out value="${AchievementRanking.getUser_name()}"/></td>
 	          <td><c:out value="${AchievementRanking.getSum_score()}"/></td>
 	          <td><c:out value="${AchievementRanking.getAchievement_name()}"/></td>

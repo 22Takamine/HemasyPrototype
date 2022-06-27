@@ -252,7 +252,7 @@ main {
 * ランキングに自動連番で順位を振る。
 *----------------------------*/
  
- table {
+table {
   counter-reset: rowCount;
 }
 
@@ -260,7 +260,7 @@ table > tbody > tr {
   counter-increment: rowCount;
 }
 
-table > tbody > tr > td:first-child::before {
+table > tbody > tr > td > div:first-child::before {
   content: counter(rowCount);
 }
  
