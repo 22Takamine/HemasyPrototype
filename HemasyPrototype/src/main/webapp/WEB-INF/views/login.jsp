@@ -9,31 +9,63 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="../../css/common.css">
+<link rel="stylesheet" href="../../css/style.css">
 <meta charset="UTF-8">
 <title>トップ画面</title>
 </head>
 <body>
-  <h1>メールアドレス及びパスワードを入力してください</h1>
-  
-  
-  <c:if test="${not empty msg}">
-  	<p>${fn:escapeXml(msg)}</p>
-  </c:if>
-  <form:form action="result" modelAttribute="index" method="post">
-    
-    <div>
-      <label><fmt:message key="form.lbl.mail"/></label><form:input path="mail" type="text"/>
-      <form:errors path="mail" cssStyle="color: red"/>
-    </div>
-    
-    <div>
-      <label><fmt:message key="form.lbl.password"/></label><form:input path="password" type="password"/>
-      <form:errors path="password" cssStyle="color: red"/>
-    </div>
-    
-    <form:button name="login"><fmt:message key="form.lbl.login"/></form:button>
-    <form:button name="register"><fmt:message key="form.lbl.register"/></form:button>
-  
-  </form:form>
+	<c:if test="${not empty msg}">
+		<p>${fn:escapeXml(msg)}</p>
+	</c:if>
+	<form:form action="result" modelAttribute="index" method="post">
+
+		<div class="pc-wrap">
+			<div class="content form">
+				<h1 class="mb-30 f-56 logoF">Hemasy</h1>
+
+				<p class="mb-5">
+					<label><fmt:message key="form.lbl.mail" /></label>
+				</p>
+				<p class="mb-20">
+					<form:input path="mail" type="email" placeholder="メールアドレス"
+						class="width-100-percent" />
+					<form:errors path="mail" cssStyle="color: red" />
+				</p>
+
+				<p class="mb-5">
+					<label><fmt:message key="form.lbl.password" /></label>
+				</p>
+				<p class="mb-20">
+					<form:input path="password" type="password"
+						placeholder="パスワード (8文字以上12文字以内)" class="width-100-percent" />
+					<form:errors path="password" cssStyle="color: red" />
+				</p>
+
+				<form:button name="login" type="submit"
+					class="btn btn_orange width-100-percent" value=""
+					onclick="location.href='index.html'">
+					<fmt:message key="form.lbl.login" />
+				</form:button>
+
+				<!-- getになって送信できない -->
+				<p class="mt-20 center">
+					<a href="/register">新規登録がまだお済みでない方は<br>こちらから新規登録をお願いいたします。
+					</a>
+				</p>
+
+				<p class="center mt-40">
+					<a href="" class="text-link">利用規約</a>
+				</p>
+
+				<p class="center mt-20 mb-40">
+					<a href="" class="text-link">プライバシーポリシー</a>
+				</p>
+			</div>
+		</div>
+
+	</form:form>
+	<script type="text/javascript" src="js/vendor/footerFixed.js"></script>
+	<script src="js/commons.js"></script>
 </body>
 </html>
