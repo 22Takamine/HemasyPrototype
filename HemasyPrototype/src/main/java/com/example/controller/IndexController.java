@@ -214,7 +214,7 @@ public class IndexController {
 	
 	
 	//メニューから記録＆リスト画面に遷移(当日のデータ)
-	@RequestMapping(value = "/record", method = RequestMethod.POST)
+	@RequestMapping(value = "/record", method = RequestMethod.GET)
 	public String record(@ModelAttribute("record") ListAndRecordForm form, Model model) {
 		
 		User user = (User) session.getAttribute("user");
