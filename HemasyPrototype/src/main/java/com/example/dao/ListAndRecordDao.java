@@ -76,13 +76,13 @@ public class ListAndRecordDao {
 	
 	private static final String GET_LATEST_WEIGHT_RECORD_M = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 5 AND user_id = :userId AND current_date >= create_date AND value2 <> '0' ORDER BY create_date DESC";
 	
-	private static final String GET_LATEST_SMOKE_DATE_RECORD = "SELECT current_date - create_date as value2 FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId AND value3 <> '0' ORDER BY create_date DESC";
+	private static final String GET_LATEST_SMOKE_DATE_RECORD = "SELECT current_date - create_date as value2 FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId AND current_date >= create_date ORDER BY create_date DESC";
 	
-	private static final String GET_LATEST_ALCOHOL_DATE_RECORD = "SELECT sum(value2*value3*value4/100) AS value2 FROM lists_and_records WHERE category = 2 AND type = 4 AND user_id = :userId AND value2 <> '0' AND current_date = create_date";
+	private static final String GET_LATEST_ALCOHOL_DATE_RECORD = "SELECT sum(value2*value3*value4/100) AS value2 FROM lists_and_records WHERE category = 2 AND type = 4 AND user_id = :userId AND current_date = create_date";
 	
-	private static final String GET_LATEST_METS_AND_TIME_RECORD = "SELECT sum(value2) AS value2,sum(value3)/60 AS value3 FROM lists_and_records WHERE category = 2 AND type = 2 AND user_id = :userId AND value2 <> '0' AND current_date = create_date";
+	private static final String GET_LATEST_METS_AND_TIME_RECORD = "SELECT sum(value2) AS value2,sum(value3)/60 AS value3 FROM lists_and_records WHERE category = 2 AND type = 2 AND user_id = :userId AND current_date = create_date";
 
-	private static final String GET_LATEST_CALORIE_INTAKE = "SELECT sum(value2 * value3) AS value2 FROM lists_and_records WHERE category = 2 AND type = 1 AND user_id = :userId AND value2 <> '0' AND current_date = create_date";
+	private static final String GET_LATEST_CALORIE_INTAKE = "SELECT sum(value2 * value3) AS value2 FROM lists_and_records WHERE category = 2 AND type = 1 AND user_id = :userId  AND current_date = create_date";
 	
 	
 	//りん-------------------------------------------------------------------------------------------------------------
@@ -257,10 +257,9 @@ public class ListAndRecordDao {
 		
 		jdbcTemplate.update(sql, param);
 
-		return;
 	}	
 	
-	public ListAndRecord getLatestWeightRecord(Integer userId) {
+	public ListAndRecord getLatestWeightRecordM(Integer userId) {
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("userId", userId);
 		

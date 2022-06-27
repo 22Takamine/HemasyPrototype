@@ -123,19 +123,30 @@ public class IndexController {
     	else {
     		
 //    		session.setAttribute("user", user);
+    		recordService.setZeroPastRecords(user.getUserId());
     		ListAndRecord userSmokeDate = listAndRecordDao.getLatestSmokeDateRecord(user.getUserId());
     		ListAndRecord userAlcohol = listAndRecordDao.getLatestAlcoholDateRecord(user.getUserId());
     		ListAndRecord userMetsAndTime = listAndRecordDao.getLatestMetsAndTimeRecord(user.getUserId());
     		ListAndRecord userCalorieIntake = listAndRecordDao.getLatestCalorieIntake(user.getUserId());
-//    		ListAndRecord userWeight = listAndRecordDao.getLatestWeightRecord(user.getUserId());
     		ListAndRecord userWeight = listAndRecordDao.getLatestWeightRecordM(user.getUserId());
-
+    		System.out.println(userWeight.getValue2());
+    		System.out.println(userMetsAndTime.getValue2());
+    		System.out.println(userCalorieIntake.getValue2());
+    		System.out.println(userSmokeDate.getValue2());
+    		
     		Integer alcoholLevel;
     		Double CaloriesBurned = userWeight.getValue2() * userMetsAndTime.getValue2() * userMetsAndTime.getValue3() * 1.05;
     		Double height = (double) (user.getHeight()/100.0);
     		Double bmi = (double) (userWeight.getValue2()/(height*height));
     		Integer calorieLevel = (int) (Math.ceil(userCalorieIntake.getValue2() - CaloriesBurned)/user.getGoalCalorie()*10);
+    		Integer smokeLevel = userSmokeDate.getValue2();
     		
+    		if(calorieLevel <= 0) {
+    			calorieLevel = 1;
+    		}
+    		if(smokeLevel <= 0) {
+    			smokeLevel = 1;
+    		}
     		if(userAlcohol.getValue2() >= 20) {
     			alcoholLevel = 2;
     		}
@@ -143,7 +154,7 @@ public class IndexController {
     			alcoholLevel = 1;
     		}
     		
-    		Color SmokeColorLevel = colorDao.getSmokeColorLevel(userSmokeDate.getValue2());
+    		Color SmokeColorLevel = colorDao.getSmokeColorLevel(smokeLevel);
     		Color AlcoholColorLevel = colorDao.getAlcoholColorLevel(alcoholLevel);
     		Color CalorieColorLevel = colorDao.getCalorieColorLevel(calorieLevel);
     		bmi = Math.floor(bmi * 10)/10;
