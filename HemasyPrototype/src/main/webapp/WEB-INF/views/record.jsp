@@ -61,7 +61,6 @@
 		<input type="hidden" value="${dataDate}" name="createDate">
 		<div id="food">
 			<h2>食事記録</h2>
-			<p>目安: ${2}kcal 摂取: ${2}kcal</p>
 			<div id="food_bre">
 				<p>
 					朝食
@@ -164,7 +163,6 @@
 				運動記録
 				<button type="button" id="add_spo" onclick="addSpoForm()">⊕</button>
 			</h2>
-			<p>目安: ${2}kcal 消費: ${2}kcal</p>
 			<c:forEach var="sportRecord" items="${sportRecordList}"
 				varStatus="spStatus">
 				<p class="sportData">
