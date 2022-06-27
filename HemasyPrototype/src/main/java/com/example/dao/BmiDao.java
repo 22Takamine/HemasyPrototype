@@ -13,9 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import com.example.entity.Bmi;
 
-
-
-
 @Repository
 public class BmiDao {
 
