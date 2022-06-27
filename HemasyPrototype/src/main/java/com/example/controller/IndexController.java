@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.dao.AchievementsDao;
+import com.example.dao.BmiDao;
 import com.example.dao.ColorDao;
 import com.example.dao.InformationDao;
 import com.example.dao.ListAndRecordDao;
 import com.example.dao.UserDao;
 import com.example.entity.Achievements;
+import com.example.entity.Bmi;
 import com.example.entity.Color;
 import com.example.entity.Information;
 import com.example.entity.ListAndRecord;
@@ -55,6 +57,9 @@ public class IndexController {
 	
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	BmiDao bmiDao;
 	
 	@Autowired
 	AchievementsDao achievementsDao;
@@ -133,11 +138,7 @@ public class IndexController {
     		ListAndRecord userMetsAndTime = listAndRecordDao.getLatestMetsAndTimeRecord(user.getUserId());
     		ListAndRecord userCalorieIntake = listAndRecordDao.getLatestCalorieIntake(user.getUserId());
     		ListAndRecord userWeight = listAndRecordDao.getLatestWeightRecordM(user.getUserId());
-    		System.out.println(userWeight.getValue2());
-    		System.out.println(userMetsAndTime.getValue2());
-    		System.out.println(userCalorieIntake.getValue2());
-    		System.out.println(userSmokeDate.getValue2());
-    		
+
     		Integer alcoholLevel;
     		Double CaloriesBurned = userWeight.getValue2() * userMetsAndTime.getValue2() * userMetsAndTime.getValue3() * 1.05;
     		Double height = (double) (user.getHeight()/100.0);
@@ -157,6 +158,7 @@ public class IndexController {
     		else {
     			alcoholLevel = 1;
     		}
+    		Bmi bmipath = bmiDao.getBmiPath(bmi);
     		
     		Color SmokeColorLevel = colorDao.getSmokeColorLevel(smokeLevel);
     		Color AlcoholColorLevel = colorDao.getAlcoholColorLevel(alcoholLevel);
@@ -172,7 +174,7 @@ public class IndexController {
     		String lungImg = "../../" + SmokeColorLevel.getColorPath();
     		String liverImg = "../../" + AlcoholColorLevel.getColorPath();
     		String stomachImg = "../../" + CalorieColorLevel.getColorPath();
-    		String bmiImg = "../../images/bmi3.png" ;
+    		String bmiImg = "../../"+ bmipath.getImgPath();
     		
     		//ここでsessionに画像のパスを保存する。
     		//session.setAttribute("lungImg", lungImg);
