@@ -79,7 +79,7 @@ public class IndexController {
 
 	
 	//ログイン画面から、新規登録画面に遷移
-	@RequestMapping(value = "/result", params="register", method = RequestMethod.POST)
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String register(@ModelAttribute("index") UserForm form, Model model) {
     	
         return "register";
@@ -225,6 +225,7 @@ public class IndexController {
 		System.out.println("えええ" + sportRecordList.size());
 
 		System.out.println(smokeRecord.getValue3());
+
 
 		System.out.println(dinnerRecordList.size());
 

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -46,8 +46,8 @@
 	      <form:textarea path="contents" name="お問い合わせ内容" cols="100" rows="10" placeholder="こちらに記述してください。"></form:textarea>
 	    </div>
         <div class="btns">
-          <form:button type="submit" class="insert-button info-btn">登録</form:button>
-          <button type="button" onclick="location.href='/back'" class="back-button info-btn">戻る</button>
+          <form:button type="submit" class="insert-button info-btn"><fmt:message key="form.lbl.regist"/></form:button>
+          <button type="button" onclick="location.href='/back'" class="back-button info-btn"><fmt:message key="form.lbl.back"/></button>
         </div>
     </form:form>
   </div>
