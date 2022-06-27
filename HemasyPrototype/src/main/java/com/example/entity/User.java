@@ -5,19 +5,15 @@ import java.sql.Date;
 public class User {
 
 	
-	
 	private Integer id;
 	private Integer userId;
 	private String userName;
 	private String mail;
 	private String password;
 	private Integer sex;
-
 	private Date birth;
 	private Double height;
 	private Double weight;
-
-
 	private Date createdAt;
 	private Integer goalExerciseTime;
 	private Integer goalCalorie;
@@ -35,8 +31,6 @@ public class User {
 
 	public User(String userName, String mail, String password,Integer sex,
 			Date birth,Double height,Integer goalExerciseTime,Integer goalCalorie,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer roleId) {
-
-//			Date birthDate,Integer height,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer roleId) {
 
 		this.userName = userName;
 		this.mail = mail;
@@ -80,22 +74,6 @@ public class User {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-
-	
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-
-		this.roleId = roleId;
-//		this.achievementId = achievementId;
-//		this.achievementFlag = achievementFlag;
-//		this.bmi = bmi;
-	}
-	
-	
-
 
 	public String getUserName() {
 		return userName;
@@ -193,24 +171,23 @@ public class User {
 		this.smokeFlag = smokeFlag;
 	}
 
-
 	public Double getWeight() {
 		return weight;
-
 	}
 
 	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
 
-//	public Double getGoalCalorie() {
-//		return goalCalorie;
-//	}
-//
-//	public void setGoalCalorie(Double goalCalorie) {
-//		this.goalCalorie = goalCalorie;
-//
-//	}
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+
+	}
+
 	
 	public Integer getAchievementId() {
 		return achievementId;

@@ -21,6 +21,7 @@ public class ListAndRecord {
 	private Date createDate;
 	private int userId;
 	
+
 	public ListAndRecord() {
 		
 	}

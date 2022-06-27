@@ -77,13 +77,13 @@ public class ListAndRecordDao {
 	
 	private static final String GET_LATEST_SMOKE_DATE_RECORD = "SELECT current_date - create_date as value2 FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId AND current_date >= create_date ORDER BY create_date DESC";
 	
-	private static final String GET_LATEST_ALCOHOL_DATE_RECORD = "SELECT sum(value2*value3*value4/100) AS value2 FROM lists_and_records WHERE category = 2 AND type = 4 AND user_id = :userId AND current_date = create_date";
+	private static final String GET_LATEST_ALCOHOL_RECORD = "SELECT sum(value2*value3*value4/100) AS value2 FROM lists_and_records WHERE category = 2 AND type = 4 AND user_id = :userId AND current_date = create_date";
 	
 	private static final String GET_LATEST_METS_AND_TIME_RECORD = "SELECT sum(value2) AS value2,sum(value3)/60 AS value3 FROM lists_and_records WHERE category = 2 AND type = 2 AND user_id = :userId AND current_date = create_date";
 
 	private static final String GET_LATEST_CALORIE_INTAKE = "SELECT sum(value2 * value3) AS value2 FROM lists_and_records WHERE category = 2 AND type = 1 AND user_id = :userId  AND current_date = create_date";
 	
-	
+	private static final String GET_LATEST_ALCOHOL_DATE_RECORD = "SELECT current_date - create_date as value2 FROM lists_and_records WHERE category = 2 AND type = 4 AND user_id = :userId AND current_date >= create_date ORDER BY create_date DESC";
 	//りん-------------------------------------------------------------------------------------------------------------
 	//日付とユーザーIDでアルコール、食事、運動をすべて取得
 	public List<ListAndRecord> getRecords(int userId, Date date) {
@@ -277,11 +277,11 @@ public class ListAndRecordDao {
         return list.isEmpty() ? null : list.get(0);
 	}
 	
-	public ListAndRecord getLatestAlcoholDateRecord(Integer userId) {
+	public ListAndRecord getLatestAlcoholRecord(Integer userId) {
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("userId", userId);
 		
-		String sql = GET_LATEST_ALCOHOL_DATE_RECORD;
+		String sql = GET_LATEST_ALCOHOL_RECORD;
 		List<ListAndRecord> list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
         return list.isEmpty() ? null : list.get(0);
 	}
@@ -303,7 +303,14 @@ public class ListAndRecordDao {
 		List<ListAndRecord> list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
         return list.isEmpty() ? null : list.get(0);
 	}
-	
+	public ListAndRecord getLatestAlcoholDateRecord(Integer userId) {
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("userId", userId);
+		
+		String sql = GET_LATEST_ALCOHOL_DATE_RECORD;
+		List<ListAndRecord> list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
+        return list.isEmpty() ? null : list.get(0);
+	}
 	
 	//かわみつ-------------------------------------------------------------------------------------------------------------
 	public List<CommonRecord> getFoodRecordsOfWeek(int id, Date day) {
@@ -690,7 +697,5 @@ public class ListAndRecordDao {
 		param.addValue("user_id", user_id);
 		jdbcTemplate.update(sql, param);
 	}
-
-	
 
 }
