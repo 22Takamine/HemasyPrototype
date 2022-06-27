@@ -69,7 +69,7 @@
 					<div class="description">
 						<p>${livarWord}</p>
 					</div>
-					<img src="${livarImg}" alt="#" class="livar-img">
+					<img src="${liverImg}" alt="#" class="livar-img">
 				</div>
 				
 				<div class="tooltip">

@@ -126,7 +126,7 @@ public class IndexController {
     	}
     	else {
     		
-//    		session.setAttribute("user", user);
+    		session.setAttribute("user", user);
     		recordService.setZeroPastRecords(user.getUserId());
     		ListAndRecord userSmokeDate = listAndRecordDao.getLatestSmokeDateRecord(user.getUserId());
     		ListAndRecord userAlcohol = listAndRecordDao.getLatestAlcoholDateRecord(user.getUserId());
@@ -169,9 +169,9 @@ public class IndexController {
     		//以下にDBから取得してきた画像のパスを入れる。
     		//（まっしーへ　ここに取ってきた画像のパスを入れるまでお願いします。）
     		
-    		String lungImg = "../../images/lung.png";
-    		String livarImg = "../../images/livar0.png" ;
-    		String stomachImg = "../../images/stomach.png" ;
+    		String lungImg = "../../" + SmokeColorLevel.getColorPath();
+    		String liverImg = "../../" + AlcoholColorLevel.getColorPath();
+    		String stomachImg = "../../" + CalorieColorLevel.getColorPath();
     		String bmiImg = "../../images/bmi3.png" ;
     		
     		//ここでsessionに画像のパスを保存する。
@@ -181,35 +181,25 @@ public class IndexController {
     		//session.setAttribute("bmiImg", bmiImg);
     		
     		//計算したbmiをsessionに保存
-    		//session.setAttribute("bmiValue", bmiValue);
+    		session.setAttribute("bmiValue",bmi);
     		
-    		double bmiValue = 22.4;
-    		model.addAttribute("bmiValue",bmiValue);
-    		
-    		
-    		String lungWord = "禁煙○○日目です";
-    		String livarWord = "禁酒○○日目です。" ;
+    		String lungWord = "禁煙"+smokeLevel+"日目です";
+    		String liverWord = "禁酒○○日目です。" ;
     		String stomachGoalkcal = "目標摂取カロリーは○○Kcalです。" ;
-    		String stomachInputKcal = "摂取カロリーは○○Kcalです。" ;
-    		String stomachOutputKcal = "消費カロリーは○○Kcalです。" ;
+    		String stomachInputKcal = "摂取カロリーは"+ userCalorieIntake.getValue2()+"Kcalです。" ;
+    		String stomachOutputKcal = "消費カロリーは" + CaloriesBurned + "Kcalです。" ;
     		
     		//ツールチップに表示する項目をsessionに保存する
-    		//session.setAttribute("lungWord", lungWord);
-    		//session.setAttribute("livarWord", livarWord);
-    		//session.setAttribute("stomachGoalkcal", stomachGoalkcal);
-    		//session.setAttribute("stomachInputKcal", stomachInputKcal);
-    		//session.setAttribute("stomachOutputKcal", stomachOutputKcal);
+    		session.setAttribute("lungWord", lungWord);
+    		session.setAttribute("liverWord", liverWord);
+    		session.setAttribute("stomachGoalkcal", stomachGoalkcal);
+    		session.setAttribute("stomachInputKcal", stomachInputKcal);
+    		session.setAttribute("stomachOutputKcal", stomachOutputKcal);
     		
-    		model.addAttribute("lungImg",lungImg );
-    		model.addAttribute("livarImg",livarImg );
-    		model.addAttribute("stomachImg",stomachImg );
-    		model.addAttribute("bmiImg",bmiImg );
-    		
-    		model.addAttribute("lungWord", lungWord);
-    		model.addAttribute("livarWord", livarWord);
-    		model.addAttribute("stomachGoalkcal", stomachGoalkcal);
-    		model.addAttribute("stomachInputKcal", stomachInputKcal);
-    		model.addAttribute("stomachOutputKcal", stomachOutputKcal);
+    		session.setAttribute("lungImg",lungImg );
+    		session.setAttribute("livarImg",liverImg );
+    		session.setAttribute("stomachImg",stomachImg );
+    		session.setAttribute("bmiImg",bmiImg );
     		
     		session.setAttribute("bmi", bmi);
 			session.setAttribute("calorieColorPath", CalorieColorLevel.getColorPath());
@@ -218,7 +208,6 @@ public class IndexController {
 			session.setAttribute("user", user);
     		
     		return "menu";
-    		
     		
 		}
     }
