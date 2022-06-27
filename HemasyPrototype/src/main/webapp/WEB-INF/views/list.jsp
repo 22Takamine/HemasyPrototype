@@ -35,6 +35,11 @@
   <div class="main">
   <h2>マイリスト編集</h2>
   
+  
+  
+  
+  
+  
   <table>
    <div class="caption"><p>検索結果：${foodList.size()}件</p></div>
     <thead>
