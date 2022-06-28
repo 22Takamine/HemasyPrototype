@@ -80,7 +80,7 @@
 		<label><input id="nen"  type="radio" name="poti" value="2" onclick="poti(2), changeHideMan(45)">年</label>
 	</div>
 	<div>
-		<input type="date" id="date" value="${statustucsDate}" onchange="poti()">
+		<input type="date" id="date" value="${statisticsDate}" onchange="poti()">
 	</div>
 	<div style="width: 800px">
 		<canvas id="foodGraph"></canvas>
