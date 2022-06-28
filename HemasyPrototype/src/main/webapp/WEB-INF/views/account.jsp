@@ -151,37 +151,49 @@
 	    
 		    <div class="mb-20">
 		    	<fmt:message key="form.lbl.rank"/>
-		    	<c:if test="${user.getRankFlag() == 1}"> 
-		    		<form:radiobutton path="rankFlag" value="1" checked="checked"/>参加する 
-		    		<form:radiobutton path="rankFlag" value="0"/>参加しない     
+		    	<c:if test="${user.getRankFlag() == 0}"> 
+		    		<form:radiobutton path="rankFlag" value="0" id="rank1" checked="checked"/>
+		    		<label for="rank1">参加する</label>
+		    		<form:radiobutton path="rankFlag" value="1" id="rank2"/>
+		    		<label for="rank2">参加しない</label>   
 				</c:if>
-				<c:if test="${user.getRankFlag() == 0}">   
-					<form:radiobutton path="rankFlag" value="1" />参加する 
-		    		<form:radiobutton path="rankFlag" value="0" checked="checked"/>参加しない
+				<c:if test="${user.getRankFlag() == 1}">   
+					<form:radiobutton path="rankFlag" value="0" id="rank1"/>
+					<label for="rank1">参加する</label>
+		    		<form:radiobutton path="rankFlag" value="1" id="rank2" checked="checked"/>
+		    		<label for="rank2">参加しない</label>   
 				</c:if>
 		    </div>
 	    
 		    <div class="mb-20">
 		    	<fmt:message key="form.lbl.smoke"/>
-		    	<c:if test="${user.getSmokeFlag() == 1}"> 
-		    		<form:radiobutton path="smokeFlag" value="1" checked="checked"/>吸っている 
-		    		<form:radiobutton path="smokeFlag" value="0"/>吸わない   
+		    	<c:if test="${user.getSmokeFlag() == 0}"> 
+		    		<form:radiobutton path="smokeFlag" value="0" id="smoke1" checked="checked"/>
+		    		<label for="smoke1">吸う</label>
+		    		<form:radiobutton path="smokeFlag" value="1" id="smoke2"/>
+					<label for="smoke2">吸わない</label>  
 				</c:if>
-				<c:if test="${user.getSmokeFlag() == 0}">   
-					<form:radiobutton path="smokeFlag" value="1"/>吸っている 
-		    		<form:radiobutton path="smokeFlag" value="0" checked="checked"/>吸わない  
+				<c:if test="${user.getSmokeFlag() == 1}">   
+					<form:radiobutton path="smokeFlag" value="0" id="smoke1"/>
+					<label for="smoke1">吸う</label>
+		    		<form:radiobutton path="smokeFlag" value="1" id="smoke2" checked="checked"/>
+		    		<label for="smoke2">吸わない</label>
 				</c:if>
 		    </div>
 		    
 		    <div class="mb-20">
 		    	<fmt:message key="form.lbl.alcohol"/>
-		    	<c:if test="${user.getAlcoholFlag() == 1}">
-		    		<form:radiobutton path="alcoholFlag" value="1" checked="checked"/>飲んでいる
-		    		<form:radiobutton path="alcoholFlag" value="0"/>飲まない    
+		    	<c:if test="${user.getAlcoholFlag() == 0}">
+		    		<form:radiobutton path="alcoholFlag" value="0" id="alcohol1" checked="checked"/>
+		    		<label for="alcohol1">飲んでいる</label>
+		    		<form:radiobutton path="alcoholFlag" value="1" id="alcohol2"/> 
+		    		<label for="alcohol2">飲まない</label>   
 				</c:if>
-				<c:if test="${user.getAlcoholFlag() == 0}">   
-					<form:radiobutton path="alcoholFlag" value="1"/>飲んでいる
-		    		<form:radiobutton path="alcoholFlag" value="0" checked="checked"/>飲まない
+				<c:if test="${user.getAlcoholFlag() == 1}">   
+					<form:radiobutton path="alcoholFlag" value="0" id="alcohol1"/>
+					<label for="alcohol1">飲んでいる</label>
+		    		<form:radiobutton path="alcoholFlag" value="1" id="alcohol2" checked="checked"/>
+		    		<label for="alcohol2">飲まない</label>
 				</c:if>
 		    </div>
 	    
