@@ -91,6 +91,18 @@ public class IndexController {
 		if (bindingResult.hasErrors()) {
 			return "register";
 		}
+		
+		User userName = userDao.findByName(form.getName());
+		User userMail = userDao.findByMail(form.getMail());
+		if(userName != null) {
+			model.addAttribute("msgName","そのユーザー名は使用されています。");
+		}
+		if(userMail != null) {
+			model.addAttribute("msgMail","そのメールアドレスは使用されています。。");
+		}
+		if(userName != null || userMail != null) {
+			return "register";
+		}
 	
 
 		
@@ -108,16 +120,15 @@ public class IndexController {
     }
 	
 	//ログイン成功時にメニュー画面に遷移
-	@RequestMapping(value = "/result", params="login", method = RequestMethod.POST)
+	@RequestMapping(value = "/result", method = RequestMethod.POST)
 	public String login(@Validated @ModelAttribute("index") IndexForm form, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {	
 			return "login";
 		}
 		
 		User user = userDao.findIdAndPass(form.getMail(), form.getPassword());
-
     	if(user == null) {
-    		model.addAttribute("msg","メールアドレスまたはパスワードが間違っています");
+    		model.addAttribute("msg","メールアドレスまたはパスワードが間違っています。");
     		return "login";
     	}
     	else if(user.getRoleId() == 0) {
@@ -546,7 +557,10 @@ public class IndexController {
 	// 戻るボタンを押すと、メニュー画面に遷移
 	@RequestMapping(value = "/back", method = RequestMethod.GET)
 	public String back(@ModelAttribute("index") UserForm form, Model model) {
-
+		User user = (User) session.getAttribute("user");
+		if(user.getRoleId() == 0) {
+			return "admin";
+		}
 		return "menu";
 	}
 	
@@ -701,13 +715,13 @@ public class IndexController {
 		return "adminInformation";
 	}
 
-	//戻るボタンを押すと、admin画面に遷移
-	@RequestMapping(value = "/backAdmin", method = RequestMethod.POST)
-	public String backAdmin(@ModelAttribute("index") UserForm form, Model model) {
-		
-
-		return "admin";
-	}
+//	//戻るボタンを押すと、admin画面に遷移
+//	@RequestMapping(value = "/backAdmin", method = RequestMethod.POST)
+//	public String backAdmin(@ModelAttribute("index") UserForm form, Model model) {
+//		
+//
+//		return "admin";
+//	}
 
 	//ハンバーガーメニューからログアウトへ
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

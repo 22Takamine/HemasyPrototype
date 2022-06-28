@@ -17,7 +17,9 @@ import com.example.entity.User;
 @Repository
 public class UserDao {
 
-	private static final String SELECT_BY_PRODUCT_ID = "SELECT * FROM users WHERE user_id = :user_id";
+	private static final String SELECT_BY_ID = "SELECT * FROM users WHERE user_id = :user_id";
+	private static final String SELECT_BY_NAME = "SELECT * FROM users WHERE user_name = :name";
+	private static final String SELECT_BY_MAIL = "SELECT * FROM users WHERE mail = :mail";
 	private static final String SELECT_ID_AND_PASS = "SELECT * FROM users WHERE mail = :mail and password = :password";
 	private static final String INSERT = "INSERT INTO users(user_name,mail,password,sex,birth,height,goal_exercise_time,goal_calorie,created_at,rank_flag,alcohol_flag,smoke_flag,role_id,achievement_id,achievement_flag)"
 			+ " VALUES(:user_name, :mail,:password,:sex,:birth,:height,:goal_exercise_time,:goalCalorie,:createdAt,:rankFlag,:alcoholFlag,:smokeFlag,1,1,0)";
@@ -28,10 +30,32 @@ public class UserDao {
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
 	public User findById(int userId) {
-		String sql = SELECT_BY_PRODUCT_ID;
+		String sql = SELECT_BY_ID;
 
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("user_id", userId);
+
+		var list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<User>(User.class) );
+		return list.isEmpty() ? null :list.get(0);
+
+	}
+	
+	public User findByName(String name) {
+		String sql = SELECT_BY_NAME;
+
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("name", name);
+
+		var list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<User>(User.class) );
+		return list.isEmpty() ? null :list.get(0);
+
+	}
+	
+	public User findByMail(String mail) {
+		String sql = SELECT_BY_MAIL;
+
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("mail", mail);
 
 		var list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<User>(User.class) );
 		return list.isEmpty() ? null :list.get(0);

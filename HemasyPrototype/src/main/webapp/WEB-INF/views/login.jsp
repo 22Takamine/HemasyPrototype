@@ -15,22 +15,21 @@
 <title>トップ画面</title>
 </head>
 <body>
-	<c:if test="${not empty msg}">
-		<p>${fn:escapeXml(msg)}</p>
-	</c:if>
 	<form:form action="result" modelAttribute="index" method="post">
 
 		<div class="pc-wrap">
 			<div class="content form">
 				<h1 class="mb-30 f-56 logoF">Hemasy</h1>
+				<c:if test="${not empty msg}">
+					<p >${fn:escapeXml(msg)}</p>
+				</c:if>
 
 				<p class="mb-5">
 					<label><fmt:message key="form.lbl.mail" /></label>
 				</p>
 				<p class="mb-20">
-					<form:input path="mail" type="email" placeholder="メールアドレス"
-						class="width-100-percent" />
-					<form:errors path="mail" cssStyle="color: red" />
+					<form:input path="mail" placeholder="メールアドレス" class="width-100-percent" />
+					<form:errors path="mail" cssStyle="color: red"/>
 				</p>
 
 				<p class="mb-5">

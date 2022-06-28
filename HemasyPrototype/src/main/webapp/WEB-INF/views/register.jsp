@@ -22,9 +22,7 @@
  <div class="center">
  
 	<h1>登録情報を入力してください</h1>
-	<c:if test="${not empty msgRegister}">
-  		<p>${fn:escapeXml(msgRegister)}</p>
-  	</c:if>
+	
 
 	<form:form action="loginBack" modelAttribute="index" method="post">
 	<form:input path="achievementId" type="hidden" value="1" readonly="readonly" />
@@ -32,12 +30,18 @@
 			<fmt:message key="form.lbl.name" />
 			<form:input path="name" id="registerinput"/>
 			<form:errors path="name" cssStyle="color: red"/>
+			<c:if test="${not empty msgName}">
+  				<div>${fn:escapeXml(msgName)}</div>
+  			</c:if>
 		</div>
 
 		<div class="mb-20">
 			<fmt:message key="form.lbl.mail" />
 			<form:input type="email" path="mail" />
 			<form:errors path="mail" cssStyle="color: red"/>
+			<c:if test="${not empty msgMail}">
+  				<div>${fn:escapeXml(msgMail)}</div>
+  			</c:if>
 		</div>
 
 		<div class="mb-20">
@@ -87,7 +91,7 @@
 
 			<form:radiobutton path="rankFlag" value="0"/>
 			参加する
-			<form:radiobutton path="rankFlag" value="1"/>
+			<form:radiobutton path="rankFlag" value="1" checked="checked"/>
 			参加しない
 		</div>
 
@@ -96,7 +100,7 @@
 
 			<form:radiobutton path="smokeFlag" value="0"/>
 			吸う
-			<form:radiobutton path="smokeFlag" value="1"/>
+			<form:radiobutton path="smokeFlag" value="1" checked="checked"/>
 			吸わない
 
 		</div>
@@ -106,7 +110,7 @@
 
 			<form:radiobutton path="alcoholFlag" value="0"/>
 			飲む
-			<form:radiobutton path="alcoholFlag" value="1"/>
+			<form:radiobutton path="alcoholFlag" value="1" checked="checked"/>
 			飲まない
 		</div>
 
