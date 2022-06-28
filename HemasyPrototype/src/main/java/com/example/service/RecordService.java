@@ -23,6 +23,11 @@ public class RecordService {
 	}
 	
 	public void achievementUnlock(int user_id) {
+		try {
+			achievementDao.unlock(0,user_id);
+		}catch(Exception e) {
+			
+		}
     	int userFoodListSize = listAndRecord.getUserFoodListSize(user_id);
     	int userExerciseListSize = listAndRecord.getUserExerciseListSize(user_id);
     	List<Achievements> foodACVList = achievementDao.getFoodDayAchievement();
