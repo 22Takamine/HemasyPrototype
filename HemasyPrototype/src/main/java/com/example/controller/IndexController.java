@@ -85,9 +85,25 @@ public class IndexController {
     	}
     	else if(user.getRoleId() == 0) {
     		
-    		session.setAttribute("user", user);
-
-    		return "admin";
+    			
+    			List<User> userList = userDao.getAllUser();
+    			
+    			List<ListAndRecord> foodList = listAndRecordDao.FoodListById(user.getUserId());
+    			
+    			List<ListAndRecord> alcoholList = listAndRecordDao.AlcoholListById(user.getUserId());
+    			
+    			List<ListAndRecord> sportList = listAndRecordDao.SportListById(user.getUserId());
+    			
+    			System.out.println(sportList.size());
+    			
+    			
+    			session.setAttribute("userList", userList);
+    			session.setAttribute("foodList", foodList);
+    			session.setAttribute("alcoholList", alcoholList);
+    			session.setAttribute("sportList", sportList);
+    			
+    			return "admin";
+  
     	}
     	else {
     		

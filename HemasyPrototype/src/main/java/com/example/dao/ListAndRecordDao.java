@@ -67,6 +67,8 @@ public class ListAndRecordDao {
 			+ "";
 	//称号ランキング
 	String sql5 = "select user_name, sum_score, achievement_name from (select user_name, sum_score, achievement_id from users as u join (select user_id, sum(score) as sum_score from achievement_unlock as au join achievement as a on au.achievement_id = a.achievement_id group by user_id) as a on u.user_id = a.user_id) as u join achievement as a on u.achievement_id = a.achievement_id order by sum_score desc;";
+	//りんのものをコピペしてきたから、マージするときは、消してください。
+	String sql6 = "SELECT * FROM lists_and_records WHERE user_id = :user_id AND category = 1 AND type = 2";
 
 	
 	//やすなり-------------------------------------------------------------------------------------------------------------
@@ -517,6 +519,17 @@ order by create_date
 	        jdbcTemplate.update(INSERT_RECORD, paramSource);
 		}
 		return 1;
+	}
+	
+	public List<ListAndRecord> SportListById(int userId) {
+			
+			MapSqlParameterSource param = new MapSqlParameterSource();
+			param.addValue("user_id", userId);
+			
+			var list = jdbcTemplate.query(sql6, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class) );
+			
+			return list.isEmpty() ? null :list;
+		
 	}
 
 }

@@ -11,7 +11,6 @@
 <head>
 <meta charset="UTF-8">
 <title>マイリスト編集画面</title>
-<link href="css/commons.css" rel="stylesheet">
 <link href="css/common.css" rel="stylesheet">
 <link href="css/ameku.css" rel="stylesheet">
 <link
@@ -52,7 +51,7 @@
 		<h2 class="center f-32">マイリスト編集</h2>
 		<form action="listCommit" method="post">
 			<input type="hidden" name="createDate" id="todayDate">
-			<div id="food-list" class="center mb-45 bgc">
+			<div id="food food-list" class="center mb-45 bgc">
 				<h2 class="mb-10">食べ物リスト<button type="button" onclick="addFoodData()">⊕</button></h2>
 				<c:forEach var="foodData" items="${foodList}" varStatus="fStatus">
 					<p class="foodData mb-10">
@@ -64,7 +63,7 @@
 					</p>
 				</c:forEach>
 			</div>
-			<div id="alcohol-list" class="center mb-45 bgc">
+			<div id="alcohol alcohol-list" class="center mb-45 bgc">
 				<h2 class="mb-10">
 					アルコール
 					<button type="button" onclick="addAlcData()">⊕</button>
@@ -85,7 +84,7 @@
 			</div>
 			<div class="center mb-45">
 				<input type="submit" value="登録" class="back-button info-btn">
-				<button type="button" class="back-button info-btn">戻る</button>
+			<button type="button" onclick="location.href='/back'" class="back-button info-btn"><fmt:message key="form.lbl.back"/></button>
 			</div>
 		</form>
 

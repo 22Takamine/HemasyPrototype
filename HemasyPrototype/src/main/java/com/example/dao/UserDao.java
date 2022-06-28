@@ -23,7 +23,7 @@ public class UserDao {
 	private static final String INSERT = "INSERT INTO users(user_name,mail,password,sex,birth,height,goal_exercise_time,goal_calorie,created_at,rank_flag,alcohol_flag,smoke_flag,role_id,achievement_id,achievement_flag)"
 			+ " VALUES(:user_name, :mail,:password,:sex,:birth,:height,:goal_exercise_time,2000,:createdAt,:rankFlag,:alcoholFlag,:smokeFlag,1,1,0)";
 	private static final String UPDATE = "UPDATE users SET user_name = :name, mail = :mail, password = :pass, sex = :sex, birth = :birth, height = :height, goal_exercise_time = :time, goal_calorie = :calorise, rank_flag = :rank, alcohol_flag = :alcohol, smoke_flag = :smoke, achievement_id = :achievement WHERE user_id = :id";
-
+	private static final String GET_ALL_USER = "SELECT * FROM users";
 
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
@@ -96,5 +96,10 @@ public class UserDao {
         jdbcTemplate.update(sql, param);  
     	
     }
+	
+	//リン作成。すべてのユーザーを取得。管理者ページで利用。
+		public List<User> getAllUser() {
+			return jdbcTemplate.query(GET_ALL_USER, new BeanPropertyRowMapper<User>(User.class));
+		}
 }
 

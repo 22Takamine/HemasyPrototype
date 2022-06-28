@@ -11,7 +11,6 @@
 <head>
 <meta charset="UTF-8">
 <title>記録画面</title>
-<link href="css/commons.css" rel="stylesheet">
 <link href="css/common.css" rel="stylesheet">
 <link href="css/ameku.css" rel="stylesheet">
 <link

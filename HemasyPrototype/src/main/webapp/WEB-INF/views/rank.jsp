@@ -36,7 +36,7 @@
   	<h2>ランキング</h2>
   	
   	<table>
-   <div class="caption"><p>検索結果：${DayRanking.size()}件</p></div>
+   	<div class="caption"><p>検索結果：${DayRanking.size()}件</p></div>
     <thead>
       <tr>
         <th></th>
