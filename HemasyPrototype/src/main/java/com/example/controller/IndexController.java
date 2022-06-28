@@ -77,7 +77,7 @@ public class IndexController {
 	}
 
 	//ログイン画面から、新規登録画面に遷移
-	@RequestMapping(value = "/result", params="register", method = RequestMethod.POST)
+	@RequestMapping(value = "/register",method = RequestMethod.GET)
 	public String register(@ModelAttribute("index") UserForm form, Model model) {
     	
         return "register";
@@ -183,11 +183,6 @@ public class IndexController {
     		session.setAttribute("livarImg","../../" + AlcoholColorLevel.getColorPath());
     		session.setAttribute("stomachImg",CalorieColorLevel.getColorPath());
     		session.setAttribute("bmiImg",bmipath.getImgPath());
-
-			session.setAttribute("calorieColorPath", CalorieColorLevel.getColorPath());
-			session.setAttribute("smokeColorPath", SmokeColorLevel.getColorPath());
-			session.setAttribute("alcoholColorPath", AlcoholColorLevel.getColorPath());
-			session.setAttribute("user", user);
     		
     		return "menu";
 		}
@@ -410,7 +405,64 @@ public class IndexController {
 //    	int userId = 1;
 //    	User user = userDao.findById(userId);
 //    	recordService.setZeroPastRecords(user);
-//    	
+
+		
+		User user = (User) session.getAttribute("user");
+		recordService.setZeroPastRecords(user.getUserId());
+		ListAndRecord userSmokeDate = listAndRecordDao.getLatestSmokeDateRecord(user.getUserId());
+		ListAndRecord userAlcohol = listAndRecordDao.getLatestAlcoholRecord(user.getUserId());
+		ListAndRecord userMetsAndTime = listAndRecordDao.getLatestMetsAndTimeRecord(user.getUserId());
+		ListAndRecord userCalorieIntake = listAndRecordDao.getLatestCalorieIntake(user.getUserId());
+		ListAndRecord userWeight = listAndRecordDao.getLatestWeightRecordM(user.getUserId());
+		ListAndRecord userAlcoholDate = listAndRecordDao.getLatestAlcoholDateRecord(user.getUserId());
+		
+		Integer alcoholLevel;
+		Double CaloriesBurned = userWeight.getValue2() * userMetsAndTime.getValue2() * userMetsAndTime.getValue3() * 1.05;
+		Double height = (double) (user.getHeight()/100.0);
+		Double bmi = (double) (userWeight.getValue2()/(height*height));
+		Integer calorieLevel = (int) (Math.ceil(userCalorieIntake.getValue2() - CaloriesBurned)/user.getGoalCalorie()*10);
+		Integer smokeLevel = userSmokeDate.getValue2();
+		Double goalCalorie = (Math.ceil((height * height)*22)*30);
+		
+		if(calorieLevel <= 0) {
+			calorieLevel = 1;
+		}
+		if(smokeLevel <= 0) {
+			smokeLevel = 1;
+		}
+		if(userAlcohol.getValue2() >= 20) {
+			alcoholLevel = 2;
+		}
+		else {
+			alcoholLevel = 1;
+		}
+		Bmi bmipath = bmiDao.getBmiPath(bmi);
+		
+		Color SmokeColorLevel = colorDao.getSmokeColorLevel(smokeLevel);
+		Color AlcoholColorLevel = colorDao.getAlcoholColorLevel(alcoholLevel);
+		Color CalorieColorLevel = colorDao.getCalorieColorLevel(calorieLevel);
+		bmi = Math.floor(bmi * 10)/10;
+		System.out.println("カロリー: " + CalorieColorLevel.getColorPath());
+		System.out.println("タバコ: " + SmokeColorLevel.getColorPath());
+		System.out.println("アルコール: " + AlcoholColorLevel.getColorPath());
+		System.out.println("BMI: " + bmi);
+
+		//計算したbmiをsessionに保存
+		session.setAttribute("bmiValue",bmi);
+
+		//ツールチップに表示する項目をsessionに保存する
+		session.setAttribute("lungWord", "禁煙"+smokeLevel+"日目です");
+		session.setAttribute("livarWord", "禁酒"+userAlcoholDate.getValue2()+"日目です。");
+		session.setAttribute("stomachGoalkcal", "目標摂取カロリーは"+goalCalorie+"Kcalです。");
+		session.setAttribute("stomachInputKcal", "摂取カロリーは"+ userCalorieIntake.getValue2()+"Kcalです。");
+		session.setAttribute("stomachOutputKcal", "消費カロリーは" + CaloriesBurned + "Kcalです。" );
+		
+		session.setAttribute("lungImg","../../" + SmokeColorLevel.getColorPath());
+		session.setAttribute("livarImg","../../" + AlcoholColorLevel.getColorPath());
+		session.setAttribute("stomachImg",CalorieColorLevel.getColorPath());
+		session.setAttribute("bmiImg",bmipath.getImgPath());
+		session.setAttribute("user", user);
+    	
     	return "menu";
     	
     }

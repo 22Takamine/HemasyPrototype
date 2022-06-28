@@ -66,24 +66,63 @@
 .header-logo > a{
  text-decoration: none;
  color: #000000;
- font-size: 30px;
- float: left;
- padding: 10px 10px 5px 10px;
+ padding:2rem 2rem;
 }
 
 header {
-	border-bottom: 1px solid; /* 線の太さと可視化 */
-	height: 100px;
+	height: 60px;
 }
 
 main {
-	height: 600px;
+	height: 100%;
+}
+
+
+
+.main {
+	background-color:#fff;
+	padding: 2rem;
+}
+
+.main.ranking{
+	width: 70%;
+	max-width: 830px;
+	margin: 0 auto;
+}
+
+.main h2{
+	text-align:center;
+	margin:1rem 0 3.3rem 0;
+	font-size:1.6rem;
+}
+
+table{
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+table tr{
+  border-bottom: solid 1px #eee;
+  cursor: pointer;
+}
+
+table tbody tr:hover{
+  background-color: #d4f0fd;
+}
+
+table th,table td{
+  text-align: center;
+  width: 25%;
+  padding: 15px 0;
+  vertical-align: middle;
 }
 
 .main-box{
 	display: flex;
 	justify-content: space-between;
 	height: 100%;
+	padding-top: 5rem;
 }
 
 .button-box{
@@ -188,27 +227,23 @@ main {
     width: 33%;
     justify-content: center;
     align-items: center;
+    z-index: 0;
 }
-
-
+.tooltip img{position:absolute;z-index:1;}
+.tooltip .stomach img{top:0; left:50%; right:50%;}
 .description {
     display: none;
     position: absolute;
     padding: 10px;
-    font-size: 12px;
+    font-size: 20px;
     line-height: 1.6em;
     color: #000;
     border-radius: 5px;
     background: #fff;
-    width: 200px;
-    height: 100px;
-    border: 1px solid;
+    width: 280px;
+    z-index: 2;
 }
 
-.description p {
-	text-align: center;
-}
- 
 .description:before {
     content: "";
   	position: absolute;
@@ -254,6 +289,12 @@ main {
  
  table {
   counter-reset: rowCount;
+}
+
+.insert{
+	max-width: 760px;
+	width: 70%;
+	margin:0 auto;
 }
 
 table > tbody > tr {
@@ -343,5 +384,9 @@ footer {
 
 #modal.hidden {
   display: none;
+}
+
+#selectGraph{
+	margin:0.8rem 0;	
 }
 

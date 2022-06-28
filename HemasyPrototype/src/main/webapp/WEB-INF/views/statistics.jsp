@@ -12,8 +12,29 @@
 <head>
 <meta charset="UTF-8">
 <title>統計画面</title>
-<link href="css/commons.css" rel="stylesheet">
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<link rel="manifest" href="img/favicon/manifest.json">
+<meta name="apple-mobile-web-app-title" content="Hemasy">
+<meta name="application-name" content="Hemasy">
+<meta name="theme-color" content="#fff">
+
+<link media="all" type="text/css" rel="stylesheet"
+	href="css/commons.css">
+<link media="all" type="text/css" rel="stylesheet" href="css/style.css">
+<link media="all" type="text/css" rel="stylesheet" href="css/common.css">
+<link
+	href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
@@ -24,39 +45,52 @@
 </head>
 
 <body>
-<header>
-	<div class="header-logo"><a href="./back">Hemasy</a></div>
-	<form:form action="hamburger" modelAttribute="index" method="post">
-	    <button type="button" class="menu-btn">
-	      <i class="fa fa-bars" aria-hidden="true"></i>
-	    </button>
-	    <div class="menu">
-	      <div class="menu__item"><a href="./account">アカウント管理</a></div>
-	      <div class="menu__item"><a href="./rank">ランキング</a></div>
-	      <div class="menu__item"><a href="./list">リスト編集</a></div>
-	      <div class="menu__item"><a href="./information">お問い合わせ</a></div>
-	      <div class="menu__item"><a href="./logout">ログアウト</a></div>
-	    </div>
-    </form:form>
-</header>
-<script src="js/commons.js"></script>
+	<header>
+		<div class="header-logo">
+			<a class="f-24 logoF" href="./back">Hemasy</a>
+		</div>
+		<form:form action="hamburger" modelAttribute="index" method="post">
+			<button type="button" class="menu-btn">
+				<i class="fa fa-bars" aria-hidden="true"></i>
+			</button>
+			<div class="menu">
+				<div class="menu__item">
+					<a href="./account">アカウント管理</a>
+				</div>
+				<div class="menu__item">
+					<a href="./rank">ランキング</a>
+				</div>
+				<div class="menu__item">
+					<a href="./list">リスト編集</a>
+				</div>
+				<div class="menu__item">
+					<a href="./information">お問い合わせ</a>
+				</div>
+				<div class="menu__item">
+					<a href="./logout">ログアウト</a>
+				</div>
+			</div>
+		</form:form>
+	</header>
+	<script src="js/commons.js"></script>
 
-	<br>
-	<br>
+	<div class="main ranking">
+	
 	<h1>統計</h1>
 	<input type="text" id="hide" value="0">
 	<input type="text" id="hideType" value="1">
 	<div id="selectGraph">
 		<button name="0" data-index="food" onclick="entryClick(1)">食事</button>
 		<button name="1" data-index="exercise" onclick="entryClick(2)">運動</button>
-		<button name="2"data-index="alcohol" onclick="entryClick(3)">酒</button>
-		<button name="3"data-index="smoke" onclick="entryClick(4)">タバコ</button>
-		<button name="4 "data-index="bmi" onclick="entryClick(5)">体重</button>
+		<button name="2" data-index="alcohol" onclick="entryClick(3)">酒</button>
+		<button name="3" data-index="smoke" onclick="entryClick(4)">タバコ</button>
+		<button name="4 " data-index="bmi" onclick="entryClick(5)">体重</button>
 	</div>
 	<div>
-<label><input type="radio" name="poti" value="0" checked onclick="poti(0)">週</label>
-<label><input type="radio" name="poti" value="1" onclick="poti(1)">月</label>
-<label><input type="radio" name="poti" value="2" onclick="poti(2)">年</label>
+		<label><input type="radio" name="poti" value="0" checked
+			onclick="poti(0)">週</label> <label><input type="radio"
+			name="poti" value="1" onclick="poti(1)">月</label> <label><input
+			type="radio" name="poti" value="2" onclick="poti(2)">年</label>
 
 	</div>
 	<input type="button" value="左" onclick="getName()">
@@ -79,8 +113,9 @@
 	<div style="width: 800px">
 		<canvas id="bmiGraph"></canvas>
 	</div>
+</div>
 	
-<script>
+	<script>
 function poti(checkValue) {
 	let elements = document.getElementsByName('poti');
 	let len = elements.length;
@@ -100,7 +135,7 @@ function poti(checkValue) {
 
 };
 </script>
-<script>
+	<script>
 //食事記録グラフの作成　ユーザーの目標摂取カロリーをセッションから取得するようにする。
 let foodList = [];
 let goalCalorie = [];
@@ -152,7 +187,7 @@ function getFoodList() {
 };
 </script>
 
-<script>
+	<script>
 //運動記録グラフの作成　ユーザーの目標運動時間をセッションから取得するようにする。
 let exerciseList = [];
 let goalExerciseTime = [];
@@ -206,7 +241,7 @@ function getExerciseList() {
 };
 </script>
 
-<script>
+	<script>
 //アルコール記録グラフ
 let alcoholList = [];
 let deadLine = [];
@@ -249,7 +284,7 @@ function getAlcoholList() {
 	.catch(error => console.log(error))
 };
 </script>
-<script>
+	<script>
 //タバコ記録グラフ
 let smokeList = [];
 //データの取得
@@ -286,7 +321,7 @@ function getSmokeList() {
 	.catch(error => console.log(error))
 };
 </script>
-<script>
+	<script>
 //体重記録グラフ
 let bmiList = [];
 //データの取得
@@ -325,7 +360,7 @@ function getBmiList() {
 	.catch(error => console.log(error))
 };
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 function entryClick(id) {
 	document.getElementById("hideType").value = id;
 	if (id == 1) {	
@@ -369,7 +404,7 @@ function entryClick(id) {
 window.onload = entryClick(1);
 </script>
 
-<script>
+	<script>
 var exerciseChartOption = {
 	responsive: true,
 	scales: {
@@ -389,7 +424,7 @@ var exerciseChartOption = {
 };
 </script>
 
-<script>	
+	<script>	
 var complexChartOption = {
 	responsive: true,
 	scales: {
