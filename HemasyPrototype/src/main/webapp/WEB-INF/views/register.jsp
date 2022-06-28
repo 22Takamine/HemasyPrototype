@@ -12,9 +12,7 @@
 <meta charset="UTF-8">
 <title>新規登録</title>
 <link href="css/commons.css" rel="stylesheet">
-<link
-	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-	rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
 	<h1>登録情報を入力してください</h1>
