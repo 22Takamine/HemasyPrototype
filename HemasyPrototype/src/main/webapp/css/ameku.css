@@ -381,6 +381,15 @@ footer {
 	padding: 0.5rem;
 }
 
+th,td {
+    border: solid 1px;              /* 枠線指定 */
+}
+ 
+table {
+    border-collapse:  collapse;     /* セルの線を重ねる */
+    border-radius:100px;
+}
+
 
 
 

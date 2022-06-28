@@ -50,10 +50,24 @@
 				<h2>
 					ユーザー一覧
 				</h2>
-				<c:forEach var="userData" items="${userList}" varStatus="uStatus">
-					<input type="hidden" name="userId${uStatus.index}" value="${userData.userId}">
-					<p>名前: ${userData.userName}　 メールアドレス: ${userData.mail}</p>
-				</c:forEach>
+				<table>
+				    <thead>
+				      <tr>
+				        <th class="center">名前</th>
+				        <th class="center">メールアドレス</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <c:forEach var="userData" items="${userList}" varStatus="uStatus">
+				      <input type="hidden" name="userId${uStatus.index}" value="${userData.userId}">
+				        <tr>
+				          <td><c:out value="${userData.userName}"/></td>
+				          <td><c:out value="${userData.mail}"/></td>
+				        </tr>
+					  </c:forEach>
+				    </tbody>
+				 </table>
+				
 			</div>
 			<div id="food admin-food" class="center mb-45 bgc">
 				<h2>
@@ -61,7 +75,7 @@
 					<button type="button" onclick="addFoodData()">⊕</button>
 				</h2>
 				<c:forEach var="foodData" items="${foodList}" varStatus="fStatus">
-					<p class="foodData">
+					<p class="foodData mb-10">
 						<input type="text" value="${foodData.value1}"
 							name="value1Food${fStatus.index}" required> <input
 							type="number" min="0" value="${foodData.value2}"
@@ -76,7 +90,7 @@
 					<button type="button" onclick="addSpoData()">⊕</button>
 				</h2>
 				<c:forEach var="sportData" items="${sportList}" varStatus="sStatus">
-					<p class="sportData">
+					<p class="sportData mb-10">
 						<input type="text" value="${sportData.value1}"
 							name="value1Spo${sStatus.index}" required> <input
 							type="number" min="0" value="${sportData.value2}"
@@ -92,7 +106,7 @@
 				</h2>
 				<c:forEach var="alcoholData" items="${alcoholList}"
 					varStatus="aStatus">
-					<p class="alcoholData">
+					<p class="alcoholData mb-10">
 						<input type="text" value="${alcoholData.value1}"
 							name="value1Alc${aStatus.index}" required> <input
 							type="number" min="0.1" max="100" value="${alcoholData.value4}"
