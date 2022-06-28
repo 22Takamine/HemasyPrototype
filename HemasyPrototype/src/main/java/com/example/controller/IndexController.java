@@ -161,7 +161,7 @@ public class IndexController {
     	else {
     		//session.setAttribute("user", user);
     		recordService.setZeroPastRecords(user.getUserId());
-    		ListAndRecord userSmokeDate = listAndRecordDao.getLatestSmokeDateRecord(user.getUserId());
+    		Double smokeLevel = listAndRecordDao.getLatestSmokeDateRecord(user.getUserId());
     		ListAndRecord userAlcohol = listAndRecordDao.getLatestAlcoholRecord(user.getUserId());
     		ListAndRecord userMetsAndTime = listAndRecordDao.getLatestMetsAndTimeRecord(user.getUserId());
     		ListAndRecord userCalorieIntake = listAndRecordDao.getLatestCalorieIntake(user.getUserId());
@@ -173,7 +173,6 @@ public class IndexController {
     		Double height = (double) (user.getHeight()/100.0);
     		Double bmi = (double) (userWeight.getValue2()/(height*height));
     		Integer calorieLevel = (int) (Math.ceil(userCalorieIntake.getValue2() - CaloriesBurned)/user.getGoalCalorie()*10);
-    		Double smokeLevel = userSmokeDate.getValue2();
     		int goalCalorie = user.getGoalCalorie();
     		
     		if(calorieLevel <= 0) {
@@ -202,7 +201,14 @@ public class IndexController {
     		session.setAttribute("bmiValue",bmi);
 
     		//ツールチップに表示する項目をsessionに保存する
-    		session.setAttribute("lungWord", "禁煙"+ (20 - smokeLevel) +"日目です");
+    		System.out.println(smokeLevel);
+    		String smokeMessage = "";
+    		if (smokeLevel == 1.0) {
+    			smokeMessage = "あなたの肺はきれいです";
+    		} else {
+    			smokeMessage = "禁煙"+(21 - smokeLevel) +"日目です";
+    		}
+    		session.setAttribute("lungWord", smokeMessage);
     		session.setAttribute("livarWord", "禁酒"+userAlcoholDate.getValue2()+"日目です。");
     		session.setAttribute("stomachGoalkcal", "目標摂取カロリーは"+goalCalorie+"Kcalです。");
     		session.setAttribute("stomachInputKcal", "摂取カロリーは"+ userCalorieIntake.getValue2()+"Kcalです。");
@@ -354,7 +360,7 @@ public class IndexController {
 		
 		User user = (User) session.getAttribute("user");
 		recordService.setZeroPastRecords(user.getUserId());
-		ListAndRecord userSmokeDate = listAndRecordDao.getLatestSmokeDateRecord(user.getUserId());
+		Double smokeLevel = listAndRecordDao.getLatestSmokeDateRecord(user.getUserId());
 		ListAndRecord userAlcohol = listAndRecordDao.getLatestAlcoholRecord(user.getUserId());
 		ListAndRecord userMetsAndTime = listAndRecordDao.getLatestMetsAndTimeRecord(user.getUserId());
 		ListAndRecord userCalorieIntake = listAndRecordDao.getLatestCalorieIntake(user.getUserId());
@@ -366,7 +372,6 @@ public class IndexController {
 		Double height = (double) (user.getHeight()/100.0);
 		Double bmi = (double) (userWeight.getValue2()/(height*height));
 		Integer calorieLevel = (int) (Math.ceil(userCalorieIntake.getValue2() - CaloriesBurned)/user.getGoalCalorie()*10);
-		Double smokeLevel = userSmokeDate.getValue2();
 		
 		if(calorieLevel <= 0) {
 			calorieLevel = 1;
@@ -393,7 +398,14 @@ public class IndexController {
 		session.setAttribute("bmiValue",bmi);
 
 		//ツールチップに表示する項目をsessionに保存する
-		session.setAttribute("lungWord", "禁煙"+(20 - smokeLevel) +"日目です");
+		System.out.println(smokeLevel);
+		String smokeMessage = "";
+		if (smokeLevel == 1.0) {
+			smokeMessage = "あなたの肺はきれいです";
+		} else {
+			smokeMessage = "禁煙"+(21 - smokeLevel) +"日目です";
+		}
+		session.setAttribute("lungWord", smokeMessage);
 		session.setAttribute("livarWord", "禁酒"+userAlcoholDate.getValue2()+"日目です。");
 		session.setAttribute("stomachGoalkcal", "目標摂取カロリーは"+user.getGoalCalorie()+"Kcalです。");
 		session.setAttribute("stomachInputKcal", "摂取カロリーは"+ userCalorieIntake.getValue2()+"Kcalです。");
