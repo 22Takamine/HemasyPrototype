@@ -85,7 +85,7 @@
 			</div>
 			<div class="center mb-45">
 				<input type="submit" value="登録" class="back-button info-btn">
-			<button type="button" onclick="location.href='/back'" class="back-button info-btn"><fmt:message key="form.lbl.back"/></button>
+				<button type="button" onclick="location.href='/back'" class="back-button info-btn"><fmt:message key="form.lbl.back"/></button>
 			</div>
 		</form>
 

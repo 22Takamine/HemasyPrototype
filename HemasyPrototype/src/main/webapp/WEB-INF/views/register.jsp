@@ -11,10 +11,11 @@
 <head>
 <meta charset="UTF-8">
 <title>新規登録</title>
-<link href="css/commons.css" rel="stylesheet">
-<link href="css/common.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<link
+<link href="css/ameku.css" rel="stylesheet">
+<!-- <link href="css/commons.css" rel="stylesheet">
+ --><link href="css/common.css" rel="stylesheet">
+<!-- <link href="css/style.css" rel="stylesheet">
+ --><link
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
 </head>
@@ -114,16 +115,16 @@
 			飲まない
 		</div>
 
-		<form:button class="mb-20">
+		<form:button class="mb-20 info-btn">
 			<fmt:message key="form.lbl.regist" />
 		</form:button>
+		<form:form action="index" modelAttribute="index" method="post" >
+			<form:button class="info-btn">
+				<fmt:message key="form.lbl.back" />
+			</form:button>
+		</form:form>
 	</form:form>
 
-	<form:form action="index" modelAttribute="index" method="post">
-		<form:button>
-			<fmt:message key="form.lbl.back" />
-		</form:button>
-	</form:form>
  </div>
 	<script src="js/commons.js"></script>
 </body>
