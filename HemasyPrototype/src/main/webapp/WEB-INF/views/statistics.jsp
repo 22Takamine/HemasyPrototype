@@ -121,7 +121,6 @@
 <script>
 //食事Graphがクリックされたとき
 document.getElementById('foodGraph').addEventListener('click', e => {
-	console.log(e)
 	const elements = window.foodListChart.getElementAtEvent(e);
 	if (elements[0]) {
 		if (document.getElementById("hide").value == 2){
@@ -132,8 +131,6 @@ document.getElementById('foodGraph').addEventListener('click', e => {
 			document.getElementById("date").value = elements[0]._xScale.min.substr(0,5) + ('000' + (Number(elements[0]._index) + 1)).slice(-2) + '-01';
 			entryClick(1);
  	 	}else {
-			console.log('aiueo', elements)
-			console.log('atamaOkasinaru', elements[0]._xScale.min.substr(0,7) + '-' + (Number(elements[0]._xScale.min.substr(8,2)) + (Number(elements[0]._index))))
 			window.location.href = '/record?recordDate=' + elements[0]._xScale.min.substr(0,7) + '-' + (Number(elements[0]._xScale.min.substr(8,2)) + (Number(elements[0]._index)));
 		}	
 	}
@@ -142,7 +139,6 @@ document.getElementById('foodGraph').addEventListener('click', e => {
 <script>
 //運動Graphがクリックされたとき
 document.getElementById('exerciseGraph').addEventListener('click', e => {
-	console.log(e)
 	const elements = exerciseListChart.getElementAtEvent(e);
 	if (elements[0]) {
 		if (document.getElementById("hide").value == 2){
@@ -153,8 +149,6 @@ document.getElementById('exerciseGraph').addEventListener('click', e => {
 			document.getElementById("date").value = elements[0]._xScale.min.substr(0,5) + ('000' + (Number(elements[0]._index) + 1)).slice(-2) + '-01';
 			entryClick(2);
 		}else {
-			console.log('aiueo', elements)
-			console.log('atamaOkasinaru', elements[0]._xScale.min.substr(0,7) + '-' + (Number(elements[0]._xScale.min.substr(8,2)) + (Number(elements[0]._index))))
 			window.location.href = '/record?recordDate=' + elements[0]._xScale.min.substr(0,7) + '-' + (Number(elements[0]._xScale.min.substr(8,2)) + (Number(elements[0]._index)));
 		}	
 	}
@@ -163,7 +157,6 @@ document.getElementById('exerciseGraph').addEventListener('click', e => {
 <script>
 //酒Graphがクリックされたとき
 document.getElementById('alcoholGraph').addEventListener('click', e => {
-	console.log(e)
 	const elements = alcoholListChart.getElementAtEvent(e);
 	if (elements[0]) {
 		if (document.getElementById("hide").value == 2){
@@ -174,8 +167,6 @@ document.getElementById('alcoholGraph').addEventListener('click', e => {
 			document.getElementById("date").value = elements[0]._xScale.min.substr(0,5) + ('000' + (Number(elements[0]._index) + 1)).slice(-2) + '-01';
 			entryClick(3);
 		}else {
-			console.log('aiueo', elements)
-			console.log('atamaOkasinaru', elements[0]._xScale.min.substr(0,7) + '-' + (Number(elements[0]._xScale.min.substr(8,2)) + (Number(elements[0]._index))))
 			window.location.href = '/record?recordDate=' + elements[0]._xScale.min.substr(0,7) + '-' + (Number(elements[0]._xScale.min.substr(8,2)) + (Number(elements[0]._index)));
 		}	
 	}
@@ -184,7 +175,6 @@ document.getElementById('alcoholGraph').addEventListener('click', e => {
 <script>
 //体重Graphがクリックされたとき
 document.getElementById('bmiGraph').addEventListener('click', e => {
-	console.log(e)
 	const elements = bmiListChart.getElementAtEvent(e);
 	if (elements[0]) {
 		if (document.getElementById("hide").value == 2){
@@ -195,8 +185,6 @@ document.getElementById('bmiGraph').addEventListener('click', e => {
 			document.getElementById("date").value = elements[0]._xScale.min.substr(0,5) + ('000' + (Number(elements[0]._index) + 1)).slice(-2) + '-01';
 			entryClick(5);
 		}else {
-			console.log('aiueo', elements)
-			console.log('atamaOkasinaru', elements[0]._xScale.min.substr(0,7) + '-' + (Number(elements[0]._xScale.min.substr(8,2)) + (Number(elements[0]._index))))
 			window.location.href = '/record?recordDate=' + elements[0]._xScale.min.substr(0,7) + '-' + (Number(elements[0]._xScale.min.substr(8,2)) + (Number(elements[0]._index)));
 		}	
 	}
@@ -205,9 +193,7 @@ document.getElementById('bmiGraph').addEventListener('click', e => {
 <script>
 //タバコグラフがクリックされたとき
 document.getElementById('smokeGraph').addEventListener('click', e => {
-	console.log(e)
 	const elements = smokeListChart.getElementAtEvent(e);
-	console.log('smoke', elements)
 	if (elements[0]._model.label.length) {
 		if (document.getElementById("hide").value == 2){
 			hideMan = 1.5;
@@ -217,7 +203,6 @@ document.getElementById('smokeGraph').addEventListener('click', e => {
 			document.getElementById("date").value = elements[0]._xScale.min.substr(0,5) + ('000' + (Number(elements[0]._index) + 1)).slice(-2) + '-01';
 			entryClick(4);
 		}else {
-			console.log(elements[0]._model.label)
 			window.location.href = '/record?recordDate=' + elements[0]._model.label;
 		}		
 	}
@@ -228,7 +213,6 @@ document.getElementById('smokeGraph').addEventListener('click', e => {
 window.addEventListener('load', changeHideMan(1.5));
 	function changeHideMan(id){
 		hideMan = id;
-		console.log(id)
 		document.getElementById("test").value = id;
 };
 </script>
@@ -267,8 +251,6 @@ var scope = document.getElementById("hide");
 var foodListChart;
 //データの取得
 function getFoodList() {
-	console.log('day', day.value)
-	console.log('scope', scope.value)
 	fetch('/getFoodListWeek?id=' + ${user.getUserId()} + '&day=' + day.value + '&scope=' + scope.value)
 	.then(res => res.json()
 	.then(data => {
@@ -392,8 +374,6 @@ function getExerciseList() {
 	fetch('/getExerciseListWeek?id=' + ${user.getUserId()} + '&day=' + day.value + '&scope=' + scope.value)
 	.then(res => res.json().then(data => {
 		exerciseList = data
-		console.log(data)
-		console.log(exerciseList)
 		exerciseList.forEach(function(createDate) {
 			goalExerciseTime.push(${user.getGoalExerciseTime()});
 		});
@@ -641,8 +621,6 @@ function getSmokeList() {
 	fetch('/getSmokeListWeek?id=' + ${user.getUserId()} + '&day=' + day.value + '&scope=' + scope.value)
 	.then(res => res.json().then(data => {
 		smokeList = data
-		console.log(data)
-		console.log(smokeList)
 		//タバコ記録グラフに使うデータ
 		var smokeGraphData = {
 			//グラフの下　日付
@@ -676,8 +654,6 @@ function getBmiList() {
     fetch('/getBmiListWeek?id=' + ${user.getUserId()} + '&day=' + day.value + '&scope=' + scope.value)
         .then(res => res.json().then(data => {
             bmiList = data
-            console.log(data)
-            console.log(bmiList)
                 //体重記録グラフに使うデータ
             var bmiGraphData = {
                 //グラフの下　日付
@@ -795,11 +771,9 @@ function getBmiList() {
 </script>
 	<script type="text/javascript">
 function entryClick(id) {
-	console.log(id)
 	document.getElementById("hideType").value = id;
 	if (id == 1) {	
 		getFoodList();
-		console.log(foodList);
 		document.getElementById('foodGraph').style.display = "";
 		document.getElementById('exerciseGraph').style.display = "none";
 		document.getElementById('alcoholGraph').style.display = "none";

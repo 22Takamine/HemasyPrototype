@@ -99,7 +99,7 @@ public class UserDao {
 		param.addValue("birth", user.getBirth());
 		param.addValue("height", user.getHeight());
 		param.addValue("goal_exercise_time",30);
-		param.addValue("goalCalorie", 2350);
+		param.addValue("goalCalorie", Math.ceil((user.getHeight()/100 * user.getHeight())/100 *22)*30);
 		param.addValue("createdAt", today);
 		param.addValue("rankFlag", user.getRankFlag());
 		param.addValue("alcoholFlag", user.getAlcoholFlag());

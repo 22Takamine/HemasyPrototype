@@ -148,7 +148,6 @@ public class ListAndRecordDao {
 	public List<ListAndRecord> getList(int type) {
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("type", type);
-		System.out.println("こいつのユーザid" + ((User) session.getAttribute("user")).getUserId());
 		param.addValue("userId", ((User) session.getAttribute("user")).getUserId());
 		return jdbcTemplate.query(GET_LISTS, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class));
 	}

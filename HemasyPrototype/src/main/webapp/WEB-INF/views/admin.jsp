@@ -135,7 +135,6 @@
 		/* 食事用処理追加処理 */
 		var fnum = document.getElementsByClassName('foodData').length;
 		function addFoodData() {
-			console.log("食事" + fnum);
 			var newP = document.createElement('p');
 			newP.innerHTML = '<input name="value1Food' + fnum +
 			  '" required> <input type="number" min="0" name="value2Food' + fnum +
@@ -148,7 +147,6 @@
 		/* 運動用処理追加処理 */
 		var snum = document.getElementsByClassName('sportData').length;
 		function addSpoData() {
-			console.log("運動" + fnum);
 			var newP = document.createElement('p');
 			newP.innerHTML = '<input name="value1Spo' + snum +
 			  '" required> <input type="number" min="0" name="value2Spo' + snum +

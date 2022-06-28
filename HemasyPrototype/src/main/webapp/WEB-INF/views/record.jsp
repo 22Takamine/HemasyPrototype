@@ -58,7 +58,7 @@
 		<a href="#alcohol">酒</a>
 		<a href="#smoke">たばこ</a>
 		<a href="#weight">体重</a>
-		<form action="record" method="post">
+		<form action="record" method="get">
 			<input type="date" name="recordDate" value="${dataDate}">の<input type="submit" value="データを確認・編集する">
 		</form>
 		<h1>${dataDate}の情報 <a href="statistics?statisticsDate=${dataDate}">統計</a> </h1>
@@ -80,14 +80,14 @@
 					varStatus="bStatus">
 					<p class="breakfastData">
 						<input type="text" value="${breakfastRecord.value1}"
-							name="value1Bre${bStatus.index}" list="foodList" onchange="changeBre(${bStatus.index});calcCalorieBre(${bStatus.index})" id="nameBre_${bStatus.index}" required> <input type="number"
+							name="value1Bre${bStatus.index}" list="foodList" onchange="changeBre(${bStatus.index});calcCalorieBre(${bStatus.index})" id="nameBre_${bStatus.index}" autocomplete="off" required> <input type="number"
 							min="0" value="${breakfastRecord.value2}"
 							name="value2Bre${bStatus.index}" id="onceCalBre_${bStatus.index}"
-							onchange="calcCalorieBre(${bStatus.index})" required>kcal × <input
+							onchange="calcCalorieBre(${bStatus.index})" autocomplete="off" required>kcal × <input
 							type="number" min="0.1" step="0.1"
 							value="${breakfastRecord.value3}"
 							name="value3Bre${bStatus.index}" id="amountBre_${bStatus.index}"
-							onchange="calcCalorieBre(${bStatus.index})" required>人前＝ <span
+							onchange="calcCalorieBre(${bStatus.index})" autocomplete="off" required>人前＝ <span
 							id="calorieBre_${bStatus.index}">${breakfastRecord.value2 * breakfastRecord.value3}</span>kcal
 						<input type="checkbox" value="del" name="delBre${bStatus.index}">削除
 						<input type="checkbox" value="add" name="addMyListBre${bStatus.index}">簡易登録<a
@@ -104,13 +104,13 @@
 					varStatus="lStatus">
 					<p class="lunchData">
 						<input type="text" value="${lunchRecord.value1}"
-							name="value1Lun${lStatus.index}" list="foodList" onchange="changeLun(${lStatus.index});calcCalorieLun(${lStatus.index})" id="nameLun_${lStatus.index}" required> <input type="number"
+							name="value1Lun${lStatus.index}" list="foodList" onchange="changeLun(${lStatus.index});calcCalorieLun(${lStatus.index})" id="nameLun_${lStatus.index}" autocomplete="off" required> <input type="number"
 							min="0" value="${lunchRecord.value2}"
 							name="value2Lun${lStatus.index}" id="onceCalLun_${lStatus.index}"
-							onchange="calcCalorieLun(${lStatus.index})" required>kcal × <input
+							onchange="calcCalorieLun(${lStatus.index})" autocomplete="off" required>kcal × <input
 							type="number" min="0.1" step="0.1" value="${lunchRecord.value3}"
 							name="value3Lun${lStatus.index}" id="amountLun_${lStatus.index}"
-							onchange="calcCalorieLun(${lStatus.index})" required>人前＝ <span
+							onchange="calcCalorieLun(${lStatus.index})" autocomplete="off" required>人前＝ <span
 							id="calorieLun_${lStatus.index}">${lunchRecord.value2 * lunchRecord.value3}</span>kcal
 						<input type="checkbox" value="del" name="delLun${lStatus.index}">削除
 						<input type="checkbox" value="add" name="addMyListLun${lStatus.index}">簡易登録<a
@@ -127,13 +127,13 @@
 					varStatus="dStatus">
 					<p class="dinnerData">
 						<input type="text" value="${dinnerRecord.value1}"
-							name="value1Din${dStatus.index}" list="foodList" onchange="changeDin(${dStatus.index});calcCalorieDin(${dStatus.index})" id="nameDin_${dStatus.index}" required> <input type="number"
+							name="value1Din${dStatus.index}" list="foodList" onchange="changeDin(${dStatus.index});calcCalorieDin(${dStatus.index})" id="nameDin_${dStatus.index}" autocomplete="off" required> <input type="number"
 							min="0" value="${dinnerRecord.value2}"
 							name="value2Din${dStatus.index}" id="onceCalDin_${dStatus.index}"
-							onchange="calcCalorieDin(${dStatus.index})" required>kcal × <input
+							onchange="calcCalorieDin(${dStatus.index})" autocomplete="off" required>kcal × <input
 							type="number" min="0.1" step="0.1" value="${dinnerRecord.value3}"
 							name="value3Din${dStatus.index}" id="amountDin_${dStatus.index}"
-							onchange="calcCalorieDin(${dStatus.index})" required>人前＝ <span
+							onchange="calcCalorieDin(${dStatus.index})" autocomplete="off" required>人前＝ <span
 							id="calorieDin_${dStatus.index}">${dinnerRecord.value2 * dinnerRecord.value3}</span>kcal
 						<input type="checkbox" value="del" name="delDin${dStatus.index}">削除
 						<input type="hidden" value="${dStatus.index + 100}" id="dIndex">
@@ -151,13 +151,13 @@
 					varStatus="sStatus">
 					<p class="snackData">
 						<input type="text" value="${snackRecord.value1}"
-							name="value1Sna${sStatus.index}" list="foodList" onchange="changeSna(${sStatus.index});calcCalorieSna(${sStatus.index})" id="nameSna_${sStatus.index}" required> <input type="number"
+							name="value1Sna${sStatus.index}" list="foodList" onchange="changeSna(${sStatus.index});calcCalorieSna(${sStatus.index})" id="nameSna_${sStatus.index}" autocomplete="off" required> <input type="number"
 							min="0" value="${snackRecord.value2}"
 							name="value2Sna${sStatus.index}" id="onceCalSna_${sStatus.index}"
-							onchange="calcCalorieSna(${sStatus.index})" required>kcal × <input
+							onchange="calcCalorieSna(${sStatus.index})" autocomplete="off" required>kcal × <input
 							type="number" min="0.1" step="0.1" value="${snackRecord.value3}"
 							name="value3Sna${sStatus.index}" id="amountSna_${sStatus.index}"
-							onchange="calcCalorieSna(${sStatus.index})" required>人前＝ <span
+							onchange="calcCalorieSna(${sStatus.index})" autocomplete="off" required>人前＝ <span
 							id="calorieSna_${sStatus.index}">${snackRecord.value2 * snackRecord.value3}</span>kcal
 						<input type="checkbox" value="del" name="delSna${sStatus.index}">削除
 						<input type="checkbox" value="add" name="addMyListSna${sStatus.index}">簡易登録<a
@@ -177,12 +177,12 @@
 				varStatus="spStatus">
 				<p class="sportData">
 					<input value="${sportRecord.value1}"
-						name="value1Spo${spStatus.index}" list="sportList" onchange="changeSpo(${spStatus.index});calcUsedCalorie(${spStatus.index})" id="nameSpo_${spStatus.index}" required>を <input type="hidden"
+						name="value1Spo${spStatus.index}" list="sportList" onchange="changeSpo(${spStatus.index});calcUsedCalorie(${spStatus.index})" id="nameSpo_${spStatus.index}" autocomplete="off" required>を <input type="hidden"
 						value="${sportRecord.value2}" name="value2Spo${spStatus.index}"
 						id="mets_${spStatus.index}"> <input type="number" min="1"
 						value="${sportRecord.value3}" name="value3Spo${spStatus.index}"
 						id="time_${spStatus.index}"
-						onchange="calcUsedCalorie(${spStatus.index})" required>分運動しました。 <span
+						onchange="calcUsedCalorie(${spStatus.index})" autocomplete="off" required>分運動しました。 <span
 						id="calorie_${spStatus.index}">${weightRecord.value2 * sportRecord.value2 * sportRecord.value3 / 60 * 1.05}</span>kcal消費
 					<input type="checkbox" value="del" name="delSpo${spStatus.index}">削除
 				</p>
@@ -206,18 +206,18 @@
 				varStatus="aStatus">
 				<p class="alcoholData">
 					<input value="${alcoholRecord.value1}"
-						name="value1Alc${aStatus.index}" list="alcoholList" onchange="changeAlc(${aStatus.index});calcAlc(${aStatus.index})" id="nameAlc_${aStatus.index}" required> <input type="number"
+						name="value1Alc${aStatus.index}" list="alcoholList" onchange="changeAlc(${aStatus.index});calcAlc(${aStatus.index})" id="nameAlc_${aStatus.index}" autocomplete="off" required> <input type="number"
 						min="0.1" max="100" value="${alcoholRecord.value4}"
 						name="value4Alc${aStatus.index}" id="oncePer_${aStatus.index}"
-						step="0.1" onchange="calcAlc(${aStatus.index})" required>% <input
+						step="0.1" onchange="calcAlc(${aStatus.index})" autocomplete="off" required>% <input
 						type="number" min="0" value="${alcoholRecord.value5}"
-						name="value5Alc${aStatus.index}" id="onceCal_${aStatus.index}" required>kcal/杯 <input
+						name="value5Alc${aStatus.index}" id="onceCal_${aStatus.index}" autocomplete="off" required>kcal/杯 <input
 						type="number" min="1" value="${alcoholRecord.value2}"
 						name="value2Alc${aStatus.index}" id="onceAmount_${aStatus.index}"
-						onchange="calcAlc(${aStatus.index})" required>ml/杯を <input
+						onchange="calcAlc(${aStatus.index})" autocomplete="off" required>ml/杯を <input
 						type="number" min="0.1" step="0.1" value="${alcoholRecord.value3}"
 						name="value3Alc${aStatus.index}" id="amount_${aStatus.index}"
-						onchange="calcAlc(${aStatus.index})" required>杯飲みました。 アルコール <span
+						onchange="calcAlc(${aStatus.index})" autocomplete="off" required>杯飲みました。 アルコール <span
 						id="alcoholAmount_${aStatus.index}">${alcoholRecord.value2 * alcoholRecord.value3 * alcoholRecord.value4 / 100}</span>g
 					<input type="checkbox" value="del" name="delAlc${aStatus.index}">削除
 					<input type="checkbox" value="add" name="addMyListAlc${aStatus.index}">簡易登録<a
@@ -231,8 +231,8 @@
 			<h2>体重</h2>
 			<p>
 				体重は<input type="number" min="1" value="${weightRecord.value2}"
-					name="value2Wei" id="weightRecord" step="0.1" onchange="calcUsedCalorieByWeight()"/>kg、体脂肪率は<input
-					type="number" min="0.1" value="${weightRecord.value3}"
+					name="value2Wei" id="weightRecord" step="0.1" max="200" onchange="calcUsedCalorieByWeight()"/>kg、体脂肪率は<input
+					type="number" min="0.1" max="100" value="${weightRecord.value3}"
 					name="value3Wei" step="0.1" required/>%です。
 			</p>
 		</div>
@@ -252,9 +252,7 @@
 		return response1.json();
 	})
 	.then(function(data1) {
-		console.log(data1)
 		foodList = data1
-		console.log(foodList)
 	})
 	
 	sportList = [];
@@ -319,7 +317,6 @@
 	
 	/* 昼食をリストから選んだ際にカロリーを自動入力 */
 	function changeLun(id) {
-		console.log('かえたね');
 		var targetName = document.getElementById('nameLun_' + id);
 		var targetCalorie = document.getElementById('onceCalLun_' + id);
 		for (let i = 0; i < foodList.length; i++) {
@@ -356,12 +353,10 @@
 	
 	/* 運動をリストから選んだ際の動き */
 	function changeSpo(id) {
-		console.log('かえたね');
 		var targetName = document.getElementById('nameSpo_' + id);
 		var targetMets = document.getElementById('mets_' + id);
 		for (let i = 0; i < sportList.length; i++) {
 			if (sportList[i]['value1'] == targetName.value) {
-				console.log(sportList[i]['value2']);
 				targetMets.value = sportList[i]['value2'];
 				break;
 			}
@@ -370,14 +365,12 @@
 	
 	/* アルコールから選んだ際の動き */
 	function changeAlc(id) {
-		console.log('アルコールかえたね');
 		var targetName = document.getElementById('nameAlc_' + id);
 		var targetPer = document.getElementById('oncePer_' + id);
 		var targetCal = document.getElementById('onceCal_' + id);
 		var targetAmo = document.getElementById('onceAmount_' + id);
 		for (let i = 0; i < alcoholList.length; i++) {
 			if (alcoholList[i]['value1'] == targetName.value) {
-				console.log(alcoholList[i]['value2']);
 				targetPer.value = alcoholList[i]['value4'];
 				targetCal.value = alcoholList[i]['value5'];
 				targetAmo.value = alcoholList[i]['value2'];
@@ -389,20 +382,19 @@
 	/* 朝食用処理追加処理 */
 	var mnum = document.getElementsByClassName('breakfastData').length;
 	function addBreForm() {
-		  console.log("朝食用" + mnum);
 		  var newP = document.createElement('p');
 		  newP.innerHTML =
 		'<input name="value1Bre' + mnum +
 		'" list="foodList" onchange="changeBre(' + mnum +
 		');calcCalorieBre(' + mnum +
 		')" id="nameBre_' + mnum + 
-		'" required><input type="number" min="0" name="value2Bre' + mnum + 
+		'" autocomplete="off" required><input type="number" min="0" name="value2Bre' + mnum + 
 		'" id="onceCalBre_' + mnum +
 		'" onchange="calcCalorieBre(' + mnum +
-		')" required>kcal ×<input type="number" min="0.1" step="0.1" name="value3Bre' + mnum + 
+		')" autocomplete="off" required>kcal ×<input type="number" min="0.1" step="0.1" name="value3Bre' + mnum + 
 		'" id="amountBre_' + mnum + 
 		'" onchange="calcCalorieBre(' + mnum +
-		')" required>人前＝ <span id="calorieBre_' + mnum +
+		')" autocomplete="off" required>人前＝ <span id="calorieBre_' + mnum +
 		'"></span>kcal' +
 		'<input type="checkbox" value="del" name="delBre' + mnum +
 		'">削除<input type="checkbox" value="add" name="addMyListBre' + mnum +
@@ -415,20 +407,19 @@
 	/* 昼食用処理追加処理 */
 	var lnum = document.getElementsByClassName('lunchData').length;
 	function addLunForm() {
-		console.log("昼食用" + lnum);
 	  	var newP = document.createElement('p');
 	  	newP.innerHTML =
 		 	'<input name="value1Lun' + lnum +
 			'" list="foodList" onchange="changeLun(' + lnum +
 			');calcCalorieLun(' + lnum +
 			')" id="nameLun_' + lnum +
-			'" required><input type="number" min="0" name="value2Lun' + lnum + 
+			'" autocomplete="off" required><input type="number" min="0" name="value2Lun' + lnum + 
 			'" id="onceCalLun_' + lnum +
 			'" onchange="calcCalorieLun(' + lnum +
-			')" required>kcal ×<input type="number" min="0.1" step="0.1" name="value3Lun' + lnum + 
+			')" autocomplete="off" required>kcal ×<input type="number" min="0.1" step="0.1" name="value3Lun' + lnum + 
 			'" id="amountLun_' + lnum + 
 			'" onchange="calcCalorieLun(' + lnum +
-			')" required>人前＝ <span id="calorieLun_' + lnum +
+			')" autocomplete="off" required>人前＝ <span id="calorieLun_' + lnum +
 			'"></span>kcal' +
 			'<input type="checkbox" value="del" name="delLun' + lnum +
 			'">削除<input type="checkbox" value="add" name="addMyListLun' + lnum +
@@ -441,20 +432,19 @@
 	/* 夕食用処理追加処理 */
 	var dnum = document.getElementsByClassName('dinnerData').length;
 	function addDinForm() {
-		console.log("夕食用" + dnum);
 	  var newP = document.createElement('p');
 	  newP.innerHTML =
 		    '<input name="value1Din' + dnum +
 			'" list="foodList" onchange="changeDin(' + dnum +
 			');calcCalorieDin(' + dnum +
 			')" id="nameDin_' + dnum +
-			'" required><input type="number" min="0" name="value2Din' + dnum + 
+			'" autocomplete="off" required><input type="number" min="0" name="value2Din' + dnum + 
 			'" id="onceCalDin_' + dnum +
 			'" onchange="calcCalorieDin(' + dnum +
-			')" required>kcal ×<input type="number" min="0.1" step="0.1" name="value3Din' + dnum + 
+			')" autocomplete="off" required>kcal ×<input type="number" min="0.1" step="0.1" name="value3Din' + dnum + 
 			'" id="amountDin_' + dnum + 
 			'" onchange="calcCalorieDin(' + dnum +
-			')" required>人前＝ <span id="calorieDin_' + dnum +
+			')" autocomplete="off" required>人前＝ <span id="calorieDin_' + dnum +
 			'"></span>kcal' +
 			'<input type="checkbox" value="del" name="delDin' + dnum +
 			'">削除<input type="checkbox" value="add" name="addMyListDin' + dnum +
@@ -467,20 +457,19 @@
 	/* 間食用処理追加処理 */
 	var snum = document.getElementsByClassName('snackData').length;
 	function addSnaForm() {
-		console.log("間食用" + snum);
 	  var newP = document.createElement('p');
 	  newP.innerHTML =
 		    '<input name="value1Sna' + snum +
 			'" list="foodList" onchange="changeSna(' + snum +
 			');calcCalorieSna(' + snum +
 			')" id="nameSna_' + snum +
-			'" required><input type="number" min="0" name="value2Sna' + snum + 
+			'" autocomplete="off" required><input type="number" min="0" name="value2Sna' + snum + 
 			'" id="onceCalSna_' + snum +
 			'" onchange="calcCalorieSna(' + snum +
-			')" required>kcal ×<input type="number" min="0.1" step="0.1" name="value3Sna' + snum + 
+			')" autocomplete="off" required>kcal ×<input type="number" min="0.1" step="0.1" name="value3Sna' + snum + 
 			'" id="amountSna_' + snum + 
 			'" onchange="calcCalorieSna(' + snum +
-			')" required>人前＝ <span id="calorieSna_' + snum +
+			')" autocomplete="off" required>人前＝ <span id="calorieSna_' + snum +
 			'"></span>kcal' +
 			'<input type="checkbox" value="del" name="delSna' + snum +
 			'">削除<input type="checkbox" value="add" name="addMyListSna' + snum +
@@ -499,12 +488,12 @@
 		  '" list="sportList" onchange="changeSpo(' + spnum +
 		  ');calcUsedCalorie(' + spnum +
 		  ')" id="nameSpo_' + spnum +
-		  '" required>を <input type="hidden" name="value2Spo' + spnum +
+		  '" autocomplete="off" required>を <input type="hidden" name="value2Spo' + spnum +
 		  '"id="mets_' + spnum +
 		  '"> <input type="number" min="1" name="value3Spo' + spnum +
 		  '" id="time_' + spnum +
 		  '" onchange="calcUsedCalorie(' + spnum +
-		  ')" required>分運動しました。<span id="calorie_' + spnum +
+		  ')" autocomplete="off" required>分運動しました。<span id="calorie_' + spnum +
 		  '"></span>kcal消費' +
 		  '<input type="checkbox" value="del" name="delSpo' + spnum +
 		  '">削除';
@@ -522,18 +511,18 @@
 		  '" list="alcoholList" onchange="changeAlc(' + anum +
 		  ');calcAlc(' + anum +
 		  ')" id="nameAlc_' + anum +
-		  '" required> <input type="number" min="0.1" max="100" name="value4Alc' + anum +
+		  '" autocomplete="off" required> <input type="number" min="0.1" max="100" name="value4Alc' + anum +
 		  '"id="oncePer_' + anum +
 		  '" step="0.1" onchange="calcAlc(' + anum +
-		  ')" required>% <input type="number" min="0" name="value5Alc' + anum + 
+		  ')" autocomplete="off" required>% <input type="number" min="0" name="value5Alc' + anum + 
 		  '" id="onceCal_' + anum +
-		  '" required>kcal/杯 <input type="number" min="1" name="value2Alc' + anum +
+		  '" autocomplete="off" required>kcal/杯 <input type="number" min="1" name="value2Alc' + anum +
 		  '"id="onceAmount_' + anum + 
 		  '" onchange="calcAlc(' + anum +
-		  ')" required>ml/杯を <input type="number" min="0.1" step="0.1" name="value3Alc' + anum +
+		  ')" autocomplete="off" required>ml/杯を <input type="number" min="0.1" step="0.1" name="value3Alc' + anum +
 		  '" id="amount_' + anum +
 		  '" onchange="calcAlc(' + anum +
-		  ')" required>杯飲みました。 アルコール<span id="alcoholAmount_' + anum +
+		  ')" autocomplete="off" required>杯飲みました。 アルコール<span id="alcoholAmount_' + anum +
 		  '"></span>g<input type="checkbox" value="del" name="delAlc' + anum +
 		  '">削除<input type="checkbox" value="add" name="addMyListAlc' + anum +
 		  '">簡易登録<a href="information.jsp">?</a>';
@@ -544,30 +533,18 @@
 	
 	/* 摂取カロリー計算 */
 	function calcCalorieBre(id){
-		console.log(id);
-		console.log('一戸カロリー' + document.getElementById('onceCalBre_' + id).value);
-		console.log('人前' + document.getElementById('amountBre_' + id).value);
 	    document.getElementById('calorieBre_' + id).innerHTML = document.getElementById('onceCalBre_' + id).value * document.getElementById('amountBre_' + id).value;
 	}
 	
 	function calcCalorieLun(id){
-		console.log(id);
-		console.log('一戸カロリー' + document.getElementById('onceCalLun_' + id).value);
-		console.log('人前' + document.getElementById('amountLun_' + id).value);
 	    document.getElementById('calorieLun_' + id).innerHTML = document.getElementById('onceCalLun_' + id).value * document.getElementById('amountLun_' + id).value;
 	}
 	
 	function calcCalorieDin(id){
-		console.log(id);
-		console.log('一戸カロリー' + document.getElementById('onceCalDin_' + id).value);
-		console.log('人前' + document.getElementById('amountDin_' + id).value);
 	    document.getElementById('calorieDin_' + id).innerHTML = document.getElementById('onceCalDin_' + id).value * document.getElementById('amountDin_' + id).value;
 	}
 	
 	function calcCalorieSna(id){
-		console.log(id);
-		console.log('一戸カロリー' + document.getElementById('onceCalSna_' + id).value);
-		console.log('人前' + document.getElementById('amountSna_' + id).value);
 	    document.getElementById('calorieSna_' + id).innerHTML = document.getElementById('onceCalSna_' + id).value * document.getElementById('amountSna_' + id).value;
 	}
 	
@@ -578,17 +555,12 @@
 	
 	/* 体重が変更されたときの消費カロリー計算 */
 	function calcUsedCalorieByWeight() {
-		console.log(spnum);
 		for (let i = 0; i < spnum; i++)
 		document.getElementById('calorie_' + i).innerHTML = document.getElementById('weightRecord').value * document.getElementById('mets_' + i).value * document.getElementById('time_' + i).value / 60 * 1.05;
 	}
 	
 	/* アルコール計算 */
 	function calcAlc(id) {
-		console.log(id);
-		console.log(document.getElementById('onceAmount_' + id).value);
-		console.log(document.getElementById('oncePer_' + id).value);
-		console.log(document.getElementById('alcoholAmount_' + id).className);
 		document.getElementById('alcoholAmount_' + id).innerHTML = document.getElementById('onceAmount_' + id).value * document.getElementById('oncePer_' + id).value * document.getElementById('amount_' + id).value / 100;
 
 	}

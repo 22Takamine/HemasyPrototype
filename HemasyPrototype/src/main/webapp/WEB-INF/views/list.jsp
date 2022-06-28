@@ -101,7 +101,6 @@
 	/* 食事用処理追加処理 */
 	var fnum = document.getElementsByClassName('foodData').length;
 	function addFoodData() {
-		  console.log("食事" + fnum);
 		  var newP = document.createElement('p');
 		  newP.innerHTML =
 			  '<input name="value1Food' + fnum +
