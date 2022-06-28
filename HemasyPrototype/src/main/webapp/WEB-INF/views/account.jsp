@@ -60,7 +60,7 @@
 	    
 		    <div class="mb-20">
 				<fmt:message key="form.lbl.password"/>
-				<form:input type="text" path="password" value="${user.getPassword()}"/>
+				<form:input type="password" path="password" value="${user.getPassword()}"/>
 				<form:errors path="password" cssStyle="color: red"/>
 		    </div>
 	    

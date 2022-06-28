@@ -58,7 +58,7 @@
 		<a href="#alcohol">酒</a>
 		<a href="#smoke">たばこ</a>
 		<a href="#weight">体重</a>
-		<form action="record" method="post">
+		<form action="record" method="get">
 			<input type="date" name="recordDate" value="${dataDate}">の<input type="submit" value="データを確認・編集する">
 		</form>
 		<h1>${dataDate}の情報 <a href="statistics?statisticsDate=${dataDate}">統計</a> </h1>
