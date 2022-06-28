@@ -46,16 +46,11 @@
 			<input type="hidden" name="createDate" id="todayDate">
 			<div id="user">
 				<h2>
-					ユーザーリスト
-					<button type="button" onclick="addUserData()">⊕</button>
+					ユーザー一覧
 				</h2>
 				<c:forEach var="userData" items="${userList}" varStatus="uStatus">
-					<p class="userData">
-						<input value="${userData.userName}"
-							name="userName${uStatus.index}" required> <input
-							value="${userData.mail}" name="mail${uStatus.index}" required>
-						<input type="checkbox" value="del" name="delUser${uStatus.index}">削除
-					</p>
+					<input type="hidden" name="userId${uStatus.index}" value="${userData.userId}">
+					<p>名前: ${userData.userName}　 メールアドレス: ${userData.mail}</p>
 				</c:forEach>
 			</div>
 			<div id="food">
@@ -116,19 +111,6 @@
 		<a href="#header">↑</a>
 	</div>
 	<script>
-		/* ユーザー用処理追加処理 */
-		var unum = document.getElementsByClassName('userData').length;
-		function addUserData() {
-			console.log("ユーザー" + unum);
-			var newP = document.createElement('p');
-			newP.innerHTML = '<input name="userName' + unum +
-			  '" required> <input type="number" min="0" name="mail' + unum +
-			  '" required><input type="checkbox" value="del" name="delUser' + unum +
-			  '">削除';
-			var parent = document.getElementById('user');
-			parent.appendChild(newP);
-			unum++;
-		}
 
 		/* 食事用処理追加処理 */
 		var fnum = document.getElementsByClassName('foodData').length;

@@ -36,4 +36,5 @@ public class UserDao {
 	public List<User> getAllUser() {
 		return jdbcTemplate.query(GET_ALL_USER, new BeanPropertyRowMapper<User>(User.class));
 	}
+
 }
