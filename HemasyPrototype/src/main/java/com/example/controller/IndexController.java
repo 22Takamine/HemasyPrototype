@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -87,9 +88,19 @@ public class IndexController {
 	//新規登録画面で登録ボタンを押した際に、ログイン画面に遷移
 	@RequestMapping(value = "/loginBack", method = RequestMethod.POST)
 	public String loginBack(@Validated @ModelAttribute("index") UserForm form,BindingResult bindingResult, Model model) {
+		LocalDate todaysDate = LocalDate.now();
 		if (bindingResult.hasErrors()) {
+			if(form.getBirth() == null) {
+				model.addAttribute("msgBirth","生年月日は必須です");
+			}
 			return "register";
 		}
+		if(form.getBirth() == null) {
+			model.addAttribute("msgBirth","生年月日は必須です");
+			return "register";
+		}
+		
+		
 		
 		User userName = userDao.findByName(form.getName());
 		User userMail = userDao.findByMail(form.getMail());
@@ -671,12 +682,14 @@ public class IndexController {
     		return "account";
         }
     	
+    	
     	Integer id = form.getUserId();
+    	User user = userDao.findById(id);
     	String name = form.getName();
     	String mail = form.getMail();
     	String pass = form.getPassword();
     	Integer sex = form.getSex();
-    	Date birthDate = form.getBirth();
+    	Date birthDate = (Date) user.getBirth();
     	Double height = form.getHeight();
     	Integer achievementId = form.getAchievementId();
     	Integer time = form.getGoalExerciseTime();
@@ -687,7 +700,7 @@ public class IndexController {
     	
     	userDao.update(id, name, mail, pass, sex, birthDate, height, achievementId, time, calorise, rank, smoke, alcohol);
     	
-    	User user = userDao.findById(id);
+    	user = userDao.findById(id);
     	session.setAttribute("user", user);
         return "menu";
     }

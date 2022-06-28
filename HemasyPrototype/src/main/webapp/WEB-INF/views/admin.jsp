@@ -11,7 +11,11 @@
 <head>
 <meta charset="UTF-8">
 <title>管理者画面</title>
-
+<link
+	href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <link href="css/common.css" rel="stylesheet">
 <link href="css/ameku.css" rel="stylesheet">
 <link
@@ -23,7 +27,7 @@
 <body>
 	<header>
 		<div class="header-logo">
-			<a href="./admin">Hemasy</a>
+			<a href="./admin" class="f-24 logoF">Hemasy</a>
 		</div>
 		<form:form action="hamburger" modelAttribute="index" method="post">
 			<button type="button" class="menu-btn">

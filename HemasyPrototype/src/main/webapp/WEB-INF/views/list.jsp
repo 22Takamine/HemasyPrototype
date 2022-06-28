@@ -13,7 +13,11 @@
 <title>マイリスト編集画面</title>
 <link href="css/common.css" rel="stylesheet">
 <link href="css/ameku.css" rel="stylesheet">
-
+<link
+	href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <link
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
@@ -23,7 +27,7 @@
 <body>
 	<header>
 		<div class="header-logo">
-			<a href="./back">Hemasy</a>
+			<a href="./back" class="f-24 logoF">Hemasy</a>
 		</div>
 		<form:form action="hamburger" modelAttribute="index" method="post">
 			<button type="button" class="menu-btn">

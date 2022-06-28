@@ -6,12 +6,17 @@
 <meta charset="UTF-8">
 <meta http-equiv="Refresh" content="2;URL=index">
 <title>ログアウト</title>
-<link href="css/commons.css" rel="stylesheet">
+<link href="css/common.css" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
 <header>
-	<div class="header-logo"><a>Hemasy</a></div>
+	<div class="header-logo"><a class="f-24 logoF">Hemasy</a></div>
 </header>
   <div class="center">
     <p>

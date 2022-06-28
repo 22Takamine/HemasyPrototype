@@ -11,7 +11,9 @@
 <head>
 <meta charset="UTF-8">
 <title>メニュー画面</title>
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="css/menu.css" rel="stylesheet">
+<link href="css/common.css" rel="stylesheet">
 <link href="css/commons.css" rel="stylesheet">
 <!-- <link href="css/style.css" rel="stylesheet">-->
 <meta name="viewport" content="width=device-width">
@@ -24,8 +26,7 @@
 <link media="all" type="text/css" rel="stylesheet" href="css/common.css">
 <link media="all" type="text/css" rel="stylesheet" href="css/commons.css">
 <link media="all" type="text/css" rel="stylesheet" href="css/style.css">
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
 </head>
 <body>
 	<header>
@@ -34,7 +35,7 @@
 		</div>
 		<form:form action="hamburger" modelAttribute="index" method="post">
 			<button type="button" class="menu-btn">
-				
+				<i class="fa fa-bars" aria-hidden="true"></i>
 			</button>
 			<div class="menu">
 				<div class="menu__item">

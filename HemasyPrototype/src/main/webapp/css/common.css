@@ -26,6 +26,7 @@ select{-moz-appearance:none;-webkit-appearance:none; -o-appearance:none; -ms-app
 textarea{width:100%;resize:none;padding:10px;min-height:140px;box-sizing:border-box;border-radius:.5rem;}
 input[type="text"],input[type="tel"],input[type="email"],input[type="password"],input[type="time"],input[type="url"],input[type="number"]{box-sizing:border-box; padding:.8rem;border:solid 1px #1C1C1C;border-radius:.5rem;font-size:.875rem}
 body.fixed{position:fixed;overflow:hidden; width:100%;height:100%;}
+
 /*-----------------
   Font Size
 ------------------*/
@@ -259,6 +260,9 @@ body.fixed{position:fixed;overflow:hidden; width:100%;height:100%;}
 .maximage img{width:100%; height:auto}
 .object-fit img{object-fit:cover;}
 
-
+/*-----------------
+  headerlogo
+------------------*/
+.logoF{font-family:'Fredoka One', cursive; text-align:center; letter-spacing:.3rem;}
 
 

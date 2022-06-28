@@ -57,7 +57,7 @@
 				</p>
 				<p class="mb-20">
 					<form:input path="password" type="password"
-						placeholder="パスワード (8文字以上12文字以内)" class="width-100-percent" />
+						placeholder="パスワード (8文字以上25文字以内)" class="width-100-percent" />
 					<form:errors path="password" cssStyle="color: red" />
 				</p>
 

@@ -12,10 +12,14 @@
 <meta charset="UTF-8">
 <title>新規登録</title>
 <link href="css/ameku.css" rel="stylesheet">
-<!-- <link href="css/commons.css" rel="stylesheet">
- --><link href="css/common.css" rel="stylesheet">
-<!-- <link href="css/style.css" rel="stylesheet">
- --><link
+<link
+	href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+ <link href="css/common.css" rel="stylesheet">
+
+ <link
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
 </head>
@@ -61,8 +65,10 @@
 
 		<div class="mb-20">
 			<fmt:message key="form.lbl.birth" />
-			<form:input type="date" path="birth" />
-			<form:errors path="birth" cssStyle="color: red"/>
+			<form:input id="datefield" type="date" path="birth" max='2000-13-13'/>
+			<c:if test="${not empty msgBirth}">
+  				<div>${fn:escapeXml(msgBirth)}</div>
+  			</c:if>
 		</div>
 
 		<div class="mb-20">
@@ -118,14 +124,32 @@
 		<form:button class="mb-20 info-btn">
 			<fmt:message key="form.lbl.regist" />
 		</form:button>
-		<form:form action="index" modelAttribute="index" method="post" >
-			<form:button class="info-btn">
-				<fmt:message key="form.lbl.back" />
-			</form:button>
-		</form:form>
+		
+		<button type="button" onclick="location.href='/index'" class="back-button info-btn"><fmt:message key="form.lbl.back"/></button>
+
 	</form:form>
 
  </div>
 	<script src="js/commons.js"></script>
 </body>
+<script>
+function changeDate(){
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() + 1; //January is 0!
+var yyyy = today.getFullYear();
+
+if (dd < 10) {
+   dd = '0' + dd;
+}
+
+if (mm < 10) {
+   mm = '0' + mm;
+} 
+    
+today = yyyy + '-' + mm + '-' + dd;
+document.getElementById("datefield").setAttribute("max", today);
+}
+window.onload = changeDate();
+</script>
 </html>

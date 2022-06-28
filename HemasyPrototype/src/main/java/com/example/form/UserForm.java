@@ -5,9 +5,7 @@ import java.sql.Date;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.validation.constraints.Size;
 
 public class UserForm {
 
@@ -18,6 +16,7 @@ public class UserForm {
 	@Email
 	private String mail;
 
+	@Size(min=8,max=25)
 	@NotBlank
 	private String password;
 
@@ -25,9 +24,6 @@ public class UserForm {
 	@NotNull
 	private Integer sex;
 
-	@NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Past
 	private Date birth;
 
 	@NotNull
