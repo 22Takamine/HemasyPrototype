@@ -18,7 +18,6 @@
 <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 </head>
 <body>
-<<<<<<< HEAD
 	<header>
 		<div class="header-logo">
 			<a href="./back">Hemasy</a>

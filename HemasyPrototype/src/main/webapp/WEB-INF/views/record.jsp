@@ -584,6 +584,6 @@
 
 	}
 	</script>
-	
+	<script src="js/commons.js"></script>
 </body>
 </html>

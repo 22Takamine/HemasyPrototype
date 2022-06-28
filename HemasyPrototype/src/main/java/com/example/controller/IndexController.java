@@ -443,13 +443,19 @@ public class IndexController {
 		
 		
 		User user = (User) session.getAttribute("user");
-		
+		recordService.setZeroPastRecords(user.getUserId());
 		ListAndRecord userSmokeDate = listAndRecordDao.getLatestSmokeDateRecord(user.getUserId());
 		ListAndRecord userAlcohol = listAndRecordDao.getLatestAlcoholRecord(user.getUserId());
 		ListAndRecord userMetsAndTime = listAndRecordDao.getLatestMetsAndTimeRecord(user.getUserId());
 		ListAndRecord userCalorieIntake = listAndRecordDao.getLatestCalorieIntake(user.getUserId());
 		ListAndRecord userWeight = listAndRecordDao.getLatestWeightRecordM(user.getUserId());
 		ListAndRecord userAlcoholDate = listAndRecordDao.getLatestAlcoholDateRecord(user.getUserId());
+		
+		System.out.println(userWeight.getValue2());
+		System.out.println(userMetsAndTime.getValue2());
+		System.out.println(userCalorieIntake.getValue2());
+		System.out.println(userSmokeDate.getValue2());
+		
 
 		Integer alcoholLevel;
 		Double CaloriesBurned = userWeight.getValue2() * userMetsAndTime.getValue2() * userMetsAndTime.getValue3() * 1.05;
