@@ -72,7 +72,6 @@ public class IndexController {
     @Autowired
     RecordService recordService;
 
-
 	//最初にここにきて、login画面にいくyu
 	@RequestMapping({ "/", "/index" })
 	public String index(@ModelAttribute("index") IndexForm form, Model model) {
@@ -212,11 +211,7 @@ public class IndexController {
     		session.setAttribute("livarImg","../../" + AlcoholColorLevel.getColorPath());
     		session.setAttribute("stomachImg",CalorieColorLevel.getColorPath());
     		session.setAttribute("bmiImg",bmipath.getImgPath());
-
-			session.setAttribute("calorieColorPath", CalorieColorLevel.getColorPath());
-			session.setAttribute("smokeColorPath", SmokeColorLevel.getColorPath());
-			session.setAttribute("alcoholColorPath", AlcoholColorLevel.getColorPath());
-			session.setAttribute("user", user);
+    		session.setAttribute("user", user);
     		
     		return "menu";
 		}

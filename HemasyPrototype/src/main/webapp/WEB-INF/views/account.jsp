@@ -13,6 +13,11 @@
 <link href="css/common.css" rel="stylesheet">
 <link href="css/ameku.css" rel="stylesheet">
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <meta name="viewport" content="width=device-width">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -20,7 +25,7 @@
 </head>
 <body>
 <header>
-	<div class="header-logo"><a href="./back">Hemasy</a></div>
+	<div class="header-logo"><a class="f-24 logoF" href="./back">Hemasy</a></div>
 	<form:form action="hamburger" modelAttribute="index" method="post">
 	    <button type="button" class="menu-btn">
 	      <i class="fa fa-bars" aria-hidden="true"></i>

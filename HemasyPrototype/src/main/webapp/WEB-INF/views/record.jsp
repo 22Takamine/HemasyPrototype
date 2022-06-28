@@ -16,12 +16,17 @@
 <link
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <meta name="viewport" content="width=device-width">
 </head>
 <body>
 	<header>
 		<div class="header-logo">
-			<a href="./back">Hemasy</a>
+			<a class="f-24 logoF" href="./back">Hemasy</a>
 		</div>
 		<form:form action="hamburger" modelAttribute="index" method="post">
 			<button type="button" class="menu-btn">
@@ -90,6 +95,7 @@
 				<p>
 					昼食
 					<button type="button" onclick="addLunForm()">⊕</button>
+
 				</p>
 				<c:forEach var="lunchRecord" items="${lunchRecordList}"
 					varStatus="lStatus">
@@ -192,6 +198,7 @@
 			<h2>
 				アルコール
 				<button type="button" onclick="addAlcForm()">⊕</button>
+
 			</h2>
 			<c:forEach var="alcoholRecord" items="${alcoholRecordList}"
 				varStatus="aStatus">

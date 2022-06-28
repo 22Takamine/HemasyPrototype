@@ -12,7 +12,6 @@ public class IndexForm {
     private String password;
 
     
-    
     public String getMail() {
         return mail;
     }
