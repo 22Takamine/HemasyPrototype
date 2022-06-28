@@ -73,7 +73,7 @@ public class IndexController {
     RecordService recordService;
 
 
-	//最初にここにきて、login画面にいくyu
+	//最初にここにきて、login画面にいく
 	@RequestMapping({ "/", "/index" })
 	public String index(@ModelAttribute("index") IndexForm form, Model model) {
 		return "login";
