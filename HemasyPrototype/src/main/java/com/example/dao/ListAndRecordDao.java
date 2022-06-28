@@ -397,8 +397,8 @@ public class ListAndRecordDao {
 					AND T3.category = 2
 					AND T3.type = 2
 					AND T2.create_date = T3.create_date
-					where T1.user_id = 2
-					and T2.create_date <= '2022-06-20'
+					where T1.user_id = :user_id
+					and T2.create_date <= :day
 					group by create_day	
 					order by create_day desc
 					
@@ -429,8 +429,8 @@ public class ListAndRecordDao {
 				    AND T2.type = 2
 				    AND T1.category = 2
 				    AND T1.type= 5
-				    Where T2.user_id = 2
-				    and left(to_char(T2.create_date, 'YYYY-MM'), 7) = left('2022-06-02', 7)
+				    Where T2.user_id = :user_id
+				    and left(to_char(T2.create_date, 'YYYY-MM'), 7) = left(:day, 7)
 				    order by to_char(T1.create_date, 'YYYY-MM') desc)c 
 				order by create_day
 				
@@ -460,8 +460,8 @@ public class ListAndRecordDao {
 				    AND T2.type = 2
 				    AND T1.category = 2
 				    AND T1.type= 5
-				    Where T2.user_id = 2
-				    and left(to_char(T2.create_date, 'YYYY-MM'), 4) <= left('2022-02-02', 4)
+				    Where T2.user_id = :user_id
+				    and left(to_char(T2.create_date, 'YYYY-MM'), 4) <= left(:day, 4)
 				    group by to_char(T1.create_date, 'YYYY-MM')
 				    order by to_char(T1.create_date, 'YYYY-MM') desc)c 
 				order by create_date
@@ -508,8 +508,8 @@ public class ListAndRecordDao {
 					from lists_and_records
 					where category = 2
 					and type = 4
-					and user_id = 2 
-					and left(to_char(create_date, 'YYYY-MM'), 7) = left('2022-06-02', 7)
+					and user_id = :user_id
+					and left(to_char(create_date, 'YYYY-MM'), 7) = left(:day, 7)
 					group by create_date
 					ORDER BY create_date desc) c
 				order by create_date
@@ -531,8 +531,8 @@ public class ListAndRecordDao {
 					from lists_and_records
 					where category = 2
 					and type = 4
-					and user_id = 2 
-					and left(to_char(create_date, 'YYYY-MM'), 4) = left('2022-06-02', 4)
+					and user_id = :user_id
+					and left(to_char(create_date, 'YYYY-MM'), 4) = left(:day, 4)
 					group by to_char(create_date, 'YYYY-MM')
 					ORDER BY create_date desc) c
 				order by create_day
@@ -578,8 +578,8 @@ public class ListAndRecordDao {
 				from lists_and_records
 				where category = 2
 				and type = 3
-				and user_id = 2
-				and left(to_char(create_date, 'YYYY-MM'), 7) = left('2022-06-02', 7)
+				and user_id = :user_id
+				and left(to_char(create_date, 'YYYY-MM'), 7) = left(:day, 7)
 				group by create_date
 				ORDER BY create_date desc)c
 			order by create_date
@@ -600,8 +600,8 @@ public class ListAndRecordDao {
 				from lists_and_records
 				where category = 2
 				and type = 3
-				and user_id = 2
-				AND left(to_char(create_date, 'YYYY-MM'), 4) = left('2022-04-23', 4)
+				and user_id = :user_id
+				AND left(to_char(create_date, 'YYYY-MM'), 4) = left(:day, 4)
 				group by to_char(create_date, 'YYYY-MM')
 				ORDER BY to_char(create_date, 'YYYY-MM') desc)c
 			order by create_date
@@ -616,7 +616,7 @@ public class ListAndRecordDao {
 		//value3 BMI
 		//valu2 体重
 		String sql = """
-			select value3, value2, create_date from(
+			select value3, value2, create_date AS create_day from(
 				select
 				sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value3
 				, sum(T2.value2) value2
@@ -644,7 +644,7 @@ public class ListAndRecordDao {
 		//value3 BMI
 		//valu2 体重
 		String sql = """
-			select value3, value2, create_date from(
+            select value3, value2, create_date AS create_day from(
 				select
 				sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value3
 				, sum(T2.value2) value2
@@ -655,11 +655,10 @@ public class ListAndRecordDao {
 				ON T1.user_id = T2.user_id
 				AND T2.category = 2
 				AND T2.type = 5
-				and create_date <= :day
 				where T1.user_id = :user_id
+                AND left(to_char(create_date, 'YYYY-MM'), 7) = left(:day, 7)
 				group by T2.create_date
-				ORDER BY T2.create_date desc
-				LIMIT 7) c
+				ORDER BY T2.create_date desc) c
 			order by create_date
 			""";
 		MapSqlParameterSource param = new MapSqlParameterSource();
@@ -669,20 +668,48 @@ public class ListAndRecordDao {
 	}
 	
 
+	public List<CommonRecord> getBmiRecordsOfYear(int user_id, Date day) {
+		//value3 BMI
+		//valu2 体重
+		String sql = """
+            select value3, value2, create_date AS create_day from(
+				select
+				sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value3
+				, sum(T2.value2) value2
+				, to_char(create_date, 'YYYY-MM') create_date
+				FROM
+				users T1
+				JOIN lists_and_records T2
+				ON T1.user_id = T2.user_id
+				AND T2.category = 2
+				AND T2.type = 5
+				where T1.user_id = :user_id
+                AND left(to_char(create_date, 'YYYY-MM'), 4) = left(:day, 4)
+				group by to_char(create_date, 'YYYY-MM')
+				ORDER BY to_char(create_date, 'YYYY-MM') )c
+			order by create_date;
+
+			""";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("user_id", user_id);
+		param.addValue("day", day);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<CommonRecord>(CommonRecord.class) );
+	}
+	
 	public void setZero(int user_id, int type) {
 		String sql = """
-			insert into lists_and_records (create_date, value2, value3, value4, value5, value6, value7, category, type, user_id)
+			insert into lists_and_records (create_date, value2, value3, value4, value5, value6, value7, value8, category, type, user_id)
 			select * from (
 			with recursive Dummy(i) as 
 			(select cast(to_char(now(), 'YYYY') || '-12-31' as date) i
 			union all
 			select cast(i + cast('-1 days ' as interval) as date) from Dummy where i > cast('2022-01-01' as date))
-			select i as days, 0 value2, 0 value3, 0 value4, 0 value5, 0 value6, 0 value7, 2 category, :type type, :user_id user_id from Dummy
+			select i as days, 0 value2, 0 value3, 0 value4, 0 value5, 0 value6, 0 value7, 0 value8, 2 category, :type type, :user_id user_id from Dummy
 			
 			except
 			
 			select
-			create_date days, 0 value2, 0 value3, 0 value4, 0 value5, 0 value6, 0 value7, 2 category, :type type, :user_id user_id
+			create_date days, 0 value2, 0 value3, 0 value4, 0 value5, 0 value6, 0 value7, 0 value8, 2 category, :type type, :user_id user_id
 			from
 			lists_and_records 
 			where

@@ -91,9 +91,15 @@ public class RecordController {
     }
     
     @RequestMapping("/getBmiListWeek")
-    public List<CommonRecord> getBmiList(@RequestParam("id") int id, @RequestParam("day") Date day) {
-    	return listAndRecordDao.getBmiRecordsOfWeek(id, day);
-
+    public List<CommonRecord> getBmiList(@RequestParam("id") int id, @RequestParam("day") Date day, @RequestParam("scope") String scopeStr) {
+    	int scope = Integer.parseInt(scopeStr);
+    	if (scope == 0) {
+    		return listAndRecordDao.getBmiRecordsOfWeek(id, day);
+    	}else if(scope == 1) {
+    		return listAndRecordDao.getBmiRecordsOfMonth(id, day);
+    	}else {
+    		return listAndRecordDao.getBmiRecordsOfYear(id, day);
+    	}
     }
 
     
