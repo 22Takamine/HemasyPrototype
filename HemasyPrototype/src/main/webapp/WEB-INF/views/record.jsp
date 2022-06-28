@@ -11,8 +11,8 @@
 <head>
 <meta charset="UTF-8">
 <title>記録画面</title>
-<link href="css/commons.css" rel="stylesheet">
 <link href="css/common.css" rel="stylesheet">
+<link href="css/ameku.css" rel="stylesheet">
 <link
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
@@ -51,21 +51,25 @@
 			</div>
 		</form:form>
 	</header>
-	<div id="header">
-		<b>記録画面</b>
+	<div id="header" class="center">
+		<h1 class="f-32">記録画面</h1>
+		<a href="#food">食事</a>
+		<a href="#sport">運動</a>
+		<a href="#alcohol">酒</a>
+		<a href="#smoke">たばこ</a>
+		<a href="#weight">体重</a>
+		<form action="record" method="post">
+			<input type="date" name="recordDate" value="${dataDate}">の<input type="submit" value="データを確認・編集する">
+		</form>
+		<h1>${dataDate}の情報 <a href="statistics?statisticsDate=${dataDate}">統計</a> </h1>
 	</div>
-	<a href="#food">食事</a>
-	<a href="#sport">運動</a>
-	<a href="#alcohol">酒</a>
-	<a href="#smoke">たばこ</a>
-	<a href="#weight">体重</a>
-	<form action="record" method="post">
-		<input type="date" name="recordDate" value="${dataDate}">の<input type="submit" value="データを確認・編集する">
-	</form>
-	<h1>${dataDate}の情報 <a href="statistics?statisticsDate=${dataDate}">統計</a> </h1>
+	
+	
+	<div id="record-box">
 	<form action="recordCommit" method="post">
 		<input type="hidden" value="${dataDate}" name="createDate">
-		<div id="food">
+
+		<div id="food" class="mb-30 mt-20 bgc">
 			<h2>食事記録</h2>
 			<div id="food_bre">
 				<p>
@@ -75,7 +79,7 @@
 				<c:forEach var="breakfastRecord" items="${breakfastRecordList}"
 					varStatus="bStatus">
 					<p class="breakfastData">
-						<input value="${breakfastRecord.value1}"
+						<input type="text" value="${breakfastRecord.value1}"
 							name="value1Bre${bStatus.index}" list="foodList" onchange="changeBre(${bStatus.index});calcCalorieBre(${bStatus.index})" id="nameBre_${bStatus.index}" required> <input type="number"
 							min="0" value="${breakfastRecord.value2}"
 							name="value2Bre${bStatus.index}" id="onceCalBre_${bStatus.index}"
@@ -95,12 +99,11 @@
 				<p>
 					昼食
 					<button type="button" onclick="addLunForm()">⊕</button>
-
 				</p>
 				<c:forEach var="lunchRecord" items="${lunchRecordList}"
 					varStatus="lStatus">
 					<p class="lunchData">
-						<input value="${lunchRecord.value1}"
+						<input type="text" value="${lunchRecord.value1}"
 							name="value1Lun${lStatus.index}" list="foodList" onchange="changeLun(${lStatus.index});calcCalorieLun(${lStatus.index})" id="nameLun_${lStatus.index}" required> <input type="number"
 							min="0" value="${lunchRecord.value2}"
 							name="value2Lun${lStatus.index}" id="onceCalLun_${lStatus.index}"
@@ -123,7 +126,7 @@
 				<c:forEach var="dinnerRecord" items="${dinnerRecordList}"
 					varStatus="dStatus">
 					<p class="dinnerData">
-						<input value="${dinnerRecord.value1}"
+						<input type="text" value="${dinnerRecord.value1}"
 							name="value1Din${dStatus.index}" list="foodList" onchange="changeDin(${dStatus.index});calcCalorieDin(${dStatus.index})" id="nameDin_${dStatus.index}" required> <input type="number"
 							min="0" value="${dinnerRecord.value2}"
 							name="value2Din${dStatus.index}" id="onceCalDin_${dStatus.index}"
@@ -147,7 +150,7 @@
 				<c:forEach var="snackRecord" items="${snackRecordList}"
 					varStatus="sStatus">
 					<p class="snackData">
-						<input value="${snackRecord.value1}"
+						<input type="text" value="${snackRecord.value1}"
 							name="value1Sna${sStatus.index}" list="foodList" onchange="changeSna(${sStatus.index});calcCalorieSna(${sStatus.index})" id="nameSna_${sStatus.index}" required> <input type="number"
 							min="0" value="${snackRecord.value2}"
 							name="value2Sna${sStatus.index}" id="onceCalSna_${sStatus.index}"
@@ -165,7 +168,7 @@
 			<datalist id="foodList">
 			</datalist>
 		</div>
-		<div id="sport">
+		<div id="sport" class="mb-30 mt-20 bgc">
 			<h2>
 				運動記録
 				<button type="button" onclick="addSpoForm()">⊕</button>
@@ -187,18 +190,17 @@
 			<datalist id="sportList">
 			</datalist>
 		</div>
-		<div id="smoke">
+		<div id="smoke" class="mb-30 mt-20 bgc">
 			<h2>たばこ</h2>
 			<p>
 				<input type="number" min="0" value="${smokeRecord.value3}"
-					name="value3Smo">本吸いました
+					name="value3Smo" required>本吸いました
 			</p>
 		</div>
-		<div id="alcohol">
+		<div id="alcohol" class="mb-30 mt-20 bgc">
 			<h2>
 				アルコール
 				<button type="button" onclick="addAlcForm()">⊕</button>
-
 			</h2>
 			<c:forEach var="alcoholRecord" items="${alcoholRecordList}"
 				varStatus="aStatus">
@@ -225,21 +227,22 @@
 			<datalist id="alcoholList">
 			</datalist>
 		</div>
-		<div id="weight">
+		<div id="weight" class="mb-30 mt-20 bgc">
 			<h2>体重</h2>
 			<p>
 				体重は<input type="number" min="1" value="${weightRecord.value2}"
 					name="value2Wei" id="weightRecord" step="0.1" onchange="calcUsedCalorieByWeight()"/>kg、体脂肪率は<input
 					type="number" min="0.1" value="${weightRecord.value3}"
-					name="value3Wei" step="0.1" />%です。
+					name="value3Wei" step="0.1" required/>%です。
 			</p>
 		</div>
-		<input type="submit" value="登録">
+		
+		<div class="btns center mb-30">
+			<input type="submit" value="登録" class="back-button info-btn">
+			<button type="button" onclick="location.href='/back'" class="back-button info-btn"><fmt:message key="form.lbl.back"/></button>
+		</div>
 	</form>
-	
-	<button type="button">戻る</button>
-
-	<a href="#header">↑</a>
+	</div>
 	<script>
 	
 	foodList = [];
@@ -254,7 +257,6 @@
 		console.log(foodList)
 	})
 	
-
 	sportList = [];
 	
 	fetch("/getList?type=2")

@@ -11,7 +11,9 @@
 <head>
 <meta charset="UTF-8">
 <title>マイリスト編集画面</title>
-<link href="css/commons.css" rel="stylesheet">
+<link href="css/common.css" rel="stylesheet">
+<link href="css/ameku.css" rel="stylesheet">
+
 <link
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
@@ -46,15 +48,15 @@
 			</div>
 		</form:form>
 	</header>
-	<div class="main">
-		<h2>マイリスト編集</h2>
+	<div class="list-page-main">
+		<h2 class="center f-32">マイリスト編集</h2>
 		<form action="listCommit" method="post">
 			<input type="hidden" name="createDate" id="todayDate">
-			<div id="food">
-				<h2>食べ物リスト<button type="button" onclick="addFoodData()">⊕</button></h2>
+			<div id="food-list" class="center mb-45 bgc">
+				<h2 class="mb-10">食べ物リスト<button type="button" onclick="addFoodData()">⊕</button></h2>
 				<c:forEach var="foodData" items="${foodList}" varStatus="fStatus">
-					<p class="foodData">
-						<input value="${foodData.value1}"
+					<p class="foodData mb-10">
+						<input type="text" value="${foodData.value1}"
 							name="value1Food${fStatus.index}" required> <input
 							type="number" min="0" value="${foodData.value2}"
 							name="value2Food${fStatus.index}" required>kcal
@@ -62,15 +64,15 @@
 					</p>
 				</c:forEach>
 			</div>
-			<div id="alcohol">
-				<h2>
+			<div id="alcohol-list" class="center mb-45 bgc">
+				<h2 class="mb-10">
 					アルコール
 					<button type="button" onclick="addAlcData()">⊕</button>
 				</h2>
 				<c:forEach var="alcoholData" items="${alcoholList}"
 					varStatus="aStatus">
-					<p class="alcoholData">
-						<input value="${alcoholData.value1}"
+					<p class="alcoholData mb-10">
+						<input type="text" value="${alcoholData.value1}"
 							name="value1Alc${aStatus.index}" required> <input
 							type="number" min="0.1" max="100" value="${alcoholData.value4}"
 							name="value4Alc${aStatus.index}" step="0.1" required>%
@@ -81,12 +83,14 @@
 					</p>
 				</c:forEach>
 			</div>
-			<input type="submit" value="登録">
+			<div class="center mb-45">
+				<input type="submit" value="登録" class="back-button info-btn">
+			<button type="button" onclick="location.href='/back'" class="back-button info-btn"><fmt:message key="form.lbl.back"/></button>
+			</div>
 		</form>
 
-		<button type="button">戻る</button>
 
-		<a href="#header">↑</a>
+
 	</div>
 	<script>
 	
@@ -100,7 +104,7 @@
 			  '" required> <input type="number" min="0" name="value2Food' + fnum +
 			  '" required>kcal<input type="checkbox" value="del" name="delFood' + fnum +
 			  '">削除';
-	  var parent = document.getElementById('food');
+	  var parent = document.getElementById('food-list');
 	  parent.appendChild(newP);
 	  fnum++ ;
 	}
@@ -116,19 +120,17 @@
 		  '" required>kcal/杯 <input type="number" min="1" name="value2Alc' + anum +
 		  '" required>ml/杯 <input type="checkbox" value="del" name="delAlc' + anum +
 		  '">削除';
-	  var parent = document.getElementById('alcohol');
+	  var parent = document.getElementById('alcohol-list');
 	  parent.appendChild(newP);
 	  anum++ ;
 	}
 	
 	var date = new Date();
-
 	var yyyy = date.getFullYear();
 	var mm = ("0"+(date.getMonth()+1)).slice(-2);
 	var dd = ("0"+date.getDate()).slice(-2);
-
 	document.getElementById("todayDate").value=yyyy+'-'+mm+'-'+dd;
 	</script>
-	<script src="js/commons.js"></script>
+		<script src="js/commons.js"></script>
 </body>
 </html>

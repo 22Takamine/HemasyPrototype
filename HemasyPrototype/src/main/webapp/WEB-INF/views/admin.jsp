@@ -11,7 +11,9 @@
 <head>
 <meta charset="UTF-8">
 <title>管理者画面</title>
-<link href="css/commons.css" rel="stylesheet">
+
+<link href="css/common.css" rel="stylesheet">
+<link href="css/ameku.css" rel="stylesheet">
 <link
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
@@ -40,32 +42,27 @@
 			</div>
 		</form:form>
 	</header>
-	<div class="main">
-		<h2>管理ページ</h2>
+	<div class="main admin-page-main">
+		<h2 class="center f-32">管理ページ</h2>
 		<form action="adminListCommit" method="post">
 			<input type="hidden" name="createDate" id="todayDate">
-			<div id="user">
+			<div id="user admin-user" class="center mb-45 bgc">
 				<h2>
-					ユーザーリスト
-					<button type="button" onclick="addUserData()">⊕</button>
+					ユーザー一覧
 				</h2>
 				<c:forEach var="userData" items="${userList}" varStatus="uStatus">
-					<p class="userData">
-						<input value="${userData.userName}"
-							name="userName${uStatus.index}" required> <input
-							value="${userData.mail}" name="mail${uStatus.index}" required>
-						<input type="checkbox" value="del" name="delUser${uStatus.index}">削除
-					</p>
+					<input type="hidden" name="userId${uStatus.index}" value="${userData.userId}">
+					<p>名前: ${userData.userName}　 メールアドレス: ${userData.mail}</p>
 				</c:forEach>
 			</div>
-			<div id="food">
+			<div id="food admin-food" class="center mb-45 bgc">
 				<h2>
 					食べ物リスト
 					<button type="button" onclick="addFoodData()">⊕</button>
 				</h2>
 				<c:forEach var="foodData" items="${foodList}" varStatus="fStatus">
 					<p class="foodData">
-						<input value="${foodData.value1}"
+						<input type="text" value="${foodData.value1}"
 							name="value1Food${fStatus.index}" required> <input
 							type="number" min="0" value="${foodData.value2}"
 							name="value2Food${fStatus.index}" required>kcal <input
@@ -73,14 +70,14 @@
 					</p>
 				</c:forEach>
 			</div>
-			<div id="sport">
+			<div id="sport admin-sport" class="center mb-45 bgc">
 				<h2>
 					運動リスト
 					<button type="button" onclick="addSpoData()">⊕</button>
 				</h2>
 				<c:forEach var="sportData" items="${sportList}" varStatus="sStatus">
 					<p class="sportData">
-						<input value="${sportData.value1}"
+						<input type="text" value="${sportData.value1}"
 							name="value1Spo${sStatus.index}" required> <input
 							type="number" min="0" value="${sportData.value2}"
 							name="value2Spo${sStatus.index}" required>メッツ <input
@@ -88,7 +85,7 @@
 					</p>
 				</c:forEach>
 			</div>
-			<div id="alcohol">
+			<div id="alcohol admin-alcohol" class="center mb-45 bgc">
 				<h2>
 					アルコール
 					<button type="button" onclick="addAlcData()">⊕</button>
@@ -96,7 +93,7 @@
 				<c:forEach var="alcoholData" items="${alcoholList}"
 					varStatus="aStatus">
 					<p class="alcoholData">
-						<input value="${alcoholData.value1}"
+						<input type="text" value="${alcoholData.value1}"
 							name="value1Alc${aStatus.index}" required> <input
 							type="number" min="0.1" max="100" value="${alcoholData.value4}"
 							name="value4Alc${aStatus.index}" step="0.1" required>% <input
@@ -108,28 +105,15 @@
 					</p>
 				</c:forEach>
 			</div>
-			<input type="submit" value="登録">
+			<div class="center mb-30">
+				<input type="submit" value="登録" class="info-btn">
+			<button type="button" onclick="location.href='/back'" class="back-button info-btn"><fmt:message key="form.lbl.back"/></button>
+			</div>
 		</form>
 
-		<button type="button">戻る</button>
 
-		<a href="#header">↑</a>
 	</div>
 	<script>
-		/* ユーザー用処理追加処理 */
-		var unum = document.getElementsByClassName('userData').length;
-		function addUserData() {
-			console.log("ユーザー" + unum);
-			var newP = document.createElement('p');
-			newP.innerHTML = '<input name="userName' + unum +
-			  '" required> <input type="number" min="0" name="mail' + unum +
-			  '" required><input type="checkbox" value="del" name="delUser' + unum +
-			  '">削除';
-			var parent = document.getElementById('user');
-			parent.appendChild(newP);
-			unum++;
-		}
-
 		/* 食事用処理追加処理 */
 		var fnum = document.getElementsByClassName('foodData').length;
 		function addFoodData() {
@@ -143,7 +127,6 @@
 			parent.appendChild(newP);
 			fnum++;
 		}
-
 		/* 運動用処理追加処理 */
 		var snum = document.getElementsByClassName('sportData').length;
 		function addSpoData() {
@@ -157,7 +140,6 @@
 			parent.appendChild(newP);
 			snum++;
 		}
-
 		/* アルコール用処理追加処理 */
 		var anum = document.getElementsByClassName('alcoholData').length;
 		function addAlcData() {
@@ -172,13 +154,10 @@
 			parent.appendChild(newP);
 			anum++;
 		}
-
 		var date = new Date();
-
 		var yyyy = date.getFullYear();
 		var mm = ("0" + (date.getMonth() + 1)).slice(-2);
 		var dd = ("0" + date.getDate()).slice(-2);
-
 		document.getElementById("todayDate").value = yyyy + '-' + mm + '-' + dd;
 	</script>
 	<script src="js/commons.js"></script>

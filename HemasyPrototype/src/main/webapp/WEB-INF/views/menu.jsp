@@ -21,6 +21,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
 <link media="all" type="text/css" rel="stylesheet" href="css/menu.css">
+<link media="all" type="text/css" rel="stylesheet" href="css/common.css">
 <link media="all" type="text/css" rel="stylesheet" href="css/commons.css">
 <link media="all" type="text/css" rel="stylesheet" href="css/style.css">
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -101,7 +102,6 @@
 				</div>
 			</div>
 		</div>
-
 	</main>
 	<footer>
 		<div>

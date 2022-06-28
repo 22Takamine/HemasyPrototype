@@ -77,7 +77,6 @@ public class IndexController {
 	public String index(@ModelAttribute("index") IndexForm form, Model model) {
 		return "login";
 	}
-
 	
 	//ログイン画面から、新規登録画面に遷移
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -245,7 +244,7 @@ public class IndexController {
 
 		System.out.println("えええ" + sportRecordList.size());
 
-		System.out.println(smokeRecord.getValue3());
+		System.out.println(smokeRecord.getValue2());
 
 		System.out.println(dinnerRecordList.size());
 
@@ -526,13 +525,59 @@ public class IndexController {
         return "statistics";
     }
 
-	//記録画面から登録ボタンでメニュー画面に遷移
-	@RequestMapping(value = "/recordRegist", method = RequestMethod.POST)
-	public String recordRegist(@ModelAttribute("index") UserForm form, Model model) {
+  //マイリスト確定時
+  	@RequestMapping(value = "/listCommit", method = RequestMethod.POST)
+  	public String listCommit(@ModelAttribute("index") UserForm form, Model model) {
 
-		//メインメニュー画面に戻るときの処理をどうやるのかを周りの人に聞く。
-		return "menu";
-	}
+  		List<ListAndRecord> listsList = new ArrayList<ListAndRecord>();
+
+  		//食事リスト
+  		for (int i = 0; request.getParameter("value1Food" + i) != null; i++) {
+  			System.out.println(request.getParameter("delFood" + i) + i + "食べ物かくにん");
+  			if (request.getParameter("delFood" + i) != null) {
+  				System.out.println("けすぞ");
+  				continue;
+  			}
+  			ListAndRecord foodData = new ListAndRecord(0, 1, 1, request.getParameter("value1Food" + i), Double.parseDouble(request.getParameter("value2Food" + i)), null, 1.0, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+  			listsList.add(foodData);
+  			System.out.println(foodData.getListsAndRecordsId());
+  			System.out.println(foodData.getCategory());
+  			System.out.println(foodData.getType());
+  			System.out.println(foodData.getValue1());
+  			System.out.println(foodData.getValue2());
+  			System.out.println(foodData.getValue3());
+  			System.out.println(foodData.getValue4());
+  			System.out.println(foodData.getValue5());
+  			System.out.println(foodData.getCreateDate());
+  			System.out.println(foodData.getUserId());
+  		}
+
+  		//アルコールリスト
+  		for (int i = 0; request.getParameter("value1Alc" + i) != null; i++) {
+  			System.out.println(request.getParameter("delAlc" + i) + "おさけかくにん");
+  			if (request.getParameter("delAlc" + i) != null) {
+  				System.out.println("けすぞ");
+  				continue;
+  			}
+  			ListAndRecord alcoholData = new ListAndRecord(0, 1, 4, request.getParameter("value1Alc" + i), Double.parseDouble(request.getParameter("value2Alc" + i)), null, Double.parseDouble(request.getParameter("value4Alc" + i)), Double.parseDouble(request.getParameter("value5Alc" + i)), null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+  			listsList.add(alcoholData);
+  			System.out.println("はじまり" + alcoholData.getListsAndRecordsId());
+  			System.out.println(alcoholData.getCategory());
+  			System.out.println(alcoholData.getType());
+  			System.out.println(alcoholData.getValue1());
+  			System.out.println(alcoholData.getValue2());
+  			System.out.println(alcoholData.getValue3());
+  			System.out.println(alcoholData.getValue4());
+  			System.out.println(alcoholData.getValue5());
+  			System.out.println(alcoholData.getCreateDate());
+  			System.out.println(alcoholData.getUserId());
+  		}
+  		
+  		listAndRecordDao.ediMyList(((User) session.getAttribute("user")).getUserId(), listsList);
+
+  		return "menu";
+
+  	}
 
 	//マイリスト編集画面から登録ボタンでメニュー画面に遷移
 	@RequestMapping(value = "/list", method = RequestMethod.POST)

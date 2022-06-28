@@ -23,7 +23,7 @@ public class UserForm {
 	@NotNull
 	private Integer sex;
 
-	@NotNull
+	@NotBlank
 	@Past
 	private Date birth;
 
