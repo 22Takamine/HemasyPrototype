@@ -93,31 +93,31 @@
 		</div>
 
 		<div class="mb-20">
-			<fmt:message key="form.lbl.rank" />
+			<fmt:message key="form.lbl.rank"/>
 
-			<form:radiobutton path="rankFlag" value="0"/>
-			参加する
-			<form:radiobutton path="rankFlag" value="1" checked="checked"/>
-			参加しない
+			<form:radiobutton path="rankFlag" value="0" id="rank1"/>
+			<label for="rank1">参加する</label>
+			<form:radiobutton path="rankFlag" value="1" id="rank2" checked="checked"/>
+			<label for="rank2">参加しない</label>
 		</div>
 
 		<div class="mb-20">
 			<fmt:message key="form.lbl.smoke" />
 
-			<form:radiobutton path="smokeFlag" value="0"/>
-			吸う
-			<form:radiobutton path="smokeFlag" value="1" checked="checked"/>
-			吸わない
+			<form:radiobutton path="smokeFlag" value="0" id="smoke1"/>
+			<label for="smoke1">吸う</label>
+			<form:radiobutton path="smokeFlag" value="1" id="smoke2" checked="checked"/>
+			<label for="smoke2">吸わない</label>
 
 		</div>
 
 		<div class="mb-20">
 			<fmt:message key="form.lbl.alcohol" />
 
-			<form:radiobutton path="alcoholFlag" value="0"/>
-			飲む
-			<form:radiobutton path="alcoholFlag" value="1" checked="checked"/>
-			飲まない
+			<form:radiobutton path="alcoholFlag" value="0" id="alcohol1"/>
+			<label for="alcohol1">飲む</label>
+			<form:radiobutton path="alcoholFlag" value="1" id="alcohol2" checked="checked"/>
+			<label for="alcohol2">飲まない</label>
 		</div>
 
 		<form:button class="mb-20 info-btn">

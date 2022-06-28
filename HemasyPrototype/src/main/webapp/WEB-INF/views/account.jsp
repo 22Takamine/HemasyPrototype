@@ -188,9 +188,7 @@
 	       <div class="mb-20 btns">
 		    <form:button class="info-btn"><fmt:message key="form.lbl.regist"/></form:button>
 		    
-			<form:form action="back" modelAttribute="index" method="get">
-			  <form:button class="info-btn"><fmt:message key="form.lbl.back"/></form:button>
-		    </form:form>
+			<button type="button" onclick="location.href='/back'" class="back-button info-btn"><fmt:message key="form.lbl.back"/></button>
 	       </div>
 	    
 	  </form:form>
