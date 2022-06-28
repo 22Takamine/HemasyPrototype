@@ -233,6 +233,20 @@ public List<ListAndRecord> SportListById(int userId) {
 		return 1;
 	}
 	
+	//管理者リスト編集
+	public int editAdminList(int userId, List<ListAndRecord> adminListsList) {
+		if (!adminListsList.isEmpty()) {
+			MapSqlParameterSource param = new MapSqlParameterSource();
+			param.addValue("userId", userId);
+			jdbcTemplate.update(DELETE_LISTS, param);
+		}
+		for(ListAndRecord adminList: adminListsList) {
+			BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(adminList);
+		    jdbcTemplate.update(INSERT_LIST_AND_RECORD, paramSource);
+		}
+		return 1;
+	}
+	
 		
 	//やすなり-------------------------------------------------------------------------------------------------------------
 	public int insert(List<CommonRecord> recordList) {

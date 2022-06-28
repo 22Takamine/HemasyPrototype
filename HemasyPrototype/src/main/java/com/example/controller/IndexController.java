@@ -750,6 +750,95 @@ public class IndexController {
 		return "adminInformation";
 	}
 	
+	//管理者のリスト管理確定時
+		@RequestMapping(value = "/adminListCommit", method = RequestMethod.POST)
+		public String adminListCommit(@ModelAttribute("index") UserForm form, Model model) {
+
+			List<ListAndRecord> listsList = new ArrayList<ListAndRecord>();
+
+			//食事リスト
+			for (int i = 0; request.getParameter("value1Food" + i) != null; i++) {
+				System.out.println(request.getParameter("delFood" + i) + i + "食べ物かくにん");
+				if (request.getParameter("delFood" + i) != null) {
+					System.out.println("けすぞ");
+					continue;
+				}
+				ListAndRecord foodData = new ListAndRecord(0, 1, 1, request.getParameter("value1Food" + i), Double.parseDouble(request.getParameter("value2Food" + i)), null, null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+				listsList.add(foodData);
+				System.out.println(foodData.getListsAndRecordsId());
+				System.out.println(foodData.getCategory());
+				System.out.println(foodData.getType());
+				System.out.println(foodData.getValue1());
+				System.out.println(foodData.getValue2());
+				System.out.println(foodData.getValue3());
+				System.out.println(foodData.getValue4());
+				System.out.println(foodData.getValue5());
+				System.out.println(foodData.getCreateDate());
+				System.out.println(foodData.getUserId());
+			}
+			
+			//運動リスト
+			for (int i = 0; request.getParameter("value1Spo" + i) != null; i++) {
+				System.out.println(request.getParameter("delSpo" + i) + i + "運動かくにん");
+				if (request.getParameter("delSpo" + i) != null) {
+					System.out.println("けすぞ");
+					continue;
+				}
+				ListAndRecord sportData = new ListAndRecord(0, 1, 2, request.getParameter("value1Spo" + i), Double.parseDouble(request.getParameter("value2Spo" + i)), null, null, null, null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+				listsList.add(sportData);
+				System.out.println(sportData.getListsAndRecordsId());
+				System.out.println(sportData.getCategory());
+				System.out.println(sportData.getType());
+				System.out.println(sportData.getValue1());
+				System.out.println(sportData.getValue2());
+				System.out.println(sportData.getValue3());
+				System.out.println(sportData.getValue4());
+				System.out.println(sportData.getValue5());
+				System.out.println(sportData.getCreateDate());
+				System.out.println(sportData.getUserId());
+			}
+
+			//アルコールリスト
+			for (int i = 0; request.getParameter("value1Alc" + i) != null; i++) {
+				System.out.println(request.getParameter("delAlc" + i) + "おさけかくにん");
+				if (request.getParameter("delAlc" + i) != null) {
+					System.out.println("けすぞ");
+					continue;
+				}
+				ListAndRecord alcoholData = new ListAndRecord(0, 1, 4, request.getParameter("value1Alc" + i), Double.parseDouble(request.getParameter("value2Alc" + i)), null, Double.parseDouble(request.getParameter("value4Alc" + i)), Double.parseDouble(request.getParameter("value5Alc" + i)), null, null, null, Date.valueOf(request.getParameter("createDate")), ((User) session.getAttribute("user")).getUserId());
+				listsList.add(alcoholData);
+				System.out.println("はじまり" + alcoholData.getListsAndRecordsId());
+				System.out.println(alcoholData.getCategory());
+				System.out.println(alcoholData.getType());
+				System.out.println(alcoholData.getValue1());
+				System.out.println(alcoholData.getValue2());
+				System.out.println(alcoholData.getValue3());
+				System.out.println(alcoholData.getValue4());
+				System.out.println(alcoholData.getValue5());
+				System.out.println(alcoholData.getCreateDate());
+				System.out.println(alcoholData.getUserId());
+			}
+			
+			listAndRecordDao.editAdminList(((User) session.getAttribute("user")).getUserId(), listsList);
+			
+			List<User> userList = userDao.getAllUser();
+			
+			List<ListAndRecord> foodList = listAndRecordDao.FoodListById(((User) session.getAttribute("user")).getUserId());
+			
+			List<ListAndRecord> alcoholList = listAndRecordDao.AlcoholListById(((User) session.getAttribute("user")).getUserId());
+			
+			List<ListAndRecord> sportList = listAndRecordDao.SportListById(((User) session.getAttribute("user")).getUserId());
+			
+			session.setAttribute("userList", userList);
+			session.setAttribute("foodList", foodList);
+			session.setAttribute("alcoholList", alcoholList);
+			session.setAttribute("sportList", sportList);
+			
+
+			return "admin";
+
+		}
+	
 	//管理者お問い合わせの検索
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String adminSearch(@ModelAttribute("index") InformationForm form, Model model) {
