@@ -18,89 +18,57 @@
 <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 </head>
 <body>
-	<header>
-		<div class="header-logo">
-			<a href="./back">Hemasy</a>
-		</div>
-		<form:form action="hamburger" modelAttribute="index" method="post">
-			<button type="button" class="menu-btn">
-				<i class="fa fa-bars" aria-hidden="true"></i>
-			</button>
-			<div class="menu">
-				<div class="menu__item">
-					<a href="./account">アカウント管理</a>
-				</div>
-				<div class="menu__item">
-					<a href="./rank">ランキング</a>
-				</div>
-				<div class="menu__item">
-					<a href="./list">リスト編集</a>
-				</div>
-				<div class="menu__item">
-					<a href="./information">お問い合わせ</a>
-				</div>
-				<div class="menu__item">
-					<a href="./logout">ログアウト</a>
-				</div>
-			</div>
-		</form:form>
-	</header>
-	<main>
-		<div class="main-box">
-		
-			<div class="button-box">
-				<form:form action="record" modelAttribute="index" class="record-button-box" method="get">
-				    <input type="hidden" id="todayDate" name="recordDate">
-				    <input type="image" src="../../images/record.png" alt="#" class="button-img">
-				</form:form>
-			  
-			    <form:form action="statistics" modelAttribute="index" class="statistics-button-box" method="get">
-			  		<input type="hidden" id="todayDate" name="statisticsDate">
-			  		<input type="image" src="../../images/statistic.png" alt="#" class="button-img">
-			    </form:form>
-			</div>
-			
-			<div class="human-box">
-				<div class="tooltip">
-					<div class="description">
-					 	<p>${lungWord}</p>
-					</div>
-					<img src="${lungImg}" alt="#" class="lung-img">
-				</div>
-				
-				<div class="tooltip">
-					<div class="description">
-						<p>${livarWord}</p>
-					</div>
-					<img src="${livarImg}" alt="#" class="livar-img">
-				</div>
-				
-				<div class="tooltip">
-					<div class="description">
-						<p>${stomachGoalkcal}</p>
-						<p>${stomachInputKcal}</p>
-						<p>${stomachOutputKcal}</p>
-					</div>
-					<img src="${stomachImg}" alt="#" class="stomach-img">
-				</div>
-			</div>
-	
-			<div class="bmi-human-box">
-				<div class="bmi-human-img-box">
-					<p>BMI(肥満度): ${bmiValue}</p>
-					<img src="${bmiImg}" alt="#" class="bmi-img">
-				</div>
-			</div>
-		</div>
-		
-
-	</main>
-	<footer>
-		<div>
-			<p>ここはfooterです。</p>
-		</div>
-	</footer>
-	<script>
+<header>
+	<div class="header-logo"><a href="./back">Hemasy</a></div>
+	<form:form action="hamburger" modelAttribute="index" method="post">
+	    <button type="button" class="menu-btn">
+	      <i class="fa fa-bars" aria-hidden="true"></i>
+	    </button>
+	    <div class="menu">
+	      <div class="menu__item"><a href="./account">アカウント管理</a></div>
+	      <div class="menu__item"><a href="./rank">ランキング</a></div>
+	      <div class="menu__item"><a href="./list">リスト編集</a></div>
+	      <div class="menu__item"><a href="./information">お問い合わせ</a></div>
+	      <div class="menu__item"><a href="./logout">ログアウト</a></div>
+	    </div>
+    </form:form>
+</header>
+  <div class="main">
+	  <form:form action="record" modelAttribute="index" method="get">
+	    <input type="hidden" id="todayDate" name="recordDate">
+	    <form:button><fmt:message key="form.lbl.record"/></form:button>
+	  </form:form>
+  
+	  <form:form action="statistics" modelAttribute="index" method="get">
+	  	<input type="hidden" id="todayDate" name="statisticsDate">
+	    <form:button><fmt:message key="form.lbl.statistics"/></form:button>
+	  </form:form>
+  </div>
+  
+  <div class="body_container box1">
+  	  	<div class="box2 lung">
+  	  		<div class="lung_right_box">
+  	  		
+  	  		</div>
+  	  		<div class="lung_left_box">
+  	  		
+  	  		</div>
+  	  	</div>
+  	  	
+  	  	<div class="box2">
+  	  		<div class="liver_box">
+  	  		
+  	  		</div>
+  	  	</div>
+  	  	
+  	  	<div class="box2">
+  	  		<div class="stomach_box">
+  	  		
+  	  		</div>
+  	  	
+  	  	</div>
+  	  </div>
+  	  <script>
   		var date = new Date();
 
     	var yyyy = date.getFullYear();
@@ -109,7 +77,6 @@
 
 		document.getElementById("todayDate").value=yyyy+'-'+mm+'-'+dd;
   	  </script>
-	<script src="js/commons.js"></script>
-
+<script src="js/commons.js"></script>
 </body>
 </html>

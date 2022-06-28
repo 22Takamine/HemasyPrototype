@@ -2,7 +2,6 @@
 package com.example.dao;
 
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +27,8 @@ public class UserDao {
 	private static final String SELECT_USER_ID = "";
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
+	
+	private static final String GET_ALL_USER = "SELECT * FROM users";
 
 	public User findById(int userId) {
 		String sql = SELECT_BY_ID;
@@ -132,5 +133,10 @@ public class UserDao {
         jdbcTemplate.update(sql, param);  
     	
     }
+
+	//リン作成。すべてのユーザーを取得。管理者ページで利用。
+	public List<User> getAllUser() {
+		return jdbcTemplate.query(GET_ALL_USER, new BeanPropertyRowMapper<User>(User.class));
+	}
 }
 
