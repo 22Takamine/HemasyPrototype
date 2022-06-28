@@ -68,7 +68,7 @@
 	<input type="hidden" id="test" value="1.5">
 
 	<div id="selectGraph">
-		<button name="0" data-index="food" onclick="entryClick(1)">食事</button>
+		<button n+ame="0" data-index="food" onclick="entryClick(1)">食事</button>
 		<button name="1" data-index="exercise" onclick="entryClick(2)">運動</button>
 		<button name="2" data-index="alcohol" onclick="entryClick(3)">酒</button>
 		<button name="3" data-index="smoke" onclick="entryClick(4)">タバコ</button>
@@ -80,7 +80,7 @@
 		<label><input id="nen"  type="radio" name="poti" value="2" onclick="poti(2), changeHideMan(45)">年</label>
 	</div>
 	<div>
-		<input type="date" id="date" value="${statustucsDate}" onchange="poti()">
+		<input type="date" id="date" value="${statisticsDate}" onchange="poti()">
 	</div>
 	<div style="width: 800px">
 		<canvas id="foodGraph"></canvas>
