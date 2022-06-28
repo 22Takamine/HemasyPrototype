@@ -22,6 +22,7 @@ import com.example.dao.UserDao;
 import com.example.entity.ListAndRecord;
 import com.example.entity.User;
 import com.example.form.IndexForm;
+import com.example.form.InformationForm;
 import com.example.form.ListAndRecordForm;
 import com.example.form.UserForm;
 
@@ -558,12 +559,12 @@ public class IndexController {
 	}
 
 	//ハンバーガーメニューからお問い合わせへ
-	@RequestMapping(value = "/information", method = RequestMethod.GET)
-	public String information(@ModelAttribute("index") UserForm form, Model model) {
+	// ハンバーガーメニューからお問い合わせへ
+		@RequestMapping(value = "/information", method = RequestMethod.GET)
+		public String information(@ModelAttribute("information") InformationForm LRform, Model model) {
 
-
-		return "information";
-	}
+			return "information";
+		}
 
 
 	//管理者ページでロゴをクリックで管理者ページへ
