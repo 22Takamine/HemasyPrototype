@@ -52,14 +52,14 @@
 
 		<div class="mb-20">
 			<fmt:message key="form.lbl.sex" />
-			<form:radiobutton path="sex" value="0"/>
+			<form:radiobutton path="sex" value="0" checked="checked"/>
 			男
 			<form:radiobutton path="sex" value="1"/>
 			女
 		</div>
 
 		<div class="mb-20">
-			<fmt:message key="form.lbl.birthDate" />
+			<fmt:message key="form.lbl.birth" />
 			<form:input type="date" path="birth" />
 			<form:errors path="birth" cssStyle="color: red"/>
 		</div>

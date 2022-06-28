@@ -7,6 +7,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class UserForm {
 
 	@NotBlank
@@ -23,7 +25,8 @@ public class UserForm {
 	@NotNull
 	private Integer sex;
 
-	@NotBlank
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Past
 	private Date birth;
 
