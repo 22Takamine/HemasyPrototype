@@ -482,8 +482,8 @@ public class ListAndRecordDao {
 		String sql = """
             select value3, value2, create_date AS create_day from(
 				select
-				sum(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value3
-				, sum(T2.value2) value2
+				avg(ROUND(T2.value2/((T1.height/100)*(T1.height/100)), 2)) value3
+				, avg(T2.value2) value2
 				, to_char(create_date, 'YYYY-MM') create_date
 				FROM
 				users T1
