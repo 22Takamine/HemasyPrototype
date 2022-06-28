@@ -18,7 +18,6 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
  <link href="css/common.css" rel="stylesheet">
-
  <link
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
@@ -36,7 +35,7 @@
 			<form:input path="name" id="registerinput"/>
 			<form:errors path="name" cssStyle="color: red"/>
 			<c:if test="${not empty msgName}">
-  				<div>${fn:escapeXml(msgName)}</div>
+  				<div class="red">${fn:escapeXml(msgName)}</div>
   			</c:if>
 		</div>
 
@@ -45,7 +44,7 @@
 			<form:input type="email" path="mail" />
 			<form:errors path="mail" cssStyle="color: red"/>
 			<c:if test="${not empty msgMail}">
-  				<div>${fn:escapeXml(msgMail)}</div>
+  				<div class="red">${fn:escapeXml(msgMail)}</div>
   			</c:if>
 		</div>
 
@@ -66,8 +65,8 @@
 		<div class="mb-20">
 			<fmt:message key="form.lbl.birth" />
 			<form:input id="datefield" type="date" path="birth" max='2000-13-13'/>
-			<c:if test="${not empty msgBirth}">
-  				<div>${fn:escapeXml(msgBirth)}</div>
+			<c:if test="${not empty msgBirth}" >
+  				<div class="red">${fn:escapeXml(msgBirth)}</div>
   			</c:if>
 		</div>
 

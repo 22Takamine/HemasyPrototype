@@ -98,5 +98,8 @@ button:focus{outline:none;}
 
 /*-- sign_up ・ login --*/
 
-
+.center{
+	color:#ff0000;
+	text-align:center;
+}
 

@@ -39,7 +39,7 @@
 			<div class="content form">
 				<h1 class="mb-30 f-56 logoF">Hemasy</h1>
 				<c:if test="${not empty msg}">
-					<p>${fn:escapeXml(msg)}</p>
+					<p class="center">${fn:escapeXml(msg)}</p>
 				</c:if>
 
 				<p class="mb-5">
