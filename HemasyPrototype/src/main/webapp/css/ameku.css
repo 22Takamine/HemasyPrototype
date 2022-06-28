@@ -372,8 +372,18 @@ footer {
 	font-size: ;
 }
 
-#food input, #sport input, #smoke input, #alcohol input, #weight input {
+#food input, #sport input, #smoke input, #alcohol input, #weight input, #food-list input, #alcohol-list input {
 	padding: 0.5rem;
+}
+
+.list-page-main {
+	display: flex;
+	flex-direction: column; 
+	align-items: center;
+}
+
+#food-list #alcohol-list {
+	widht: 70%;
 }
 
 
