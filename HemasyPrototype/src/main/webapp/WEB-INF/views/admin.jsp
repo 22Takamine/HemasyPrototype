@@ -21,7 +21,7 @@
 <body>
 	<header>
 		<div class="header-logo">
-			<a href="./admin">Hemasy</a>
+			<a href="./back">Hemasy</a>
 		</div>
 		<form:form action="hamburger" modelAttribute="index" method="post">
 			<button type="button" class="menu-btn">

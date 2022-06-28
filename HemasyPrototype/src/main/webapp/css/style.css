@@ -2,11 +2,11 @@
 /*------------------------
  header
 --------------------------*/
-header{background-color:#fff; position:fixed; left:0; top:0; width:100%; z-index:100; }
-.header-login,.header-pages{max-width:950px; margin:0 auto; padding:.7rem; position:relative}
-.header-login img,.header-pages h1 img{width:30vw; max-width:130px; height:auto}
+header{padding:1.25rem 2rem;}
+.header-login,.header-pages{max-width:950px; margin:0 auto; padding:.5rem; position:relative}
+.header-login img,.header-pages h1 img{width:30vw; max-width:130px; height:70px}
 .header-login .btn{font-size:.6rem; margin:0; letter-spacing:normal;}
-.header-login .btn a{padding:.3rem .5rem .4rem;}
+.headerheader-login .btn a{padding:.3rem .5rem .4rem;}
 .header-pages p img{width:32px; max-height:32px; margin:0 auto;}
 .header-pages .h-navbtn{position:relative; z-index:0; width:45px; text-align:center}
 .logoF{font-family:'Fredoka One', cursive; text-align:center; letter-spacing:.3rem;}
@@ -41,10 +41,9 @@ button.btn{border:none;padding:.9rem 0; border-radius:5rem;}
 .pcr-wrap{padding-bottom:2rem;}
 .wrap-white{position:relative;background-color:#fff;}
 .pc-content{width:950px; margin:2rem auto 0;}
-
+.pc-wrap{background-color:#fff; margin:3rem auto 0; padding:2rem 0; box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.3); max-width:750px;}
+.pc-wrap p{line-height:1.75rem;}
 @media (min-width: 62em) {
-	.pc-wrap{background-color:#fff; margin:3rem auto 0; padding:2rem 0; box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.3);}
-	.pc-wrap p{line-height:1.75rem;}
 	.content{width:100%;}
 	.pcr-wrap{padding-bottom:2rem;}
 	.pcr-wrap.wrap-white .content{padding:1.2rem 2rem}
@@ -98,5 +97,6 @@ button:focus{outline:none;}
 .special-text{width:92%; margin:0 auto 1rem;}
 
 /*-- sign_up ・ login --*/
+
 
 

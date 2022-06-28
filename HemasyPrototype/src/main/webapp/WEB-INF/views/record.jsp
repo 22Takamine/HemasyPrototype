@@ -90,6 +90,7 @@
 				<p>
 					昼食
 					<button type="button" onclick="addLunForm()">⊕</button>
+
 				</p>
 				<c:forEach var="lunchRecord" items="${lunchRecordList}"
 					varStatus="lStatus">
@@ -113,6 +114,7 @@
 				<p>
 					夕食
 					<button type="button" onclick="addDinForm()">⊕</button>
+
 				</p>
 				<c:forEach var="dinnerRecord" items="${dinnerRecordList}"
 					varStatus="dStatus">
@@ -137,6 +139,7 @@
 				<p>
 					間食
 					<button type="button" onclick="addSnaForm()">⊕</button>
+
 				</p>
 				<c:forEach var="snackRecord" items="${snackRecordList}"
 					varStatus="sStatus">
@@ -163,6 +166,7 @@
 			<h2>
 				運動記録
 				<button type="button" onclick="addSpoForm()">⊕</button>
+
 			</h2>
 			<c:forEach var="sportRecord" items="${sportRecordList}"
 				varStatus="spStatus">
@@ -192,6 +196,7 @@
 			<h2>
 				アルコール
 				<button type="button" onclick="addAlcForm()">⊕</button>
+
 			</h2>
 			<c:forEach var="alcoholRecord" items="${alcoholRecordList}"
 				varStatus="aStatus">

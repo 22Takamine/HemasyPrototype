@@ -72,7 +72,6 @@ public class IndexController {
     @Autowired
     RecordService recordService;
 
-
 	//最初にここにきて、login画面にいくyu
 	@RequestMapping({ "/", "/index" })
 	public String index(@ModelAttribute("index") IndexForm form, Model model) {
@@ -81,7 +80,7 @@ public class IndexController {
 
 	
 	//ログイン画面から、新規登録画面に遷移
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	@RequestMapping(value = "/register",method = RequestMethod.GET)
 	public String register(@ModelAttribute("index") UserForm form, Model model) {
         return "register";
     }
@@ -212,11 +211,6 @@ public class IndexController {
     		session.setAttribute("livarImg","../../" + AlcoholColorLevel.getColorPath());
     		session.setAttribute("stomachImg",CalorieColorLevel.getColorPath());
     		session.setAttribute("bmiImg",bmipath.getImgPath());
-
-			session.setAttribute("calorieColorPath", CalorieColorLevel.getColorPath());
-			session.setAttribute("smokeColorPath", SmokeColorLevel.getColorPath());
-			session.setAttribute("alcoholColorPath", AlcoholColorLevel.getColorPath());
-			session.setAttribute("user", user);
     		
     		return "menu";
 		}
@@ -513,6 +507,7 @@ public class IndexController {
 		return "menu";
 
 	}
+
     
     //統計画面に遷移（ゆうちゃんへ、GETにしてね）
     @RequestMapping(value = "/statistics", method = RequestMethod.GET)
