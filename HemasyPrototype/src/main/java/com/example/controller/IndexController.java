@@ -213,6 +213,7 @@ public class IndexController {
     		session.setAttribute("stomachGoalkcal", "目標摂取カロリーは"+goalCalorie+"Kcalです。");
     		session.setAttribute("stomachInputKcal", "摂取カロリーは"+ userCalorieIntake.getValue2()+"Kcalです。");
     		session.setAttribute("stomachOutputKcal", "消費カロリーは" + CaloriesBurned + "Kcalです。" );
+    		recordService.achievementUnlock(user.getUserId());
     		
     		session.setAttribute("lungImg","../../" + SmokeColorLevel.getColorPath());
     		session.setAttribute("livarImg","../../" + AlcoholColorLevel.getColorPath());
@@ -415,7 +416,7 @@ public class IndexController {
 		session.setAttribute("livarImg","../../" + AlcoholColorLevel.getColorPath());
 		session.setAttribute("stomachImg",CalorieColorLevel.getColorPath());
 		session.setAttribute("bmiImg",bmipath.getImgPath());
-
+		recordService.achievementUnlock(user.getUserId());
 		session.setAttribute("calorieColorPath", CalorieColorLevel.getColorPath());
 		session.setAttribute("smokeColorPath", SmokeColorLevel.getColorPath());
 		session.setAttribute("alcoholColorPath", AlcoholColorLevel.getColorPath());
@@ -543,7 +544,7 @@ public class IndexController {
 	@RequestMapping(value = "/account", method = RequestMethod.GET)
 	public String account(@ModelAttribute("index") UserForm form, Model model) {
 		User user = (User) session.getAttribute("user");
-		List<Achievements> achievementList = achievementsDao.findByAll();
+		List<Achievements> achievementList = achievementsDao.findByAll(user.getUserId());
 		session.setAttribute("achievementsList",achievementList);
 		model.addAttribute("achievementName",achievementsDao.findById(user.getAchievementId()).getAchievementName());
 		return "account";

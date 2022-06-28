@@ -349,6 +349,22 @@ public List<ListAndRecord> SportListById(int userId) {
 	}
 	
 	//かわみつ-------------------------------------------------------------------------------------------------------------
+	public int getUserFoodListSize(int i) {
+		String sql = "select create_date from lists_and_records where category = 2 and type = 1 and user_id = :id and value2 <> 0 group by create_date";
+		
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("id", i);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class)).size();
+	}
+
+	public int getUserExerciseListSize(int i) {
+		String sql = "select create_date from lists_and_records where category = 2 and type = 2 and user_id = :id and value2 <> 0 group by create_date";
+		
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("id", i);
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<ListAndRecord>(ListAndRecord.class)).size();
+	}
+	
 	public List<CommonRecord> getFoodRecordsOfWeek(int id, Date day) {
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		//ToDo user_id を :user_id にして id を入れる。
