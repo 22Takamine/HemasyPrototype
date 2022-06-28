@@ -42,4 +42,28 @@ public class AchievementsDao {
 		return list.isEmpty() ? null :list.get(0);
 
 	}
+	public List<Achievements> getFoodDayAchievement() {
+    	String sql = """
+    			select * from achievement where major_divisions = 1 and sub_divisions = 1
+    			""";
+    	MapSqlParameterSource param = new MapSqlParameterSource();
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<Achievements>(Achievements.class));
+    }
+    
+    public List<Achievements> getExerciseDayAchievement() {
+    	String sql = """
+    			select * from achievement where major_divisions = 2 and sub_divisions = 1
+    			""";
+    	MapSqlParameterSource param = new MapSqlParameterSource();
+		return jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<Achievements>(Achievements.class));
+    }
+
+	public void unlock(int achievementId, int userId) {
+		// TODO 自動生成されたメソッド・スタブ
+		String sql ="insert into achievement_unlock (achievement_id, user_id) values(:ACVID, :user_id)";
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("ACVID", achievementId);
+		param.addValue("user_id", userId);
+		jdbcTemplate.update(sql, param);
+	}
 }
