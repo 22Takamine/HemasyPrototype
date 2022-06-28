@@ -127,6 +127,8 @@ public class IndexController {
     		//session.setAttribute("stomachInputKcal", stomachInputKcal);
     		//session.setAttribute("stomachOutputKcal", stomachOutputKcal);
     		
+    		
+    		
     		model.addAttribute("lungImg",lungImg );
     		model.addAttribute("livarImg",livarImg );
     		model.addAttribute("stomachImg",stomachImg );
@@ -194,6 +196,10 @@ public class IndexController {
 		System.out.println(dinnerRecordList.size());
 		
 		System.out.println(snackRecordList.size());
+		
+		Date recordDate = Date.valueOf(request.getParameter("recordDate"));
+		System.out.println(recordDate);
+		model.addAttribute("dataDate", recordDate);
 		
 		model.addAttribute("breakfastRecordList", breakfastRecordList);
 		model.addAttribute("lunchRecordList", lunchRecordList);

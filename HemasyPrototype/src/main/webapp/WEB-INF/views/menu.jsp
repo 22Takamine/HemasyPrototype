@@ -13,7 +13,7 @@
 <title>メニュー画面</title>
 <link href="css/menu.css" rel="stylesheet">
 <!-- <link href="css/style.css" rel="stylesheet">-->
-<!--link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <meta name="viewport" content="width=device-width">
 <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 </head>
@@ -49,12 +49,15 @@
 		<div class="main-box">
 		
 			<div class="button-box">
-				<div class="record-button-box">
-					<a href="/record" class="link button"><img src="../../images/record.png" alt="#" class="button-img"></a> <!-- ここaタグに変えたよ -->
-				</div>
-				<div class="statistics-button-box">
-					<a href="/statistics" class="link button"><img src="../../images/statistic.png" alt="#" class="button-img"></a> <!-- ここaタグに変えたよ -->
-				</div>
+				<form:form action="record" modelAttribute="index" class="record-button-box" method="get">
+				    <input type="hidden" id="todayDate" name="recordDate">
+				    <input type="image" src="../../images/record.png" alt="#" class="button-img">
+				</form:form>
+			  
+			    <form:form action="statistics" modelAttribute="index" class="statistics-button-box" method="get">
+			  		<input type="hidden" id="todayDate" name="statisticsDate">
+			  		<input type="image" src="../../images/statistic.png" alt="#" class="button-img">
+			    </form:form>
 			</div>
 			
 			<div class="human-box">
@@ -90,8 +93,15 @@
 			</div>
 		</div>
 		
-
 	</main>
+	
+	<script>
+  		var date = new Date();
+    	var yyyy = date.getFullYear();
+    	var mm = ("0"+(date.getMonth()+1)).slice(-2);
+    	var dd = ("0"+date.getDate()).slice(-2);
+		document.getElementById("todayDate").value=yyyy+'-'+mm+'-'+dd;
+  	 </script>
 	<script src="js/commons.js"></script>
 </body>
 </html>
