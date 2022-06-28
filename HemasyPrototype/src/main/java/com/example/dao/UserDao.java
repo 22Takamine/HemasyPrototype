@@ -15,25 +15,47 @@ import org.springframework.stereotype.Repository;
 import com.example.entity.User;
 
 @Repository
-
 public class UserDao {
 
-	private static final String SELECT_BY_PRODUCT_ID = "SELECT * FROM users WHERE user_id = :user_id";
+	private static final String SELECT_BY_ID = "SELECT * FROM users WHERE user_id = :user_id";
+	private static final String SELECT_BY_NAME = "SELECT * FROM users WHERE user_name = :name";
+	private static final String SELECT_BY_MAIL = "SELECT * FROM users WHERE mail = :mail";
 	private static final String SELECT_ID_AND_PASS = "SELECT * FROM users WHERE mail = :mail and password = :password";
 	private static final String INSERT = "INSERT INTO users(user_name,mail,password,sex,birth,height,goal_exercise_time,goal_calorie,created_at,rank_flag,alcohol_flag,smoke_flag,role_id,achievement_id,achievement_flag)"
-			+ " VALUES(:user_name, :mail,:password,:sex,:birth,:height,:goal_exercise_time,2000,:createdAt,:rankFlag,:alcoholFlag,:smokeFlag,1,1,0)";
+			+ " VALUES(:user_name, :mail,:password,:sex,:birth,:height,:goal_exercise_time,:goalCalorie,:createdAt,:rankFlag,:alcoholFlag,:smokeFlag,1,1,0)";
 	private static final String UPDATE = "UPDATE users SET user_name = :name, mail = :mail, password = :pass, sex = :sex, birth = :birth, height = :height, goal_exercise_time = :time, goal_calorie = :calorise, rank_flag = :rank, alcohol_flag = :alcohol, smoke_flag = :smoke, achievement_id = :achievement WHERE user_id = :id";
 
-
+	private static final String SELECT_USER_ID = "";
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
-	
 	public User findById(int userId) {
-		String sql = SELECT_BY_PRODUCT_ID;
+		String sql = SELECT_BY_ID;
 
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("user_id", userId);
+
+		var list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<User>(User.class) );
+		return list.isEmpty() ? null :list.get(0);
+
+	}
+	
+	public User findByName(String name) {
+		String sql = SELECT_BY_NAME;
+
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("name", name);
+
+		var list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<User>(User.class) );
+		return list.isEmpty() ? null :list.get(0);
+
+	}
+	
+	public User findByMail(String mail) {
+		String sql = SELECT_BY_MAIL;
+
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("mail", mail);
 
 		var list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<User>(User.class) );
 		return list.isEmpty() ? null :list.get(0);
@@ -53,11 +75,24 @@ public class UserDao {
 		return resultList.isEmpty() ? null:resultList.get(0);
 	}
 
+	public User findUser(Integer id) {
+		
+		MapSqlParameterSource param = new MapSqlParameterSource();
+
+		param.addValue("userId", id);
+		
+		String sql = SELECT_USER_ID;
+		List<User>resultList = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<User>(User.class));
+
+		return resultList.isEmpty() ? null:resultList.get(0);
+	}
+	
 	public void insert(User user) {
 		String sql = INSERT;
 
 		Date today = new Date();
 
+	
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("user_name", user.getUserName());
 		param.addValue("mail", user.getMail());
@@ -65,7 +100,8 @@ public class UserDao {
 		param.addValue("sex", user.getSex());
 		param.addValue("birth", user.getBirth());
 		param.addValue("height", user.getHeight());
-		param.addValue("goal_exercise_time",user.getGoalExerciseTime());
+		param.addValue("goal_exercise_time",30);
+		param.addValue("goalCalorie", 2350);
 		param.addValue("createdAt", today);
 		param.addValue("rankFlag", user.getRankFlag());
 		param.addValue("alcoholFlag", user.getAlcoholFlag());

@@ -21,10 +21,10 @@ public class ListAndRecord {
 	private Date createDate;
 	private int userId;
 	
+
 	public ListAndRecord() {
 		
 	}
-	
 	
 	public ListAndRecord(int listsAndRecordsId, int category, int type, String value1, Integer value2, Integer value3,
 			Integer value4, Integer value5, Integer value6, Integer value7, Integer value8, Date createDate,
@@ -43,6 +43,5 @@ public class ListAndRecord {
 		this.createDate = createDate;
 		this.userId = userId;
 	}
-	
-	
+
 }

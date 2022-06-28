@@ -348,8 +348,8 @@ footer {
   display: none;
 }
 
-/* #registerinput {
-	padding: 0;
-	border-radius: 0;
-} */
+#textarea {
+	width: 70%;
+}
+
 

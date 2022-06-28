@@ -10,6 +10,7 @@ public class InformationForm {
 	private Integer informationId;
 	private Integer readFlag;
 	private Integer doneFlag;
+	private String keyword;
 	
 	public int getUserId() {
 		return userId;
@@ -51,6 +52,12 @@ public class InformationForm {
 	}
 	public void setDoneFlag(Integer doneFlag) {
 		this.doneFlag = doneFlag;
+	}
+	public String getKeyword() {
+		return this.keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;	
 	}
 	
 }

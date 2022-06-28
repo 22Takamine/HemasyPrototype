@@ -3,7 +3,7 @@ package com.example.entity;
 import java.sql.Date;
 
 public class User {
-	
+
 	
 	private Integer id;
 	private Integer userId;
@@ -13,6 +13,7 @@ public class User {
 	private Integer sex;
 	private Date birth;
 	private Double height;
+	private Double weight;
 	private Date createdAt;
 	private Integer goalExerciseTime;
 	private Integer goalCalorie;
@@ -24,13 +25,13 @@ public class User {
 	private Integer achievementFlag;
 	private Double bmi;
 	
-	
 	public User() {
 
 	}
 
 	public User(String userName, String mail, String password,Integer sex,
 			Date birth,Double height,Integer goalExerciseTime,Integer goalCalorie,Integer rankFlag,Integer alcoholFlag,Integer smokeFlag,Integer roleId) {
+
 		this.userName = userName;
 		this.mail = mail;
 		this.password = password;
@@ -62,13 +63,10 @@ public class User {
 		this.rankFlag = rankFlag;
 		this.alcoholFlag = alcoholFlag;
 		this.smokeFlag = smokeFlag;
-		this.roleId = roleId;
-		this.achievementId = achievementId;
-		this.achievementFlag = achievementFlag;
-		this.bmi = bmi;
+		
 	}
-	
-	
+
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -116,7 +114,6 @@ public class User {
 	public void setHeight(Double height) {
 		this.height = height;
 	}
-
 
 	public Date getBirth() {
 		return birth;
@@ -173,14 +170,24 @@ public class User {
 	public void setSmokeFlag(Integer smokeFlag) {
 		this.smokeFlag = smokeFlag;
 	}
-	
+
+	public Double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
+
 	public Integer getRoleId() {
 		return roleId;
 	}
 
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
+
 	}
+
 	
 	public Integer getAchievementId() {
 		return achievementId;
