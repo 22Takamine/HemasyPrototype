@@ -50,7 +50,7 @@
 		<h2 class="center f-32">管理ページ</h2>
 		<form action="adminListCommit" method="post">
 			<input type="hidden" name="createDate" id="todayDate">
-			<div id="user admin-user" class="center mb-45 bgc">
+			<div id="admin-user" class="center mb-45 bgc">
 				<h2>
 					ユーザー一覧
 				</h2>
@@ -73,7 +73,7 @@
 				 </table>
 				
 			</div>
-			<div id="food admin-food" class="center mb-45 bgc">
+			<div id="admin-food" class="center mb-45 bgc">
 				<h2>
 					食べ物リスト
 					<button type="button" onclick="addFoodData()">⊕</button>
@@ -88,7 +88,7 @@
 					</p>
 				</c:forEach>
 			</div>
-			<div id="sport admin-sport" class="center mb-45 bgc">
+			<div id="admin-sport" class="center mb-45 bgc">
 				<h2>
 					運動リスト
 					<button type="button" onclick="addSpoData()">⊕</button>
@@ -103,7 +103,7 @@
 					</p>
 				</c:forEach>
 			</div>
-			<div id="alcohol admin-alcohol" class="center mb-45 bgc">
+			<div id="admin-alcohol" class="center mb-45 bgc">
 				<h2>
 					アルコール
 					<button type="button" onclick="addAlcData()">⊕</button>
@@ -125,7 +125,6 @@
 			</div>
 			<div class="center mb-30">
 				<input type="submit" value="登録" class="info-btn">
-			<button type="button" onclick="location.href='/back'" class="back-button info-btn"><fmt:message key="form.lbl.back"/></button>
 			</div>
 		</form>
 
@@ -136,11 +135,11 @@
 		var fnum = document.getElementsByClassName('foodData').length;
 		function addFoodData() {
 			var newP = document.createElement('p');
-			newP.innerHTML = '<input name="value1Food' + fnum +
+			newP.innerHTML = '<input type="text" name="value1Food' + fnum +
 			  '" required> <input type="number" min="0" name="value2Food' + fnum +
 			  '" required>kcal<input type="checkbox" value="del" name="delFood' + fnum +
 			  '">削除';
-			var parent = document.getElementById('food');
+			var parent = document.getElementById('admin-food');
 			parent.appendChild(newP);
 			fnum++;
 		}
@@ -148,11 +147,11 @@
 		var snum = document.getElementsByClassName('sportData').length;
 		function addSpoData() {
 			var newP = document.createElement('p');
-			newP.innerHTML = '<input name="value1Spo' + snum +
+			newP.innerHTML = '<input type="text" name="value1Spo' + snum +
 			  '" required> <input type="number" min="0" name="value2Spo' + snum +
 			  '" required>メッツ<input type="checkbox" value="del" name="delSpo' + snum +
 			  '">削除';
-			var parent = document.getElementById('sport');
+			var parent = document.getElementById('admin-sport');
 			parent.appendChild(newP);
 			snum++;
 		}
@@ -160,13 +159,13 @@
 		var anum = document.getElementsByClassName('alcoholData').length;
 		function addAlcData() {
 			var newP = document.createElement('p');
-			newP.innerHTML = '<input name="value1Alc' + anum +
+			newP.innerHTML = '<input type="text" name="value1Alc' + anum +
 		  '" required> <input type="number" min="0.1" max="100" name="value4Alc' + anum +
 		  '" step="0.1" required>%<input type="number" min="0" name="value5Alc' + anum +
 		  '" required>kcal/杯 <input type="number" min="1" name="value2Alc' + anum +
 		  '" required>ml/杯 <input type="checkbox" value="del" name="delAlc' + anum +
 		  '">削除';
-			var parent = document.getElementById('alcohol');
+			var parent = document.getElementById('admin-alcohol');
 			parent.appendChild(newP);
 			anum++;
 		}
