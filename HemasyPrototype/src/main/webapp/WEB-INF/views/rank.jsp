@@ -64,6 +64,7 @@
 
 		<table>
 			<div class="caption">
+				<h2>前日運動時間ランキング</h2>
 				<p>検索結果：${DayRanking.size()}件</p>
 			</div>
 			<thead>
@@ -90,6 +91,7 @@
 
 		<table>
 			<div class="caption">
+				<h2>前週運動時間ランキング</h2>
 				<p>検索結果：${WeekRanking.size()}件</p>
 			</div>
 			<thead>
@@ -117,6 +119,7 @@
 
 		<table>
 			<div class="caption">
+				<h2>称号スコアランキング</h2>
 				<p>検索結果：${AchievementRanking.size()}件</p>
 			</div>
 			<thead>

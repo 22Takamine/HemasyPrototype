@@ -231,7 +231,7 @@
 			<h2>体重</h2>
 			<p>
 				体重は<input type="number" min="1" value="${weightRecord.value2}"
-					name="value2Wei" id="weightRecord" step="0.1" max="200" onchange="calcUsedCalorieByWeight()"/>kg、体脂肪率は<input
+					name="value2Wei" id="weightRecord" step="0.1" max="200" onchange="calcUsedCalorieByWeight()" required/>kg、体脂肪率は<input
 					type="number" min="0.1" max="100" value="${weightRecord.value3}"
 					name="value3Wei" step="0.1" required/>%です。
 			</p>

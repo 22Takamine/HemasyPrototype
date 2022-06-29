@@ -1,8 +1,6 @@
 package com.example.controller;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -430,10 +428,11 @@ public class IndexController {
     //統計画面に遷移（ゆうちゃんへ、GETにしてね）
     @RequestMapping(value = "/statistics", method = RequestMethod.GET)
     public String statistics(@ModelAttribute("index") UserForm form, Model model) {
-    	LocalDateTime nowDate = LocalDateTime.now();
-    	DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
-    	 String formatNowDate = dtf1.format(nowDate);
-    	 model.addAttribute("statisticsDate", formatNowDate);
+    	
+    	
+    	Date statisticsDate = Date.valueOf(request.getParameter("statisticsDate"));
+    	
+    	model.addAttribute("statisticsDate", statisticsDate);
         return "statistics";
     }
 
