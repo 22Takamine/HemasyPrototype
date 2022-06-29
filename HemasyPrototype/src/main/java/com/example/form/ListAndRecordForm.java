@@ -8,13 +8,13 @@ public class ListAndRecordForm {
 	private int category;
 	private int type;
 	private String value1;
-	private Integer value2;
-	private Integer value3;
-	private Integer value4;
-	private Integer value5;
-	private Integer value6;
-	private Integer value7;
-	private Integer value8;
+	private Double value2;
+	private Double value3;
+	private Double value4;
+	private Double value5;
+	private Double value6;
+	private Double value7;
+	private Double value8;
 	private Date createDate;
 	private int userId;
 
@@ -42,46 +42,46 @@ public class ListAndRecordForm {
 	public void setValue1(String value1) {
 		this.value1 = value1;
 	}
-	public Integer getValue2() {
+	public Double getValue2() {
 		return value2;
 	}
-	public void setValue2(Integer value2) {
+	public void setValue2(Double value2) {
 		this.value2 = value2;
 	}
-	public Integer getValue3() {
+	public Double getValue3() {
 		return value3;
 	}
-	public void setValue3(Integer value3) {
+	public void setValue3(Double value3) {
 		this.value3 = value3;
 	}
-	public Integer getValue4() {
+	public Double getValue4() {
 		return value4;
 	}
-	public void setValue4(Integer value4) {
+	public void setValue4(Double value4) {
 		this.value4 = value4;
 	}
-	public Integer getValue5() {
+	public Double getValue5() {
 		return value5;
 	}
-	public void setValue5(Integer value5) {
+	public void setValue5(Double value5) {
 		this.value5 = value5;
 	}
-	public Integer getValue6() {
+	public Double getValue6() {
 		return value6;
 	}
-	public void setValue6(Integer value6) {
+	public void setValue6(Double value6) {
 		this.value6 = value6;
 	}
-	public Integer getValue7() {
+	public Double getValue7() {
 		return value7;
 	}
-	public void setValue7(Integer value7) {
+	public void setValue7(Double value7) {
 		this.value7 = value7;
 	}
-	public Integer getValue8() {
+	public Double getValue8() {
 		return value8;
 	}
-	public void setValue8(Integer value8) {
+	public void setValue8(Double value8) {
 		this.value8 = value8;
 	}
 	public Date getCreateDate() {

@@ -5,11 +5,9 @@ import java.sql.Date;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-
+import javax.validation.constraints.Size;
 
 public class UserForm {
-
 
 	@NotBlank
 	private String name;
@@ -18,6 +16,7 @@ public class UserForm {
 	@Email
 	private String mail;
 
+	@Size(min=8,max=25)
 	@NotBlank
 	private String password;
 
@@ -25,8 +24,6 @@ public class UserForm {
 	@NotNull
 	private Integer sex;
 
-	@NotNull
-	@Past
 	private Date birth;
 
 	@NotNull
@@ -153,5 +150,5 @@ public class UserForm {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-    
+	
 }

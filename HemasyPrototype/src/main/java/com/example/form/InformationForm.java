@@ -1,15 +1,22 @@
 package com.example.form;
 
+import javax.validation.constraints.Size;
+
 //@Data
 public class InformationForm {
 
 	private int userId;
+	
+	@Size(min=1,max=25)
 	private String title;
+	
+	@Size(min=1,max=1000)
 	private String contents;
 	
 	private Integer informationId;
 	private Integer readFlag;
 	private Integer doneFlag;
+	private String keyword;
 	
 	public int getUserId() {
 		return userId;
@@ -51,6 +58,12 @@ public class InformationForm {
 	}
 	public void setDoneFlag(Integer doneFlag) {
 		this.doneFlag = doneFlag;
+	}
+	public String getKeyword() {
+		return this.keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;	
 	}
 	
 }

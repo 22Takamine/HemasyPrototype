@@ -18,7 +18,9 @@ public class InformationDao{
 	
 	private static final String SELECT_BY_ALL = "SELECT i.information_id, u.user_name, u.mail, i.title, i.send_at, i.read_flag, i.done_flag FROM infomation i INNER JOIN users u ON i.user_id = u.user_id ORDER BY i.information_id DESC";
 	private static final String SELECT_BY_ID = "SELECT i.information_id, u.user_name, u.mail, i.title,i.contents, i.send_at, i.read_flag, i.done_flag FROM infomation i INNER JOIN users u ON i.user_id = u.user_id WHERE i.information_id = :information_id";
+    private static final String SELECT_BY_ID_OR_TITLE = "SELECT i.information_id, u.user_name, u.mail, i.title,i.contents, i.send_at, i.read_flag, i.done_flag FROM infomation i INNER JOIN users u ON i.user_id = u.user_id WHERE u.user_name LIKE '%' ||:name || '%' OR i.title LIKE '%' ||:title || '%' ORDER BY i.information_id DESC";
 	private static final String UPDATE = "UPDATE infomation SET read_flag = :read_flag, done_flag = :done_flag WHERE information_id = :information_id";
+	private static final String UPDATEALL = "UPDATE infomation SET read_flag = :read_flag";
 	private static final String DELETE = "DELETE FROM infomation WHERE information_id = :information_id";
 	private String sql1 = "insert into infomation(user_id, title, contents,send_at, read_flag, done_flag) values(:user_id,:title,:contents, CURRENT_DATE,0,0);";
 	
@@ -44,6 +46,18 @@ public class InformationDao{
 
 	}
 	
+	public List<Information> findBySearch(String item) {
+		String sql = SELECT_BY_ID_OR_TITLE;
+
+		MapSqlParameterSource param = new MapSqlParameterSource();
+		param.addValue("name", item);
+		param.addValue("title", item);
+
+		var list = jdbcTemplate.query(sql, param, new BeanPropertyRowMapper<Information>(Information.class) );
+		return list;
+
+	}
+	
 	public void update(Integer information_id, Integer read_flag, Integer done_flag) {
     	String sql = UPDATE;
     	
@@ -52,6 +66,15 @@ public class InformationDao{
         param.addValue("read_flag", read_flag);
         param.addValue("done_flag", done_flag);
         
+        jdbcTemplate.update(sql, param);  
+    	
+    }
+	
+	public void updateAll() {
+    	String sql = UPDATEALL;
+
+    	MapSqlParameterSource param = new MapSqlParameterSource();
+    	param.addValue("read_flag", 1);
         jdbcTemplate.update(sql, param);  
     	
     }

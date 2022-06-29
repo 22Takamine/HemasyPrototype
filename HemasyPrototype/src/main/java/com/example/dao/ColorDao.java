@@ -22,7 +22,7 @@ public class ColorDao {
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
-	public Color getSmokeColorLevel(Integer colorLevel) {
+	public Color getSmokeColorLevel(Double colorLevel) {
 		MapSqlParameterSource param = new MapSqlParameterSource();
 		param.addValue("colorLevel", colorLevel);
 		

@@ -15,6 +15,7 @@ import com.example.dao.AchievementsDao;
 import com.example.dao.ListAndRecordDao;
 import com.example.entity.Achievements;
 import com.example.entity.CommonRecord;
+import com.example.entity.ListAndRecord;
 import com.example.service.RecordService;
 
 
@@ -90,9 +91,15 @@ public class RecordController {
     }
     
     @RequestMapping("/getBmiListWeek")
-    public List<CommonRecord> getBmiList(@RequestParam("id") int id, @RequestParam("day") Date day) {
-    	return listAndRecordDao.getBmiRecordsOfWeek(id, day);
-
+    public List<CommonRecord> getBmiList(@RequestParam("id") int id, @RequestParam("day") Date day, @RequestParam("scope") String scopeStr) {
+    	int scope = Integer.parseInt(scopeStr);
+    	if (scope == 0) {
+    		return listAndRecordDao.getBmiRecordsOfWeek(id, day);
+    	}else if(scope == 1) {
+    		return listAndRecordDao.getBmiRecordsOfMonth(id, day);
+    	}else {
+    		return listAndRecordDao.getBmiRecordsOfYear(id, day);
+    	}
     }
 
     
@@ -101,6 +108,12 @@ public class RecordController {
     	return achievementsDao.findById(id);
 
     }
+    
+    @RequestMapping("/getList")
+    public List<ListAndRecord> getList(@RequestParam("type") int type) {
+    	return listAndRecordDao.getList(type);
+    }
+
 
 }
 
