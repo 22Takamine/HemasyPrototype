@@ -66,7 +66,7 @@
 				</form:form>
 			  
 			    <form:form action="statistics" modelAttribute="index" class="statistics-button-box" method="get">
-			  		<input type="hidden" id="todayDate" name="statisticsDate">
+			  		<input type="hidden" id="todayDate1" name="statisticsDate">
 			  		<input type="image" src="../../images/statistic.png" alt="#" class="button-img">
 			    </form:form>
 			</div>
@@ -117,6 +117,7 @@
     	var dd = ("0"+date.getDate()).slice(-2);
 
 		document.getElementById("todayDate").value=yyyy+'-'+mm+'-'+dd;
+		document.getElementById("todayDate1").value=yyyy+'-'+mm+'-'+dd;
   	  </script>
 	<script src="js/commons.js"></script>
 </body>
