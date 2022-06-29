@@ -188,7 +188,6 @@ public class User {
 
 	}
 
-	
 	public Integer getAchievementId() {
 		return achievementId;
 	}
@@ -203,8 +202,7 @@ public class User {
 	
 	public void setAchievementFlag(Integer achievementFlag) {
 		this.achievementFlag = achievementFlag;
-	}
-	
+	}	
 
 	//	// 全フィールドが未入力かの判断
 	//	public boolean isEmptyCondition() {
