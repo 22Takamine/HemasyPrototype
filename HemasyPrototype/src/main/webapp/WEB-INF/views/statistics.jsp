@@ -417,10 +417,7 @@ function getExerciseList() {
 					id: "y-axis-2",
 					type: "linear", 
 					position: "right",
-					ticks: {
-						max:${user.getGoalExerciseTime()}*hideMan,	                		
-						min: 0
-					},	
+
 					scaleLabel: {
 						display: true,
 						labelString: "消費カロリー"  	  
