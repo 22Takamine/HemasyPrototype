@@ -640,10 +640,20 @@ public class IndexController {
 		
 		// user_id =1が登録した食事リストを取得する
 		List<ListAndRecord> foodList = listAndRecordDao.FoodListById(user_id);
+		if (foodList != null) {
+			for (ListAndRecord foodData : foodList) {
+				foodData.setValue1(foodData.getValue1().substring(0, foodData.getValue1().length()-8));
+			}
+		}
 		model.addAttribute("foodList", foodList);
 
-		// user_id =1が登録したお酒リストを取得する(今は暫定でuser_idの部分に固定で２を入れている)
+		// user_id =1が登録したお酒リストを取得する
 		List<ListAndRecord> alcoholList = listAndRecordDao.AlcoholListById(user_id);
+		if (alcoholList != null) {
+			for (ListAndRecord alcoholData : alcoholList) {
+				alcoholData.setValue1(alcoholData.getValue1().substring(0, alcoholData.getValue1().length()-8));
+			}
+		}
 		model.addAttribute("alcoholList", alcoholList);
 
 		return "list";
