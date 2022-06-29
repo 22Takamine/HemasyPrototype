@@ -206,7 +206,7 @@ public class IndexController {
     		if (smokeLevel == 1.0) {
     			smokeMessage = "あなたの肺はきれいです";
     		} else {
-    			smokeMessage = "禁煙"+(21 - smokeLevel) +"日目です";
+    			smokeMessage = "禁煙"+(20 - smokeLevel) +"日目です";
     		}
     		session.setAttribute("lungWord", smokeMessage);
     		session.setAttribute("livarWord", "禁酒"+userAlcoholDate.getValue2()+"日目です。");
@@ -404,7 +404,7 @@ public class IndexController {
 		if (smokeLevel == 1.0) {
 			smokeMessage = "あなたの肺はきれいです";
 		} else {
-			smokeMessage = "禁煙"+(21 - smokeLevel) +"日目です";
+			smokeMessage = "禁煙"+(20 - smokeLevel) +"日目です";
 		}
 		session.setAttribute("lungWord", smokeMessage);
 		session.setAttribute("livarWord", "禁酒"+userAlcoholDate.getValue2()+"日目です。");
@@ -576,6 +576,42 @@ public class IndexController {
     	userDao.update(id, name, mail, pass, sex, birthDate, height, achievementId, time, calorise, rank, smoke, alcohol);
     	
     	user = userDao.findById(id);
+    	
+
+		ListAndRecord userMetsAndTime = listAndRecordDao.getLatestMetsAndTimeRecord(user.getUserId());
+		ListAndRecord userCalorieIntake = listAndRecordDao.getLatestCalorieIntake(user.getUserId());
+    	
+    	ListAndRecord userWeight = listAndRecordDao.getLatestWeightRecordM(user.getUserId());
+    	Double CaloriesBurned = userWeight.getValue2() * userMetsAndTime.getValue2() * userMetsAndTime.getValue3() * 1.05;
+    	Double height1 = (double) (user.getHeight()/100.0);
+    	Double bmi = (double) (userWeight.getValue2()/(height1*height1));
+    	Integer calorieLevel = (int) (Math.ceil(userCalorieIntake.getValue2() - CaloriesBurned)/user.getGoalCalorie()*10);
+    	int goalCalorie = user.getGoalCalorie();
+
+    	if(calorieLevel <= 0) {
+    		calorieLevel = 1;
+    	}else if(calorieLevel >= 12) {
+    		calorieLevel = 11;
+    	}
+
+    	Color CalorieColorLevel = colorDao.getCalorieColorLevel(calorieLevel);
+
+
+    	bmi = Math.floor(bmi * 10)/10;
+    	Bmi bmipath = bmiDao.getBmiPath(bmi);
+    	//計算したbmiをsessionに保存
+    	session.setAttribute("bmiValue",bmi);
+
+
+    	session.setAttribute("stomachGoalkcal", "目標摂取カロリーは"+goalCalorie+"Kcalです。");
+    	session.setAttribute("stomachInputKcal", "摂取カロリーは"+ userCalorieIntake.getValue2()+"Kcalです。");
+    	session.setAttribute("stomachOutputKcal", "消費カロリーは" + CaloriesBurned + "Kcalです。" );
+
+    	session.setAttribute("stomachImg",CalorieColorLevel.getColorPath());
+    	session.setAttribute("bmiImg",bmipath.getImgPath());
+
+    	
+    	
     	session.setAttribute("user", user);
         return "menu";
     }
