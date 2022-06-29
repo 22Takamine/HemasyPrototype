@@ -555,10 +555,27 @@ public class IndexController {
     	if (bindingResult.hasErrors()) {
     		return "account";
         }
-    	
-    	
+    	int flag = 0;
     	Integer id = form.getUserId();
     	User user = userDao.findById(id);
+    	
+    	User userName = userDao.findByName(form.getName());
+		User userMail = userDao.findByMail(form.getMail());
+		if(userName != null && !(user.getUserName().equals(form.getName()))) {
+			flag += 1;
+			model.addAttribute("msgName","そのユーザー名は使用されています。");
+		}
+		if(userMail != null && !(user.getMail().equals(form.getMail()))) {
+			flag += 1;
+			model.addAttribute("msgMail","そのメールアドレスは使用されています。。");
+		}
+		if(flag > 0) {
+			flag = 0;
+			return "account";
+		}
+    	
+    	
+    	
     	String name = form.getName();
     	String mail = form.getMail();
     	String pass = form.getPassword();

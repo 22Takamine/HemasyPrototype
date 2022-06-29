@@ -49,6 +49,9 @@
 				<fmt:message key="form.lbl.name"/>
 				<form:input type="text" path="name" value="${user.getUserName()}"/>
 				<form:errors path="name" cssStyle="color: red"/>
+				<c:if test="${not empty msgName}">
+  					<div class="red">${fn:escapeXml(msgName)}</div>
+  				</c:if>
 		    </div>
 
 	    
@@ -56,6 +59,9 @@
 				<fmt:message key="form.lbl.mail"/>
 				<form:input type="text" path="mail" value="${user.getMail()}"/>
 				<form:errors path="mail" cssStyle="color: red"/>
+				<c:if test="${not empty msgMail}">
+  					<div class="red">${fn:escapeXml(msgMail)}</div>
+  				</c:if>
 		    </div>
 	    
 		    <div class="mb-20">
