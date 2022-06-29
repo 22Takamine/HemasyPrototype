@@ -65,15 +65,14 @@
 
 		<div class="insert">
 			<p>
-				<fmt:message key="form.lbl.name" />${information.user_name}</p>
+				<fmt:message key="form.lbl.name" />${fn:escapeXml(information.user_name)}</p>
 			<p>
-				<fmt:message key="form.lbl.mail" />${information.mail}</p>
+				<fmt:message key="form.lbl.mail" />${fn:escapeXml(information.mail)}</p>
 			<p>
-				<fmt:message key="form.lbl.subject" />${information.title}</p>
+				<fmt:message key="form.lbl.subject" />${fn:escapeXml(information.title)}</p>
 
 			<div class="form_body">
-				<p>
-					<fmt:message key="form.lbl.contents" />${information.contents}</p>
+				<p><fmt:message key="form.lbl.contents" />${fn:escapeXml(information.contents)}</p>
 			</div>
 		</div>
 

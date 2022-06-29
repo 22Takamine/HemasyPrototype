@@ -45,11 +45,11 @@
     <form:form action="information" method="post" modelAttribute="information">
 	    <div class="title">
 	      <label>件名</label><br>
-	      <form:input path="title" type="text" />
+	      <form:input path="title" type="text" placeholder="25文字以内"/>
 	    </div>
 	    <div class="contents">
 	      <label>内容</label><br>
-	      <form:textarea id="textarea" path="contents" name="お問い合わせ内容" cols="100" rows="10" placeholder="こちらに記述してください。"></form:textarea>
+	      <form:textarea id="textarea" path="contents" name="お問い合わせ内容" cols="100" rows="10" placeholder="こちらに記述してください。(1000文字以内)"></form:textarea>
 	    </div>
         <div class="btns">
           <form:button type="submit" class="insert-button info-btn"><fmt:message key="form.lbl.regist"/></form:button>
