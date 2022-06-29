@@ -176,19 +176,20 @@
 			<c:forEach var="sportRecord" items="${sportRecordList}"
 				varStatus="spStatus">
 				<p class="sportData">
-					<input value="${sportRecord.value1}"
-						name="value1Spo${spStatus.index}" list="sportList" onchange="changeSpo(${spStatus.index});calcUsedCalorie(${spStatus.index})" id="nameSpo_${spStatus.index}" autocomplete="off" required>を <input type="hidden"
+					<input type="hidden" value="${sportRecord.value1}" id="nameSpo_${spStatus.index}">
+					<select name="value1Spo${spStatus.index}" onchange="changeSpo(${spStatus.index});calcUsedCalorie(${spStatus.index})" id="listSpo_${spStatus.index}">
+					</select>を
+					<input type="hidden"
 						value="${sportRecord.value2}" name="value2Spo${spStatus.index}"
-						id="mets_${spStatus.index}"> <input type="number" min="1"
+						id="mets_${spStatus.index}">
+					<input type="number" min="1"
 						value="${sportRecord.value3}" name="value3Spo${spStatus.index}"
 						id="time_${spStatus.index}"
-						onchange="calcUsedCalorie(${spStatus.index})" autocomplete="off" required>分運動しました。 <span
+						onchange="calcUsedCalorie(${spStatus.index})" autocomplete="off" required>分も運動しました。 <span
 						id="calorie_${spStatus.index}">${weightRecord.value2 * sportRecord.value2 * sportRecord.value3 / 60 * 1.05}</span>kcal消費
 					<input type="checkbox" value="del" name="delSpo${spStatus.index}">削除
 				</p>
 			</c:forEach>
-			<datalist id="sportList">
-			</datalist>
 		</div>
 		<div id="smoke" class="mb-30 mt-20 bgc">
 			<h2>たばこ</h2>
@@ -279,7 +280,6 @@
 	window.setTimeout(function(){
 		
 		var foodListSelect = document.getElementById('foodList');
-		var sportListSelect = document.getElementById('sportList');
 		var alcoholListSelect = document.getElementById('alcoholList');
 		
 		for (let i = 0; i < foodList.length; i++) {
@@ -288,10 +288,17 @@
 			foodListSelect.appendChild(option);
 		}
 		
-		for (let i = 0; i < sportList.length; i++) {
-			var option = document.createElement('option');
-			option.value = sportList[i]['value1'];
-			sportListSelect.appendChild(option);
+		for (let i = 0; i < document.getElementsByClassName('sportData').length; i++) {
+			var sportListSelect = document.getElementById('listSpo_' + i);
+			for (let j = 0; j < sportList.length; j++) {
+				var option = document.createElement('option');
+				option.value = sportList[j]['value1'];
+				option.innerHTML = option.value;
+				if (option.value == document.getElementById('nameSpo_' + i).value) {
+					option.selected = true;
+				}
+				sportListSelect.appendChild(option);
+			}
 		}
 		
 		for (let i = 0; i < alcoholList.length; i++) {
@@ -353,7 +360,7 @@
 	
 	/* 運動をリストから選んだ際の動き */
 	function changeSpo(id) {
-		var targetName = document.getElementById('nameSpo_' + id);
+		var targetName = document.getElementById('listSpo_' + id);
 		var targetMets = document.getElementById('mets_' + id);
 		for (let i = 0; i < sportList.length; i++) {
 			if (sportList[i]['value1'] == targetName.value) {
@@ -483,19 +490,26 @@
 	var spnum = document.getElementsByClassName('sportData').length;
 	function addSpoForm() {
 	  var newP = document.createElement('p');
+	  var selectOption = '';
+	  for (let i = 0; i < sportList.length; i++) {
+		  selectOption += '<option value="' + sportList[i]['value1'] + '">' + sportList[i]['value1'] + '</option>';
+	  }
 	  newP.innerHTML =
-		  '<input name="value1Spo' + spnum +
-		  '" list="sportList" onchange="changeSpo(' + spnum +
+		  '<input type="hidden" value="' + sportList[0]['value1'] +
+		  '" id="nameSpo_' + spnum +
+		  '"><select name="value1Spo' + spnum +
+		  '" onchange="changeSpo(' + spnum +
 		  ');calcUsedCalorie(' + spnum +
-		  ')" id="nameSpo_' + spnum +
-		  '" autocomplete="off" required>を <input type="hidden" name="value2Spo' + spnum +
-		  '"id="mets_' + spnum +
-		  '"> <input type="number" min="1" name="value3Spo' + spnum +
+		  ')" id="listSpo_' + spnum +
+		  '">' + selectOption +
+		  '</select>を<input type="hidden" value="' + sportList[0]['value2'] +
+		  '" name="value2Spo' + spnum +
+		  '" id="mets_' + spnum +
+		  '"><input type="number" min="1" name="value3Spo' + spnum +
 		  '" id="time_' + spnum +
 		  '" onchange="calcUsedCalorie(' + spnum +
-		  ')" autocomplete="off" required>分運動しました。<span id="calorie_' + spnum +
-		  '"></span>kcal消費' +
-		  '<input type="checkbox" value="del" name="delSpo' + spnum +
+		  ')" autocomplete="off" required>分も運動しました。 <span id="calorie_' + spnum +
+		  '"></span>kcal消費<input type="checkbox" value="del" name="delSpo' + spnum +
 		  '">削除';
 	  var parent = document.getElementById('sport');
 	  parent.appendChild(newP);
