@@ -206,7 +206,7 @@ public class IndexController {
     		if (smokeLevel == 1.0) {
     			smokeMessage = "あなたの肺はきれいです";
     		} else {
-    			smokeMessage = "禁煙"+(21 - smokeLevel) +"日目です";
+    			smokeMessage = "禁煙"+(20 - smokeLevel) +"日目です";
     		}
     		session.setAttribute("lungWord", smokeMessage);
     		session.setAttribute("livarWord", "禁酒"+userAlcoholDate.getValue2()+"日目です。");
@@ -404,7 +404,7 @@ public class IndexController {
 		if (smokeLevel == 1.0) {
 			smokeMessage = "あなたの肺はきれいです";
 		} else {
-			smokeMessage = "禁煙"+(21 - smokeLevel) +"日目です";
+			smokeMessage = "禁煙"+(20 - smokeLevel) +"日目です";
 		}
 		session.setAttribute("lungWord", smokeMessage);
 		session.setAttribute("livarWord", "禁酒"+userAlcoholDate.getValue2()+"日目です。");
