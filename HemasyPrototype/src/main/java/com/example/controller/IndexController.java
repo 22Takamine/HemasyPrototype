@@ -655,7 +655,6 @@ public class IndexController {
 			}
 		}
 		model.addAttribute("alcoholList", alcoholList);
-
 		return "list";
 	}
 

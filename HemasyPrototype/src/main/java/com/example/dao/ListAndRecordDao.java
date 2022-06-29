@@ -34,7 +34,7 @@ public class ListAndRecordDao {
 	private static final String GET_SMOKE_RECORDS = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 3 AND user_id = :userId AND create_date = :createDate";
 	private static final String GET_LATEST_WEIGHT_RECORD = "SELECT * FROM lists_and_records WHERE category = 2 AND type = 5 AND value2 <> 0 AND create_date <= :createDate AND user_id = :userId ORDER BY create_date DESC";
 	private static final String INSERT_LIST_AND_RECORD = "INSERT INTO lists_and_records (category, type, value1, value2, value3, value4, value5, value6, value7, value8, create_date, user_id) VALUES (:category, :type, :value1, :value2, :value3, :value4, :value5, :value6, :value7, :value8, :createDate, :userId)";
-	private static final String DELETE_RECORD_BY_DATE = "DELETE FROM lists_and_records WHERE create_date = :createDate AND user_id = :userId";
+	private static final String DELETE_RECORD_BY_DATE = "DELETE FROM lists_and_records WHERE category = 2 AND create_date = :createDate AND user_id = :userId";
 	private static final String GET_LISTS = "SELECT * FROM lists_and_records WHERE category = 1 AND type = :type AND (user_id = 1 or user_id = :userId) ORDER BY value1";
 	private static final String FIND_LIST_BY_NAME = "SELECT * FROM lists_and_records WHERE category = 1 AND type = :type AND value1 = :value1 AND user_id = :userId";
 	private static final String UPDATE_MY_LISTS = "UPDATE lists_and_records SET value2 = :value2, value3 = :value3, value4 = :value4, value5 = :value5 WHERE category = 1 AND type = :type AND value1 = :value1 AND user_id = :userId";
