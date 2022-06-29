@@ -164,7 +164,7 @@ public class IndexController {
     		ListAndRecord userMetsAndTime = listAndRecordDao.getLatestMetsAndTimeRecord(user.getUserId());
     		ListAndRecord userCalorieIntake = listAndRecordDao.getLatestCalorieIntake(user.getUserId());
     		ListAndRecord userWeight = listAndRecordDao.getLatestWeightRecordM(user.getUserId());
-    		ListAndRecord userAlcoholDate = listAndRecordDao.getLatestAlcoholDateRecord(user.getUserId());
+    		Double kinshunissu = listAndRecordDao.getLatestAlcoholDateRecord(user.getUserId());
 
     		Integer alcoholLevel;
     		Double CaloriesBurned = userWeight.getValue2() * userMetsAndTime.getValue2() * userMetsAndTime.getValue3() * 1.05;
@@ -206,8 +206,15 @@ public class IndexController {
     		} else {
     			smokeMessage = "禁煙"+(20 - smokeLevel) +"日目です";
     		}
+    		
+    		String alcoholMessage = "";
+    		if (kinshunissu == -1.0) {
+    			alcoholMessage = "あなたの肝臓は元気です";
+    		} else {
+    			alcoholMessage = "禁酒" + kinshunissu + "日目です";
+    		}
     		session.setAttribute("lungWord", smokeMessage);
-    		session.setAttribute("livarWord", "禁酒"+userAlcoholDate.getValue2()+"日目です。");
+    		session.setAttribute("livarWord", alcoholMessage);
     		session.setAttribute("stomachGoalkcal", "目標摂取カロリーは"+goalCalorie+"Kcalです。");
     		session.setAttribute("stomachInputKcal", "摂取カロリーは"+ userCalorieIntake.getValue2()+"Kcalです。");
     		session.setAttribute("stomachOutputKcal", "消費カロリーは" + CaloriesBurned + "Kcalです。" );
@@ -364,7 +371,7 @@ public class IndexController {
 		ListAndRecord userMetsAndTime = listAndRecordDao.getLatestMetsAndTimeRecord(user.getUserId());
 		ListAndRecord userCalorieIntake = listAndRecordDao.getLatestCalorieIntake(user.getUserId());
 		ListAndRecord userWeight = listAndRecordDao.getLatestWeightRecordM(user.getUserId());
-		ListAndRecord userAlcoholDate = listAndRecordDao.getLatestAlcoholDateRecord(user.getUserId());
+		Double kinshunissu = listAndRecordDao.getLatestAlcoholDateRecord(user.getUserId());
 		
 		Integer alcoholLevel;
 		Double CaloriesBurned = userWeight.getValue2() * userMetsAndTime.getValue2() * userMetsAndTime.getValue3() * 1.05;
@@ -404,8 +411,17 @@ public class IndexController {
 		} else {
 			smokeMessage = "禁煙"+(20 - smokeLevel) +"日目です";
 		}
+		
+		
+		String alcoholMessage = "";
+		if (kinshunissu == -1.0) {
+			alcoholMessage = "あなたの肝臓は元気です";
+		} else {
+			alcoholMessage = "禁酒" + kinshunissu + "日目です";
+		}
+
 		session.setAttribute("lungWord", smokeMessage);
-		session.setAttribute("livarWord", "禁酒"+userAlcoholDate.getValue2()+"日目です。");
+		session.setAttribute("livarWord", alcoholMessage);
 		session.setAttribute("stomachGoalkcal", "目標摂取カロリーは"+user.getGoalCalorie()+"Kcalです。");
 		session.setAttribute("stomachInputKcal", "摂取カロリーは"+ userCalorieIntake.getValue2()+"Kcalです。");
 		session.setAttribute("stomachOutputKcal", "消費カロリーは" + CaloriesBurned + "Kcalです。" );
