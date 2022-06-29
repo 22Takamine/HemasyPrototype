@@ -466,7 +466,7 @@ public List<ListAndRecord> SportListById(int userId) {
 	public List<CommonRecord> getExerciseRecordsOfMonth(int user_id, Date day) {
 		//ToDouser_id をidからとる
 		//value 2 = bmi
-		//value 3 = 消費カロリー　
+		//value 3 = 消費カロリー
 		//value 4 = 体重
 		String sql = """
 				select value3, value4,  create_date AS create_day from(
