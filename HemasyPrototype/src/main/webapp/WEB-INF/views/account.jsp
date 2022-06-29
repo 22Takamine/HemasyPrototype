@@ -84,7 +84,7 @@
 	    
 		    <div class="mb-20">
 				<fmt:message key="form.lbl.birth"/>
-				<input type="text" value="${user.getBirth()}" readonly="readonly"/>
+				<form:input id="datefield" type="date" path="birth" value="${user.getBirth()}"/>
 		    </div>
 		    <div class="mb-20">
 				<fmt:message key="form.lbl.height"/>
@@ -213,7 +213,26 @@
 	  
 	  </div>
   </div>
+<script>
+function changeDate(){
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() + 1; //January is 0!
+var yyyy = today.getFullYear();
 
+if (dd < 10) {
+   dd = '0' + dd;
+}
+
+if (mm < 10) {
+   mm = '0' + mm;
+} 
+    
+today = yyyy + '-' + mm + '-' + dd;
+document.getElementById("datefield").setAttribute("max", today);
+}
+window.addEventListner('load', changeDate());
+</script>
 <script src="js/commons.js"></script>
 </body>
 </html>

@@ -596,7 +596,7 @@ public class IndexController {
     	String mail = form.getMail();
     	String pass = form.getPassword();
     	Integer sex = form.getSex();
-    	Date birthDate = (Date) user.getBirth();
+    	Date birthDate = form.getBirth();
     	Double height = form.getHeight();
     	Integer achievementId = form.getAchievementId();
     	Integer time = form.getGoalExerciseTime();

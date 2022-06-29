@@ -36,6 +36,7 @@
 		<div class="header-logo">
 			<a class="f-24 logoF" href="./back">Hemasy</a>
 		</div>
+		<c:if test="${user.getRoleId() == 1}">
 		<form:form action="hamburger" modelAttribute="index" method="post">
 			<button type="button" class="menu-btn">
 				<i class="fa fa-bars" aria-hidden="true"></i>
@@ -58,6 +59,7 @@
 				</div>
 			</div>
 		</form:form>
+		</c:if>
 	</header>
 	<div class="main ranking">
 		<h2>ランキング</h2>
