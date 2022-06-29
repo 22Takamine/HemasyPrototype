@@ -128,7 +128,7 @@
 		<%--     <form:button><fmt:message key="form.lbl.process"/></form:button> --%>
 		<%--   </form:form> --%>
 
-		<form:form action="backAdmin" modelAttribute="index" method="post">
+		<form:form action="admin" modelAttribute="index" method="post">
 			<form:button>
 				<fmt:message key="form.lbl.back" />
 			</form:button>
