@@ -58,7 +58,16 @@
 	</header>
 	<div class="main">
 		<h2>管理者お問い合わせ</h2>
-
+		
+		<form:form action="search" modelAttribute="index" method="get">
+	      <form:input path="keyword" type="text" placeholder="キーワード検索"></form:input>
+	      <form:button><fmt:message key="form.lbl.search"/></form:button>
+	    </form:form>
+	    <form:form action="alreadyRead" modelAttribute="index" method="get">
+	      <form:button><fmt:message key="form.lbl.alreadyRead"/></form:button>
+	    </form:form>
+      	
+      	
 		<table>
 			<thead>
 				<tr>
